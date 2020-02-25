@@ -17,3 +17,4 @@ FOUNDATION_EXPORT const unsigned char CZOrganizerSDKVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <CZOrganizerSDK/PublicHeader.h>
 
 
+ #import <CZOrganizerSDK/CZOrganizerHomeViewController.h>

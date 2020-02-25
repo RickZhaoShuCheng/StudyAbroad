@@ -1,0 +1,183 @@
+
+"没有连接网络，请检查网络设置" = "Network unconnected. Please check network settings";
+"服务器响应超时，请稍后再试或联系客服400-810-1919" = "Server response timed out. Please try later or contact service 400-810-1919"; //MARK
+"网络无法连接，请检查网络设置或联系管理员 (错误码:%lu)"=  "Unable to connect network. Please check network settings or contact admin (error code: %lu)";//MARK
+"登录不成功，请联系客服400-810-1919 (错误码:%lu)" = "Login failed. Please contact service 400-810-1919 (error code: %lu) ";
+"登录不成功，请联系客服400-810-1919" =  "Login failed. Please contact service 400-810-1919";
+"登录不成功，请联系管理员" = "Login failed. Please contact admin ";
+"请输入正确的手机号码" = "Please enter correct mobile number";
+"验证码输入错误，请重新输入" = "Wrong verification code. Please enter again";
+"验证码失效，请重新获取" = "Verification code expired. Please send again";
+"密码要求6位及以上数字、字母或符号" = "Password requires at least 6 numbers, letters or symbols";
+"两次输入的密码不相同，请重新输入" = "The two passwords didn’t match. Please enter again";
+"邀请码不存在，请重新输入" = "Invitation code not found. Please enter again";
+"你选择的企业已开通全时会议，如需使用请联系管理员开通" = "The enterprise you selected has opened G-Net meeting. To use it, please contact admin";
+"该手机号码已注册，请直接登录客户端" = "Mobile number registered. Please log in on client directly"; //MARK
+"该邮箱已注册，请填写登录客户端" =  "Email registered. Please log in on client directly";  //MARK
+"该手机号码已注册，请填写其他手机号码" = "Mobile number registered. Please enter other numbers";
+"该邮箱已注册，请填写其他邮箱" = "Email registered. Please enter other emails";
+"你已提交过注册申请，请联系管理员审批" = "Registration application submitted. Please contact admin for approval";
+
+"确认密码" = "Confirm Password";
+"更多登录方式" = "More login methods";
+"企业微信登录" = "WeChat Work";
+"钉钉登录" = "DingTalk";
+"QQ登录" = "QQ";
+"微博登录" = "Weibo";
+"海外手机号登录"  = "Overseas Mobile Number";
+"管理员已为你开通帐号-验证手机号即可登录" = "Admin has opened account for you. Verify your mobile number to log in";
+
+
+"你是企业帐号，请使用企业帐号登录" = "Your account is enterprise account. Please use enterprise account for login";
+"帐号不存在，请重新输入" =  "Account not found. Please enter again";
+"请输入正确的验证码" = "Please enter correct verification code";
+"你是企业帐号，请联系管理员协助修改密码" = "Your account is enterprise account. Please contact admin to change password";
+"找回密码不成功，请联系客服400-810-1919  (错误码:%lu)" = "Failed to retrieve password. Please contact customer service 400-810-1919 (Error code: %lu)";
+"请输入新密码" = "Please enter new password";
+"请输入确认密码" = "Please confirm password";
+"域名不存在，请重新输入或联系管理员" = "Domain name not found. Please enter again or contact admin";
+"输入的邮箱没有对应的企业域名，请重新输入" = "No matched enterprise domain for entered email. Please enter again";
+"企业帐号或密码不正确，请输入企业内部系统的密码或联系管理员重设密码" = "Incorrect enterprise account or password. Please enter the password of enterprise internal system or contact admin ";
+"请先登录企业内部系统设置初始密码" = "Please log in on enterprise internal system to set initial password"; //MARK
+"帐号不存在，请联系管理员开通全时会议" = "Account not found. Please contact admin to open G-Net meeting service";
+"请输入企业邮箱"="Please enter enterprise email";
+"请输入企业域名"="Please enter enterprise domain";
+"请输入企业帐号"="Please enter enterprise account";
+"请输入密码"="Please enter password";
+
+
+"请输入手机号" = "Please enter mobile number";
+"请输入邮箱" = "Please enter email";
+"请输入邮箱/手机号" = "Please enter email/mobile number";
+"请输入短信验证码" = "Please enter SMS code";
+"请输入邮件验证码" = "Please enter email verification code";
+"请输入验证码" = "Please enter verification code";
+"请输入姓名" = "Please enter name";
+"请输入公司名称" = "Please enter company name";
+"帐号或密码不正确，请重新输入" = "Incorrect account or password. Please enter again";
+"你的帐号已升级，请下载新的客户端登录"="Account upgraded. Please download the latest client for login";//MARK
+
+
+"手机" = "Phone";
+"短信验证码" = "SMS code";
+"获取验证码" = "Get Code";
+"邮箱注册" = "Email Signup";
+"忘记密码？" = "Forget password?";
+"注册即同意《全时用户使用条款》和《隐私权条款》"= "Signup means agreeing to G-Net Terms of Service and Privacy Policy";
+"《全时用户使用条款》"= "Terms of Service";
+"《隐私权条款》"= "Privacy Policy";
+"欢迎使用全时云会议" = "Welcome to G-Net MeetNow";
+"返回" = "Back";
+"重新发送" = "Resend";
+"手机注册" = "Phone Signup";
+"邮件验证码" = "Email Verification Code";
+
+
+"邮箱" = "Email";
+"完善信息" = "Complete Info";
+"姓名" = "Name";
+"公司名称" = "Company name";
+"邀请码" = "Invitation Code";
+"设置密码" = "Set Password";
+"密码要求6位及以上数字、字母或符号" = "Password includes 6-digit or more numbers, letters or symbols";
+"手机号验证" = "Mobile Number Verification";
+"你的企业需要你使用手机号验证身份" = "Your enterprise needs your mobile number for verification";
+"邮箱验证" = "Email Verification";
+
+"你的企业需要你使用邮箱验证身份" = "Your enterprise needs your email for verification";
+"申请已提交" = "Application Submitted";
+"复制此链接发送给公司管理员审批" = "Copy this link and send to admin for approval";
+"微信扫码一键注册"="WeChat Signup";
+"扫一扫下载云会议手机App"="Scan to download MeetNow APP";
+"企业域名"="Enterprise domain";
+"企业帐号" = "Enterprise account";
+
+
+
+"你的帐号还没有归属企业，请选择企业" = "You haven't selected enterprise for your account. Please select enterprise";
+"选择国家/地区" = "Select country/region";
+"搜索国家/地区" = "Search country/region";
+"输入验证码" = "Enter verification code";
+"验证码已经发送到绑定手机号" = "Verification code has been sent to your bound mobile number";
+"验证码已经发送到绑定邮箱" = "Verification code has been sent to your bound email";
+"验证成功" = "Verified successfully";
+"忘记密码" = "Forgot Password";
+"请输入你需要找回登录密码的帐号"="Please enter account to retrieve password";
+"海外手机号忘记密码"="Forgot Password for Overseas Mobile Number";
+"你的企业需要你使用手机号验证身份"="你的企业需要你使用手机号验证身份";
+"重置密码"="Reset Password";
+"密码要求6位及以上数字、字母或符号"="Password includes 6-digit or more numbers, letters or symbols";
+
+"新密码"="New password";
+"确认新密码"="Confirm new password";
+"企业登录" = "Enterprise Login";
+"企业邮箱"="Enterprise email";
+"我知道公司域名"="I Know Enterprise Domain";
+"我不知道公司域名"="I Don't Know Enterprise Domain";
+
+"帐号注册" = "Sign Up";
+"注册后，无限次免费开会" = "Sign up to have free meetings";
+"搜索" = "Search";
+
+"我知道了"="Got it";
+
+
+"推荐使用" = "Recommended";
+"手机号"="Phone";
+"企业邮箱地址" ="Enterprise email";
+"邮箱/手机号"="Email/Mobile number";
+"邮件验证码"="Email verification code";
+"验证码"="Verification code";
+"新登录密码"="New password";
+"确认新密码"="Confirm password";
+"密码"="Password";
+"搜索"="Search";
+"没有匹配的搜索结果"="No results";
+"申请正在等待审批"="Waiting for approval";
+"你已提交过注册申请，请联系管理员审批"="The enterprise you selected has opened G-Net meeting. To use it, please contact admin";
+"补充企业信息"="";
+"管理员已为你开通帐号-验证邮箱即可登录"="Admin has opened account for you, Verify mobile number to log in";
+"我们会联系你的管理员为你开通帐号，请注意查收邮件/短信"="We'll contact your admin to open account for you. Please check your email/SMS";
+"手机号已绑定其他微信帐号，是否继续关联新的微信帐号？"="The mobile number has been bound to another WeChat account. Do you want to bind new WeChat account?";
+"测试已到期，如需继续使用请联系管理员或客服400-810-1919"="Trial expired, To continue using the account, please contact admin or sales department";
+"根据手机加载出来多个用户"="";
+"根据邮箱加载出来多个用户"="";
+"全时云会议"="G-Net MeetNow";
+"绑定手机号"="Bind mobile number";
+"绑定邮箱"="Bind email";
+"注册后，无限次免费开会"="Sign up to have free meetings";
+"手机号已经绑定了其他微信帐号\n是否关联新微信帐号？"="Already bound other WeChat account, Bind new WeChat account?";
+"取消"="Cancel";
+"关联新微信"="Bind new WeChat";
+"填写信息立即体验无限次免费开会"="Enter info to try free meetings now";
+"我有邀请码"="I Have Invitation Code";
+"完成注册"="Signup";
+"完成"="Complete";
+"复制此链接发送给公司管理员审批"="Copy this link and send to admin for approval";
+"复制此链接发送给管理员可以加快审批"="Sending this link to admin can quicken approval";
+"复制链接"="Copy Link";
+"管理员拒绝了你加入企业的申请，请重新选择归属企业"="The admin rejected your application. Please select enterprise again";
+"管理员拒绝了你的申请" = "The admin rejected your application ";
+"我知道了"="Got It";
+"登录"="Login";
+"海外手机号登录"="Overseas Mobile Number";
+"帐号密码登录"="Account Password Login";
+"下一步"="Next";
+"海外手机号找回密码"="Retrieve Password for Overseas Numbers";
+"提交"="Submit";
+
+"注册不成功，请联系客服400-810-1919 (错误码:%lu)" = "Register failed. Please contact service 400-810-1919 (error code: %lu) ";
+"获取第三方应用异常 (错误码:%lu)" = "Get third party application exception (error code: %lu) ";
+"你是企业帐号，请联系管理员开通帐号" = "You are an enterprise account. Please contact the administrator to open the account";
+"复制成功" = "Copied";
+
+"修改登录密码" = "Change password";
+
+
+"操作不成功，请联系客服400-810-1919 (错误码:%lu)" = "Operation failed. Please contact service 400-810-1919 (error code: %lu) ";
+
+"你填写的信息为企业帐号，不能绑定第三方应用（错误码：201083）" = "Enterprise account, unable to bind the third party application (error code: 201083)";
+"复制此链接发送给管理员审批，审批通过后即可使用全时会议" = "Copy this link and send to admin for approval, and use G-Net MeetNow after approval"
+"完善企业认证信息" = "Complete Enterprise Authentication"
+"请填写企业邮箱信息，认证后即可加入企业" = "Please enter enterprise email and join enterprise after authentication"
+"请填写手机号，认证后即可加入企业" = "Please enter phone number and join enterprise after authentication"
