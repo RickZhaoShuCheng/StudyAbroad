@@ -60,8 +60,8 @@
 + (MJRefreshBackNormalFooter *)lb_footerWithAction:(dispatch_block_t)action {
     MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:action];
     [footer setTitle:@"——— 已经到底了 ———" forState:MJRefreshStateNoMoreData];
-    footer.stateLabel.textColor = colorWithHexString(@"e5e5e5");
-    footer.stateLabel.font = Font26;
+//    footer.stateLabel.textColor = colorWithHexString(@"e5e5e5");
+//    footer.stateLabel.font = Font26;
 //    footer.refreshingTitleHidden = YES;
 //    footer.triggerAutomaticallyRefreshPercent = 0;
     return footer;
@@ -71,8 +71,8 @@
 + (MJRefreshBackNormalFooter *)lb_footerWithTarget:(id)target Action:(SEL)action {
     MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:target refreshingAction:action];
     [footer setTitle:@"——— 已经到底了 ———" forState:MJRefreshStateNoMoreData];
-    footer.stateLabel.textColor = colorWithHexString(@"e5e5e5");
-    footer.stateLabel.font = Font26;
+//    footer.stateLabel.textColor = colorWithHexString(@"e5e5e5");
+//    footer.stateLabel.font = Font26;
 //    footer.refreshingTitleHidden = YES;
 //    footer.triggerAutomaticallyRefreshPercent = 0;
     

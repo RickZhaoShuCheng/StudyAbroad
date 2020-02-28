@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    [self requestForCarefullyChoose];
+//    [self requestForCarefullyChoose];
 }
 
 -(void)initUI
@@ -49,16 +49,16 @@
     self.contentScrollView = self.dataCollectionView;
     self.dataCollectionView.alwaysBounceVertical = YES;
     
-    WEAKSELF
-    self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageIndex = 0;
-        [weakSelf requestForCarefullyChoose];
-    }];
-    
-    self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        weakSelf.pageIndex += 1;
-        [weakSelf requestForCarefullyChoose];
-    }];
+//    WEAKSELF
+//    self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+//        weakSelf.pageIndex = 0;
+//        [weakSelf requestForCarefullyChoose];
+//    }];
+//    
+//    self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+//        weakSelf.pageIndex += 1;
+//        [weakSelf requestForCarefullyChoose];
+//    }];
 }
 
 -(void)viewDidLayoutSubviews
@@ -84,9 +84,9 @@
                 
                 NSMutableArray *array = [[NSMutableArray alloc] init];
                 
-                for (NSDictionary dic in data) {
+                for (NSDictionary *dic in data) {
                     CZProductModel *model = [CZProductModel modelWithDict:dic];
-                    [array addObject:data];
+                    [array addObject:model];
                 }
                 
                 [weakSelf.dataCollectionView.mj_header endRefreshing];
