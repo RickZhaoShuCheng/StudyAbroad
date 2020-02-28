@@ -7,6 +7,8 @@
 //
 
 #import "CZServiceCell.h"
+#import "CZHomeModel.h"
+#import "UIImageView+WebCache.h"
 
 @interface CZServiceCell ()
 
@@ -34,7 +36,6 @@
         make.centerY.mas_equalTo(-20);
         make.centerX.mas_equalTo(0);
     }];
-    self.iconImageView.backgroundColor = [UIColor redColor];
     
     self.mainTitleLabel = [[UILabel alloc] init];
     self.mainTitleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:13];
@@ -45,7 +46,12 @@
         make.centerX.mas_equalTo(0);
         make.centerY.mas_equalTo(20);
     }];
-    self.mainTitleLabel.text = NSLocalizedString(@"全部服务", nil);
 }
 
+-(void)setModel:(CZHomeModel *)model
+{
+    _model = model;
+    self.mainTitleLabel.text = model.content1;
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.spImg)] placeholderImage:nil];
+}
 @end

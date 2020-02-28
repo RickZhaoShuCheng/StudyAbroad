@@ -37,4 +37,10 @@ static CGFloat const defaultHeight = 150;
     [self addSubview:self.serviceView];
 }
 
+-(void)reloadByDatas:(NSMutableArray *)datas
+{
+    self.serviceView.datas = datas;
+    [self.serviceView reloadData];
+}
+
 @end

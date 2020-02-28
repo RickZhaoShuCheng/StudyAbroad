@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong , readonly) DropMenuBar *menuScreeningView;
 
+-(void)setRelateScrollView:(UIScrollView *)scrollView;
+
 @end
 
 NS_ASSUME_NONNULL_END

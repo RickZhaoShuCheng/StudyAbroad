@@ -7,27 +7,35 @@
 //
 
 #import "CZSchoolStarView.h"
+#import "CZSchoolStarCell.h"
 
-@interface CZSchoolStarView ()
-
-@property (nonatomic, strong) NSMutableArray *dataArr;
+@interface CZSchoolStarView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @end
 
 @implementation CZSchoolStarView
 
-
-#pragma mark -------------UICollectionViewDelegateFlowLayout
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(129, 150);
+- (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
+    self = [super initWithFrame:frame collectionViewLayout:layout];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        [self registerClass:[CZSchoolStarCell class] forCellWithReuseIdentifier:NSStringFromClass([CZSchoolStarCell class])];
+        self.dataSource = self;
+        self.delegate = self;
+    }
+    return self;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 0;
+#pragma mark ----------UICollectionViewDataSource
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.dataArr.count;
 }
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 15;
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    CZSchoolStarCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZSchoolStarCell class]) forIndexPath:indexPath];
+    [cell setModel:self.dataArr[indexPath.row]];
+    return cell;
 }
+
 
 
 @end

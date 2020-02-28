@@ -321,13 +321,13 @@
 #pragma mark - 重置actionTitle 的文字
 - (void)resetActionTitle:(ItemModel *)selectModel selectRow:(NSInteger)row {
     // 表明只有一层数据。。选中第一行则恢复初始的title. 反正显示选中的数据
-    if(row == 0) {
-        [self.action setTitle:self.action.title forState:UIControlStateNormal];
-        [self.action setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }else {
+//    if(row == 0) {
+//        [self.action setTitle:self.action.title forState:UIControlStateNormal];
+//        [self.action setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    }else {
         [self.action setTitle:selectModel.displayText forState:UIControlStateNormal];
         [self.action setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    }
+//    }
     [self.action adjustFrame];
 }
 

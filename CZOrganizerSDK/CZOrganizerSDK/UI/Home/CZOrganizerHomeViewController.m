@@ -16,9 +16,20 @@
 #import "MenuAction.h"
 #import "DropMenuBar.h"
 #import "CZSearchBar.h"
+#import "CZSchoolStarView.h"
+#import "CZHotActivityView.h"
+#import "QSCommonService.h"
+#import "QSOrganizerHomeService.h"
+#import "CZHomeModel.h"
+#import "UIImageView+WebCache.h"
+#import "CZSchoolStarModel.h"
+#import "CZActivityModel.h"
+#import "CZBoardView.h"
+#import "QSClient.h"
+#import "CZCountryUtil.h"
 
 static NSInteger sectionCount = 6;
-static CGFloat filterHeight = 120;
+static CGFloat filterHeight = 95;
 
 typedef enum : NSUInteger {
     CZTableSectionTypeService,
@@ -31,6 +42,7 @@ typedef enum : NSUInteger {
 
 @interface CZOrganizerHomeViewController ()<DropMenuBarDelegate>
 @property (nonatomic , strong) CZHomeBannerView *bannerView;//轮播图
+@property (nonatomic , strong) UIImageView *bannerBottomView;//轮播图bottom
 @property (nonatomic , strong) CZServiceBannerView *serviceBannerView;//服务选择图
 @property (nonatomic , strong) CZCourseView *courseView;//课程选择图
 @property (nonatomic , strong) UIView *courseContainerView;//课程选择图(容器)
@@ -42,6 +54,14 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIButton *locationButton;
 @property (nonatomic, strong) UIButton *shopButton;
 @property (nonatomic, strong) CZSearchBar *searchBar;
+@property (nonatomic, strong) CZSchoolStarView *startView;
+@property (nonatomic, strong) CZHotActivityView *activityView;
+@property (nonatomic, strong) CZBoardView *boardView;
+@property (nonatomic , strong) UIView *boardContainerView;
+//data
+@property (nonatomic, strong) NSMutableDictionary *dataDicts;
+@property (nonatomic, strong) NSMutableArray *schoolStars;
+@property (nonatomic, strong) NSMutableArray *hotActivities;
 
 @end
 
@@ -50,6 +70,9 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+    [self requestForHomeData];
+    [self requestForSchoolStars];
+    [self requestForHotActivities];
 }
 
 - (void)initUI
@@ -89,13 +112,18 @@ typedef enum : NSUInteger {
 {
     if (!_bannerView) {
         _bannerView = [[CZHomeBannerView alloc] init];
-        [_bannerView setPicsURLs:@[@"http://e.hiphotos.baidu.com/zhidao/pic/item/d62a6059252dd42a1c362a29033b5bb5c9eab870.jpg",@"http://e.hiphotos.baidu.com/zhidao/pic/item/d62a6059252dd42a1c362a29033b5bb5c9eab870.jpg"]];
-        CGFloat width = self.view.bounds.size.width;
-        UIImageView *customView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width/375.0*41.0)];
-        customView.image = [CZImageProvider imageNamed:@"zhu_ye_banner_bottom"];
-        _bannerView.customView = customView;
+        _bannerView.customView = self.bannerBottomView;
     }
     return _bannerView;
+}
+
+-(UIImageView *)bannerBottomView
+{
+    if (!_bannerBottomView) {
+        CGFloat width = self.view.bounds.size.width;
+        _bannerBottomView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width/375.0*41.0)];
+    }
+    return _bannerBottomView;
 }
 
 -(CZServiceBannerView *)serviceBannerView
@@ -109,9 +137,17 @@ typedef enum : NSUInteger {
 -(CZCourseView *)courseView
 {
     if (!_courseView) {
-        _courseView = [[CZCourseView alloc] initWithCourses:@[@"1",@"1",@"1"] container:self.courseContainerView];
+        _courseView = [[CZCourseView alloc] initWithCourses:@[] container:self.courseContainerView];
     }
     return _courseView;
+}
+
+-(CZBoardView *)boardView
+{
+    if (!_boardView) {
+        _boardView = [[CZBoardView alloc] initWithBoards:@[] container:self.boardContainerView];
+    }
+    return _boardView;
 }
 
 -(UIView *)courseContainerView
@@ -122,12 +158,51 @@ typedef enum : NSUInteger {
     return _courseContainerView;
 }
 
+-(UIView *)boardContainerView
+{
+    if (!_boardContainerView) {
+        _boardContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width-50)];
+    }
+    return _boardContainerView;
+}
+
 -(UIView *)homeFilterContainerView
 {
     if (!_homeFilterContainerView) {
         _homeFilterContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, filterHeight)];
     }
     return _homeFilterContainerView;
+}
+
+-(CZHotActivityView *)activityView
+{
+    if (!_activityView) {
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        layout.minimumLineSpacing = 15;
+        layout.itemSize = CGSizeMake(160, 187);
+        layout.minimumInteritemSpacing = 0;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
+        _activityView = [[CZHotActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 150) collectionViewLayout:layout];
+    }
+    return _activityView;
+}
+
+-(CZSchoolStarView *)startView
+{
+    if (!_startView) {
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        layout.minimumLineSpacing = 15;
+        layout.itemSize = CGSizeMake(129, 150);
+        layout.minimumInteritemSpacing = 0;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
+
+        _startView = [[CZSchoolStarView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 150) collectionViewLayout:layout];
+    }
+    return _startView;
 }
 
 //override
@@ -139,14 +214,12 @@ typedef enum : NSUInteger {
 // 子类化实现
 - (NSArray<UIViewController<CZScrollContentControllerDeleagte> *> *)contentScrollers
 {
-    //
-        NSMutableArray *arry = [[NSMutableArray alloc]init];
-        for (int i =0; i<2; i++) {
-            CZCarefullyChooseViewController *tabVc = [[CZCarefullyChooseViewController alloc]init];
-            [arry addObject:tabVc];
-        }
-        return arry;
-    return nil;
+    NSMutableArray *arry = [[NSMutableArray alloc]init];
+    for (int i =0; i<5; i++) {
+        CZCarefullyChooseViewController *tabVc = [[CZCarefullyChooseViewController alloc]init];
+        [arry addObject:tabVc];
+    }
+    return arry;
 }
 
 - (UIView *)tableViewForHeaderInSection:(NSInteger)section
@@ -204,6 +277,12 @@ typedef enum : NSUInteger {
             return 150;
         case 1:
             return [UIScreen mainScreen].bounds.size.width/2.0;
+        case 2:
+            return 187;
+        case 3:
+            return 187;
+        case 4:
+            return self.view.bounds.size.width-50;
         default:
             return 0;
     }
@@ -214,6 +293,9 @@ typedef enum : NSUInteger {
     switch (section) {
         case 0:
         case 1:
+        case 2:
+        case 3:
+        case 4:
             return 1;
         default:
             return 0;
@@ -259,6 +341,48 @@ typedef enum : NSUInteger {
             
         }
             
+        case 2:
+        {
+            static NSString *cellider = @"starCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellider];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellider];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [cell.contentView addSubview:self.startView];
+            return cell;
+            
+        }
+        case 3:
+        {
+            static NSString *cellider = @"activityCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellider];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellider];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [cell.contentView addSubview:self.activityView];
+            return cell;
+            
+        }
+        case 4:
+        {
+            static NSString *cellider = @"boardCell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellider];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellider];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [cell.contentView addSubview:self.boardContainerView];
+            return cell;
+            
+        }
         default:
             return nil;
     }
@@ -328,7 +452,17 @@ typedef enum : NSUInteger {
         NSLog(@"1111 === %@", selecModel.displayText);
     };
     
+    NSMutableArray *countrys = [[NSMutableArray alloc] init];
+    NSMutableArray *countryDatas = [CZCountryUtil sharedInstance].datas;
+    for (int i = 0; i < countryDatas.count; i++) {
+        CZSCountryModel *country = countryDatas[i];
+        BOOL select = i == 0;
+        ItemModel *model = [ItemModel modelWithText:country.country.area_name currentID:country.country.ID isSelect:select];
+        [countrys addObject:model];
+    }
+    
     MenuAction *countrySort = [MenuAction actionWithTitle:NSLocalizedString(@"国家", nil) style:MenuActionTypeList];
+    countrySort.ListDataSource = countrys;
     countrySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
         NSLog(@"1111 === %@", selecModel.displayText);
     };
@@ -366,6 +500,140 @@ typedef enum : NSUInteger {
 - (void)dropMenuViewWillDisAppear:(DropMenuBar *)view selectAction:(MenuAction *)action
 {
     
+}
+
+#pragma - Network
+
+-(void)requestForHomeData
+{
+    QSOrganizerHomeService *service = [QSCommonService service:QSServiceTypeOrganizerHome];
+    [service requestForApiPlaceholderFindPlaceholderMapBySpType:@(1) callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success) {
+            for (NSDictionary *dict in data) {
+                NSDictionary *nDict = [QSCommonService removeNullFromDictionary:dict];
+                NSNumber *zomeType = nDict[@"zoneType"];
+                NSArray *datas = [self.dataDicts objectForKey:zomeType];
+                NSMutableArray *updateDatas = [NSMutableArray new];
+                if (!datas) datas = @[];
+                [updateDatas addObjectsFromArray:datas];
+                [updateDatas addObject:nDict];
+                [self.dataDicts setObject:updateDatas forKey:zomeType];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self reloadDatas];
+        });
+    }];
+}
+
+-(NSMutableDictionary *)dataDicts
+{
+    if (!_dataDicts) {
+        _dataDicts = [[NSMutableDictionary alloc] init];
+    }
+    return _dataDicts;
+}
+
+-(void)reloadDatas
+{
+    NSMutableArray *items1 = self.dataDicts[@(1)];
+    NSMutableArray *pics = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in items1) {
+        CZHomeModel *model = [CZHomeModel modelWithDict:dict];
+        [pics addObject:PIC_URL(model.spImg)];
+    }
+    self.bannerView.picsURLs = pics;
+    
+    
+    NSMutableArray *items2 = self.dataDicts[@(2)];
+    CZHomeModel *model = [CZHomeModel modelWithDict:[items2 firstObject]];
+    [self.bannerBottomView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.spImg)] placeholderImage:nil];
+    
+    NSMutableArray *items4 = self.dataDicts[@(4)];
+    NSMutableArray *courses = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in items4) {
+        CZHomeModel *model = [CZHomeModel modelWithDict:dict];
+        CZCourseModel *course = [CZCourseModel new];
+        course.link = model.url;
+        course.cover = PIC_URL(model.spImg);
+        [courses addObject:course];
+    }
+    [self.courseView updateLayoutByCourses:courses];
+    
+    
+    NSMutableArray *items3 = self.dataDicts[@(3)];
+    NSMutableArray *services = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in items3) {
+        CZHomeModel *model = [CZHomeModel modelWithDict:dict];
+        [services addObject:model];
+    }
+    [self.serviceBannerView reloadByDatas:services];
+    
+    NSMutableArray *items5 = self.dataDicts[@(5)];
+    NSMutableArray *boards = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in items5) {
+        CZHomeModel *model = [CZHomeModel modelWithDict:dict];
+        [boards addObject:model];
+    }
+    [self.boardView updateLayoutByBoards:boards];
+    
+    [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
+}
+
+-(NSMutableArray *)schoolStars
+{
+    if (!_schoolStars) {
+        _schoolStars = [[NSMutableArray alloc] init];
+    }
+    return _schoolStars;
+}
+
+-(void)requestForSchoolStars
+{
+    QSOrganizerHomeService *service = [QSCommonService service:QSServiceTypeOrganizerHome];
+    [service requestForApiSportUserGetHomePageSportUser:[QSClient userId] callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success) {
+            for (NSDictionary *dict in data) {
+                NSDictionary *nDict = [QSCommonService removeNullFromDictionary:dict];
+                CZSchoolStarModel *model = [CZSchoolStarModel modelWithDict:nDict];
+                [self.schoolStars addObject:model];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+               self.startView.dataArr = self.schoolStars;
+               [self.startView reloadData];
+            });
+        }
+
+    }];
+}
+
+-(NSMutableArray *)hotActivities
+{
+    if (!_hotActivities) {
+        _hotActivities = [[NSMutableArray alloc] init];
+    }
+    return _hotActivities;
+}
+
+-(void)requestForHotActivities
+{
+    QSOrganizerHomeService *service = [QSCommonService service:QSServiceTypeOrganizerHome];
+    [service requestForapiProductActivitySelectHotProductActivityByUserId:[QSClient userId] pageNum:@(1) pageSize:@(5) callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success) {
+            for (NSDictionary *dict in data) {
+                NSDictionary *nDict = [QSCommonService removeNullFromDictionary:dict];
+                CZActivityModel *model = [CZActivityModel modelWithDict:nDict];
+                [self.hotActivities addObject:model];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+               self.activityView.dataArr = self.hotActivities;
+               [self.activityView reloadData];
+            });
+        }
+    }];
 }
 
 @end

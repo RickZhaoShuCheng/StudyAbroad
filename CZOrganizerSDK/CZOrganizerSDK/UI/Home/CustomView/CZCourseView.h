@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithCourses:(NSArray<CZCourseModel *> *)courses
                       container:(UIView *)container;
+
+-(void)updateLayoutByCourses:(NSArray<CZCourseModel *> *)courses;
+
 @end
 
 NS_ASSUME_NONNULL_END

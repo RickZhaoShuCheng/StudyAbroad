@@ -8,6 +8,7 @@
 
 #import "CZCourseView.h"
 #import "CZCourseModel.h"
+#import "UIImageView+WebCache.h"
 
 static CGFloat padding = 15;
 
@@ -39,6 +40,13 @@ static CGFloat padding = 15;
     return self;
 }
 
+-(void)updateLayoutByCourses:(NSArray<CZCourseModel *> *)courses
+{
+    self.courses = courses;
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self layoutBaseViews];
+}
+
 -(NSMutableArray<UIImageView *> *)covers
 {
     if (!_covers) {
@@ -51,9 +59,10 @@ static CGFloat padding = 15;
 {
     for (NSInteger index = 0; index < self.courses.count; index++) {
         UIImageView *cover = [[UIImageView alloc] init];
-        cover.backgroundColor = [UIColor yellowColor];
         cover.tag = index;
         [self.covers addObject:cover];
+        CZCourseModel *model = self.courses[index];
+        [cover sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.cover)] placeholderImage:nil];
     }
     
     

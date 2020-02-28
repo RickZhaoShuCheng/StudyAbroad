@@ -14,7 +14,14 @@
 
 #import "Masonry.h"
 #import "CZImageProvider.h"
+#import "NSObject+ORM.h"
 
 #define CZColorCreater(r, g, b, a) [UIColor colorWithRed:(r / 255.0) green:(g / 255.0) blue:(b / 255.0) alpha:a]
+
+#define aliyunPicURL @"https://develop-kingsuper.oss-cn-hangzhou.aliyuncs.com/"
+
+#define PIC_URL(x) ([(x) hasPrefix:@"http"] ? (x) : ([NSString stringWithFormat:@"%@%@",aliyunPicURL,x]))
+
+#define WEAKSELF                            typeof(self) __weak weakSelf=self;
 
 #endif /* CZOrganizerSDK_PrefixHeader_pch */

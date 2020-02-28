@@ -8,6 +8,7 @@
 
 #import "CZServiceView.h"
 #import "CZServiceCell.h"
+#import "CZHomeModel.h"
 
 @interface CZServiceView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -37,11 +38,12 @@
 }
 #pragma mark ----------UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 30;
+    return self.datas.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZServiceCell class]) forIndexPath:indexPath];
-
+    CZHomeModel *model = self.datas[indexPath.row];
+    [cell setModel:model];
     return cell;
 }
 

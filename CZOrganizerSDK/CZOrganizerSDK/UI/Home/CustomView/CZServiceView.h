@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZServiceView : UICollectionView
 
+@property (nonatomic , strong) NSMutableArray *datas;
+
 @end
 
 NS_ASSUME_NONNULL_END

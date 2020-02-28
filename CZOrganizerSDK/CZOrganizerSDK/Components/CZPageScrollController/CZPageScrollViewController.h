@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong, readonly) CZPageScrollContentView *scrollContentView;
 
+@property(nonatomic, weak , readonly) UITableView *scrollMainTableView;
+
 -(void)reloadData;
 
 #pragma mark - Override(子类化实现下面的方法)

@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class CZHomeModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZServiceCell : UICollectionViewCell
-
+@property (nonatomic , strong) CZHomeModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

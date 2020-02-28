@@ -35,8 +35,6 @@
         self.frame = superView.bounds;
         self.pageMenu.tracker.hidden = YES;
         self.pageMenu.delegate = self;
-        self.backgroundColor = [UIColor cyanColor];
-        superView.backgroundColor = [UIColor greenColor];
         [superView addSubview:self];
         
         self.pageMenuOt = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 25, superView.bounds.size.width, 25) trackerStyle:SPPageMenuTrackerStyleRoundedRect];
@@ -49,8 +47,6 @@
         self.pageMenuOt.delegate = self;
         [self addSubview:self.pageMenuOt];
         self.frame = superView.bounds;
-        self.backgroundColor = [UIColor cyanColor];
-        superView.backgroundColor = [UIColor greenColor];
         [superView addSubview:self];
         [self createDefaultFilterMenu];
     }
@@ -77,5 +73,9 @@
     self.menuScreeningView.hideTable = YES;
 }
 
+-(void)setRelateScrollView:(UIScrollView *)scrollView
+{
+    [self.pageMenu setBridgeScrollView:scrollView];
+}
 
 @end

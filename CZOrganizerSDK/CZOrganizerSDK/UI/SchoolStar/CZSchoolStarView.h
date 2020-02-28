@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZSchoolStarView : UICollectionView
 
+@property (nonatomic, strong) NSMutableArray *dataArr;
+
 @end
 
 NS_ASSUME_NONNULL_END

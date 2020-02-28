@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initLayoutByHeight:(CGFloat)height;
 
+-(void)reloadByDatas:(NSMutableArray *)datas;
+
 @end
 
 NS_ASSUME_NONNULL_END
