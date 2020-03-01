@@ -9,14 +9,24 @@
 #import <UIKit/UIKit.h>
 
 @class DropMenuBar;
+@class CZHomeFilterView;
+
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol CZHomeFilterViewDelegate <NSObject>
+
+-(void)filterView:(CZHomeFilterView *)filterView itemSelectedAtIndex:(NSInteger)index;
+
+@end
 
 @interface CZHomeFilterView : UIView
 
 - (instancetype)initWithSuperView:(UIView *)superView;
 
 @property (nonatomic, strong , readonly) DropMenuBar *menuScreeningView;
+
+@property (nonatomic, assign) id<CZHomeFilterViewDelegate> delegate;
 
 -(void)setRelateScrollView:(UIScrollView *)scrollView;
 

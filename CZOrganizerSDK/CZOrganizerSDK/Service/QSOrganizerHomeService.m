@@ -10,12 +10,16 @@
 #import "QSClient.h"
 #import "QSClientConfigeration.h"
 #import "QSNetworkManagerUtil.h"
+#import "QSCommonService.h"
 
 static const NSString *ApiPlaceholderFindPlaceholderMapBySpType = @"apiPlaceholder/findPlaceholderMapBySpType";
 static const NSString *ApiSportUserGetHomePageSportUser = @"apiSportUser/getHomePageSportUser";
 static const NSString *ApiProductGetShoppingCartRecommendProduct = @"apiProduct/getShoppingCartRecommendProduct";
 static const NSString *ApiProductGetDefaultProductList = @"apiProduct/getDefaultProductList";
-
+static const NSString *ApiDiaryFindAllCaseList = @"apiDiary/findAllCaseList";
+static const NSString *ApiSportUserGetSportUserListByFilter = @"apiSportUser/getSportUserListByFilter";
+static const NSString *ApiCounselorGetCounselorListByFilter = @"apiCounselor/getCounselorListByFilter";
+static const NSString *ApiOrganGetOrganListByFilter = @"apiOrgan/getOrganListByFilter";
 
 @implementation QSOrganizerHomeService
 
@@ -52,6 +56,10 @@ static const NSString *ApiProductGetDefaultProductList = @"apiProduct/getDefault
         
         if ([data isKindOfClass:[NSNull class]]) {
             data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
         }
         
         if (callBack) {
@@ -94,6 +102,10 @@ static const NSString *ApiProductGetDefaultProductList = @"apiProduct/getDefault
         
         if ([data isKindOfClass:[NSNull class]]) {
             data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
         }
         
         if (callBack) {
@@ -141,6 +153,10 @@ static const NSString *ApiProductGetDefaultProductList = @"apiProduct/getDefault
             data = nil;
         }
         
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
         if (callBack) {
             callBack(success , code , data , errorMessage);
         }
@@ -184,10 +200,199 @@ static const NSString *ApiProductGetDefaultProductList = @"apiProduct/getDefault
             data = nil;
         }
         
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
         if (callBack) {
             callBack(success , code , data , errorMessage);
         }
     }];
 }
+
+-(void)requestForApiDiaryFindAllCaseListByParam:(CZHomeParam *)param
+                                       callBack:(QSOrganizerHomeBack)callBack
+{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiDiaryFindAllCaseList];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *parameters = [param dictonary];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    NSString *currentUserId = [QSClient userId];
+    [headers setObject:currentUserId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+-(void)requestForApiSportUserGetSportUserListByFilterByParam:(CZHomeParam *)param
+                                                    callBack:(QSOrganizerHomeBack)callBack
+{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiSportUserGetSportUserListByFilter];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *parameters = [param dictonary];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    NSString *currentUserId = [QSClient userId];
+    [headers setObject:currentUserId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+-(void)requestForApiCounselorGetCounselorListByFilterByParam:(CZHomeParam *)param
+                                                    callBack:(QSOrganizerHomeBack)callBack
+{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiCounselorGetCounselorListByFilter];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *parameters = [param dictonary];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    NSString *currentUserId = [QSClient userId];
+    [headers setObject:currentUserId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+-(void)requestForApiOrganGetOrganListByFilterByParam:(CZHomeParam *)param
+                                            callBack:(QSOrganizerHomeBack)callBack
+{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiOrganGetOrganListByFilter];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *parameters = [param dictonary];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    NSString *currentUserId = [QSClient userId];
+    [headers setObject:currentUserId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
 
 @end

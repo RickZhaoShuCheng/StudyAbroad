@@ -21,7 +21,7 @@
 /**
  *  MJ normal footer
  */
-+ (MJRefreshBackNormalFooter *)lb_footerWithAction:(dispatch_block_t)action;
-+ (MJRefreshBackNormalFooter *)lb_footerWithTarget:(id)target Action:(SEL)action;
++ (MJRefreshAutoStateFooter *)lb_footerWithAction:(dispatch_block_t)action;
++ (MJRefreshAutoStateFooter *)lb_footerWithTarget:(id)target Action:(SEL)action;
 
 @end

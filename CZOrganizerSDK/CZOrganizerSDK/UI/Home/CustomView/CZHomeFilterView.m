@@ -62,6 +62,10 @@
     if (pageMenu.selectedItemIndex != self.pageMenu.selectedItemIndex) {
         [self.pageMenu setSelectedItemIndex:index];
     }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(filterView:itemSelectedAtIndex:)]) {
+        [self.delegate filterView:self itemSelectedAtIndex:index];
+    }
 }
 
 -(void)createDefaultFilterMenu

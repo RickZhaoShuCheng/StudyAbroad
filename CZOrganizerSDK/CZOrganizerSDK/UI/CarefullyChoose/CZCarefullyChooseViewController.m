@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-//    [self requestForCarefullyChoose];
+    [self requestForCarefullyChoose];
 }
 
 -(void)initUI
@@ -39,7 +39,7 @@
     CGFloat coverWidth = (screenWidth - 15*3)/2.0;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*233);
+    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*220);
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
@@ -49,16 +49,16 @@
     self.contentScrollView = self.dataCollectionView;
     self.dataCollectionView.alwaysBounceVertical = YES;
     
-//    WEAKSELF
-//    self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-//        weakSelf.pageIndex = 0;
-//        [weakSelf requestForCarefullyChoose];
-//    }];
-//    
-//    self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-//        weakSelf.pageIndex += 1;
-//        [weakSelf requestForCarefullyChoose];
-//    }];
+    WEAKSELF
+    self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        weakSelf.pageIndex = 0;
+        [weakSelf requestForCarefullyChoose];
+    }];
+    
+    self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        weakSelf.pageIndex += 1;
+        [weakSelf requestForCarefullyChoose];
+    }];
 }
 
 -(void)viewDidLayoutSubviews
@@ -74,7 +74,7 @@
     CZHomeParam *param = [[CZHomeParam alloc] init];
     param.userId = [QSClient userId];
     param.serviceSource = @(1);
-    param.pageNum = @(0);
+    param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
     [service requestForApiProductGetDefaultProductListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         

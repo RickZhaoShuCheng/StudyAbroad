@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CZProductModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCarefullyChooseCell : UICollectionViewCell
+
+@property (nonatomic , strong) CZProductModel *model;
 
 @end
 

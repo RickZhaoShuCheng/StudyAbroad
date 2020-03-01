@@ -76,9 +76,10 @@
     
     BOOL removeAll = YES;
     if (self.menus.count > 0) {
-        DropMenuView *view = self.menus[0];
-        if (view.superview) {
-            removeAll = NO;
+        for (DropMenuView *view in self.menus) {
+            if (view.superview) {
+                removeAll = NO;
+            }
         }
     }
     

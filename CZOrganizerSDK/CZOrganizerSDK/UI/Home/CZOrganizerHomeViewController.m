@@ -9,6 +9,10 @@
 #import "CZOrganizerHomeViewController.h"
 #import "CZHomeBannerView.h"
 #import "CZCarefullyChooseViewController.h"
+#import "CZDiaryViewController.h"
+#import "CZSchoolStarViewController.h"
+#import "CZAdvisorViewController.h"
+#import "CZOrganizerListViewController.h"
 #import "CZServiceBannerView.h"
 #import "CZCourseView.h"
 #import "CZCourseModel.h"
@@ -40,7 +44,7 @@ typedef enum : NSUInteger {
     CZTableSectionFilter,
 } CZTableSectionType;
 
-@interface CZOrganizerHomeViewController ()<DropMenuBarDelegate>
+@interface CZOrganizerHomeViewController ()<DropMenuBarDelegate,CZHomeFilterViewDelegate>
 @property (nonatomic , strong) CZHomeBannerView *bannerView;//轮播图
 @property (nonatomic , strong) UIImageView *bannerBottomView;//轮播图bottom
 @property (nonatomic , strong) CZServiceBannerView *serviceBannerView;//服务选择图
@@ -215,10 +219,16 @@ typedef enum : NSUInteger {
 - (NSArray<UIViewController<CZScrollContentControllerDeleagte> *> *)contentScrollers
 {
     NSMutableArray *arry = [[NSMutableArray alloc]init];
-    for (int i =0; i<5; i++) {
-        CZCarefullyChooseViewController *tabVc = [[CZCarefullyChooseViewController alloc]init];
-        [arry addObject:tabVc];
-    }
+    CZCarefullyChooseViewController *controller1 = [[CZCarefullyChooseViewController alloc]init];
+    [arry addObject:controller1];
+    CZDiaryViewController *controller2 = [[CZDiaryViewController alloc]init];
+    [arry addObject:controller2];
+    CZSchoolStarViewController *controller3 = [[CZSchoolStarViewController alloc]init];
+    [arry addObject:controller3];
+    CZAdvisorViewController *controller4 = [[CZAdvisorViewController alloc]init];
+    [arry addObject:controller4];
+    CZOrganizerListViewController *controller5 = [[CZOrganizerListViewController alloc]init];
+    [arry addObject:controller5];
     return arry;
 }
 
@@ -228,6 +238,7 @@ typedef enum : NSUInteger {
         if (!self.homeFilterView) {
             self.homeFilterView = [[CZHomeFilterView alloc] initWithSuperView:self.homeFilterContainerView];
             self.homeFilterView.menuScreeningView.actions = self.actions;
+            self.homeFilterView.delegate = self;
         }
         return self.homeFilterContainerView;
     }
@@ -634,6 +645,13 @@ typedef enum : NSUInteger {
             });
         }
     }];
+}
+
+#pragma - mark CZHomeFilterViewDelegate
+
+-(void)filterView:(CZHomeFilterView *)filterView itemSelectedAtIndex:(NSInteger)index
+{
+    [self.scrollContentView.collectionView setContentOffset:CGPointMake(index*self.view.bounds.size.width, 0) animated:YES];
 }
 
 @end

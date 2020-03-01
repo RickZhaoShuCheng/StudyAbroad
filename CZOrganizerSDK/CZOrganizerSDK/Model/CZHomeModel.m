@@ -10,4 +10,9 @@
 
 @implementation CZHomeModel
 
++ (NSDictionary *)arrayContainModelClass
+{
+    return @{@"productVoList":@"CZProductVoListModel"};
+}
+
 @end

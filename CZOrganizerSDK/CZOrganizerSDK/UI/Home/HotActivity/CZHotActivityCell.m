@@ -66,7 +66,7 @@
 -(void)setModel:(CZActivityModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.banners)] placeholderImage:nil];
     self.nameLabel.text = model.title;
     self.addressPriceLabel.text = model.address;
 }

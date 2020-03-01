@@ -7,6 +7,7 @@
 //
 
 #import "CZCarefullyChooseCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface CZCarefullyChooseCell ()
 @property (nonatomic , strong) UIImageView *coverImageView;
@@ -31,10 +32,8 @@
     self.coverImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.coverImageView];
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(160);
-        make.height.mas_equalTo(94);
-        make.top.mas_equalTo(0);
-        make.centerX.mas_equalTo(0);
+        make.left.right.top.mas_equalTo(0);
+        make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(132/165.0);
     }];
     self.coverImageView.backgroundColor = [UIColor redColor];
 
@@ -42,13 +41,12 @@
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.textColor = [UIColor blackColor];
     self.nameLabel.font = [UIFont boldSystemFontOfSize:14];
-    self.nameLabel.numberOfLines = 1;
+    self.nameLabel.numberOfLines = 2;
     [self.contentView addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.coverImageView.mas_bottom).offset(12);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.left.mas_equalTo(9);
-        make.left.mas_equalTo(-9);
+        make.left.right.mas_equalTo(0);
     }];
     
     self.priceLabel = [[UILabel alloc] init];
@@ -78,9 +76,19 @@
     [self.distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.width.mas_greaterThanOrEqualTo(0);
         make.right.mas_equalTo(self.nameLabel);
-        make.bottom.mas_equalTo(-12.5);
+        make.bottom.mas_equalTo(self.addressLabel);
     }];
     
+}
+
+-(void)setModel:(CZProductModel *)model
+{
+    _model = model;
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    self.nameLabel.text = model.title;
+    self.priceLabel.text = model.price.stringValue;
+    self.addressLabel.text = model.organName;
+    self.distanceLabel.text = model.distance.stringValue;
 }
 
 @end

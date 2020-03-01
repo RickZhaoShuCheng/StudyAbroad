@@ -32,6 +32,7 @@
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZCarefullyChooseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZCarefullyChooseCell class]) forIndexPath:indexPath];
+    [cell setModel:self.dataArr[indexPath.row]];
     return cell;
 }
 
