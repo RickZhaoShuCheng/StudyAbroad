@@ -122,7 +122,7 @@
     NSDictionary *attribtDic1 = @{NSForegroundColorAttributeName:CZColorCreater(51, 172, 253, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]
     };
-    NSMutableAttributedString *attribtStr1 = [[NSMutableAttributedString alloc]initWithString:model.reserveCount.stringValue attributes:attribtDic1];
+    NSMutableAttributedString *attribtStr1 = [[NSMutableAttributedString alloc]initWithString:[@(model.reserveCount.integerValue) stringValue] attributes:attribtDic1];
     
     NSDictionary *attribtDic2 = @{NSForegroundColorAttributeName:CZColorCreater(170, 170, 187, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]

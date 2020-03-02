@@ -85,7 +85,7 @@
     [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
     self.infoView.infoLabel.text = model.realName;
     NSString *formatterString = NSLocalizedString(@"服务%@人", nil);
-    self.infoView.subTitleLabel.text = [NSString stringWithFormat:formatterString,model.servicePersonCount.stringValue];
+    self.infoView.subTitleLabel.text = [NSString stringWithFormat:formatterString,[@(model.servicePersonCount.integerValue) stringValue]];
     self.fromLabel.text = [NSString stringWithFormat:@"%@/%@",model.schoolName,NSLocalizedString(@"留学中", nil)];
     self.countyLabel.text = model.countryName;
 }

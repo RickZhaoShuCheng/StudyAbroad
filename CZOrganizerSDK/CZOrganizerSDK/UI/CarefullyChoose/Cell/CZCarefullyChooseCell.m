@@ -86,9 +86,9 @@
     _model = model;
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
     self.nameLabel.text = model.title;
-    self.priceLabel.text = model.price.stringValue;
+    self.priceLabel.text = [NSString stringWithFormat:@"%.2f" , model.price.floatValue];
     self.addressLabel.text = model.organName;
-    self.distanceLabel.text = model.distance.stringValue;
+    self.distanceLabel.text =[NSString stringWithFormat:@"%.2f" , model.distance.floatValue];
 }
 
 @end

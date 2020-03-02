@@ -45,8 +45,8 @@
     _omodel = omodel;
     [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(omodel.logo)] placeholderImage:nil];
     self.infoView.infoLabel.text = omodel.name;
-    NSString *formatterString = NSLocalizedString(@"专业度：%@ 服务：%@ 价格：%@ 响应：%@", nil);
-    self.infoView.organizeNameLabel.text = [NSString stringWithFormat:formatterString ,omodel.valProfessional.stringValue , omodel.valService.stringValue,omodel.valPrice.stringValue,omodel.valResponse.stringValue];
+    NSString *formatterString = NSLocalizedString(@"专业度：%.2f 服务：%.2f 价格：%.2f 响应：%.2f", nil);
+    self.infoView.organizeNameLabel.text = [NSString stringWithFormat:formatterString ,omodel.valProfessional.floatValue, omodel.valService.floatValue,omodel.valPrice.floatValue,omodel.valResponse.floatValue];
     formatterString = NSLocalizedString(@"%@条评价", nil);
     self.infoView.subTitleLabel.text = [NSString stringWithFormat:formatterString,omodel.comments];
 }

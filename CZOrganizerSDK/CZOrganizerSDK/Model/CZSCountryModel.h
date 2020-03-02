@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "CZCountryModel.h"
-#import "ItemModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CZSCountryModel : ItemModel
+@interface CZSCountryModel : NSObject
 
 @property (nonatomic , strong) CZCountryModel *country;
 
