@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCountryModel : NSObject
-
+@property (nonatomic , strong) NSString *id;
 @property (nonatomic , strong) NSString *ID;
 @property (nonatomic , strong) NSString *area_name;
 @property (nonatomic , strong) NSString *pid;

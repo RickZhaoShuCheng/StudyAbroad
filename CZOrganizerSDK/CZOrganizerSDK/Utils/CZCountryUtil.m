@@ -69,9 +69,10 @@ static dispatch_once_t onceToken;
         
         for (CZSCountryModel *p in provinces) {
             NSArray *cities = [d objectForKey:p.country.ID];
-            model.relatedArray = cities;
+            p.relatedArray = cities;
         }
     }
+    NSLog(@"");
 }
 
 -(NSString *)getCountryCompletePath

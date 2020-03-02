@@ -13,6 +13,7 @@
 #import "CZSchoolStarViewController.h"
 #import "CZAdvisorViewController.h"
 #import "CZOrganizerListViewController.h"
+#import "CZSelectCityViewController.h"
 #import "CZServiceBannerView.h"
 #import "CZCourseView.h"
 #import "CZCourseModel.h"
@@ -96,6 +97,7 @@ typedef enum : NSUInteger {
     [self.locationButton setImage:[CZImageProvider imageNamed:@"zhu_ye_di_zhi_ding_wei"] forState:UIControlStateNormal];
     self.locationButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [self.locationButton setTitle:NSLocalizedString(@"南京", nil) forState:UIControlStateNormal];
+    [self.locationButton addTarget:self action:@selector(actionForSelectCity) forControlEvents:UIControlEventTouchUpInside];
     [self.locationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
     [self.locationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.locationButton.frame = CGRectMake(0, 0, 60, 40);
@@ -119,6 +121,12 @@ typedef enum : NSUInteger {
         _bannerView.customView = self.bannerBottomView;
     }
     return _bannerView;
+}
+
+-(void)actionForSelectCity
+{
+    CZSelectCityViewController *controller = [[CZSelectCityViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(UIImageView *)bannerBottomView
