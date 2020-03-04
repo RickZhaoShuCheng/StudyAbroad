@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(NSString *)userId;
 
+//点击购物车
+-(void)showCartViewInNavigationController:(UINavigationController *)rootNavi;
+
 @end
 
 @interface QSClient : NSObject
@@ -36,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)logInfo:(NSString *)format, ...;
 +(instancetype)sharedInstance;
 +(NSString *)userId;
++(void)showCartInNavi:(UINavigationController *)controller;
 @end
 
 NS_ASSUME_NONNULL_END

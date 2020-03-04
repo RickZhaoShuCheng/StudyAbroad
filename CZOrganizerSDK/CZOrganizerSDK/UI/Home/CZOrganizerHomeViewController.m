@@ -114,6 +114,7 @@ typedef enum : NSUInteger {
     self.navigationItem.leftBarButtonItem = leftBarItem;
     
     self.shopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.shopButton addTarget:self action:@selector(actionForShowCart) forControlEvents:UIControlEventTouchUpInside];
     [self.shopButton setImage:[CZImageProvider imageNamed:@"zhu_ye_dao_hang_gou_wu_che_an_niu"] forState:UIControlStateNormal];
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.shopButton];
     self.navigationItem.rightBarButtonItem = rightBarItem;
@@ -138,6 +139,11 @@ typedef enum : NSUInteger {
     controller.hidesBottomBarWhenPushed = YES;
     controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+-(void)actionForShowCart
+{
+    [QSClient showCartInNavi:self.navigationController];
 }
 
 -(UIImageView *)bannerBottomView
