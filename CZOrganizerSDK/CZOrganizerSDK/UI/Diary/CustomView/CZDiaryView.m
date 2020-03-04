@@ -29,7 +29,7 @@
 #pragma mark ----------UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 //    return self.dataArr.count;
-    return 20;
+    return 0;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZDiaryCell class]) forIndexPath:indexPath];

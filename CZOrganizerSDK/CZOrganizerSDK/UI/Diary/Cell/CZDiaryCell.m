@@ -45,7 +45,6 @@
         make.left.right.top.mas_equalTo(0);
         make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(237/165.0);
     }];
-    self.coverImageView.backgroundColor = [UIColor redColor];
 
     
     self.tagLabel = [[UILabel alloc] init];
@@ -78,7 +77,6 @@
         make.left.bottom.mas_equalTo(0);
         make.size.mas_equalTo(16);
     }];
-    self.iconImageView.backgroundColor = [UIColor redColor];
     
     
     self.nickNameLabel = [[UILabel alloc] init];

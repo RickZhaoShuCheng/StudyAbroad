@@ -14,7 +14,7 @@
 
 static const NSString *ApiPlaceholderFindPlaceholderMapBySpType = @"apiPlaceholder/findPlaceholderMapBySpType";
 static const NSString *ApiSportUserGetHomePageSportUser = @"apiSportUser/getHomePageSportUser";
-static const NSString *ApiProductGetShoppingCartRecommendProduct = @"apiProduct/getShoppingCartRecommendProduct";
+static const NSString *ApiProductActivitySelectHotProductActivity = @"apiProductActivity/selectHotProductActivity";
 static const NSString *ApiProductGetDefaultProductList = @"apiProduct/getDefaultProductList";
 static const NSString *ApiDiaryFindAllCaseList = @"apiDiary/findAllCaseList";
 static const NSString *ApiSportUserGetSportUserListByFilter = @"apiSportUser/getSportUserListByFilter";
@@ -121,7 +121,7 @@ static const NSString *ApiOrganGetOrganListByFilter = @"apiOrgan/getOrganListByF
                                                            callBack:(QSOrganizerHomeBack)callBack
 {
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductGetShoppingCartRecommendProduct];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductActivitySelectHotProductActivity];
     NSURL *url = [NSURL URLWithString:urlString];
     NSDictionary *parameters = @{@"userId":userId,@"pageNum":pageNum,@"pageSize":pageSize};
     

@@ -310,7 +310,7 @@ typedef enum : NSUInteger {
         case 2:
             return 187;
         case 3:
-            return 187;
+            return 140;
         case 4:
             return self.view.bounds.size.width-50;
         default:
