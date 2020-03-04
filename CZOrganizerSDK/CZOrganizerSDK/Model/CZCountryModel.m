@@ -23,4 +23,21 @@
     }
 }
 
+#pragma mark - NSCoping
+
+- (id)copyWithZone:(NSZone __unused *)zone {
+    CZCountryModel *model = [[CZCountryModel alloc] init];
+    model.ID = self.ID;
+    model.area_name = self.area_name;
+    model.pid = self.pid;
+    model.level = self.level;
+    model.code = self.code;
+    model.language_code = self.language_code;
+    model.lat = self.lat;
+    model.lng = self.lng;
+    model.hot = self.hot;
+
+    return model;
+}
+
 @end

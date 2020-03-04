@@ -8,11 +8,14 @@
 
 #import "CZSearchBar.h"
 
-@interface CZSearchBar ()
+@interface CZSearchBar ()<UITextFieldDelegate>
 
 @property (nonatomic , strong) UITextField *searchBar;
 
 @property (nonatomic , strong) UIImageView *iconView;
+
+@property (nonatomic , strong) void(^textChangeBlock)(NSString *text);
+
 
 @end
 
@@ -43,7 +46,10 @@
     }];
     
     self.searchBar = [[UITextField alloc] init];
+    self.searchBar.delegate = self;
+    self.searchBar.returnKeyType = UIReturnKeyDone;
     [self addSubview:self.searchBar];
+    [self.searchBar addTarget:self action:@selector(textDidChanged:) forControlEvents:UIControlEventEditingChanged];
     self.searchBar.placeholder = NSLocalizedString(@"搜索", nil);
     [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(self.iconView);
@@ -56,6 +62,39 @@
 -(CGSize)intrinsicContentSize
 {
     return CGSizeMake([UIScreen mainScreen].bounds.size.width, 33);
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [self textDidChanged:textField];
+    return YES;
+}
+
+-(void)textDidChanged:(UITextField *)textField
+{
+    UITextRange *selectedRange = [textField markedTextRange];
+    //获取高亮部分
+    UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+    // 没有高亮选择的字，说明不是拼音输入
+    if (!position) {
+        if (self.textChangeBlock) {
+            self.textChangeBlock(textField.text);
+        }
+    }
+    else {
+        // 有高亮选择的字符串，不做处理
+    }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)setEditTextChangedListener:(void(^)(NSString *text))block
+{
+    self.textChangeBlock = block;
 }
 
 @end

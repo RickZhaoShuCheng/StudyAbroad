@@ -91,6 +91,11 @@
  * 删除Dictionary中的NSNull
  */
 + (NSMutableDictionary *)removeNullFromDictionary:(NSDictionary *)dic{
+    
+    if (!dic || ![dic isKindOfClass:[NSDictionary class]]) {
+        return [@{} mutableCopy];
+    }
+    
     NSMutableDictionary *mdic = [NSMutableDictionary dictionary];
     for (NSString *strKey in dic.allKeys) {
         NSValue *value = dic[strKey];
@@ -116,6 +121,10 @@
  * 删除NSArray中的NSNull
  */
 + (NSMutableArray *)removeNullFromArray:(NSArray *)arr{
+    
+    if (!arr || ![arr isKindOfClass:[NSArray class]]) {
+        return @[];
+    }
     
     NSMutableArray *marr = [NSMutableArray array];
     for (int i = 0; i < arr.count; i++) {

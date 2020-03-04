@@ -8,7 +8,8 @@
 
 #import "QSClientConfigeration.h"
 
-static NSString *onlineURL = @"http://222.186.36.88:8888/";
+//static NSString *onlineURL = @"http://222.186.36.88:8888/";
+static NSString *onlineURL = @"http://product-sit.kingsuper.net/";
 
 @implementation QSClientConfigeration
 

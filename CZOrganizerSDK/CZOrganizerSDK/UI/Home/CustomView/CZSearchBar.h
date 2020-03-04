@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZSearchBar : UIView
 
+-(void)setEditTextChangedListener:(void(^)(NSString *text))block;
+
 @end
 
 NS_ASSUME_NONNULL_END

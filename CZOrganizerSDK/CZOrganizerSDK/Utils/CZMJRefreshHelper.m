@@ -9,50 +9,50 @@
 #import "CZMJRefreshHelper.h"
 @implementation CZMJRefreshHelper
 
-+ (MJRefreshGifHeader *)lb_headerWithAction:(dispatch_block_t)action {
++ (MJRefreshStateHeader *)lb_headerWithAction:(dispatch_block_t)action {
     //mjrefresh header
-    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingBlock:action];
-    header.lastUpdatedTimeLabel.hidden = YES;
-    header.stateLabel.hidden = YES;
-    // 设置普通状态的动画图片
-    NSMutableArray *idleImages = [NSMutableArray array];
-    for (int i = 0; i<=30; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_%d", i]];
-        if (image) {
-            [idleImages addObject:image];
-        }
-    }
-    
-    [header setImages:idleImages forState:MJRefreshStateIdle];
-    
-    [header setImages:idleImages forState:MJRefreshStatePulling];
-    
-    // 设置正在刷新状态的动画图片
-    [header setImages:idleImages duration:1.5 forState:MJRefreshStateRefreshing];
+    MJRefreshStateHeader *header = [MJRefreshStateHeader headerWithRefreshingBlock:action];
+//    header.lastUpdatedTimeLabel.hidden = YES;
+//    header.stateLabel.hidden = YES;
+//    // 设置普通状态的动画图片
+//    NSMutableArray *idleImages = [NSMutableArray array];
+//    for (int i = 0; i<=30; i++) {
+//        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_%d", i]];
+//        if (image) {
+//            [idleImages addObject:image];
+//        }
+//    }
+//
+//    [header setImages:idleImages forState:MJRefreshStateIdle];
+//
+//    [header setImages:idleImages forState:MJRefreshStatePulling];
+//
+//    // 设置正在刷新状态的动画图片
+//    [header setImages:idleImages duration:1.5 forState:MJRefreshStateRefreshing];
     return header;
 }
 
 
-+ (MJRefreshGifHeader *)lb_headerWithTarget:(id)target Action:(SEL)action {
++ (MJRefreshStateHeader *)lb_headerWithTarget:(id)target Action:(SEL)action {
     //mjrefresh header
-    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:target refreshingAction:action];
-    header.lastUpdatedTimeLabel.hidden = YES;
-    header.stateLabel.hidden = YES;
-    // 设置普通状态的动画图片
-    NSMutableArray *idleImages = [NSMutableArray array];
-    for (int i = 0; i<=30; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_%d", i]];
-        if (image) {
-            [idleImages addObject:image];
-        }
-    }
-    
-    [header setImages:idleImages forState:MJRefreshStateIdle];
-    
-    [header setImages:idleImages forState:MJRefreshStatePulling];
-    
-    // 设置正在刷新状态的动画图片
-    [header setImages:idleImages duration:1.5 forState:MJRefreshStateRefreshing];
+    MJRefreshStateHeader *header = [MJRefreshStateHeader headerWithRefreshingTarget:target refreshingAction:action];
+//    header.lastUpdatedTimeLabel.hidden = YES;
+//    header.stateLabel.hidden = YES;
+//    // 设置普通状态的动画图片
+//    NSMutableArray *idleImages = [NSMutableArray array];
+//    for (int i = 0; i<=30; i++) {
+//        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_%d", i]];
+//        if (image) {
+//            [idleImages addObject:image];
+//        }
+//    }
+//
+//    [header setImages:idleImages forState:MJRefreshStateIdle];
+//
+//    [header setImages:idleImages forState:MJRefreshStatePulling];
+//
+//    // 设置正在刷新状态的动画图片
+//    [header setImages:idleImages duration:1.5 forState:MJRefreshStateRefreshing];
     return header;
 }
 

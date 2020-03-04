@@ -10,9 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class CZServiceView;
+
+@protocol CZServiceViewDelegate <NSObject>
+
+-(void)serviceViewDidScroll:(NSInteger)pageIndex;
+
+@end
+
 @interface CZServiceView : UICollectionView
 
 @property (nonatomic , strong) NSMutableArray *datas;
+
+@property (nonatomic , weak) id<CZServiceViewDelegate> czDelegate;
 
 @end
 

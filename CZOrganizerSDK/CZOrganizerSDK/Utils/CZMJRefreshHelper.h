@@ -15,8 +15,8 @@
 /**
  *  MJ gif header
  */
-+ (MJRefreshGifHeader *)lb_headerWithAction:(dispatch_block_t)action;
-+ (MJRefreshGifHeader *)lb_headerWithTarget:(id)target Action:(SEL)action;
++ (MJRefreshStateHeader *)lb_headerWithAction:(dispatch_block_t)action;
++ (MJRefreshStateHeader *)lb_headerWithTarget:(id)target Action:(SEL)action;
 
 /**
  *  MJ normal footer

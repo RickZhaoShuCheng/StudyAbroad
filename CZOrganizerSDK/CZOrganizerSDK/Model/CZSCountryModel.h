@@ -11,11 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CZSCountryModel : NSObject
+@interface CZSCountryModel : NSObject<NSCopying>
 
-@property (nonatomic , strong) CZCountryModel *country;
+@property (nonatomic , copy) CZCountryModel *country;
 
 @property (nonatomic , strong) NSArray *relatedArray;
+
+@property (nonatomic , copy) CZSCountryModel *upLevelCountry;
 
 @end
 

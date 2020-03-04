@@ -10,4 +10,14 @@
 
 @implementation CZSCountryModel
 
+#pragma mark - NSCoping
+
+- (id)copyWithZone:(NSZone __unused *)zone {
+    CZSCountryModel *model = [[CZSCountryModel alloc] init];
+    model.country = self.country;
+    model.relatedArray = self.relatedArray;
+    model.upLevelCountry = self.upLevelCountry;
+    return model;
+}
+
 @end

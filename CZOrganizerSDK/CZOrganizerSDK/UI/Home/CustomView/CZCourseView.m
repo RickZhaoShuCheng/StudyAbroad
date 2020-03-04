@@ -44,6 +44,7 @@ static CGFloat padding = 15;
 {
     self.courses = courses;
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.covers removeAllObjects];
     [self layoutBaseViews];
 }
 

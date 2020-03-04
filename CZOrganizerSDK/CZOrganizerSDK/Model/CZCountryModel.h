@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CZCountryModel : NSObject
+@interface CZCountryModel : NSObject<NSCopying>
 @property (nonatomic , strong) NSString *id;
 @property (nonatomic , strong) NSString *ID;
 @property (nonatomic , strong) NSString *area_name;

@@ -30,6 +30,7 @@
 
 - (void)initWithUI{
     self.iconImageView = [[UIImageView alloc] init];
+    self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:self.iconImageView];
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(25);
@@ -51,7 +52,15 @@
 -(void)setModel:(CZHomeModel *)model
 {
     _model = model;
-    self.mainTitleLabel.text = model.content1;
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.spImg)] placeholderImage:nil];
+    if (model.sort) {
+        self.mainTitleLabel.text = model.content1;
+        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.spImg)] placeholderImage:nil];
+    }
+    else
+    {
+        self.mainTitleLabel.text = @"";
+        self.iconImageView.image = nil;
+    }
+
 }
 @end

@@ -32,6 +32,8 @@
 #import "CZBoardView.h"
 #import "QSClient.h"
 #import "CZCountryUtil.h"
+#import "CZMJRefreshHelper.h"
+#import "SDCycleScrollView.h"
 
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 95;
@@ -45,7 +47,7 @@ typedef enum : NSUInteger {
     CZTableSectionFilter,
 } CZTableSectionType;
 
-@interface CZOrganizerHomeViewController ()<DropMenuBarDelegate,CZHomeFilterViewDelegate>
+@interface CZOrganizerHomeViewController ()<DropMenuBarDelegate,CZHomeFilterViewDelegate,CZSelectCityViewControllerDelegate>
 @property (nonatomic , strong) CZHomeBannerView *bannerView;//轮播图
 @property (nonatomic , strong) UIImageView *bannerBottomView;//轮播图bottom
 @property (nonatomic , strong) CZServiceBannerView *serviceBannerView;//服务选择图
@@ -75,6 +77,12 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+    
+    WEAKSELF
+    self.scrollMainTableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        [weakSelf requestForHomeData];
+    }];
+    
     [self requestForHomeData];
     [self requestForSchoolStars];
     [self requestForHotActivities];
@@ -84,6 +92,7 @@ typedef enum : NSUInteger {
 {
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.canScroll = YES;
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self createDefaultFilterMenu];
@@ -126,6 +135,8 @@ typedef enum : NSUInteger {
 -(void)actionForSelectCity
 {
     CZSelectCityViewController *controller = [[CZSelectCityViewController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -293,7 +304,7 @@ typedef enum : NSUInteger {
 {
     switch (indexPath.section) {
         case 0:
-            return 150;
+            return defaultHeight+pageControlHeight;
         case 1:
             return [UIScreen mainScreen].bounds.size.width/2.0;
         case 2:
@@ -525,6 +536,7 @@ typedef enum : NSUInteger {
 
 -(void)requestForHomeData
 {
+    [self.dataDicts removeAllObjects];
     QSOrganizerHomeService *service = [QSCommonService service:QSServiceTypeOrganizerHome];
     [service requestForApiPlaceholderFindPlaceholderMapBySpType:@(1) callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success) {
@@ -587,6 +599,17 @@ typedef enum : NSUInteger {
         CZHomeModel *model = [CZHomeModel modelWithDict:dict];
         [services addObject:model];
     }
+    
+    if (services.count > 8) {
+        if (services.count%8 > 0) {
+            NSInteger count = 8 - services.count%8;
+            for (NSInteger i = 0; i < count; i++) {
+                CZHomeModel *model = [[CZHomeModel alloc] init];
+                [services addObject:model];
+            }
+        }
+    }
+    
     [self.serviceBannerView reloadByDatas:services];
     
     NSMutableArray *items5 = self.dataDicts[@(5)];
@@ -598,6 +621,9 @@ typedef enum : NSUInteger {
     [self.boardView updateLayoutByBoards:boards];
     
     [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
+    
+    [self.scrollMainTableView.mj_header endRefreshing];
+    [self.scrollMainTableView reloadData];
 }
 
 -(NSMutableArray *)schoolStars
@@ -660,6 +686,16 @@ typedef enum : NSUInteger {
 -(void)filterView:(CZHomeFilterView *)filterView itemSelectedAtIndex:(NSInteger)index
 {
     [self.scrollContentView.collectionView setContentOffset:CGPointMake(index*self.view.bounds.size.width, 0) animated:YES];
+}
+
+
+#pragma - mark selectCity
+
+-(void)selectCity:(CZSCountryModel *)model viewController:(nonnull UIViewController *)vc
+{
+    [CZCountryUtil sharedInstance].selectModel = model;
+    [self.locationButton setTitle:model.country.area_name forState:UIControlStateNormal];
+    [vc.navigationController popViewControllerAnimated:YES];
 }
 
 @end

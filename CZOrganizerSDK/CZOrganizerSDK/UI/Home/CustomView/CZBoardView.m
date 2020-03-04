@@ -46,6 +46,7 @@ static CGFloat innerPadding = 10;
 {
     self.boards = courses;
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.covers removeAllObjects];
     [self layoutBaseViews];
 }
 

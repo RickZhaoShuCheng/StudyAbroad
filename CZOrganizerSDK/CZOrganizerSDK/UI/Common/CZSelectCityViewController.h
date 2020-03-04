@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CZSCountryModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol CZSelectCityViewControllerDelegate <NSObject>
+
+-(void)selectCity:(CZSCountryModel *)model viewController:(UIViewController *)vc;
+
+@end
+
 @interface CZSelectCityViewController : UIViewController
+
+@property (nonatomic , weak) id<CZSelectCityViewControllerDelegate> delegate;
 
 @end
 

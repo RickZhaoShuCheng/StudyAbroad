@@ -28,6 +28,10 @@
 
 @property (nonatomic , strong) CZSearchBar *searchBar;
 
+@property (nonatomic , strong) UITableView *searchResultTableView;
+@property (nonatomic , strong) NSMutableArray *searchResultArray;
+
+
 @end
 
 @implementation CZSelectCityViewController
@@ -103,6 +107,23 @@
         self.selectCity = self.selectProvince.relatedArray[0];
         self.cityDatas = self.selectProvince.relatedArray;
     }
+    
+    self.searchResultTableView = [[UITableView alloc] init];
+    self.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.searchResultTableView.tableFooterView = [UIView new];
+    self.searchResultTableView.delegate = self;
+    self.searchResultTableView.dataSource = self;
+    [self.searchResultTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+    [self.view addSubview:self.searchResultTableView];
+    [self.searchResultTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
+    self.searchResultTableView.hidden = YES;
+    WEAKSELF
+    [self.searchBar setEditTextChangedListener:^(NSString * _Nonnull text) {
+        weakSelf.searchResultTableView.hidden = text.length == 0;
+        [weakSelf searchForCitiesByKeywords:text];
+    }];
 }
 
 
@@ -110,7 +131,10 @@
     if (tableView == self.countryTableView) {
         return self.datas.count;
     }
-    return self.provinceDatas.count;
+    if (tableView == self.proviceTableView) {
+        return self.provinceDatas.count;
+    }
+    return self.searchResultArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.countryTableView) {
@@ -127,19 +151,31 @@
         }
         return cell;
     }
-    
-    
-    CZSelectProvinceCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZSelectProvinceCell class]) forIndexPath:indexPath];
-    CZSCountryModel *model = self.provinceDatas[indexPath.row];
-    [cell setModel:model];
-    if ([model.country.ID isEqualToString:self.selectProvince.country.ID]) {
-        [cell setDidSelect:YES];
+    else if (tableView == self.proviceTableView) {
+        
+        CZSelectProvinceCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZSelectProvinceCell class]) forIndexPath:indexPath];
+        CZSCountryModel *model = self.provinceDatas[indexPath.row];
+        [cell setModel:model];
+        if ([model.country.ID isEqualToString:self.selectProvince.country.ID]) {
+            [cell setDidSelect:YES];
+        }
+        else
+        {
+            [cell setDidSelect:NO];
+        }
+        return cell;
     }
     else
     {
-        [cell setDidSelect:NO];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+        CZSCountryModel *model = self.searchResultArray[indexPath.row];
+        cell.textLabel.text = model.country.area_name;
+        cell.textLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
+        cell.textLabel.textColor = [UIColor blackColor];
+        return cell;
     }
-    return cell;
+    
+
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 45;
@@ -160,8 +196,11 @@
             self.cityDatas = nil;
             self.selectCity = nil;
         }
+        [self.countryTableView reloadData];
+        [self.proviceTableView reloadData];
+        [self.cityCollectionView reloadData];
     }
-    else
+    else if (tableView == self.proviceTableView)
     {
         self.selectProvince = self.selectCountry.relatedArray[indexPath.row];
         if (self.selectProvince.relatedArray && self.selectProvince.relatedArray.count > 0) {
@@ -173,11 +212,18 @@
             self.cityDatas = nil;
             self.selectCity = nil;
         }
+        [self.countryTableView reloadData];
+        [self.proviceTableView reloadData];
+        [self.cityCollectionView reloadData];
     }
-    
-    [self.countryTableView reloadData];
-    [self.proviceTableView reloadData];
-    [self.cityCollectionView reloadData];
+    else
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(selectCity:viewController:)]) {
+            CZSCountryModel *country = self.searchResultArray[indexPath.row];
+            [self.delegate selectCity:country viewController:self];
+        }
+    }
+
 }
 
 #pragma mark ----------UICollectionViewDataSource
@@ -192,8 +238,28 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectCity = self.selectProvince.relatedArray[indexPath.row];
-    [self.cityCollectionView reloadData];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectCity:viewController:)]) {
+        self.selectCity = self.selectProvince.relatedArray[indexPath.row];
+        [self.delegate selectCity:self.selectCity viewController:self];
+    }
+}
+
+#pragma -mark 搜索
+
+-(void)searchForCitiesByKeywords:(NSString *)keywords
+{
+    if (!keywords.length) {
+        return;
+    }
+    NSArray *cities = [CZCountryUtil sharedInstance].cities;
+
+    NSString *formatString = [NSString stringWithFormat:@"self.country.area_name CONTAINS[cd] '%@' AND self.country.level = '3'",keywords];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:formatString];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:cities];
+    [array filterUsingPredicate:predicate];
+    
+    self.searchResultArray = array;
+    [self.searchResultTableView reloadData];
 }
 
 @end

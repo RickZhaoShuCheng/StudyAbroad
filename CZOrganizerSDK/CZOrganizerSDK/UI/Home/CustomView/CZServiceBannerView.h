@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const defaultHeight;
+extern CGFloat const pageControlHeight;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZServiceBannerView : UIView

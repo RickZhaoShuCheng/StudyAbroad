@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCountryUtil : NSObject
 @property (nonatomic , strong ,readonly) NSMutableArray<CZSCountryModel*> *datas;
+@property (nonatomic , strong ,readonly) NSMutableArray *cities;
+@property (nonatomic , strong ,readonly) NSMutableArray *provinces;
+@property (nonatomic , strong) CZSCountryModel *selectModel;
 +(instancetype)sharedInstance;
 
 @end

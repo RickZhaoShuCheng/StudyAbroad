@@ -12,6 +12,8 @@ static NSString *CountryPlistPath = @"/Plist/country.plist";
 
 @interface CZCountryUtil ()
 @property (nonatomic , strong) NSMutableArray *datas;
+@property (nonatomic , strong) NSMutableArray *cities;
+@property (nonatomic , strong) NSMutableArray *provinces;
 @end
 
 @implementation CZCountryUtil
@@ -40,13 +42,22 @@ static dispatch_once_t onceToken;
 {
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[self getCountryCompletePath]];
     NSMutableArray *countryDictArray = [dict[@"RECORDS"] mutableCopy];
-    
+    self.cities = [[NSMutableArray alloc] init];
+    self.provinces = [[NSMutableArray alloc] init];
     NSMutableDictionary *d = [[NSMutableDictionary alloc] init];
     for (NSDictionary *dict in countryDictArray) {
         CZCountryModel *model = [CZCountryModel modelWithDict:dict];
         CZSCountryModel *sModel = [[CZSCountryModel alloc] init];
         sModel.country = model;
         
+        if ([model.level isEqualToString:@"2"]) {
+            [self.provinces addObject:sModel];
+        }
+        
+        if ([model.level isEqualToString:@"3"]) {
+            [self.cities addObject:sModel];
+        }
+                
         NSMutableArray *a = [d objectForKey:model.pid];
         if (!a)
         {
@@ -72,7 +83,19 @@ static dispatch_once_t onceToken;
             p.relatedArray = cities;
         }
     }
-    NSLog(@"");
+    
+    for (CZSCountryModel *model in self.cities) {
+        for (CZSCountryModel *m1 in self.provinces) {
+            if ([model.country.pid isEqualToString:m1.country.ID]) {
+                model.upLevelCountry = m1;
+                for (CZSCountryModel *m2 in self.datas) {
+                    if ([m1.country.pid isEqualToString:m2.country.ID]) {
+                        model.upLevelCountry.upLevelCountry = m2;
+                    }
+                }
+            }
+        }
+    }
 }
 
 -(NSString *)getCountryCompletePath
