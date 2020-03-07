@@ -48,7 +48,7 @@
         [self addSubview:self.pageMenuOt];
         self.frame = superView.bounds;
         [superView addSubview:self];
-        [self createDefaultFilterMenu];
+//        [self createDefaultFilterMenu];
     }
     return self;
 }

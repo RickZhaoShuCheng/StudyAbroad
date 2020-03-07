@@ -225,6 +225,18 @@
 		539484B923FFC5AC00770E99 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 539484A023FFC5AC00770E99 /* MASViewAttribute.m */; };
 		539BB0172407CCB100F9C2FA /* CZHomeParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 539BB0152407CCB100F9C2FA /* CZHomeParam.h */; };
 		539BB0182407CCB100F9C2FA /* CZHomeParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 539BB0162407CCB100F9C2FA /* CZHomeParam.m */; };
+		53A90CB3241378A100894E9D /* CZCommonFilterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CB1241378A100894E9D /* CZCommonFilterManager.h */; };
+		53A90CB4241378A100894E9D /* CZCommonFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CB2241378A100894E9D /* CZCommonFilterManager.m */; };
+		53A90CB72413912E00894E9D /* FMTagsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CB52413912E00894E9D /* FMTagsView.h */; };
+		53A90CB82413912E00894E9D /* FMTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CB62413912E00894E9D /* FMTagsView.m */; };
+		53A90CBB2413924100894E9D /* CZLastFilterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CB92413924100894E9D /* CZLastFilterView.h */; };
+		53A90CBC2413924100894E9D /* CZLastFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CBA2413924100894E9D /* CZLastFilterView.m */; };
+		53A90CBF2413951100894E9D /* CZCommonInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CBD2413951100894E9D /* CZCommonInstance.h */; };
+		53A90CC02413951100894E9D /* CZCommonInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CBE2413951100894E9D /* CZCommonInstance.m */; };
+		53A90CC42413D15600894E9D /* CZAllServiceViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CC22413D15600894E9D /* CZAllServiceViewController.h */; };
+		53A90CC52413D15600894E9D /* CZAllServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CC32413D15600894E9D /* CZAllServiceViewController.m */; };
+		53A90CC82413D1D100894E9D /* CZAllServiceThirdViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CC62413D1D100894E9D /* CZAllServiceThirdViewController.h */; };
+		53A90CC92413D1D100894E9D /* CZAllServiceThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CC72413D1D100894E9D /* CZAllServiceThirdViewController.m */; };
 		53AAD110240274FB00A107B4 /* CZHomeFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AAD10E240274FB00A107B4 /* CZHomeFilterView.m */; };
 		53AAD111240274FB00A107B4 /* CZHomeFilterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 53AAD10F240274FB00A107B4 /* CZHomeFilterView.h */; };
 		53AC45DD24038F7600521C2F /* MenuAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 53AC45D524038F7600521C2F /* MenuAction.h */; };
@@ -488,6 +500,18 @@
 		539484BA23FFC5F600770E99 /* CZOrganizerSDK-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CZOrganizerSDK-PrefixHeader.pch"; sourceTree = "<group>"; };
 		539BB0152407CCB100F9C2FA /* CZHomeParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZHomeParam.h; sourceTree = "<group>"; };
 		539BB0162407CCB100F9C2FA /* CZHomeParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZHomeParam.m; sourceTree = "<group>"; };
+		53A90CB1241378A100894E9D /* CZCommonFilterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZCommonFilterManager.h; sourceTree = "<group>"; };
+		53A90CB2241378A100894E9D /* CZCommonFilterManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZCommonFilterManager.m; sourceTree = "<group>"; };
+		53A90CB52413912E00894E9D /* FMTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMTagsView.h; sourceTree = "<group>"; };
+		53A90CB62413912E00894E9D /* FMTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMTagsView.m; sourceTree = "<group>"; };
+		53A90CB92413924100894E9D /* CZLastFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZLastFilterView.h; sourceTree = "<group>"; };
+		53A90CBA2413924100894E9D /* CZLastFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZLastFilterView.m; sourceTree = "<group>"; };
+		53A90CBD2413951100894E9D /* CZCommonInstance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZCommonInstance.h; sourceTree = "<group>"; };
+		53A90CBE2413951100894E9D /* CZCommonInstance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZCommonInstance.m; sourceTree = "<group>"; };
+		53A90CC22413D15600894E9D /* CZAllServiceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAllServiceViewController.h; sourceTree = "<group>"; };
+		53A90CC32413D15600894E9D /* CZAllServiceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAllServiceViewController.m; sourceTree = "<group>"; };
+		53A90CC62413D1D100894E9D /* CZAllServiceThirdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAllServiceThirdViewController.h; sourceTree = "<group>"; };
+		53A90CC72413D1D100894E9D /* CZAllServiceThirdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAllServiceThirdViewController.m; sourceTree = "<group>"; };
 		53AAD10E240274FB00A107B4 /* CZHomeFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZHomeFilterView.m; sourceTree = "<group>"; };
 		53AAD10F240274FB00A107B4 /* CZHomeFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZHomeFilterView.h; sourceTree = "<group>"; };
 		53AC45D524038F7600521C2F /* MenuAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuAction.h; sourceTree = "<group>"; };
@@ -770,6 +794,8 @@
 		537E3D4E240A78A700C080E9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				53A90CB52413912E00894E9D /* FMTagsView.h */,
+				53A90CB62413912E00894E9D /* FMTagsView.m */,
 				537E3D4F240A796C00C080E9 /* CZPersonInfoView.h */,
 				537E3D50240A796C00C080E9 /* CZPersonInfoView.m */,
 				537E3D53240A7F4300C080E9 /* CZRankView.h */,
@@ -790,6 +816,12 @@
 				53F8097C240D32B100E44651 /* CZSelectProvinceCell.m */,
 				53F8097F240D52C300E44651 /* CZSelectCityCell.h */,
 				53F80980240D52C300E44651 /* CZSelectCityCell.m */,
+				53A90CB1241378A100894E9D /* CZCommonFilterManager.h */,
+				53A90CB2241378A100894E9D /* CZCommonFilterManager.m */,
+				53A90CB92413924100894E9D /* CZLastFilterView.h */,
+				53A90CBA2413924100894E9D /* CZLastFilterView.m */,
+				53A90CBD2413951100894E9D /* CZCommonInstance.h */,
+				53A90CBE2413951100894E9D /* CZCommonInstance.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1030,6 +1062,7 @@
 		5394846B23FFB07A00770E99 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				53A90CC12413D13E00894E9D /* AllService */,
 				534C18E4240BD781007DD7EC /* Organizer */,
 				537E3D8C240AB61300C080E9 /* Advisor */,
 				537E3D79240A971100C080E9 /* SchoolStar */,
@@ -1120,6 +1153,17 @@
 			path = Masonry;
 			sourceTree = "<group>";
 		};
+		53A90CC12413D13E00894E9D /* AllService */ = {
+			isa = PBXGroup;
+			children = (
+				53A90CC22413D15600894E9D /* CZAllServiceViewController.h */,
+				53A90CC32413D15600894E9D /* CZAllServiceViewController.m */,
+				53A90CC62413D1D100894E9D /* CZAllServiceThirdViewController.h */,
+				53A90CC72413D1D100894E9D /* CZAllServiceThirdViewController.m */,
+			);
+			path = AllService;
+			sourceTree = "<group>";
+		};
 		53AC45D424038F7600521C2F /* DropMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1181,6 +1225,7 @@
 				5394846923FFB03400770E99 /* CZPageScrollController.h in Headers */,
 				539484A623FFC5AC00770E99 /* MASConstraintMaker.h in Headers */,
 				5394844323FFB03400770E99 /* TAPageControl.h in Headers */,
+				53A90CBF2413951100894E9D /* CZCommonInstance.h in Headers */,
 				53AC45E024038F7600521C2F /* DropMenuView.h in Headers */,
 				5320142024057D5E009B78AB /* NSObject+ORM.h in Headers */,
 				5320141B240576D2009B78AB /* CZHomeModel.h in Headers */,
@@ -1218,18 +1263,21 @@
 				537E3D71240A96DF00C080E9 /* CZSchoolStarCell.h in Headers */,
 				5394845D23FFB03400770E99 /* SDWebImageCompat.h in Headers */,
 				5394845523FFB03400770E99 /* SDWebImageDecoder.h in Headers */,
+				53A90CB3241378A100894E9D /* CZCommonFilterManager.h in Headers */,
 				5331CAB02407EC0D0069AC92 /* CZCountryModel.h in Headers */,
 				5394848523FFC48C00770E99 /* CZCarefullyChooseViewController.h in Headers */,
 				537E3D98240AB7D500C080E9 /* CZAdvisorModel.h in Headers */,
 				537E3D78240A96DF00C080E9 /* CZHotActivityCell.h in Headers */,
 				535E5DBC24080B1300471453 /* CZMJRefreshHelper.h in Headers */,
 				537E3D86240A9A9100C080E9 /* CZProductVoListModel.h in Headers */,
+				53A90CC42413D15600894E9D /* CZAllServiceViewController.h in Headers */,
 				535F000F24000558003463B0 /* CZServiceBannerView.h in Headers */,
 				53B59A2A24069232000C8399 /* CZCountryUtil.h in Headers */,
 				5394844523FFB03400770E99 /* NSData+ImageContentType.h in Headers */,
 				535E5D9E24080AED00471453 /* MJRefreshBackGifFooter.h in Headers */,
 				53B59A2424065F0A000C8399 /* CZActivityModel.h in Headers */,
 				5320140624056526009B78AB /* QSNetworkManager.h in Headers */,
+				53A90CBB2413924100894E9D /* CZLastFilterView.h in Headers */,
 				539484AC23FFC5AC00770E99 /* MASViewConstraint.h in Headers */,
 				535E5D9924080AED00471453 /* MJRefreshConfig.h in Headers */,
 				537E3D94240AB65000C080E9 /* CZAdvisorView.h in Headers */,
@@ -1254,6 +1302,7 @@
 				535E5DB924080AED00471453 /* MJRefreshBackFooter.h in Headers */,
 				5320141624056807009B78AB /* QSOrganizerHomeService.h in Headers */,
 				539484AA23FFC5AC00770E99 /* MASViewAttribute.h in Headers */,
+				53A90CB72413912E00894E9D /* FMTagsView.h in Headers */,
 				535E5DB624080AED00471453 /* MJRefreshHeader.h in Headers */,
 				5394843723FFB03400770E99 /* SDCycleScrollView.h in Headers */,
 				5394844823FFB03400770E99 /* SDWebImageDownloaderOperation.h in Headers */,
@@ -1263,6 +1312,7 @@
 				53C1A1A82404E18F00C6A3E9 /* CZSearchBar.h in Headers */,
 				5394845E23FFB03400770E99 /* UIImage+MultiFormat.h in Headers */,
 				5394847423FFB17000770E99 /* CZHomeBannerView.h in Headers */,
+				53A90CC82413D1D100894E9D /* CZAllServiceThirdViewController.h in Headers */,
 				535E5D9424080AED00471453 /* MJRefresh.h in Headers */,
 				5394845C23FFB03400770E99 /* SDWebImagePrefetcher.h in Headers */,
 				5394844123FFB03400770E99 /* TADotView.h in Headers */,
@@ -1413,6 +1463,7 @@
 				5320140F240565E4009B78AB /* QSClientConfigeration.m in Sources */,
 				5394847523FFB17000770E99 /* CZHomeBannerView.m in Sources */,
 				539484B023FFC5AC00770E99 /* MASConstraintMaker.m in Sources */,
+				53A90CC52413D15600894E9D /* CZAllServiceViewController.m in Sources */,
 				535E5DB524080AED00471453 /* MJRefreshAutoFooter.m in Sources */,
 				538B99672400CBB100D1A093 /* CZCourseModel.m in Sources */,
 				535E5DA324080AED00471453 /* MJRefreshBackNormalFooter.m in Sources */,
@@ -1425,6 +1476,7 @@
 				539484B823FFC5AC00770E99 /* MASViewConstraint.m in Sources */,
 				537E3D74240A96DF00C080E9 /* CZSchoolStarView.m in Sources */,
 				537E3D95240AB65000C080E9 /* CZAdvisorView.m in Sources */,
+				53A90CBC2413924100894E9D /* CZLastFilterView.m in Sources */,
 				53B59A3A2406B7B1000C8399 /* CZCarefullyChooseView.m in Sources */,
 				539484B923FFC5AC00770E99 /* MASViewAttribute.m in Sources */,
 				5394844623FFB03400770E99 /* SDWebImageManager.m in Sources */,
@@ -1452,6 +1504,7 @@
 				535E5DAA24080AED00471453 /* MJRefreshNormalHeader.m in Sources */,
 				535E5DA824080AED00471453 /* MJRefreshAutoGifFooter.m in Sources */,
 				5394844F23FFB03400770E99 /* SDWebImageCompat.m in Sources */,
+				53A90CB82413912E00894E9D /* FMTagsView.m in Sources */,
 				5320140524056526009B78AB /* QSNetworkManagerUtil.m in Sources */,
 				5394845F23FFB03400770E99 /* UIButton+WebCache.m in Sources */,
 				535E5DA724080AED00471453 /* MJRefreshAutoStateFooter.m in Sources */,
@@ -1480,11 +1533,14 @@
 				537E3D90240AB62400C080E9 /* CZAdvisorViewController.m in Sources */,
 				535E5DBD24080B1300471453 /* CZMJRefreshHelper.m in Sources */,
 				535E5DA124080AED00471453 /* MJRefreshBackGifFooter.m in Sources */,
+				53A90CC92413D1D100894E9D /* CZAllServiceThirdViewController.m in Sources */,
 				537E3D87240A9A9100C080E9 /* CZProductVoListModel.m in Sources */,
 				5331CAB92407FEE10069AC92 /* CZProductModel.m in Sources */,
+				53A90CC02413951100894E9D /* CZCommonInstance.m in Sources */,
 				5394844023FFB03400770E99 /* TAAbstractDotView.m in Sources */,
 				530751BA240A50C70074A67E /* CZDiaryView.m in Sources */,
 				535F000123FFFC12003463B0 /* CZImageProvider.m in Sources */,
+				53A90CB4241378A100894E9D /* CZCommonFilterManager.m in Sources */,
 				5394844C23FFB03400770E99 /* UIImage+GIF.m in Sources */,
 				534C18F5240BFECD007DD7EC /* CZSelectCityViewController.m in Sources */,
 				5394843E23FFB03400770E99 /* TAPageControl.m in Sources */,

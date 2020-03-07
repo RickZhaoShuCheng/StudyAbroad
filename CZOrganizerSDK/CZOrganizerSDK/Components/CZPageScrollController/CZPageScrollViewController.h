@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, weak , readonly) UITableView *scrollMainTableView;
 
+@property(nonatomic, assign) NSInteger stopSectionIndex;
+
 -(void)reloadData;
 
 #pragma mark - Override(子类化实现下面的方法)
@@ -52,9 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (NSInteger)tableViewSectionCountForSection:(NSInteger)section;
-
-
-- (NSInteger)setSectionCout;
 
 
 - (void)didScrolling:(BOOL)canScroll;
