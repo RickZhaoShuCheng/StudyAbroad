@@ -46,6 +46,10 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
 //首页-筛选机构列表数据
 -(void)requestForApiOrganGetOrganListByFilterByParam:(CZHomeParam *)param
                                             callBack:(QSOrganizerHomeBack)callBack;
+
+//
+-(void)requestForApiProductGetProductListByFilterByParam:(CZHomeParam *)param
+                                                callBack:(QSOrganizerHomeBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

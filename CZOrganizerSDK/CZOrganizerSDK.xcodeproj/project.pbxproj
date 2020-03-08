@@ -22,8 +22,6 @@
 		5320140E240565E4009B78AB /* QSClientConfigeration.h in Headers */ = {isa = PBXBuildFile; fileRef = 5320140C240565E4009B78AB /* QSClientConfigeration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5320140F240565E4009B78AB /* QSClientConfigeration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320140D240565E4009B78AB /* QSClientConfigeration.m */; };
 		532014122405678D009B78AB /* QSCommonService.m in Sources */ = {isa = PBXBuildFile; fileRef = 532014102405678D009B78AB /* QSCommonService.m */; };
-		532014132405678D009B78AB /* QSCommonService.h in Headers */ = {isa = PBXBuildFile; fileRef = 532014112405678D009B78AB /* QSCommonService.h */; };
-		5320141624056807009B78AB /* QSOrganizerHomeService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5320141424056807009B78AB /* QSOrganizerHomeService.h */; };
 		5320141724056807009B78AB /* QSOrganizerHomeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320141524056807009B78AB /* QSOrganizerHomeService.m */; };
 		5320141B240576D2009B78AB /* CZHomeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 53201419240576D2009B78AB /* CZHomeModel.h */; };
 		5320141C240576D2009B78AB /* CZHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320141A240576D2009B78AB /* CZHomeModel.m */; };
@@ -185,7 +183,7 @@
 		5394846123FFB03400770E99 /* SPPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394842923FFB03400770E99 /* SPPageMenu.m */; };
 		5394846223FFB03400770E99 /* SPPageMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 5394842A23FFB03400770E99 /* SPPageMenu.h */; };
 		5394846323FFB03400770E99 /* CZPageScrollContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5394842D23FFB03400770E99 /* CZPageScrollContentView.h */; };
-		5394846423FFB03400770E99 /* CZScrollContentControllerDeleagte.h in Headers */ = {isa = PBXBuildFile; fileRef = 5394842E23FFB03400770E99 /* CZScrollContentControllerDeleagte.h */; };
+		5394846423FFB03400770E99 /* CZScrollContentControllerDeleagte.h in Headers */ = {isa = PBXBuildFile; fileRef = 5394842E23FFB03400770E99 /* CZScrollContentControllerDeleagte.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5394846523FFB03400770E99 /* CZPageScrollContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394842F23FFB03400770E99 /* CZPageScrollContentView.m */; };
 		5394846623FFB03400770E99 /* CZPageScrollViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5394843023FFB03400770E99 /* CZPageScrollViewController.h */; };
 		5394846723FFB03400770E99 /* CZRecognizeGesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394843223FFB03400770E99 /* CZRecognizeGesTableView.m */; };
@@ -223,7 +221,7 @@
 		539484B723FFC5AC00770E99 /* ViewController+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5394849E23FFC5AC00770E99 /* ViewController+MASAdditions.h */; };
 		539484B823FFC5AC00770E99 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394849F23FFC5AC00770E99 /* MASViewConstraint.m */; };
 		539484B923FFC5AC00770E99 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 539484A023FFC5AC00770E99 /* MASViewAttribute.m */; };
-		539BB0172407CCB100F9C2FA /* CZHomeParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 539BB0152407CCB100F9C2FA /* CZHomeParam.h */; };
+		539BB0172407CCB100F9C2FA /* CZHomeParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 539BB0152407CCB100F9C2FA /* CZHomeParam.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		539BB0182407CCB100F9C2FA /* CZHomeParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 539BB0162407CCB100F9C2FA /* CZHomeParam.m */; };
 		53A90CB3241378A100894E9D /* CZCommonFilterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CB1241378A100894E9D /* CZCommonFilterManager.h */; };
 		53A90CB4241378A100894E9D /* CZCommonFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CB2241378A100894E9D /* CZCommonFilterManager.m */; };
@@ -237,6 +235,12 @@
 		53A90CC52413D15600894E9D /* CZAllServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CC32413D15600894E9D /* CZAllServiceViewController.m */; };
 		53A90CC82413D1D100894E9D /* CZAllServiceThirdViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CC62413D1D100894E9D /* CZAllServiceThirdViewController.h */; };
 		53A90CC92413D1D100894E9D /* CZAllServiceThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CC72413D1D100894E9D /* CZAllServiceThirdViewController.m */; };
+		53A90CCC2414BD5100894E9D /* CZAllServiceDiaryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CCA2414BD5100894E9D /* CZAllServiceDiaryViewController.h */; };
+		53A90CCD2414BD5100894E9D /* CZAllServiceDiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CCB2414BD5100894E9D /* CZAllServiceDiaryViewController.m */; };
+		53A90CD02414D53C00894E9D /* CZDiaryModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CCE2414D53C00894E9D /* CZDiaryModel.h */; };
+		53A90CD12414D53C00894E9D /* CZDiaryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CCF2414D53C00894E9D /* CZDiaryModel.m */; };
+		53A90CD72414EBC100894E9D /* CZAllServiceSubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 53A90CD52414EBC100894E9D /* CZAllServiceSubViewController.h */; };
+		53A90CD82414EBC100894E9D /* CZAllServiceSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A90CD62414EBC100894E9D /* CZAllServiceSubViewController.m */; };
 		53AAD110240274FB00A107B4 /* CZHomeFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AAD10E240274FB00A107B4 /* CZHomeFilterView.m */; };
 		53AAD111240274FB00A107B4 /* CZHomeFilterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 53AAD10F240274FB00A107B4 /* CZHomeFilterView.h */; };
 		53AC45DD24038F7600521C2F /* MenuAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 53AC45D524038F7600521C2F /* MenuAction.h */; };
@@ -512,6 +516,12 @@
 		53A90CC32413D15600894E9D /* CZAllServiceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAllServiceViewController.m; sourceTree = "<group>"; };
 		53A90CC62413D1D100894E9D /* CZAllServiceThirdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAllServiceThirdViewController.h; sourceTree = "<group>"; };
 		53A90CC72413D1D100894E9D /* CZAllServiceThirdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAllServiceThirdViewController.m; sourceTree = "<group>"; };
+		53A90CCA2414BD5100894E9D /* CZAllServiceDiaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAllServiceDiaryViewController.h; sourceTree = "<group>"; };
+		53A90CCB2414BD5100894E9D /* CZAllServiceDiaryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAllServiceDiaryViewController.m; sourceTree = "<group>"; };
+		53A90CCE2414D53C00894E9D /* CZDiaryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDiaryModel.h; sourceTree = "<group>"; };
+		53A90CCF2414D53C00894E9D /* CZDiaryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZDiaryModel.m; sourceTree = "<group>"; };
+		53A90CD52414EBC100894E9D /* CZAllServiceSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAllServiceSubViewController.h; sourceTree = "<group>"; };
+		53A90CD62414EBC100894E9D /* CZAllServiceSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAllServiceSubViewController.m; sourceTree = "<group>"; };
 		53AAD10E240274FB00A107B4 /* CZHomeFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZHomeFilterView.m; sourceTree = "<group>"; };
 		53AAD10F240274FB00A107B4 /* CZHomeFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZHomeFilterView.h; sourceTree = "<group>"; };
 		53AC45D524038F7600521C2F /* MenuAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuAction.h; sourceTree = "<group>"; };
@@ -639,6 +649,8 @@
 				537E3D97240AB7D500C080E9 /* CZAdvisorModel.m */,
 				534C18E0240BC636007DD7EC /* CZOrganizerModel.h */,
 				534C18E1240BC636007DD7EC /* CZOrganizerModel.m */,
+				53A90CCE2414D53C00894E9D /* CZDiaryModel.h */,
+				53A90CCF2414D53C00894E9D /* CZDiaryModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1160,6 +1172,10 @@
 				53A90CC32413D15600894E9D /* CZAllServiceViewController.m */,
 				53A90CC62413D1D100894E9D /* CZAllServiceThirdViewController.h */,
 				53A90CC72413D1D100894E9D /* CZAllServiceThirdViewController.m */,
+				53A90CCA2414BD5100894E9D /* CZAllServiceDiaryViewController.h */,
+				53A90CCB2414BD5100894E9D /* CZAllServiceDiaryViewController.m */,
+				53A90CD52414EBC100894E9D /* CZAllServiceSubViewController.h */,
+				53A90CD62414EBC100894E9D /* CZAllServiceSubViewController.m */,
 			);
 			path = AllService;
 			sourceTree = "<group>";
@@ -1204,6 +1220,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5394846423FFB03400770E99 /* CZScrollContentControllerDeleagte.h in Headers */,
+				539BB0172407CCB100F9C2FA /* CZHomeParam.h in Headers */,
 				53F80979240D329600E44651 /* CZSelectCountryCell.h in Headers */,
 				534C18EC240BD7F4007DD7EC /* CZOrganizerListView.h in Headers */,
 				5320140A240565C6009B78AB /* QSClient.h in Headers */,
@@ -1215,7 +1233,6 @@
 				530751AB240A4F9C0074A67E /* CZDiaryViewController.h in Headers */,
 				53AAD111240274FB00A107B4 /* CZHomeFilterView.h in Headers */,
 				535E5DB124080AED00471453 /* MJRefreshComponent.h in Headers */,
-				5394846423FFB03400770E99 /* CZScrollContentControllerDeleagte.h in Headers */,
 				5331CAB82407FEE10069AC92 /* CZProductModel.h in Headers */,
 				530751B5240A50BC0074A67E /* CZDiaryCell.h in Headers */,
 				5394846323FFB03400770E99 /* CZPageScrollContentView.h in Headers */,
@@ -1250,7 +1267,6 @@
 				538B99662400CBB100D1A093 /* CZCourseModel.h in Headers */,
 				539484A323FFC5AC00770E99 /* MASConstraint+Private.h in Headers */,
 				53B59A2E24069EFC000C8399 /* CZBoardView.h in Headers */,
-				539BB0172407CCB100F9C2FA /* CZHomeParam.h in Headers */,
 				5394844223FFB03400770E99 /* TAAnimatedDotView.h in Headers */,
 				5394846823FFB03400770E99 /* CZRecognizeGesTableView.h in Headers */,
 				53AC45DD24038F7600521C2F /* MenuAction.h in Headers */,
@@ -1279,6 +1295,7 @@
 				5320140624056526009B78AB /* QSNetworkManager.h in Headers */,
 				53A90CBB2413924100894E9D /* CZLastFilterView.h in Headers */,
 				539484AC23FFC5AC00770E99 /* MASViewConstraint.h in Headers */,
+				53A90CCC2414BD5100894E9D /* CZAllServiceDiaryViewController.h in Headers */,
 				535E5D9924080AED00471453 /* MJRefreshConfig.h in Headers */,
 				537E3D94240AB65000C080E9 /* CZAdvisorView.h in Headers */,
 				537E3D55240A7F4300C080E9 /* CZRankView.h in Headers */,
@@ -1294,18 +1311,18 @@
 				53AC45DF24038F7600521C2F /* DropMenuBar.h in Headers */,
 				535F000723FFFF8B003463B0 /* CZServiceView.h in Headers */,
 				535E5DB324080AED00471453 /* MJRefreshAutoFooter.h in Headers */,
+				53A90CD02414D53C00894E9D /* CZDiaryModel.h in Headers */,
 				539484A823FFC5AC00770E99 /* NSArray+MASAdditions.h in Headers */,
 				5394846023FFB03400770E99 /* UIImage+GIF.h in Headers */,
-				532014132405678D009B78AB /* QSCommonService.h in Headers */,
 				5394844A23FFB03400770E99 /* SDImageCache.h in Headers */,
 				539484B523FFC5AC00770E99 /* Masonry.h in Headers */,
 				535E5DB924080AED00471453 /* MJRefreshBackFooter.h in Headers */,
-				5320141624056807009B78AB /* QSOrganizerHomeService.h in Headers */,
 				539484AA23FFC5AC00770E99 /* MASViewAttribute.h in Headers */,
 				53A90CB72413912E00894E9D /* FMTagsView.h in Headers */,
 				535E5DB624080AED00471453 /* MJRefreshHeader.h in Headers */,
 				5394843723FFB03400770E99 /* SDCycleScrollView.h in Headers */,
 				5394844823FFB03400770E99 /* SDWebImageDownloaderOperation.h in Headers */,
+				53A90CD72414EBC100894E9D /* CZAllServiceSubViewController.h in Headers */,
 				5394843823FFB03400770E99 /* SDCollectionViewCell.h in Headers */,
 				537E3D59240A8A1A00C080E9 /* CZPersonInfoCell.h in Headers */,
 				535E5D9324080AED00471453 /* UIScrollView+MJExtension.h in Headers */,
@@ -1449,6 +1466,7 @@
 				535E5DA924080AED00471453 /* MJRefreshAutoNormalFooter.m in Sources */,
 				5320140B240565C6009B78AB /* QSClient.m in Sources */,
 				539BB0182407CCB100F9C2FA /* CZHomeParam.m in Sources */,
+				53A90CCD2414BD5100894E9D /* CZAllServiceDiaryViewController.m in Sources */,
 				53AC45DE24038F7600521C2F /* ItemModel.m in Sources */,
 				537E3D8B240A9E0900C080E9 /* CZSchoolStarViewController.m in Sources */,
 				535E5D9D24080AED00471453 /* UIView+MJExtension.m in Sources */,
@@ -1472,6 +1490,7 @@
 				535E5D9024080AED00471453 /* UIScrollView+MJRefresh.m in Sources */,
 				537E3D62240A8C6C00C080E9 /* CZPaddingLabel.m in Sources */,
 				539484B123FFC5AC00770E99 /* MASLayoutConstraint.m in Sources */,
+				53A90CD82414EBC100894E9D /* CZAllServiceSubViewController.m in Sources */,
 				537E3D5E240A8BC600C080E9 /* CZPersonInfoLocationCell.m in Sources */,
 				539484B823FFC5AC00770E99 /* MASViewConstraint.m in Sources */,
 				537E3D74240A96DF00C080E9 /* CZSchoolStarView.m in Sources */,
@@ -1481,6 +1500,7 @@
 				539484B923FFC5AC00770E99 /* MASViewAttribute.m in Sources */,
 				5394844623FFB03400770E99 /* SDWebImageManager.m in Sources */,
 				535F000C23FFFFDC003463B0 /* CZServiceCell.m in Sources */,
+				53A90CD12414D53C00894E9D /* CZDiaryModel.m in Sources */,
 				539484AF23FFC5AC00770E99 /* MASCompositeConstraint.m in Sources */,
 				5394843D23FFB03400770E99 /* TADotView.m in Sources */,
 				53AC45E424038F7600521C2F /* MenuAction.m in Sources */,

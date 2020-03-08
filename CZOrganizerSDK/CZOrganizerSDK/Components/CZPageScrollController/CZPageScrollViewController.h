@@ -58,6 +58,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didScrolling:(BOOL)canScroll;
 
+// 滚动到某一页的时候
+- (void)scrollView:(CZPageScrollContentView *)scrollView atIndex:(NSInteger)index;
+
 -(void)scrollToBottom;
 
 @end

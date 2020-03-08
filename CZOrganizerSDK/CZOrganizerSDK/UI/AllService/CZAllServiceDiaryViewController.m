@@ -1,54 +1,47 @@
 //
-//  CZAllServiceThirdViewController.m
+//  CZAllServiceDiaryViewController.m
 //  CZOrganizerSDK
 //
-//  Created by zsc on 2020/3/7.
+//  Created by zsc on 2020/3/8.
 //  Copyright © 2020 zsc. All rights reserved.
 //
 
-#import "CZAllServiceThirdViewController.h"
-#import "CZCarefullyChooseView.h"
+#import "CZAllServiceDiaryViewController.h"
+#import "CZDiaryView.h"
 #import "QSCommonService.h"
 #import "QSOrganizerHomeService.h"
 #import "QSClient.h"
 #import "CZMJRefreshHelper.h"
-#import "CZProductModel.h"
-#import "DropMenuBar.h"
-#import "CZCommonFilterManager.h"
+#import "CZDiaryModel.h"
 
-@interface CZAllServiceThirdViewController ()
+@interface CZAllServiceDiaryViewController ()
 
-@property (nonatomic ,strong) CZCarefullyChooseView *dataCollectionView;
+@property (nonatomic ,strong) CZDiaryView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
-@property (nonatomic, strong) DropMenuBar *menuScreeningView;
-
-@property (nonatomic, strong)CZCommonFilterManager *manager;
 
 @end
 
-@implementation CZAllServiceThirdViewController
+@implementation CZAllServiceDiaryViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    [self requestForProductList];
+    [self requestForDiaryList];
 }
 
 -(void)initUI
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self createDefaultFilterMenu];
-    
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat coverWidth = (screenWidth - 15*3)/2.0;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*220);
+    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.dataCollectionView = [[CZCarefullyChooseView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame)) collectionViewLayout:layout];
+    self.dataCollectionView = [[CZDiaryView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.dataCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
@@ -56,31 +49,31 @@
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         weakSelf.pageIndex = 1;
-        [weakSelf requestForProductList];
+        [weakSelf requestForDiaryList];
     }];
     
     self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageIndex += 1;
-        [weakSelf requestForProductList];
+        [weakSelf requestForDiaryList];
     }];
 }
 
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    self.dataCollectionView.frame = CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame));
-}
+//-(void)viewDidLayoutSubviews
+//{
+//    [super viewDidLayoutSubviews];
+//    self.dataCollectionView.frame = self.view.bounds;
+//}
 
--(void)requestForProductList
+-(void)requestForDiaryList
 {
     WEAKSELF
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
     CZHomeParam *param = [[CZHomeParam alloc] init];
     param.userId = [QSClient userId];
-    param.serviceSource = @(1);
+    param.productCategory = self.model.spId;
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
-    [service requestForApiProductGetProductListByFilterByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiDiaryFindAllCaseListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         
         if (success) {
         
@@ -89,7 +82,7 @@
                 NSMutableArray *array = [[NSMutableArray alloc] init];
                 
                 for (NSDictionary *dic in data) {
-                    CZProductModel *model = [CZProductModel modelWithDict:dic];
+                    CZDiaryModel *model = [CZDiaryModel modelWithDict:dic];
                     [array addObject:model];
                 }
                 
@@ -128,12 +121,5 @@
     }];
 }
 
-
--(void)createDefaultFilterMenu
-{
-    self.manager = [[CZCommonFilterManager alloc] init];
-    self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeCarefulyChoose];
-    [self.view addSubview:self.menuScreeningView];
-}
 
 @end

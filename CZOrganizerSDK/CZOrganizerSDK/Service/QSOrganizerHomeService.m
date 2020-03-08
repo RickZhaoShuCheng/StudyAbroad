@@ -20,6 +20,7 @@ static const NSString *ApiDiaryFindAllCaseList = @"apiDiary/findAllCaseList";
 static const NSString *ApiSportUserGetSportUserListByFilter = @"apiSportUser/getSportUserListByFilter";
 static const NSString *ApiCounselorGetCounselorListByFilter = @"apiCounselor/getCounselorListByFilter";
 static const NSString *ApiOrganGetOrganListByFilter = @"apiOrgan/getOrganListByFilter";
+static const NSString *ApiProductGetProductListByFilter = @"apiProduct/getProductListByFilter";
 
 @implementation QSOrganizerHomeService
 
@@ -394,5 +395,50 @@ static const NSString *ApiOrganGetOrganListByFilter = @"apiOrgan/getOrganListByF
     }];
 }
 
+-(void)requestForApiProductGetProductListByFilterByParam:(CZHomeParam *)param
+                                                callBack:(QSOrganizerHomeBack)callBack
+{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductGetProductListByFilter];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *parameters = [param dictonary];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    NSString *currentUserId = [QSClient userId];
+    [headers setObject:currentUserId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
 
 @end

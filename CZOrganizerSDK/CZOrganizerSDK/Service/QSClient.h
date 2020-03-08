@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CZHomeParam.h"
 
 @class QSClientConfigeration;
 
@@ -21,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //点击购物车
 -(void)showCartViewInNavigationController:(UINavigationController *)rootNavi;
+
+-(UIViewController *)instanceDiaryViewControllerByParam:(CZHomeParam *)param;
 
 @end
 
@@ -40,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(instancetype)sharedInstance;
 +(NSString *)userId;
 +(void)showCartInNavi:(UINavigationController *)controller;
++(UIViewController *)instanceDiaryViewControllerByParam:(CZHomeParam *)param;
 @end
 
 NS_ASSUME_NONNULL_END

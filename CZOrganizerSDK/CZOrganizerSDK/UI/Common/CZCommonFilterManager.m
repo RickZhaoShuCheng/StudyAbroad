@@ -88,8 +88,11 @@
         ItemModel *model = [ItemModel modelWithText:name  currentID:[@(i) stringValue] isSelect:NO];
         [datas2 addObject:model];
     }
-    servicesSort.ListDataSource = datas2;
     
+    if (datas2.count >0) {
+        servicesSort.ListDataSource = datas2;
+    }
+        
     MenuAction *locationSort = [MenuAction actionWithTitle:NSLocalizedString(@"地点", nil) style:MenuActionTypeCustom];
     locationSort.tag = 1;
     CZSelectCityViewController *vc = [[CZSelectCityViewController alloc] init];

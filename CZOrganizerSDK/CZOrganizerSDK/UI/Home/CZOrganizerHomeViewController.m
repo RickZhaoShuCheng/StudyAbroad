@@ -161,6 +161,7 @@ typedef enum : NSUInteger {
         _serviceBannerView.select = ^(CZHomeModel * _Nonnull model) {
             CZAllServiceViewController *controller = [[CZAllServiceViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
+            controller.model = model;
             [weakSelf.navigationController pushViewController:controller animated:YES];
         };
     }
@@ -258,6 +259,7 @@ typedef enum : NSUInteger {
     [arry addObject:controller4];
     CZOrganizerListViewController *controller5 = [[CZOrganizerListViewController alloc]init];
     [arry addObject:controller5];
+    
     return arry;
 }
 
@@ -425,6 +427,8 @@ typedef enum : NSUInteger {
 -(void)didScrolling:(BOOL)canScroll
 {
     self.canScroll = canScroll;
+    
+    self.homeFilterView.isTop = !canScroll;
 }
 
 -(void)addMoreButton:(UIView *)view
@@ -550,15 +554,13 @@ typedef enum : NSUInteger {
         [boards addObject:model];
     }
     [self.boardView updateLayoutByBoards:boards];
-    
-    [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
-    
-    self.stopSectionIndex = sectionCount+1;
+        
+    self.stopSectionIndex = sectionCount-1;
     
     [self.scrollMainTableView.mj_header endRefreshing];
     [self.scrollMainTableView reloadData];
 }
-
+    
 -(NSMutableArray *)schoolStars
 {
     if (!_schoolStars) {
@@ -629,6 +631,11 @@ typedef enum : NSUInteger {
     [CZCountryUtil sharedInstance].selectModel = model;
     [self.locationButton setTitle:model.country.area_name forState:UIControlStateNormal];
     [vc.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)scrollView:(CZPageScrollContentView *)scrollView atIndex:(NSInteger)index
+{
+    [self.homeFilterView.pageMenu setSelectedItemIndex:index];
 }
 
 @end

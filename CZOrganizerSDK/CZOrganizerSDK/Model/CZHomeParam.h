@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *countryId;
 @property (nonatomic , strong) NSString *cityId;
 @property (nonatomic , strong) NSString *majorId;
-@property (nonatomic , strong) NSString *productCategory;
+@property (nonatomic , strong) NSNumber *productCategory;
 @property (nonatomic , strong) NSString *educationType;
 @property (nonatomic , strong) NSString *superviseType;
 @property (nonatomic , strong) NSString *minPrice;

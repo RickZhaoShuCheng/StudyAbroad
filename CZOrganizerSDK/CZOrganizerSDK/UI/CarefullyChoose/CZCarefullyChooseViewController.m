@@ -58,7 +58,7 @@
     
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageIndex = 0;
+        weakSelf.pageIndex = 1;
         [weakSelf requestForCarefullyChoose];
     }];
     

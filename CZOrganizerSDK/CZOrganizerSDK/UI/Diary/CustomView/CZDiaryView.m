@@ -28,12 +28,11 @@
 
 #pragma mark ----------UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-//    return self.dataArr.count;
-    return 0;
+    return self.dataArr.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZDiaryCell class]) forIndexPath:indexPath];
-//    [cell setModel:self.dataArr[indexPath.row]];
+    [cell setModel:self.dataArr[indexPath.row]];
     return cell;
 }
 

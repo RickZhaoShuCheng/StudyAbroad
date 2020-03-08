@@ -7,7 +7,6 @@
 //
 
 #import "CZHomeFilterView.h"
-#import "SPPageMenu.h"
 #import "DropMenuBar.h"
 #import "MenuAction.h"
 
@@ -26,10 +25,12 @@
     self = [super init];
     if (self) {
         self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, superView.bounds.size.width, 25) trackerStyle:SPPageMenuTrackerStyleLine];
+        self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
         [self.pageMenu setItems:@[NSLocalizedString(@"精选", nil),NSLocalizedString(@"口碑", nil),NSLocalizedString(@"达人", nil),NSLocalizedString(@"顾问", nil),NSLocalizedString(@"机构", nil)] selectedItemIndex:0];
         self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:16];
         self.pageMenu.tracker.hidden = YES;
-        self.pageMenu.selectedItemTitleColor = self.pageMenu.unSelectedItemTitleColor = [UIColor colorWithRed:47/255.0 green:47/255.0 blue:47/255.0 alpha:1.0];
+        self.pageMenu.tracker.backgroundColor = self.pageMenu.unSelectedItemTitleColor = CZColorCreater(51, 172, 253, 1);
+        self.pageMenu.selectedItemTitleColor = self.pageMenu.unSelectedItemTitleColor = [UIColor blackColor];
         self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollEqualWidths;
         [self addSubview:self.pageMenu];
         self.frame = superView.bounds;
@@ -80,6 +81,26 @@
 -(void)setRelateScrollView:(UIScrollView *)scrollView
 {
     [self.pageMenu setBridgeScrollView:scrollView];
+}
+
+-(void)setIsTop:(BOOL)isTop
+{
+    _isTop = isTop;
+    if (isTop) {
+        self.pageMenu.tracker.hidden = NO;
+        self.pageMenuOt.hidden = YES;
+        CGRect rect = self.pageMenu.frame;
+        rect.origin.y = 15;
+        self.pageMenu.frame = rect;
+    }
+    else
+    {
+        self.pageMenu.tracker.hidden = YES;
+        self.pageMenuOt.hidden = NO;
+        CGRect rect = self.pageMenu.frame;
+        rect.origin.y = 0;
+        self.pageMenu.frame = rect;
+    }
 }
 
 @end
