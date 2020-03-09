@@ -31,7 +31,7 @@
 -(void)initUI
 {
     self.title = self.model.content1;
-    NSMutableArray *vcs = [self contentScrollers]
+    NSMutableArray *vcs = [self contentScrollers];
     
     self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
