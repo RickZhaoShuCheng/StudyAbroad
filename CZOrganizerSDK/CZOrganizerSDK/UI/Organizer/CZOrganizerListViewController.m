@@ -15,6 +15,7 @@
 #import "CZOrganizerModel.h"
 #import "CZAdvisorDetailViewController.h"
 #import "CZOrganizerDetailViewController.h"
+#import "CZOrganizerVC.h"
 
 @interface CZOrganizerListViewController ()
 
@@ -68,9 +69,12 @@
 //        detailVC.hidesBottomBarWhenPushed = YES;
 //        [weakSelf.navigationController pushViewController:detailVC animated:YES];
         
-        CZOrganizerDetailViewController *detailVC = [[CZOrganizerDetailViewController alloc]init];
-        detailVC.hidesBottomBarWhenPushed = YES;
-        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+//        CZOrganizerDetailViewController *detailVC = [[CZOrganizerDetailViewController alloc]init];
+//        detailVC.hidesBottomBarWhenPushed = YES;
+//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+        CZOrganizerVC *organizerVC = [[CZOrganizerVC alloc]init];
+        organizerVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:organizerVC animated:YES];
     };
 }
 
