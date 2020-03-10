@@ -34,6 +34,7 @@
 #import "SDCycleScrollView.h"
 #import "CZCommonInstance.h"
 #import "CZAllServiceViewController.h"
+#import "CZAllServiceSubViewController.h"
 
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 50;
@@ -159,10 +160,19 @@ typedef enum : NSUInteger {
         WEAKSELF
         _serviceBannerView = [[CZServiceBannerView alloc] initLayoutByHeight:0];
         _serviceBannerView.select = ^(CZHomeModel * _Nonnull model) {
-            CZAllServiceViewController *controller = [[CZAllServiceViewController alloc] init];
-            controller.hidesBottomBarWhenPushed = YES;
-            controller.model = model;
-            [weakSelf.navigationController pushViewController:controller animated:YES];
+            if (model.sort.integerValue == 1) {
+                CZAllServiceViewController *controller = [[CZAllServiceViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                controller.model = model;
+                [weakSelf.navigationController pushViewController:controller animated:YES];
+            }
+            else
+            {
+                CZAllServiceSubViewController *controller = [[CZAllServiceSubViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                controller.model = model;
+                [weakSelf.navigationController pushViewController:controller animated:YES];
+            }
         };
     }
     return _serviceBannerView;
