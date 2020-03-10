@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorView : UITableView
 @property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, copy)dispatch_block_t selectBlock;
 @end
 
 NS_ASSUME_NONNULL_END

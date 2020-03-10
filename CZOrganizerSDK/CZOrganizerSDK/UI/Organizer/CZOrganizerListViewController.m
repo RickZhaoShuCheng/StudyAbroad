@@ -13,6 +13,8 @@
 #import "QSCommonService.h"
 #import "QSClient.h"
 #import "CZOrganizerModel.h"
+#import "CZAdvisorDetailViewController.h"
+#import "CZOrganizerDetailViewController.h"
 
 @interface CZOrganizerListViewController ()
 
@@ -35,13 +37,13 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
-    
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
-    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+//    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
+//    
+//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
+//    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
+//    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     self.dataView = [[CZOrganizerListView alloc] init];
     self.dataView.backgroundColor = [UIColor whiteColor];
@@ -59,6 +61,17 @@
         weakSelf.pageIndex += 1;
         [weakSelf requestForOrganizers];
     }];
+    
+    //点击cell
+    self.dataView.selectBlock = ^{
+//        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
+//        detailVC.hidesBottomBarWhenPushed = YES;
+//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+        
+        CZOrganizerDetailViewController *detailVC = [[CZOrganizerDetailViewController alloc]init];
+        detailVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    };
 }
 
 -(void)viewDidLayoutSubviews

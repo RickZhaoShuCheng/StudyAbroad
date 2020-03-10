@@ -13,6 +13,7 @@
 #import "QSCommonService.h"
 #import "QSClient.h"
 #import "CZAdvisorModel.h"
+#import "CZAdvisorDetailViewController.h"
 
 @interface CZAdvisorViewController ()
 
@@ -59,6 +60,12 @@
         weakSelf.pageIndex += 1;
         [weakSelf requestForAdvisors];
     }];
+    //点击cell
+    self.dataView.selectBlock = ^{
+        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
+        detailVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    };
 }
 
 -(void)viewDidLayoutSubviews
