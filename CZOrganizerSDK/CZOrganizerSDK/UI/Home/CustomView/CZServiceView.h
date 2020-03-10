@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CZHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CZServiceViewDelegate <NSObject>
 
 -(void)serviceViewDidScroll:(NSInteger)pageIndex;
+
+-(void)serviceViewDidSelectItem:(CZHomeModel *)model;
 
 @end
 

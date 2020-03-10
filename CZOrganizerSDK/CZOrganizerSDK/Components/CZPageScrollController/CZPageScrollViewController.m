@@ -17,8 +17,6 @@
 // 承载主视图的table
 @property(nonatomic, weak) UITableView *scrollMainTableView;
 
-@property(nonatomic, assign) NSInteger stopSectionIndex;
-
 @end
 
 @implementation CZPageScrollViewController
@@ -50,7 +48,7 @@
 // 初始化视图
 - (void)setupViews
 {
-    self.stopSectionIndex = [self setSectionCout] - 1;
+    self.stopSectionIndex = -1;
     CZRecognizeGesTableView *tableView = [[CZRecognizeGesTableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableView.showsVerticalScrollIndicator = NO;
     tableView.delegate = self;
@@ -254,11 +252,6 @@
 {
     // override
     return 0;
-}
-
-- (NSInteger)setSectionCout{
-    
-    return 1;
 }
 
 -(void)reloadData

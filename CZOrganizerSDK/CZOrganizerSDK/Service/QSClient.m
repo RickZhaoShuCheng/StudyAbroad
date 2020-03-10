@@ -90,9 +90,27 @@ static dispatch_once_t onceToken;
     return @"-1";
 }
 
++(void)showCartInNavi:(UINavigationController *)controller
+{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(showCartViewInNavigationController:)]) {
+        [client.delegate showCartViewInNavigationController:controller];
+    }
+}
+
 +(UIViewController *)instancedOrganizerViewController
 {
     return [[CZOrganizerHomeViewController alloc] init];
+}
+
++(UIViewController *)instanceDiaryViewControllerByParam:(CZHomeParam *)param
+{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(instanceDiaryViewControllerByParam:)]) {
+       return [client.delegate instanceDiaryViewControllerByParam:param];
+    }
+    
+    return nil;
 }
 
 @end

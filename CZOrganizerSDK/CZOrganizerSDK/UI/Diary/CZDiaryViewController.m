@@ -12,7 +12,7 @@
 #import "QSOrganizerHomeService.h"
 #import "QSClient.h"
 #import "CZMJRefreshHelper.h"
-#import "CZProductModel.h"
+#import "CZDiaryModel.h"
 
 @interface CZDiaryViewController ()
 
@@ -51,7 +51,7 @@
     
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageIndex = 0;
+        weakSelf.pageIndex = 1;
         [weakSelf requestForDiaryList];
     }];
     
@@ -73,7 +73,7 @@
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
     CZHomeParam *param = [[CZHomeParam alloc] init];
     param.userId = [QSClient userId];
-    param.productCategory = @"1";
+//    param.productCategory = @"1";
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
     [service requestForApiDiaryFindAllCaseListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
@@ -85,7 +85,7 @@
                 NSMutableArray *array = [[NSMutableArray alloc] init];
                 
                 for (NSDictionary *dic in data) {
-                    CZProductModel *model = [CZProductModel modelWithDict:dic];
+                    CZDiaryModel *model = [CZDiaryModel modelWithDict:dic];
                     [array addObject:model];
                 }
                 

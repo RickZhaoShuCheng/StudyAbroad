@@ -35,7 +35,6 @@
         make.left.right.top.mas_equalTo(0);
         make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(132/165.0);
     }];
-    self.coverImageView.backgroundColor = [UIColor redColor];
 
     
     self.nameLabel = [[UILabel alloc] init];

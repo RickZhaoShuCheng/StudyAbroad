@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *isCollect;
 @property (nonatomic , strong) NSArray *activitySessionList;
 @property (nonatomic , strong) NSArray *counselorVoList;
+@property (nonatomic , strong) NSString *introduce;
 
 
 @end

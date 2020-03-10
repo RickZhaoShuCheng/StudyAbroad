@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPPageMenu.h"
 
 @class DropMenuBar;
 @class CZHomeFilterView;
@@ -23,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZHomeFilterView : UIView
 
 - (instancetype)initWithSuperView:(UIView *)superView;
+
+@property (nonatomic , strong ,readonly) SPPageMenu *pageMenu;
+
+@property (nonatomic) BOOL isTop;
 
 @property (nonatomic, strong , readonly) DropMenuBar *menuScreeningView;
 

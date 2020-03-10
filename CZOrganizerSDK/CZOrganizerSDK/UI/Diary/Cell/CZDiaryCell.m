@@ -45,7 +45,6 @@
         make.left.right.top.mas_equalTo(0);
         make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(237/165.0);
     }];
-    self.coverImageView.backgroundColor = [UIColor redColor];
 
     
     self.tagLabel = [[UILabel alloc] init];
@@ -65,7 +64,7 @@
     self.nameLabel.numberOfLines = 2;
     [self.contentView addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.tagLabel.mas_bottom).offset(8);
+        make.top.mas_equalTo(self.tagLabel.mas_bottom).offset(2);
         make.height.mas_greaterThanOrEqualTo(0);
         make.left.right.mas_equalTo(0);
     }];
@@ -78,7 +77,6 @@
         make.left.bottom.mas_equalTo(0);
         make.size.mas_equalTo(16);
     }];
-    self.iconImageView.backgroundColor = [UIColor redColor];
     
     
     self.nickNameLabel = [[UILabel alloc] init];
@@ -126,8 +124,7 @@
     self.diaryNameLabel.text = @"-";
     [self.diaryNameLabel setContentHuggingPriority:UILayoutPriorityRequired
                                      forAxis:UILayoutConstraintAxisHorizontal];
-    self.diaryNameLabel.backgroundColor = [UIColor blueColor];
-    self.diaryNameLabel.textColor = CZColorCreater(107, 107, 124, 1);
+    self.diaryNameLabel.textColor = [UIColor whiteColor];
     self.diaryNameLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     [self.coverImageView addSubview:self.diaryNameLabel];
     [self.diaryNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,6 +145,18 @@
         make.right.mas_equalTo(self.diaryNameLabel.mas_right).offset(6.5).priorityMedium();
     }];
     [self.coverImageView sendSubviewToBack:self.diaryBgView];
+}
+
+-(void)setModel:(CZDiaryModel *)model
+{
+    _model = model;
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.smdMainImg)] placeholderImage:nil];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.nickNameLabel.text = model.userNickName;
+    self.nameLabel.text = model.smdContent;
+    self.goodCountLabel.text = [@(model.praiseCount.integerValue) stringValue];
+    self.diaryNameLabel.text = [NSString stringWithFormat:@"%@ | %@篇日记" , model.schoolName,[@(model.diaryCount.integerValue) stringValue]];
+        self.tagLabel.text = model.topicTypeStr;
 }
 
 @end

@@ -1,12 +1,12 @@
 //
-//  CZCarefullyChooseViewController.m
+//  CZAllServiceThirdViewController.m
 //  CZOrganizerSDK
 //
-//  Created by zsc on 2020/2/21.
+//  Created by zsc on 2020/3/7.
 //  Copyright © 2020 zsc. All rights reserved.
 //
 
-#import "CZCarefullyChooseViewController.h"
+#import "CZAllServiceThirdViewController.h"
 #import "CZCarefullyChooseView.h"
 #import "QSCommonService.h"
 #import "QSOrganizerHomeService.h"
@@ -16,7 +16,7 @@
 #import "DropMenuBar.h"
 #import "CZCommonFilterManager.h"
 
-@interface CZCarefullyChooseViewController ()
+@interface CZAllServiceThirdViewController ()
 
 @property (nonatomic ,strong) CZCarefullyChooseView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
@@ -26,14 +26,12 @@
 
 @end
 
-@implementation CZCarefullyChooseViewController
-@synthesize contentScrollView;
-@synthesize canScroll;
+@implementation CZAllServiceThirdViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    [self requestForCarefullyChoose];
+    [self requestForProductList];
 }
 
 -(void)initUI
@@ -50,31 +48,30 @@
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.dataCollectionView = [[CZCarefullyChooseView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height) collectionViewLayout:layout];
+    self.dataCollectionView = [[CZCarefullyChooseView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame)) collectionViewLayout:layout];
     self.dataCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataCollectionView];
-    self.contentScrollView = self.dataCollectionView;
     self.dataCollectionView.alwaysBounceVertical = YES;
     
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         weakSelf.pageIndex = 1;
-        [weakSelf requestForCarefullyChoose];
+        [weakSelf requestForProductList];
     }];
     
     self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageIndex += 1;
-        [weakSelf requestForCarefullyChoose];
+        [weakSelf requestForProductList];
     }];
 }
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.dataCollectionView.frame = CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height);
+    self.dataCollectionView.frame = CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame));
 }
 
--(void)requestForCarefullyChoose
+-(void)requestForProductList
 {
     WEAKSELF
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
@@ -83,7 +80,7 @@
     param.serviceSource = @(1);
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
-    [service requestForApiProductGetDefaultProductListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiProductGetProductListByFilterByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         
         if (success) {
         

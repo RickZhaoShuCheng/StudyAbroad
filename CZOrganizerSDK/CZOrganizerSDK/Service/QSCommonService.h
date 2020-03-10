@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "QSNetworkManagerUtil.h"
 
 typedef enum : NSUInteger {
     QSServiceTypeOrganizerHome,

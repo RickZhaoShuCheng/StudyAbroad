@@ -18,8 +18,6 @@
 #import "CZCourseView.h"
 #import "CZCourseModel.h"
 #import "CZHomeFilterView.h"
-#import "MenuAction.h"
-#import "DropMenuBar.h"
 #import "CZSearchBar.h"
 #import "CZSchoolStarView.h"
 #import "CZHotActivityView.h"
@@ -34,9 +32,11 @@
 #import "CZCountryUtil.h"
 #import "CZMJRefreshHelper.h"
 #import "SDCycleScrollView.h"
+#import "CZCommonInstance.h"
+#import "CZAllServiceViewController.h"
 
 static NSInteger sectionCount = 6;
-static CGFloat filterHeight = 95;
+static CGFloat filterHeight = 50;
 
 typedef enum : NSUInteger {
     CZTableSectionTypeService,
@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
     CZTableSectionFilter,
 } CZTableSectionType;
 
-@interface CZOrganizerHomeViewController ()<DropMenuBarDelegate,CZHomeFilterViewDelegate,CZSelectCityViewControllerDelegate>
+@interface CZOrganizerHomeViewController ()<CZHomeFilterViewDelegate,CZSelectCityViewControllerDelegate>
 @property (nonatomic , strong) CZHomeBannerView *bannerView;//轮播图
 @property (nonatomic , strong) UIImageView *bannerBottomView;//轮播图bottom
 @property (nonatomic , strong) CZServiceBannerView *serviceBannerView;//服务选择图
@@ -56,8 +56,6 @@ typedef enum : NSUInteger {
 @property (nonatomic , strong) CZHomeFilterView *homeFilterView;
 @property (nonatomic , strong) UIView *homeFilterContainerView;
 @property (nonatomic , assign) BOOL canScroll;
-@property (nonatomic, strong) DropMenuBar *menuScreeningView;
-@property (nonatomic, strong) NSArray<MenuAction *> *actions;
 @property (nonatomic, strong) UIButton *locationButton;
 @property (nonatomic, strong) UIButton *shopButton;
 @property (nonatomic, strong) CZSearchBar *searchBar;
@@ -95,7 +93,7 @@ typedef enum : NSUInteger {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.canScroll = YES;
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    [self createDefaultFilterMenu];
+//    [self createDefaultFilterMenu];
     [self createNavigationBar];
 }
 
@@ -114,6 +112,7 @@ typedef enum : NSUInteger {
     self.navigationItem.leftBarButtonItem = leftBarItem;
     
     self.shopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.shopButton addTarget:self action:@selector(actionForShowCart) forControlEvents:UIControlEventTouchUpInside];
     [self.shopButton setImage:[CZImageProvider imageNamed:@"zhu_ye_dao_hang_gou_wu_che_an_niu"] forState:UIControlStateNormal];
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.shopButton];
     self.navigationItem.rightBarButtonItem = rightBarItem;
@@ -140,6 +139,11 @@ typedef enum : NSUInteger {
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+-(void)actionForShowCart
+{
+    [QSClient showCartInNavi:self.navigationController];
+}
+
 -(UIImageView *)bannerBottomView
 {
     if (!_bannerBottomView) {
@@ -152,7 +156,14 @@ typedef enum : NSUInteger {
 -(CZServiceBannerView *)serviceBannerView
 {
     if (!_serviceBannerView) {
+        WEAKSELF
         _serviceBannerView = [[CZServiceBannerView alloc] initLayoutByHeight:0];
+        _serviceBannerView.select = ^(CZHomeModel * _Nonnull model) {
+            CZAllServiceViewController *controller = [[CZAllServiceViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.model = model;
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        };
     }
     return _serviceBannerView;
 }
@@ -248,6 +259,7 @@ typedef enum : NSUInteger {
     [arry addObject:controller4];
     CZOrganizerListViewController *controller5 = [[CZOrganizerListViewController alloc]init];
     [arry addObject:controller5];
+    
     return arry;
 }
 
@@ -256,7 +268,6 @@ typedef enum : NSUInteger {
     if (section == CZTableSectionFilter) {
         if (!self.homeFilterView) {
             self.homeFilterView = [[CZHomeFilterView alloc] initWithSuperView:self.homeFilterContainerView];
-            self.homeFilterView.menuScreeningView.actions = self.actions;
             self.homeFilterView.delegate = self;
         }
         return self.homeFilterContainerView;
@@ -310,7 +321,7 @@ typedef enum : NSUInteger {
         case 2:
             return 187;
         case 3:
-            return 187;
+            return 140;
         case 4:
             return self.view.bounds.size.width-50;
         default:
@@ -330,11 +341,6 @@ typedef enum : NSUInteger {
         default:
             return 0;
     }
-}
-
--(NSInteger)setSectionCout
-{
-    return sectionCount;
 }
 
 -(UITableViewCell *)tableViewCellForRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -420,18 +426,9 @@ typedef enum : NSUInteger {
 
 -(void)didScrolling:(BOOL)canScroll
 {
-    self.menuScreeningView.hidden = canScroll;
-    
-    if (self.canScroll != canScroll) {
-        if (!canScroll) {
-            self.menuScreeningView.actions = self.actions;
-        }
-        else
-        {
-            self.homeFilterView.menuScreeningView.actions = self.actions;
-        }
-    }
     self.canScroll = canScroll;
+    
+    self.homeFilterView.isTop = !canScroll;
 }
 
 -(void)addMoreButton:(UIView *)view
@@ -466,71 +463,6 @@ typedef enum : NSUInteger {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
--(void)createDefaultFilterMenu
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 15; i++) {
-        BOOL select = i == 0;
-        ItemModel *model = [ItemModel modelWithText:[NSString stringWithFormat:@" == %d", i] currentID:[NSString stringWithFormat:@"%d", i] isSelect:select];
-        [array addObject:model];
-    }
-    
-    MenuAction *smartSort = [MenuAction actionWithTitle:NSLocalizedString(@"智能排序", nil) style:MenuActionTypeList];
-    smartSort.ListDataSource = array;
-    smartSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-        NSLog(@"1111 === %@", selecModel.displayText);
-    };
-    
-    NSMutableArray *countrys = [[NSMutableArray alloc] init];
-    NSMutableArray *countryDatas = [CZCountryUtil sharedInstance].datas;
-    for (int i = 0; i < countryDatas.count; i++) {
-        CZSCountryModel *country = countryDatas[i];
-        BOOL select = i == 0;
-        ItemModel *model = [ItemModel modelWithText:country.country.area_name currentID:country.country.ID isSelect:select];
-        [countrys addObject:model];
-    }
-    
-    MenuAction *countrySort = [MenuAction actionWithTitle:NSLocalizedString(@"国家", nil) style:MenuActionTypeList];
-    countrySort.ListDataSource = countrys;
-    countrySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-        NSLog(@"1111 === %@", selecModel.displayText);
-    };
-    
-    MenuAction *profassionnalSort = [MenuAction actionWithTitle:NSLocalizedString(@"专业", nil) style:MenuActionTypeList];
-    profassionnalSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-        NSLog(@"1111 === %@", selecModel.displayText);
-    };
-    
-    MenuAction *citySort = [MenuAction actionWithTitle:NSLocalizedString(@"城市", nil) style:MenuActionTypeList];
-    citySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-        NSLog(@"1111 === %@", selecModel.displayText);
-    };
-    
-    MenuAction *filterSort = [MenuAction actionWithTitle:NSLocalizedString(@"筛选", nil) style:MenuActionTypeList];
-    filterSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-        NSLog(@"1111 === %@", selecModel.displayText);
-    };
-    
-    self.menuScreeningView = [[DropMenuBar alloc] initWithAction:@[smartSort, countrySort,profassionnalSort,citySort,filterSort]];
-    self.menuScreeningView.delegate = self;
-    self.menuScreeningView.frame = CGRectMake(0, 50, self.view.frame.size.width, 45);
-    self.menuScreeningView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.menuScreeningView];
-    self.menuScreeningView.hidden = YES;
-    self.actions = self.menuScreeningView.actions;
-}
-
-- (void)dropMenuViewWillAppear:(DropMenuBar *)view selectAction:(MenuAction *)action
-{
-    if (self.canScroll) {
-        [self scrollToBottom];
-    }
-}
-- (void)dropMenuViewWillDisAppear:(DropMenuBar *)view selectAction:(MenuAction *)action
-{
-    
-}
 
 #pragma - Network
 
@@ -599,6 +531,8 @@ typedef enum : NSUInteger {
         CZHomeModel *model = [CZHomeModel modelWithDict:dict];
         [services addObject:model];
     }
+    [[CZCommonInstance sharedInstance].servies removeAllObjects];;
+    [[CZCommonInstance sharedInstance].servies addObjectsFromArray:services];
     
     if (services.count > 8) {
         if (services.count%8 > 0) {
@@ -610,6 +544,7 @@ typedef enum : NSUInteger {
         }
     }
     
+    
     [self.serviceBannerView reloadByDatas:services];
     
     NSMutableArray *items5 = self.dataDicts[@(5)];
@@ -619,13 +554,13 @@ typedef enum : NSUInteger {
         [boards addObject:model];
     }
     [self.boardView updateLayoutByBoards:boards];
-    
-    [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
+        
+    self.stopSectionIndex = sectionCount-1;
     
     [self.scrollMainTableView.mj_header endRefreshing];
     [self.scrollMainTableView reloadData];
 }
-
+    
 -(NSMutableArray *)schoolStars
 {
     if (!_schoolStars) {
@@ -696,6 +631,11 @@ typedef enum : NSUInteger {
     [CZCountryUtil sharedInstance].selectModel = model;
     [self.locationButton setTitle:model.country.area_name forState:UIControlStateNormal];
     [vc.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)scrollView:(CZPageScrollContentView *)scrollView atIndex:(NSInteger)index
+{
+    [self.homeFilterView.pageMenu setSelectedItemIndex:index];
 }
 
 @end

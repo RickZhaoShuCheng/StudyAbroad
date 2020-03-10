@@ -134,4 +134,11 @@ CGFloat const pageControlHeight = 30;
     self.pageControl.currentPage = pageIndex;
 }
 
+-(void)serviceViewDidSelectItem:(CZHomeModel *)model
+{
+    if (self.select) {
+        self.select(model);
+    }
+}
+
 @end

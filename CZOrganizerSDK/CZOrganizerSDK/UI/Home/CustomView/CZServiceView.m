@@ -127,4 +127,12 @@
         [self.czDelegate serviceViewDidScroll:pageIndex];
     }
 }
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.czDelegate && [self.czDelegate respondsToSelector:@selector(serviceViewDidScroll:)]) {
+        [self.czDelegate serviceViewDidSelectItem:self.datas[indexPath.row]];
+    }
+}
+
 @end

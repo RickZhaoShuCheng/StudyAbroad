@@ -36,7 +36,6 @@
         make.top.mas_equalTo(0);
         make.centerX.mas_equalTo(0);
     }];
-    self.coverImageView.backgroundColor = [UIColor redColor];
 
     
     self.nameLabel = [[UILabel alloc] init];
