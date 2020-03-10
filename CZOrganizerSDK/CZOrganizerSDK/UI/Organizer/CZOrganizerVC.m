@@ -53,7 +53,7 @@
             CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
             //改变图片的y值和高度即可
             rect.origin.y = offsetY;
-            rect.size.height =/Users/roc/Documents/LXZJ/StudyAbroad HeightRatio(540)+baseVc.collectionView.tagListHeight - offsetY;
+            rect.size.height = HeightRatio(540)+baseVc.collectionView.tagListHeight - offsetY;
             baseVc.collectionView.headerView.bgImg.frame = rect;
         }
         //悬浮
