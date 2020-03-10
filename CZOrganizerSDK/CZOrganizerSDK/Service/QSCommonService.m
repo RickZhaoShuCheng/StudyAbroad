@@ -8,6 +8,7 @@
 
 #import "QSCommonService.h"
 #import "QSOrganizerHomeService.h"
+#import "CZAdvisorDetailService.h"
 
 @interface QSCommonService ()
 
@@ -66,6 +67,8 @@
     switch (type) {
         case QSServiceTypeOrganizerHome:
             return [QSOrganizerHomeService class];
+        case QSServiceTypeAdvisorDetail:
+            return [CZAdvisorDetailService class];
         default:
             return NULL;
     }

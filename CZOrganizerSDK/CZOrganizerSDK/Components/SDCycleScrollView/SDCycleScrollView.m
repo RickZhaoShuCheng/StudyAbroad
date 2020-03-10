@@ -619,7 +619,11 @@ NSString * const ID = @"SDCycleScrollViewCell";
     }
     
     if (_titlesGroup.count && itemIndex < _titlesGroup.count) {
-        cell.title = _titlesGroup[itemIndex];
+        if ([_titlesGroup[itemIndex] isKindOfClass:[NSAttributedString class]]) {
+            cell.attributedTitle = _titlesGroup[itemIndex];
+        }else{
+            cell.title = _titlesGroup[itemIndex];
+        }
     }
     
     if (!cell.hasConfigured) {

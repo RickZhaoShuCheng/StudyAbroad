@@ -90,6 +90,14 @@
         _titleLabel.hidden = NO;
     }
 }
+- (void)setAttributedTitle:(NSAttributedString *)attributedTitle
+{
+    _attributedTitle = [attributedTitle copy];
+    _titleLabel.attributedText = attributedTitle;
+    if (_titleLabel.hidden) {
+        _titleLabel.hidden = NO;
+    }
+}
 
 -(void)setTitleLabelTextAlignment:(NSTextAlignment)titleLabelTextAlignment
 {

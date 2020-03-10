@@ -11,6 +11,7 @@
 
 typedef enum : NSUInteger {
     QSServiceTypeOrganizerHome,
+    QSServiceTypeAdvisorDetail,
 } QSServiceType;
 
 NS_ASSUME_NONNULL_BEGIN

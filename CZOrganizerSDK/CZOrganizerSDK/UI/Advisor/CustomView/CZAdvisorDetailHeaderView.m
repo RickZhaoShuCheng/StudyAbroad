@@ -1,0 +1,361 @@
+//
+//  CZAdvisorDetailHeaderView.m
+//  CZOrganizerSDK
+//
+//  Created by 谢朋远 on 2020/3/4.
+//  Copyright © 2020 zsc. All rights reserved.
+//
+
+#import "CZAdvisorDetailHeaderView.h"
+#import "UIImageView+WebCache.h"
+#import "CZRankView.h"
+#import "CZAdvisorDetailBtnView.h"
+#import "CZAdvisorDetailHeaderCell.h"
+
+
+@interface CZAdvisorDetailHeaderView()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@property (nonatomic ,strong)UIImageView *avatarImg;
+@property (nonatomic ,strong)UIImageView *VImg;
+@property (nonatomic ,strong)UILabel *nameLab;
+@property (nonatomic ,strong)UILabel *organizerLab;
+@property (nonatomic ,strong)CZRankView *rankView;
+@property (nonatomic ,strong)UILabel *serviceLab;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *caseView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *fansView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *serviceView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *consultView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *praiseView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *complainView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *refundView;
+@property (nonatomic ,strong)CZAdvisorDetailBtnView *evaluationView;
+@property (nonatomic ,strong)UIView *locationView;
+@property (nonatomic ,strong)UILabel *locationTitle;
+@property (nonatomic ,strong)UILabel *locationContent;
+@property (nonatomic ,strong)UIImageView *locationImg;
+@property (nonatomic ,strong)UIView *dynamicView;
+@property (nonatomic ,strong)UICollectionView *collectionView;
+
+@end
+@implementation CZAdvisorDetailHeaderView
+
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = CZColorCreater(245, 245, 249, 1);
+        [self initWithUI];
+        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=dc636c57845494ee87220d191dce91c3/8718367adab44aed01ce530cbb1c8701a08bfb52.jpg"] placeholderImage:nil];
+        [self.bgImg sd_setImageWithURL:[NSURL URLWithString:@"http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=dc636c57845494ee87220d191dce91c3/8718367adab44aed01ce530cbb1c8701a08bfb52.jpg"] placeholderImage:nil];
+    }
+    return self;
+}
+//设置标签
+- (void)setTags:(NSMutableArray *)tagesArr{
+    self.tagList.tags = tagesArr;
+    self.tagList.frame = CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), kScreenWidth - WidthRatio(60),self.tagList.contentHeight);
+    self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, HeightRatio(540));
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return 20;
+}
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 1;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CZAdvisorDetailHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderCell class]) forIndexPath:indexPath];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(WidthRatio(116), WidthRatio(116));
+}
+
+-(void)initWithUI{
+    
+    //根据标签高度调整背景高度
+    self.bgImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, HeightRatio(540))];
+    [self addSubview:self.bgImg];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    effectView.alpha = 1;
+    effectView.backgroundColor = CZColorCreater(0, 0, 0, 0.3);
+//    effectView.frame = self.bgImg.bounds;
+    [self.bgImg addSubview:effectView];
+    [effectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.bgImg);
+    }];
+    
+    self.avatarImg = [[UIImageView alloc]init];
+    self.avatarImg.layer.masksToBounds = YES;
+    self.avatarImg.layer.cornerRadius = WidthRatio(100)/2;
+    [self addSubview:self.avatarImg];
+    [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.mas_leading).offset(WidthRatio(50));
+        make.top.mas_equalTo(self.mas_top).offset(HeightRatio(180));
+        make.width.height.mas_equalTo(WidthRatio(100));
+    }];
+    
+    self.VImg = [[UIImageView alloc]init];
+    self.VImg.image = [CZImageProvider imageNamed:@"shou_ye_ren_zheng_cell"];
+    [self addSubview:self.VImg];
+    [self.VImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-HeightRatio(18));
+        make.centerX.mas_equalTo(self.avatarImg);
+        make.width.mas_equalTo(WidthRatio(100));
+        make.height.mas_equalTo(HeightRatio(36));
+    }];
+    
+    self.nameLab = [[UILabel alloc] init];
+    self.nameLab.text = @"张彤彤";
+    self.nameLab.textColor = CZColorCreater(255, 255, 255, 1);
+    self.nameLab.font = [UIFont boldSystemFontOfSize:WidthRatio(34)];
+    [self addSubview:self.nameLab];
+    [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(20));
+        make.top.mas_equalTo(self.avatarImg.mas_top);
+        make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
+        make.height.mas_greaterThanOrEqualTo(0);
+    }];
+    
+    self.organizerLab = [[UILabel alloc] init];
+    self.organizerLab.text = @"南京市海牛工作室";
+    self.organizerLab.textColor = CZColorCreater(255, 255, 255, 1);
+    self.organizerLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    [self addSubview:self.organizerLab];
+    [self.organizerLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(20));
+        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(HeightRatio(8));
+        make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
+        make.height.mas_greaterThanOrEqualTo(0);
+    }];
+    
+    self.rankView = [CZRankView instanceRankViewByRate:3.1];
+    [self addSubview:self.rankView];
+    [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(WidthRatio(150));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(20));
+        make.bottom.mas_equalTo(self.VImg.mas_bottom);
+        make.height.mas_equalTo(HeightRatio(28));
+    }];
+    
+    self.serviceLab = [[UILabel alloc] init];
+    self.serviceLab.text = @"服务3637人";
+    self.serviceLab.textColor = CZColorCreater(255, 255, 255, 1);
+    self.serviceLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    [self addSubview:self.serviceLab];
+    [self.serviceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.rankView.mas_trailing);
+        make.top.mas_equalTo(self.rankView.mas_top).offset(-HeightRatio(2));
+        make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
+        make.height.mas_greaterThanOrEqualTo(0);
+    }];
+    
+    //数据
+    {
+        self.caseView = [[CZAdvisorDetailBtnView alloc]init];
+        self.caseView.countLab.text = @"23";
+        self.caseView.nameLab.text = @"案例";
+        [self addSubview:self.caseView];
+        [self.caseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.mas_leading);
+            make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(HeightRatio(40));
+            make.width.mas_equalTo(kScreenWidth/4);
+            make.height.mas_equalTo(HeightRatio(60));
+        }];
+        
+        self.fansView = [[CZAdvisorDetailBtnView alloc]init];
+        self.fansView.countLab.text = @"188";
+        self.fansView.nameLab.text = @"粉丝";
+        [self addSubview:self.fansView];
+        [self.fansView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.caseView.mas_trailing);
+            make.top.mas_equalTo(self.caseView);
+            make.width.height.mas_equalTo(self.caseView);
+        }];
+        
+        self.serviceView = [[CZAdvisorDetailBtnView alloc]init];
+        self.serviceView.countLab.text = @"1.2K";
+        self.serviceView.nameLab.text = @"服务次数";
+        [self addSubview:self.serviceView];
+        [self.serviceView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.fansView.mas_trailing);
+            make.top.mas_equalTo(self.fansView);
+            make.width.height.mas_equalTo(self.fansView);
+        }];
+        
+        self.consultView = [[CZAdvisorDetailBtnView alloc]init];
+        self.consultView.countLab.text = @"188";
+        self.consultView.nameLab.text = @"咨询排行";
+        [self addSubview:self.consultView];
+        [self.consultView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.serviceView.mas_trailing);
+            make.top.mas_equalTo(self.serviceView);
+            make.width.height.mas_equalTo(self.serviceView);
+        }];
+        
+        self.praiseView = [[CZAdvisorDetailBtnView alloc]init];
+        self.praiseView.countLab.text = @"90%";
+        self.praiseView.nameLab.text = @"好评率";
+        [self addSubview:self.praiseView];
+        [self.praiseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.mas_leading);
+            make.top.mas_equalTo(self.caseView.mas_bottom).offset(HeightRatio(50));
+            make.width.mas_equalTo(kScreenWidth/4);
+            make.height.mas_equalTo(HeightRatio(60));
+        }];
+        
+        self.complainView = [[CZAdvisorDetailBtnView alloc]init];
+        self.complainView.countLab.text = @"90%";
+        self.complainView.nameLab.text = @"投诉率";
+        [self addSubview:self.complainView];
+        [self.complainView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.praiseView.mas_trailing);
+            make.top.mas_equalTo(self.praiseView);
+            make.width.mas_equalTo(kScreenWidth/4);
+            make.height.mas_equalTo(HeightRatio(60));
+        }];
+        
+        self.refundView = [[CZAdvisorDetailBtnView alloc]init];
+        self.refundView.countLab.text = @"20%";
+        self.refundView.nameLab.text = @"退款率";
+        [self addSubview:self.refundView];
+        [self.refundView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.complainView.mas_trailing);
+            make.top.mas_equalTo(self.complainView);
+            make.width.mas_equalTo(kScreenWidth/4);
+            make.height.mas_equalTo(HeightRatio(60));
+        }];
+        
+        self.evaluationView = [[CZAdvisorDetailBtnView alloc]init];
+        self.evaluationView.countLab.text = @"524";
+        self.evaluationView.nameLab.text = @"评价数量";
+        [self addSubview:self.evaluationView];
+        [self.evaluationView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.refundView.mas_trailing);
+            make.top.mas_equalTo(self.refundView);
+            make.width.mas_equalTo(kScreenWidth/4);
+            make.height.mas_equalTo(HeightRatio(60));
+        }];
+    }
+    
+    [self layoutIfNeeded];
+    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), kScreenWidth - WidthRatio(60),0)];
+    self.tagList.tagCornerRadius = WidthRatio(3);
+    self.tagList.tagBorderWidth = 0;
+    self.tagList.tagBackgroundColor = CZColorCreater(52, 172, 255, 1);
+    self.tagList.tagTextColor = [UIColor whiteColor];
+    self.tagList.tagFont = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.tagList.tagItemSpacing = WidthRatio(16);
+    self.tagList.tagLineSpacing = WidthRatio(16);
+    self.tagList.tagContentInset = UIEdgeInsetsMake(HeightRatio(5), WidthRatio(10), HeightRatio(5), WidthRatio(10));
+    [self addSubview:self.tagList];
+    
+    
+    self.locationView = [[UIView alloc]init];
+    self.locationView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.locationView];
+    [self.locationView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.mas_equalTo(self);
+        make.top.mas_equalTo(self.bgImg.mas_bottom).offset(HeightRatio(16));
+        make.height.mas_equalTo(HeightRatio(135));
+    }];
+    
+    self.locationTitle = [[UILabel alloc] init];
+    self.locationTitle.text = @"南京市海牛留学工作室";
+    self.locationTitle.textColor = CZColorCreater(0, 0, 0, 1);
+    self.locationTitle.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    [self.locationView addSubview:self.locationTitle];
+    [self.locationTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.locationView.mas_leading).offset(WidthRatio(30));
+        make.top.mas_equalTo(self.locationView.mas_top).offset(HeightRatio(30));
+        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-WidthRatio(94));
+        make.height.mas_greaterThanOrEqualTo(0);
+    }];
+    
+    self.locationContent = [[UILabel alloc] init];
+    self.locationContent.text = @"南京市雨花台区达州路32号软件谷科";
+    self.locationContent.textColor = CZColorCreater(170, 170, 187, 1);
+    self.locationContent.font = [UIFont systemFontOfSize:WidthRatio(26)];
+    [self.locationView addSubview:self.locationContent];
+    [self.locationContent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.locationView.mas_leading).offset(WidthRatio(30));
+        make.top.mas_equalTo(self.locationTitle.mas_bottom).offset(HeightRatio(16));
+        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-WidthRatio(94));
+        make.height.mas_greaterThanOrEqualTo(0);
+    }];
+    
+    
+    self.locationImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"guwen_dingwei"]];
+    [self.locationView addSubview:self.locationImg];
+    [self.locationImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-WidthRatio(30));
+        make.centerY.mas_equalTo(self.locationView);
+        make.size.mas_equalTo(self.locationImg.image.size);
+    }];
+    
+    UILabel *line = [[UILabel alloc] init];
+    line.backgroundColor = CZColorCreater(241, 241, 245, 1);
+    [self.locationView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.locationImg.mas_leading).offset(-WidthRatio(32));
+        make.centerY.mas_equalTo(self.locationView);
+        make.height.mas_equalTo(HeightRatio(64));
+        make.width.mas_equalTo(1);
+    }];
+    
+    self.dynamicView = [[UIView alloc]init];
+    self.dynamicView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.dynamicView];
+    [self.dynamicView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.mas_equalTo(self);
+        make.bottom.mas_equalTo(self.mas_bottom).offset(-HeightRatio(16));
+        make.height.mas_equalTo(HeightRatio(198));
+    }];
+    
+    UILabel *tips = [[UILabel alloc]init];
+    tips.backgroundColor = CZColorCreater(76, 182, 253, 1);
+    [self.dynamicView addSubview:tips];
+    [tips mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.centerY.mas_equalTo(self.dynamicView);
+        make.width.mas_equalTo(WidthRatio(8));
+        make.height.mas_equalTo(HeightRatio(26));
+    }];
+    
+    UILabel *titleLab = [[UILabel alloc] init];
+    titleLab.text = @"顾问动态";
+    titleLab.textColor = CZColorCreater(0, 0, 0, 1);
+    titleLab.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    [self.dynamicView addSubview:titleLab];
+    [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(tips.mas_trailing).offset(WidthRatio(22));
+        make.centerY.mas_equalTo(self.dynamicView);
+        make.height.width.mas_greaterThanOrEqualTo(0);
+    }];
+    
+    UIImageView *arrowImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"zhu_ye_you_jian_tou"]];
+    [self.dynamicView addSubview:arrowImg];
+    [arrowImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.dynamicView.mas_trailing).offset(-WidthRatio(30));
+        make.centerY.mas_equalTo(self.dynamicView);
+        make.height.mas_equalTo(12);
+        make.width.mas_equalTo(8);
+    }];
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    layout.minimumLineSpacing = WidthRatio(18);
+    self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.showsHorizontalScrollIndicator = NO;
+    [self.collectionView registerClass:[CZAdvisorDetailHeaderCell class] forCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderCell class])];
+    [self.dynamicView addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(titleLab.mas_trailing).offset(WidthRatio(28));
+        make.centerY.mas_equalTo(self.dynamicView);
+        make.top.bottom.mas_equalTo(self.dynamicView);
+        make.trailing.mas_equalTo(arrowImg.mas_leading).offset(-WidthRatio(18));
+    }];
+}
+@end
