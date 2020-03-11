@@ -167,38 +167,11 @@
 -(void)initUI{
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIView *bottomView = [[UIView alloc]init];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.bottom.mas_equalTo(self.view);
-        make.height.mas_equalTo(HeightRatio(140));
-    }];
-    
-    self.chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.chatBtn.layer.masksToBounds = YES;
-    self.chatBtn.layer.cornerRadius = HeightRatio(80)/2.0;
-    [self.chatBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
-    [self.chatBtn setTitle:@"咨询一下" forState:UIControlStateNormal];
-    [self.chatBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:WidthRatio(30)]];
-    [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
-    [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
-    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(14))];
-    [bottomView addSubview:self.chatBtn];
-    [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(bottomView);
-        make.height.mas_equalTo(HeightRatio(80));
-        make.width.mas_equalTo(WidthRatio(690));
-        make.top.mas_equalTo(bottomView.mas_top);
-    }];
-    
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(self.view);
         make.leading.trailing.mas_equalTo(self.view);
         make.top.mas_equalTo(self.view.mas_top);
-        make.bottom.mas_equalTo(bottomView.mas_top);
+        make.bottom.mas_equalTo(self.view);
     }];
 }
 

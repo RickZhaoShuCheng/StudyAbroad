@@ -9,6 +9,10 @@
 #import "CZOrganizerVC.h"
 #import "SPPageMenu.h"
 #import "CZOrganizerDetailViewController.h"
+#import "CZRankView.h"
+#import "CZOrganizerProjectVC.h"
+#import "CZOrganizerDiaryVC.h"
+#import "CZOrganizerAdvisorVC.h"
 
 #define PageMenuHeight          HeightRatio(60)
 
@@ -19,12 +23,23 @@
 @property (nonatomic,strong) NSArray *titleArr;
 @property (nonatomic,strong) NSMutableArray *myChildViewControllers;
 @property (nonatomic,strong) UIScrollView *scrollView;
+@property (nonatomic,strong) UIView *topView;
+@property (nonatomic ,strong) UIButton *searchBtn;
+@property (nonatomic ,strong) UIView *titleView;
+@property (nonatomic ,strong) UILabel *titleLab;
+@property (nonatomic ,strong) CZRankView *rankView;
+@property (nonatomic ,strong) UILabel *scoreLab;
+@property (nonatomic ,strong) UILabel *countLab;
+@property (nonatomic ,strong) UIButton *focusBtn;
+@property (nonatomic ,assign) CGFloat alpha;
+@property (nonatomic ,strong) UIButton *chatBtn;
 @end
 
 @implementation CZOrganizerVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.alpha = 0.0;
     [self initWithUI];
     [self initPageMenu];
     [self firstPageScrollHandle];
@@ -39,8 +54,13 @@
     [baseVc.collectionView setScrollContentSize:^(CGFloat offsetY) {
         //设置渐变透明度
         CGFloat alpha = (offsetY / NaviH)>0.99?0.99:(offsetY / NaviH);
+        weakSelf.alpha = alpha;
         [weakSelf.navigationController.navigationBar.subviews.firstObject setAlpha:alpha];
-        weakSelf.pageMenu.alpha = alpha;
+        weakSelf.topView.alpha = alpha;
+        if (!weakSelf.titleView.superview) {
+            weakSelf.navigationItem.titleView = weakSelf.titleView;
+        }
+        weakSelf.titleView.alpha = alpha;
         if (alpha >0.5) {
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
@@ -69,13 +89,23 @@
     }];
 }
 
+- (void)clickSearchBtn:(UIButton *)searchBtn{
+    
+}
+
 /**
  * 初始化PageMenu
  */
 -(void)initPageMenu{
+    
+    self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, PageMenuHeight)];
+    self.topView.backgroundColor = [UIColor whiteColor];
+    //初始隐藏
+    self.topView.alpha = 0.0;
+    
     self.titleArr = @[@"主页",@"项目",@"日记",@"顾问"];
     // trackerStyle:跟踪器的样式
-    self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, kScreenWidth, PageMenuHeight) trackerStyle:SPPageMenuTrackerStyleLine];
+    self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(WidthRatio(200), 0, kScreenWidth-WidthRatio(216), PageMenuHeight) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
     self.pageMenu.selectedItemTitleColor = CZColorCreater(0, 0, 0, 1);
     self.pageMenu.unSelectedItemTitleColor = CZColorCreater(0, 0, 0, 1);
@@ -85,16 +115,14 @@
     [self.pageMenu setItems:self.titleArr selectedItemIndex:0];
     // 设置代理
     self.pageMenu.delegate = self;
-    //初始隐藏
-    self.pageMenu.alpha = 0.0;
     
     
-    NSArray *controllerClassNames = [NSArray arrayWithObjects:@"CZOrganizerDetailViewController",@"UIViewController",@"UIViewController",@"UIViewController",nil];
+    NSArray *controllerClassNames = [NSArray arrayWithObjects:@"CZOrganizerDetailViewController",@"CZOrganizerProjectVC",@"CZOrganizerDiaryVC",@"CZOrganizerAdvisorVC",nil];
     for (int i = 0; i < self.titleArr.count; i++) {
         if (controllerClassNames.count > i) {
             UIViewController *baseVC = [[NSClassFromString(controllerClassNames[i]) alloc] init];
             [self addChildViewController:baseVC];
-            // 控制器本来自带childViewControllers,但是遗憾的是该数组的元素顺序永远无法改变，只要是addChildViewController,都是添加到最后一个，而控制器不像数组那样，可以插入或删除任意位置，所以这里自己定义可变数组，以便插入(删除)(如果没有插入(删除)功能，直接用自带的childViewControllers即可)
+        //控制器本来自带childViewControllers,但是遗憾的是该数组的元素顺序永远无法改变，只要是addChildViewController,都是添加到最后一个，而控制器不像数组那样，可以插入或删除任意位置，所以这里自己定义可变数组，以便插入(删除)(如果没有插入(删除)功能，直接用自带的childViewControllers即可)
             [self.myChildViewControllers addObject:baseVC];
         }
     }
@@ -107,16 +135,37 @@
     
     // 这一行赋值，可实现pageMenu的跟踪器时刻跟随scrollView滑动的效果
     self.pageMenu.bridgeScrollView = self.scrollView;
-    [self.view addSubview:self.pageMenu];
+    [self.topView addSubview:self.pageMenu];
+    [self.view addSubview:self.topView];
     
     // pageMenu.selectedItemIndex就是选中的item下标
     if (self.pageMenu.selectedItemIndex < self.myChildViewControllers.count) {
-        CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
+        UIViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
         [self.scrollView addSubview:baseVc.view];
-        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight);
+        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-HeightRatio(140));
         self.scrollView.contentOffset = CGPointMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0);
         self.scrollView.contentSize = CGSizeMake(self.titleArr.count*kScreenWidth, 0);
     }
+    
+    //搜索按钮
+    self.searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [self.searchBtn setTitleColor:CZColorCreater(188, 188, 201, 1) forState:UIControlStateNormal];
+    [self.searchBtn.titleLabel setFont:[UIFont systemFontOfSize:WidthRatio(28)]];
+    [self.searchBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_xue_xiao_fang_da_jing"] forState:UIControlStateNormal];
+    [self.searchBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_xue_xiao_fang_da_jing"] forState:UIControlStateHighlighted];
+    [self.searchBtn setBackgroundColor:CZColorCreater(244, 244, 248, 1)];
+    [self.searchBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(16))];
+    [self.searchBtn.layer setMasksToBounds:YES];
+    [self.searchBtn.layer setCornerRadius:HeightRatio(50)/2];
+    [self.searchBtn addTarget:self action:@selector(clickSearchBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topView addSubview:self.searchBtn];
+    [self.searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.topView).offset(WidthRatio(40));
+        make.centerY.mas_equalTo(self.topView);
+        make.width.mas_equalTo(WidthRatio(140));
+        make.height.mas_equalTo(HeightRatio(50));
+    }];
 }
 #pragma mark - SPPageMenu的代理方法
 - (void)pageMenu:(SPPageMenu *)pageMenu itemSelectedFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
@@ -124,6 +173,33 @@
     if (fromIndex == toIndex) {
         return;
     }
+    if (fromIndex == 0 && toIndex == 1) {
+        if (self.topView.alpha < 1) {
+            //页面滑动过去的，需要处理导航条
+            [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
+            self.topView.alpha = 1;
+            if (!self.titleView.superview) {
+                self.navigationItem.titleView = self.titleView;
+            }
+            self.titleView.alpha = 1;
+            [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+            [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
+        }
+    }else if(toIndex == 0){
+        //页面滑动回来的，需要处理导航条
+        [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+        self.topView.alpha = self.alpha;
+        self.titleView.alpha = self.alpha;
+        if (self.alpha > 0.5) {
+            [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+            [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
+        }else{
+            [self.backBtn setImage:[CZImageProvider imageNamed:@"baise_fanhui"] forState:UIControlStateNormal];
+            [self.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
+        }
+            
+    }
+    
     // 如果fromIndex与toIndex之差大于等于2,说明跨界面移动了,此时不动画.
     if (labs(toIndex - fromIndex) >= 2) {
         [self.scrollView setContentOffset:CGPointMake(kScreenWidth * toIndex, 0) animated:NO];
@@ -139,9 +215,10 @@
     if ([targetViewController isViewLoaded]){
         return;
     };
-    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, 0, kScreenWidth, kScreenHeight - PageMenuHeight - NaviH);
+    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - PageMenuHeight - NaviH - StatusBarHeight - HeightRatio(140));
     [self.scrollView addSubview:targetViewController.view];
 }
+
 /**
  * 初始化UI
  */
@@ -161,11 +238,71 @@
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
     self.navigationItem.rightBarButtonItem = rbackItem;
     
+    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
+
+    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-140, HeightRatio(30))];
+    self.titleLab.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
+    self.titleLab.text = @"南京市海牛工作室";
+    [self.titleView addSubview:self.titleLab];
+    
+    self.rankView = [CZRankView instanceRankViewByRate:3.1];
+    self.rankView.frame = CGRectMake(0, HeightRatio(45), WidthRatio(150), HeightRatio(28));
+    [self.titleView addSubview:self.rankView];
+    
+    self.scoreLab = [[UILabel alloc]initWithFrame:CGRectMake(WidthRatio(135), HeightRatio(36), WidthRatio(50), HeightRatio(30))];
+    self.scoreLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.scoreLab.textColor = CZColorCreater(129, 129, 146, 1);
+    self.scoreLab.text = @"3.1";
+    [self.titleView addSubview:self.scoreLab];
+    
+    self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(WidthRatio(135)+WidthRatio(50)+WidthRatio(34), HeightRatio(36), WidthRatio(180), HeightRatio(30))];
+    self.countLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.countLab.textColor = CZColorCreater(129, 129, 146, 1);
+    self.countLab.text = @"粉丝数 8122";
+    [self.titleView addSubview:self.countLab];
+    
+    self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-WidthRatio(116), HeightRatio(10), WidthRatio(116), HeightRatio(46))];
+    [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
+    [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+    [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:WidthRatio(26)]];
+    [self.focusBtn.layer setMasksToBounds:YES];
+    [self.focusBtn.layer setCornerRadius:HeightRatio(46)/2];
+    [self.titleView addSubview:self.focusBtn];
+    
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
+    
+    UIView *bottomView = [[UIView alloc]init];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.bottom.mas_equalTo(self.view);
+        make.height.mas_equalTo(HeightRatio(140));
+    }];
+    
+    self.chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.chatBtn.layer.masksToBounds = YES;
+    self.chatBtn.layer.cornerRadius = HeightRatio(80)/2.0;
+    [self.chatBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
+    [self.chatBtn setTitle:@"咨询一下" forState:UIControlStateNormal];
+    [self.chatBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:WidthRatio(30)]];
+    [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
+    [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
+    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(14))];
+    [bottomView addSubview:self.chatBtn];
+    [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(bottomView);
+        make.height.mas_equalTo(HeightRatio(80));
+        make.width.mas_equalTo(WidthRatio(690));
+        make.top.mas_equalTo(bottomView.mas_top);
+    }];
 }
 
 - (void)rbackItemClick{
