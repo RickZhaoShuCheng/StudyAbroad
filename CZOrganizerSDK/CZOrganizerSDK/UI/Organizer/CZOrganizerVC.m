@@ -100,6 +100,9 @@
     
     self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, PageMenuHeight)];
     self.topView.backgroundColor = [UIColor whiteColor];
+    self.topView.layer.shadowOpacity = 0.3;//阴影透明度
+    self.topView.layer.shadowOffset = CGSizeMake(0, 1);//阴影偏移量
+    self.topView.layer.shadowRadius = 4;//阴影的半径
     //初始隐藏
     self.topView.alpha = 0.0;
     

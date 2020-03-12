@@ -159,6 +159,10 @@
 //#pragma mark UIScrollView
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    //-1时会崩溃，不知道是不是因为这个？
+    if (self.stopSectionIndex == -1) {
+        return;
+    }
     CGFloat bottomCellOffset = [_scrollMainTableView rectForSection:self.stopSectionIndex].origin.y;
     if (scrollView.contentOffset.y >= bottomCellOffset) {
         scrollView.contentOffset = CGPointMake(0, bottomCellOffset);
