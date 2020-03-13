@@ -81,6 +81,8 @@ typedef enum : NSUInteger {
     WEAKSELF
     self.scrollMainTableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         [weakSelf requestForHomeData];
+        [weakSelf requestForSchoolStars];
+        [weakSelf requestForHotActivities];
     }];
     
     [self requestForHomeData];
