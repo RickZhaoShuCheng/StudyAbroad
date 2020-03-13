@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(CZRankView *)instanceRankViewByRate:(CGFloat)rate;
 
+-(void)setRankByRate:(CGFloat)rate;
+
 @end
 
 NS_ASSUME_NONNULL_END

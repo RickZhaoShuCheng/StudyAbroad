@@ -27,6 +27,8 @@
 @end
 
 @implementation CZAllServiceThirdViewController
+@synthesize contentScrollView;
+@synthesize canScroll;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,6 +54,10 @@
     self.dataCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
+    [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
+        make.left.right.bottom.mas_equalTo(0);
+    }];
     
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
@@ -63,12 +69,6 @@
         weakSelf.pageIndex += 1;
         [weakSelf requestForProductList];
     }];
-}
-
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    self.dataCollectionView.frame = CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame));
 }
 
 -(void)requestForProductList

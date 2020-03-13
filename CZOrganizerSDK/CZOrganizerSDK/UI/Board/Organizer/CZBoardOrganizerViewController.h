@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CZScrollContentControllerDeleagte.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CZBoardOrganizerViewController : UIViewController
+@interface CZBoardOrganizerViewController : UIViewController<CZScrollContentControllerDeleagte>
 
 @end
 

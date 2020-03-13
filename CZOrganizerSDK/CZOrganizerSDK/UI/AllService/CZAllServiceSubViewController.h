@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "CZHomeModel.h"
+#import "CZScrollContentControllerDeleagte.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CZAllServiceSubViewController : UIViewController
+@interface CZAllServiceSubViewController : UIViewController<CZScrollContentControllerDeleagte>
 @property (nonatomic, strong) CZHomeModel *model;
 @end
 

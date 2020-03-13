@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CZScrollContentControllerDeleagte.h"
+#import "CZHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZSchoolStarViewController : UIViewController<CZScrollContentControllerDeleagte>
+@property (nonatomic, strong) CZHomeModel *model;
 
 @end
 

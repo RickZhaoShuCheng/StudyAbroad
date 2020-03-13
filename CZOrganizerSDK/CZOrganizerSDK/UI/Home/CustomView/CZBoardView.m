@@ -33,6 +33,7 @@ static CGFloat innerPadding = 10;
 {
     self = [super init];
     if (self) {
+        self.userInteractionEnabled = YES;
         self.boards = courses;
         CGFloat defaultWidth = container.bounds.size.width-2*padding;
         self.frame = CGRectMake(padding, 0, defaultWidth, defaultWidth);
@@ -62,6 +63,8 @@ static CGFloat innerPadding = 10;
 {
     for (NSInteger index = 0; index < self.boards.count; index++) {
         UIImageView *cover = [[UIImageView alloc] init];
+        cover.userInteractionEnabled = YES;
+        [cover addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionForClickCover:)]];
         cover.tag = index;
         [self.covers addObject:cover];
         CZHomeModel *model = self.boards[index];
@@ -134,6 +137,13 @@ static CGFloat innerPadding = 10;
             view.frame = CGRectMake(xPd*(15+width), yPd*(15+height), width, height);
             [bottomView addSubview:view];
         }
+    }
+}
+
+-(void)actionForClickCover:(UIGestureRecognizer *)gesture
+{
+    if (self.clickBlock) {
+        self.clickBlock(self.boards[gesture.view.tag]);
     }
 }
 

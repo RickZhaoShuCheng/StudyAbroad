@@ -51,7 +51,10 @@
     self.searchBar = [[CZSearchBar alloc] initWithFrame:CGRectMake(0, 0, 400, 33)];
     self.navigationItem.titleView = self.searchBar;
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] style:UIBarButtonItemStylePlain target:self action:@selector(actionForBack)];
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = backButton;
     
     self.view.backgroundColor = [UIColor whiteColor];

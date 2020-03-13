@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *sales;
 @property (nonatomic , strong) NSString *reputation;
 @property (nonatomic , strong) NSString *comments;
-
+@property (nonatomic , assign) CGFloat cellHeight;
 
 @end
 

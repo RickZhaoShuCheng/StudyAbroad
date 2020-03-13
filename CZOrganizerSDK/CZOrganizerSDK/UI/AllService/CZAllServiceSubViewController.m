@@ -16,12 +16,14 @@
 
 #import "SPPageMenu.h"
 
-@interface CZAllServiceSubViewController ()
+@interface CZAllServiceSubViewController ()<SPPageMenuDelegate>
 @property (nonatomic , strong)CZPageScrollContentView *contentView;
 @property (nonatomic , strong)SPPageMenu *pageMenu;
 @end
 
 @implementation CZAllServiceSubViewController
+@synthesize contentScrollView;
+@synthesize canScroll;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,13 +40,20 @@
     [self.pageMenu setItems:@[NSLocalizedString(@"精选", nil),NSLocalizedString(@"口碑", nil),NSLocalizedString(@"达人", nil),NSLocalizedString(@"顾问", nil),NSLocalizedString(@"机构", nil)] selectedItemIndex:0];
     self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:16];
     self.pageMenu.tracker.backgroundColor = self.pageMenu.unSelectedItemTitleColor = CZColorCreater(51, 172, 253, 1);
-    self.pageMenu.selectedItemTitleColor = self.pageMenu.unSelectedItemTitleColor = [UIColor blackColor];
+    self.pageMenu.delegate = self;
+    self.pageMenu.selectedItemTitleColor = [UIColor blackColor];
+    self.pageMenu.unSelectedItemTitleColor = CZColorCreater(167, 167, 185, 1);
     [self.view addSubview:self.pageMenu];
     
     self.contentView = [[CZPageScrollContentView alloc]initWithFrame:CGRectMake(0, self.pageMenu.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height-self.pageMenu.bounds.size.height) contentControllers:vcs rootController:self];
     [self.view addSubview:self.contentView];
-    
+    self.pageMenu.bridgeScrollView = self.contentView.collectionView;
 
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 
@@ -62,9 +71,22 @@
     [arry addObject:controller4];
     CZOrganizerListViewController *controller5 = [[CZOrganizerListViewController alloc]init];
     [arry addObject:controller5];
-    
+    controller1.model = self.model;
+    controller2.model = self.model;
+    controller3.model = self.model;
+    controller4.model = self.model;
+    controller5.model = self.model;
     return arry;
 }
 
+-(void)actionForBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)pageMenu:(SPPageMenu *)pageMenu itemSelectedFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
+{
+    [self.contentView.collectionView setContentOffset:CGPointMake(toIndex*self.view.bounds.size.width, 0) animated:YES];
+}
 
 @end

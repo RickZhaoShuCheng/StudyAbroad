@@ -19,11 +19,23 @@ static CGFloat const padding = 3;
     }
     
     CZRankView *rankView = [[CZRankView alloc] init];
+    [rankView setRankViewsByRate:rate];
+    return rankView;
+}
+
+-(void)setRankByRate:(CGFloat)rate
+{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self setRankViewsByRate:rate];
+}
+
+-(void)setRankViewsByRate:(CGFloat)rate
+{
     for (NSInteger i = 0; i < 5; i++) {
         UIImageView *rank = [[UIImageView alloc] init];
         rank.frame = CGRectMake(i*(padding+10), 0, 10, 10);
         rank.image = [CZImageProvider imageNamed:@"shou_ye_rank_0"];
-        [rankView addSubview:rank];
+        [self addSubview:rank];
         
         if (i < rate) {
             rank.image = [CZImageProvider imageNamed:@"shou_ye_rank_2"];
@@ -34,7 +46,6 @@ static CGFloat const padding = 3;
             rank.image = [CZImageProvider imageNamed:@"shou_ye_rank_1"];
         }
     }
-    return rankView;
 }
 
 @end

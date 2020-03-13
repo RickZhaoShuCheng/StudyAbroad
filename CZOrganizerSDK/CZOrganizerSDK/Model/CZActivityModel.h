@@ -46,7 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *reserveOrderCount;
 @property (nonatomic , strong) NSString *countryName;
 @property (nonatomic , strong) NSString *provinceName;
-
 @property (nonatomic , strong) NSString *cityName;
 @property (nonatomic , strong) NSString *disName;
 @property (nonatomic , strong) NSString *leaderBoard;
@@ -57,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSArray *activitySessionList;
 @property (nonatomic , strong) NSArray *counselorVoList;
 @property (nonatomic , strong) NSString *introduce;
-
+@property (nonatomic , strong) NSString *description;
 
 @end
 

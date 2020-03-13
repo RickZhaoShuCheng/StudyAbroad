@@ -46,8 +46,13 @@
     self.dataCollectionView = [[CZDiaryView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.dataCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataCollectionView];
-    self.contentScrollView = self.dataCollectionView;
+    if (!self.model) {
+        self.contentScrollView = self.dataCollectionView;
+    }
     self.dataCollectionView.alwaysBounceVertical = YES;
+    [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
     
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{

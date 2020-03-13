@@ -35,19 +35,15 @@
 -(void)initUI
 {
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
-    
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
-    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
     self.dataView = [[CZAdvisorView alloc] init];
     self.dataView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataView];
-    self.contentScrollView = self.dataView;
+    if (!self.model) {
+        self.contentScrollView = self.dataView;
+    }
+    [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
 //    self.dataView.alwaysBounceVertical = YES;
     
     WEAKSELF
@@ -66,12 +62,6 @@
         detailVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     };
-}
-
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    self.dataView.frame = self.view.bounds;
 }
 
 -(void)requestForAdvisors

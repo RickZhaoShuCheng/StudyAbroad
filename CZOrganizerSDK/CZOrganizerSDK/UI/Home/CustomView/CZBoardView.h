@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class CZHomeModel;
+#import "CZHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZBoardView : UIView
+
+@property (nonatomic,strong,readonly)NSArray<CZHomeModel *> *boards;
+
+@property (nonatomic,strong)void(^clickBlock)(CZHomeModel *);
 
 - (instancetype)initWithBoards:(NSArray<CZHomeModel *> *)courses
                       container:(UIView *)container;

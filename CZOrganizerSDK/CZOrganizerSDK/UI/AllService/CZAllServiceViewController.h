@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAllServiceViewController : UIViewController
 @property (nonatomic, strong) CZHomeModel *model;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -35,6 +35,7 @@
 #import "CZCommonInstance.h"
 #import "CZAllServiceViewController.h"
 #import "CZAllServiceSubViewController.h"
+#import "CZAllBoardViewController.h"
 
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 50;
@@ -189,7 +190,14 @@ typedef enum : NSUInteger {
 -(CZBoardView *)boardView
 {
     if (!_boardView) {
+        WEAKSELF
         _boardView = [[CZBoardView alloc] initWithBoards:@[] container:self.boardContainerView];
+        _boardView.clickBlock = ^(CZHomeModel * _Nonnull model) {
+            CZAllBoardViewController *controller = [[CZAllBoardViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.models = weakSelf.boardView.boards;
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        };
     }
     return _boardView;
 }
@@ -206,6 +214,7 @@ typedef enum : NSUInteger {
 {
     if (!_boardContainerView) {
         _boardContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width-50)];
+        _boardContainerView.userInteractionEnabled = YES;
     }
     return _boardContainerView;
 }
@@ -492,11 +501,11 @@ typedef enum : NSUInteger {
                 [updateDatas addObject:nDict];
                 [self.dataDicts setObject:updateDatas forKey:zomeType];
             }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self reloadDatas];
+            });
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadDatas];
-        });
     }];
 }
 

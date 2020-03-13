@@ -22,6 +22,8 @@
 @end
 
 @implementation CZAllServiceDiaryViewController
+@synthesize contentScrollView;
+@synthesize canScroll;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,12 +59,6 @@
         [weakSelf requestForDiaryList];
     }];
 }
-
-//-(void)viewDidLayoutSubviews
-//{
-//    [super viewDidLayoutSubviews];
-//    self.dataCollectionView.frame = self.view.bounds;
-//}
 
 -(void)requestForDiaryList
 {
