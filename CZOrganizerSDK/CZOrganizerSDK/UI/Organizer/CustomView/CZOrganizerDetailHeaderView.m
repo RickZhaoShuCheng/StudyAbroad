@@ -31,6 +31,7 @@
 @property (nonatomic ,strong)UIImageView *locationImg;
 @property (nonatomic ,strong)UIButton *phoneBtn;
 @property (nonatomic ,strong)UIView *dynamicView;
+@property (nonatomic ,strong)UIButton *foldBtn;
 @end
 @implementation CZOrganizerDetailHeaderView
 -(instancetype)initWithFrame:(CGRect)frame{
@@ -256,6 +257,34 @@
             make.height.mas_equalTo(HeightRatio(160));
         }];
         
+        NSArray *titleArr = [NSArray arrayWithObjects:@"执业许可",@"机构相册",@"资金托管",@"缴保证金",nil];
+        NSArray *imgArr = [NSArray arrayWithObjects:@"jigou_zhengjian",@"jitou_tupian",@"jigou_qianbao",@"jigou_bao", nil];
+        [titleArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setImage:[CZImageProvider imageNamed:imgArr[idx]] forState:UIControlStateNormal];
+            [btn setImage:[CZImageProvider imageNamed:imgArr[idx]] forState:UIControlStateHighlighted];
+            [btn setTitle:obj forState:UIControlStateNormal];
+            [btn setTitleColor:CZColorCreater(61, 67, 83, 1) forState:UIControlStateNormal];
+            [btn.titleLabel setFont:[UIFont systemFontOfSize:WidthRatio(24)]];
+            [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(18))];
+            [self.containerView addSubview:btn];
+            [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.leading.mas_equalTo(self.containerView.mas_leading).offset(WidthRatio(26)+idx%4 * (WidthRatio(160) + WidthRatio(25)));
+                make.width.mas_equalTo(WidthRatio(160));
+                make.top.mas_equalTo(self.containerView).offset(HeightRatio(20)+ idx/4 * HeightRatio(60));
+                make.height.mas_equalTo(HeightRatio(60));
+            }];
+        }];
+        
+        self.foldBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.foldBtn setImage:[CZImageProvider imageNamed:@"jigou_zhedie"] forState:UIControlStateNormal];
+        [self.containerView addSubview:self.foldBtn];
+        [self.foldBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.containerView);
+            make.top.mas_equalTo(self.containerView.mas_top).offset(HeightRatio(80));
+            make.size.mas_equalTo(WidthRatio(60));
+        }];
+        
     }
     
     //动态信息
@@ -371,4 +400,5 @@
         }];
     }
 }
+
 @end

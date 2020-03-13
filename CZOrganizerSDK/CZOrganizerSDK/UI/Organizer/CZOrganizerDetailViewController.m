@@ -7,15 +7,10 @@
 //
 
 #import "CZOrganizerDetailViewController.h"
-#import "CZOrganizerDetailCollectionView.h"
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 
 @interface CZOrganizerDetailViewController ()
-@property (nonatomic ,strong)CZOrganizerDetailCollectionView *collectionView;
-@property (nonatomic ,strong)UILabel *titleLab;//标题
-@property (nonatomic ,strong)UIButton *backBtn;//返回按钮
-@property (nonatomic ,strong)UIButton *shareBtn;//分享按钮
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
 @end
 
@@ -24,8 +19,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    [self actionMethod];
     [self requestAdvisorDetail];
+    WEAKSELF
+    //将collectionView滚动值传至主控制器
+    [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
+        if (weakSelf.scrollContentSize) {
+            weakSelf.scrollContentSize(offsetY);
+        }
+    }];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -41,48 +42,14 @@
     [self.collectionView.headerView.scrollDynamic adjustWhenControllerViewWillAppera];
 }
 
-- (void)actionMethod{
-    WEAKSELF
-    //滚动时设置导航条透明度
-    [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
-        //设置渐变透明度
-        CGFloat alpha = (offsetY / NaviH)>0.99?0.99:(offsetY / NaviH);
-        [weakSelf.navigationController.navigationBar.subviews.firstObject setAlpha:alpha];
-        weakSelf.titleLab.alpha = alpha;
-        weakSelf.titleLab.textColor = [UIColor blackColor];
-        if (alpha >0.5) {
-            [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
-            [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-        }else{
-            [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"baise_fanhui"] forState:UIControlStateNormal];
-            [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
-        }
-        //判断是否改变
-        if (offsetY < 0) {
-            CGRect rect = weakSelf.collectionView.headerView.bgImg.frame;
-            //改变图片的y值和高度即可
-            rect.origin.y = offsetY;
-            rect.size.height = HeightRatio(540)+weakSelf.collectionView.tagListHeight - offsetY;
-            weakSelf.collectionView.headerView.bgImg.frame = rect;
-        }
-        
-        //悬浮
-        CGFloat header = weakSelf.collectionView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
-        if (offsetY < (header - (NaviH+StatusBarHeight+5)) && offsetY >= 0) {
-            //当视图滑动的距离小于header时
-            weakSelf.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        }else if(weakSelf.collectionView.contentOffset.y >= (header - (NaviH+StatusBarHeight+5))){
-            //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
-        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(NaviH+StatusBarHeight+5, 0, 0, 0);
-        }
-    }];
-}
 //测试标签
 -(void)testTags{
     NSMutableArray *arr = [NSMutableArray array];
     [arr addObject:@"留学5年"];
     [arr addObject:@"擅长澳洲留学问答"];
     [arr addObject:@"留学之家2019年问答排名第一"];
+    [arr addObject:@"留学之家2019年问答排名第一"];
+    [arr addObject:@"留学5年"];
     [arr addObject:@"留学之家2019年问答排名第一"];
 
     [self.collectionView.headerView setTags:arr];
@@ -199,63 +166,12 @@
  */
 -(void)initUI{
     self.view.backgroundColor = [UIColor whiteColor];
-    //返回按钮
-    self.backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//baise_fanhui@2x  tong_yong_fan_hui
-    [self.backBtn setImage:[CZImageProvider imageNamed:@"baise_fanhui"] forState:UIControlStateNormal];
-    [self.backBtn addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithCustomView:self.backBtn];
-    self.navigationItem.leftBarButtonItem = backItem;
-    
-    //右边按钮
-    self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
-    [self.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
-    [self.shareBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
-    self.navigationItem.rightBarButtonItem = rbackItem;
-    //导航透明
-    self.edgesForExtendedLayout = UIRectEdgeTop;
-//    self.navigationController.navigationBar.translucent = YES;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
-    
-    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
-    self.titleLab.text = @"机构详情";
-    self.titleLab.textAlignment = NSTextAlignmentCenter;
-    self.titleLab.textColor = [UIColor clearColor];
-    [self.navigationItem setTitleView:self.titleLab];
-    
-    UIView *bottomView = [[UIView alloc]init];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.bottom.mas_equalTo(self.view);
-        make.height.mas_equalTo(HeightRatio(140));
-    }];
-    
-    self.chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.chatBtn.layer.masksToBounds = YES;
-    self.chatBtn.layer.cornerRadius = HeightRatio(80)/2.0;
-    [self.chatBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
-    [self.chatBtn setTitle:@"咨询一下" forState:UIControlStateNormal];
-    [self.chatBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:WidthRatio(30)]];
-    [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
-    [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
-    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(14))];
-    [bottomView addSubview:self.chatBtn];
-    [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(bottomView);
-        make.height.mas_equalTo(HeightRatio(80));
-        make.width.mas_equalTo(WidthRatio(690));
-        make.top.mas_equalTo(bottomView.mas_top);
-    }];
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(self.view);
         make.leading.trailing.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view.mas_top).offset(-(NaviH+StatusBarHeight+5));
-        make.bottom.mas_equalTo(bottomView.mas_top);
+        make.top.mas_equalTo(self.view.mas_top);
+        make.bottom.mas_equalTo(self.view);
     }];
 }
 
@@ -268,14 +184,5 @@
         _collectionView = [[CZOrganizerDetailCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     }
     return _collectionView;
-}
-- (void)rbackItemClick{
-    [self testTags];
-    [self testDiaryFilter];
-}
-
-//返回
--(void)actionForBack{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CZOrganizerDetailCollectionView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerDetailViewController : UIViewController
-
+@property (nonatomic ,strong)CZOrganizerDetailCollectionView *collectionView;
+@property (nonatomic ,copy) void (^scrollContentSize)(CGFloat offsetY);
 @end
 
 NS_ASSUME_NONNULL_END
