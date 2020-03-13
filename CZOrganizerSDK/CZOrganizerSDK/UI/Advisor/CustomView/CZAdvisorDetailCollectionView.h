@@ -10,6 +10,7 @@
 #import "CZAdvisorDetailHeaderView.h"
 #import "CZAdvisorDetailCollectionHeadView.h"
 #import "CZAdvisorDetailCollectionFooterView.h"
+#import "CZAdvisorInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDetailCollectionView : UICollectionView
@@ -24,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)NSMutableArray *diaryFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
+@property (nonatomic ,strong) CZAdvisorInfoModel *model;
+
 
 /**
  * 滚动值

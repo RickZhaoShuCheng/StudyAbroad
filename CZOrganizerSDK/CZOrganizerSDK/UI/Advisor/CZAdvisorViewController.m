@@ -58,8 +58,9 @@
         [weakSelf requestForAdvisors];
     }];
     //点击cell
-    self.dataView.selectBlock = ^{
+    self.dataView.selectedBlock = ^(NSString * _Nonnull counselorId) {
         CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
+        detailVC.counselorId = counselorId;
         detailVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     };

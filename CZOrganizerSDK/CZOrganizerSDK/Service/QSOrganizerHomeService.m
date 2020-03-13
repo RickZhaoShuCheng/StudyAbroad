@@ -21,6 +21,7 @@ static const NSString *ApiSportUserGetSportUserListByFilter = @"apiSportUser/get
 static const NSString *ApiCounselorGetCounselorListByFilter = @"apiCounselor/getCounselorListByFilter";
 static const NSString *ApiOrganGetOrganListByFilter = @"apiOrgan/getOrganListByFilter";
 static const NSString *ApiProductGetProductListByFilter = @"apiProduct/getProductListByFilter";
+static const NSString *ApiOrganGetOrganDetails = @"apiOrgan/getOrganDetails";
 
 @implementation QSOrganizerHomeService
 
@@ -441,4 +442,52 @@ static const NSString *ApiProductGetProductListByFilter = @"apiProduct/getProduc
     }];
 }
 
+/**
+ *获取机构详情
+ *organId 机构id
+ */
+-(void)requestForApiOrganGetOrganDetails:(NSString *)organId callBack:(QSOrganizerHomeBack)callBack{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiOrganGetOrganDetails];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,@"organId":organId};
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
 @end

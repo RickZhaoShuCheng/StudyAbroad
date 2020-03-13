@@ -39,15 +39,48 @@
     if (self) {
         self.backgroundColor = CZColorCreater(245, 245, 249, 1);
         [self initWithUI];
-        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=dc636c57845494ee87220d191dce91c3/8718367adab44aed01ce530cbb1c8701a08bfb52.jpg"] placeholderImage:nil];
-        [self.bgImg sd_setImageWithURL:[NSURL URLWithString:@"http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=dc636c57845494ee87220d191dce91c3/8718367adab44aed01ce530cbb1c8701a08bfb52.jpg"] placeholderImage:nil];
     }
     return self;
+}
+- (void)setModel:(CZOrganizerModel *)model{
+    _model = model;
+    
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    self.nameLab.text = model.name;
+    [self.rankView setRankByRate:[model.valStar floatValue]];
+    if ([model.status integerValue] == 1) {
+        self.VImg.hidden = NO;
+    }else{
+        self.VImg.hidden = YES;
+    }
+    self.organizerLab.text = [NSString stringWithFormat:@"专业度: %.2f  服务: %.2f  价格: %.2f  响应: %.2f",[model.valProfessional floatValue] ,[model.valService floatValue],[model.valPrice floatValue],[model.valResponse floatValue]];
+    self.serviceLab.text = [NSString stringWithFormat:@"%@条评价",model.commentsCount];
+    self.caseView.countLab.text = [model.caseCount stringValue];
+    self.fansView.countLab.text = [model.reserveCount stringValue];
+    self.serviceView.countLab.text = [model.serviceCount stringValue];
+    self.consultView.countLab.text = [model.askRanking stringValue];
+    self.praiseView.countLab.text = [NSString stringWithFormat:@"%@%@",model.ratePraise,@"%"];
+    self.complainView.countLab.text = [NSString stringWithFormat:@"%@%@",model.rateComplaint,@"%"];
+    self.refundView.countLab.text = [NSString stringWithFormat:@"%@%@",model.rateRepay,@"%"];
+    self.evaluationView.countLab.text = [model.counselorCount stringValue];
+    self.locationContent.text = model.address;
+    
+    NSMutableArray *keyArr = [NSMutableArray array];
+    if (model.keywords.length) {
+        [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
+    }
+    [self setTags:keyArr];
 }
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr{
     self.tagList.tags = tagesArr;
-    self.tagList.frame = CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), kScreenWidth - WidthRatio(60),self.tagList.contentHeight);
+    if (tagesArr.count == 0) {
+        self.tagList.frame = CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), 0,0);
+    }else{
+        self.tagList.frame = CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), kScreenWidth - WidthRatio(60),self.tagList.contentHeight);
+    }
+    
     self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, HeightRatio(540));
 }
 -(void)initWithUI{
@@ -59,7 +92,6 @@
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     effectView.alpha = 1;
     effectView.backgroundColor = CZColorCreater(0, 0, 0, 0.3);
-//    effectView.frame = self.bgImg.bounds;
     [self.bgImg addSubview:effectView];
     [effectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.bgImg);
@@ -90,7 +122,7 @@
         }];
         
         self.nameLab = [[UILabel alloc] init];
-        self.nameLab.text = @"南京市海牛工作室";
+        self.nameLab.text = @"-";
         self.nameLab.textColor = CZColorCreater(255, 255, 255, 1);
         self.nameLab.font = [UIFont boldSystemFontOfSize:WidthRatio(34)];
         [self addSubview:self.nameLab];
@@ -102,7 +134,7 @@
         }];
         
         self.organizerLab = [[UILabel alloc] init];
-        self.organizerLab.text = @"专业度: 4.9  服务: 4.9  价格: 4.9  响应: 4.9";
+        self.organizerLab.text = @"专业度: -  服务: -  价格: -  响应: -";
         self.organizerLab.textColor = CZColorCreater(255, 255, 255, 1);
         self.organizerLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
         [self addSubview:self.organizerLab];
@@ -122,7 +154,7 @@
             make.centerY.mas_equalTo(self.organizerLab);
         }];
         
-        self.rankView = [CZRankView instanceRankViewByRate:3.1];
+        self.rankView = [CZRankView instanceRankViewByRate:0];
         [self addSubview:self.rankView];
         [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(WidthRatio(150));
@@ -132,13 +164,13 @@
         }];
         
         self.serviceLab = [[UILabel alloc] init];
-        self.serviceLab.text = @"1622条评价";
+        self.serviceLab.text = @"-条评价";
         self.serviceLab.textColor = CZColorCreater(255, 255, 255, 1);
         self.serviceLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
         [self addSubview:self.serviceLab];
         [self.serviceLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.rankView.mas_trailing);
-            make.top.mas_equalTo(self.rankView.mas_top).offset(-HeightRatio(2));
+            make.top.mas_equalTo(self.rankView.mas_top).offset(-HeightRatio(4));
             make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
             make.height.mas_greaterThanOrEqualTo(0);
         }];
@@ -147,7 +179,7 @@
     //数据
     {
         self.caseView = [[CZOrganizerDetailBtnView alloc]init];
-        self.caseView.countLab.text = @"23";
+        self.caseView.countLab.text = @"-";
         self.caseView.nameLab.text = @"案例";
         [self addSubview:self.caseView];
         [self.caseView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -158,7 +190,7 @@
         }];
         
         self.fansView = [[CZOrganizerDetailBtnView alloc]init];
-        self.fansView.countLab.text = @"188";
+        self.fansView.countLab.text = @"-";
         self.fansView.nameLab.text = @"预约";
         [self addSubview:self.fansView];
         [self.fansView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,7 +200,7 @@
         }];
         
         self.serviceView = [[CZOrganizerDetailBtnView alloc]init];
-        self.serviceView.countLab.text = @"1.2K";
+        self.serviceView.countLab.text = @"-";
         self.serviceView.nameLab.text = @"服务次数";
         [self addSubview:self.serviceView];
         [self.serviceView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -178,7 +210,7 @@
         }];
         
         self.consultView = [[CZOrganizerDetailBtnView alloc]init];
-        self.consultView.countLab.text = @"188";
+        self.consultView.countLab.text = @"-";
         self.consultView.nameLab.text = @"咨询排行";
         [self addSubview:self.consultView];
         [self.consultView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -188,7 +220,7 @@
         }];
         
         self.praiseView = [[CZOrganizerDetailBtnView alloc]init];
-        self.praiseView.countLab.text = @"90%";
+        self.praiseView.countLab.text = @"-%";
         self.praiseView.nameLab.text = @"好评率";
         [self addSubview:self.praiseView];
         [self.praiseView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -199,7 +231,7 @@
         }];
         
         self.complainView = [[CZOrganizerDetailBtnView alloc]init];
-        self.complainView.countLab.text = @"90%";
+        self.complainView.countLab.text = @"-%";
         self.complainView.nameLab.text = @"投诉率";
         [self addSubview:self.complainView];
         [self.complainView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -210,7 +242,7 @@
         }];
         
         self.refundView = [[CZOrganizerDetailBtnView alloc]init];
-        self.refundView.countLab.text = @"20%";
+        self.refundView.countLab.text = @"-%";
         self.refundView.nameLab.text = @"退款率";
         [self addSubview:self.refundView];
         [self.refundView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -221,7 +253,7 @@
         }];
         
         self.evaluationView = [[CZOrganizerDetailBtnView alloc]init];
-        self.evaluationView.countLab.text = @"524";
+        self.evaluationView.countLab.text = @"-";
         self.evaluationView.nameLab.text = @"顾问";
         [self addSubview:self.evaluationView];
         [self.evaluationView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -369,7 +401,7 @@
         }];
 
         self.locationContent = [[UILabel alloc] init];
-        self.locationContent.text = @"南京市雨花台区达州路32号软件谷科";
+        self.locationContent.text = @"-";
         self.locationContent.textColor = CZColorCreater(53, 53, 53, 1);
         self.locationContent.font = [UIFont systemFontOfSize:WidthRatio(28)];
         [self.locationView addSubview:self.locationContent];

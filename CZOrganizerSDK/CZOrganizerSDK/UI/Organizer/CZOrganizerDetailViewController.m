@@ -92,9 +92,9 @@
         //测试
         dispatch_sync(dispatch_get_main_queue(), ^{
             ///展示个人标签
-            [weakSelf testTags];
+//            [weakSelf testTags];
             //测试筛选项
-            [weakSelf testDiaryFilter];
+//            [weakSelf testDiaryFilter];
             //测试评价图片
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             NSMutableArray *tempArr = [NSMutableArray array];

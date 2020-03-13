@@ -55,7 +55,7 @@ static const NSString *ApiCounselorGetCounselorDetails = @"apiCounselor/getCouns
         }
         
         if (data) {
-            data = [QSCommonService removeNullFromArray:data];
+            data = [QSCommonService removeNullFromDictionary:data];
         }
         
         if (callBack) {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JCTagListView.h"
 #import "SDCycleScrollView.h"
+#import "CZOrganizerModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)UIVisualEffectView *effectView;
 @property (nonatomic ,strong)JCTagListView *tagList;
 @property (nonatomic ,strong)SDCycleScrollView *scrollDynamic;
+@property (nonatomic ,strong) CZOrganizerModel *model;
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr;
 @end

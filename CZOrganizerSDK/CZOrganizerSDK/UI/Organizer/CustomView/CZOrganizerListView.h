@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerListView : UITableView
 @property (nonatomic, strong) NSMutableArray *dataArr;
-@property (nonatomic, copy)dispatch_block_t selectBlock;
+@property (nonatomic, copy)void (^selectedBlock)(NSString *organId);
 @end
 
 NS_ASSUME_NONNULL_END

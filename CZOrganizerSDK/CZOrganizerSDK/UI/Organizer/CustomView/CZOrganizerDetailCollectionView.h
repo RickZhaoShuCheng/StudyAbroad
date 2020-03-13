@@ -10,6 +10,7 @@
 #import "CZOrganizerDetailHeaderView.h"
 #import "CZOrganizerDetailCollectionHeadView.h"
 #import "CZOrganizerDetailCollectionFooterView.h"
+#import "CZOrganizerModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)NSMutableArray *diaryFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
+@property (nonatomic ,strong) CZOrganizerModel *model;
 
 /**
  * 滚动值

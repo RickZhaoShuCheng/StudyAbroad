@@ -41,6 +41,35 @@
     return self;
 }
 
+- (void)setModel:(CZAdvisorInfoModel *)model{
+    _model = model;
+    self.headerView.model = _model;
+    CGRect frame = self.headerView.bgImg.frame;
+    CGFloat maxY = self.headerView.tagList.frame.origin.y + self.headerView.tagList.frame.size.height;
+    if (maxY >= self.headerView.bgImg.frame.size.height) {
+        frame.size.height = frame.size.height + self.headerView.tagList.contentHeight;
+        self.tagListHeight = self.headerView.tagList.contentHeight;
+        self.headerView.bgImg.frame = frame;
+    }
+    
+    NSMutableArray *filterDiaryArr = [NSMutableArray array];
+    if (model.filterDiary.length) {
+        [filterDiaryArr addObjectsFromArray:[model.filterDiary componentsSeparatedByString:@","]];
+    }
+    [self.diaryFilterArr removeAllObjects];
+    [self.diaryFilterArr addObjectsFromArray:filterDiaryArr];
+    
+    NSMutableArray *filterCommentArr = [NSMutableArray array];
+    if (model.filterComment.length) {
+        [filterCommentArr addObjectsFromArray:[model.filterComment componentsSeparatedByString:@","]];
+    }
+    [self.evaluateFilterArr removeAllObjects];
+    [self.evaluateFilterArr addObjectsFromArray:filterCommentArr];
+    
+    [self reloadData];
+}
+
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
@@ -149,6 +178,8 @@
         CZAdvisorDetailCollectionHeadView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZAdvisorDetailCollectionHeadView class]) forIndexPath:indexPath];
         if (indexPath.section == 0) {
             self.headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderView class]) forIndexPath:indexPath];
+            
+            
             return self.headerView;
         }else if (indexPath.section == 1){
             self.projectHeader = header;

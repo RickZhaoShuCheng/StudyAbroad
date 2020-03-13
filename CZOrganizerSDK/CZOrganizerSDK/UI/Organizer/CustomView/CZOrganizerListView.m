@@ -11,6 +11,7 @@
 #import "CZPersonInfoCell.h"
 #import "CZPersonInfoSubCell.h"
 #import "CZSchoolStarModel.h"
+#import "CZOrganizerModel.h"
 @interface CZOrganizerListView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -65,8 +66,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.selectBlock) {
-        self.selectBlock();
+    CZOrganizerModel *model = self.dataArr[indexPath.section];
+    if (self.selectedBlock) {
+        self.selectedBlock(model.organId);
     }
 }
 

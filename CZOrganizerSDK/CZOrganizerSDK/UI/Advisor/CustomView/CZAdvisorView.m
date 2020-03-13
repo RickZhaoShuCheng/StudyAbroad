@@ -11,6 +11,7 @@
 #import "CZPersonInfoCell.h"
 #import "CZPersonInfoSubCell.h"
 #import "CZSchoolStarModel.h"
+#import "CZAdvisorModel.h"
 @interface CZAdvisorView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -66,8 +67,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.selectBlock) {
-        self.selectBlock();
+    CZAdvisorModel *model = self.dataArr[indexPath.section];
+    if (self.selectedBlock) {
+        self.selectedBlock(model.counselorId);
     }
 }
 

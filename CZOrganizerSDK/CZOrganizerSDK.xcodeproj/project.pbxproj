@@ -327,6 +327,8 @@
 		D86B814E241941FA007F1595 /* CZOrganizerDiaryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D86B814C241941FA007F1595 /* CZOrganizerDiaryVC.m */; };
 		D86B815124194248007F1595 /* CZOrganizerAdvisorVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D86B814F24194248007F1595 /* CZOrganizerAdvisorVC.h */; };
 		D86B815224194248007F1595 /* CZOrganizerAdvisorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D86B815024194248007F1595 /* CZOrganizerAdvisorVC.m */; };
+		D8868591241BCFE700B14680 /* CZAdvisorInfoModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D886858F241BCFE700B14680 /* CZAdvisorInfoModel.h */; };
+		D8868592241BCFE700B14680 /* CZAdvisorInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D8868590241BCFE700B14680 /* CZAdvisorInfoModel.m */; };
 		D8AA19232410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8AA19212410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.h */; };
 		D8AA19242410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AA19222410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m */; };
 		D8AA192824110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8AA192624110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h */; };
@@ -706,6 +708,8 @@
 		D86B814C241941FA007F1595 /* CZOrganizerDiaryVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZOrganizerDiaryVC.m; sourceTree = "<group>"; };
 		D86B814F24194248007F1595 /* CZOrganizerAdvisorVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZOrganizerAdvisorVC.h; sourceTree = "<group>"; };
 		D86B815024194248007F1595 /* CZOrganizerAdvisorVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZOrganizerAdvisorVC.m; sourceTree = "<group>"; };
+		D886858F241BCFE700B14680 /* CZAdvisorInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorInfoModel.h; sourceTree = "<group>"; };
+		D8868590241BCFE700B14680 /* CZAdvisorInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorInfoModel.m; sourceTree = "<group>"; };
 		D8AA19212410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailCollectionView.h; sourceTree = "<group>"; };
 		D8AA19222410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailCollectionView.m; sourceTree = "<group>"; };
 		D8AA192624110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailCollectionHeadView.h; sourceTree = "<group>"; };
@@ -849,6 +853,8 @@
 				534C18E1240BC636007DD7EC /* CZOrganizerModel.m */,
 				53A90CCE2414D53C00894E9D /* CZDiaryModel.h */,
 				53A90CCF2414D53C00894E9D /* CZDiaryModel.m */,
+				D886858F241BCFE700B14680 /* CZAdvisorInfoModel.h */,
+				D8868590241BCFE700B14680 /* CZAdvisorInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1584,6 +1590,7 @@
 				539484A923FFC5AC00770E99 /* MASUtilities.h in Headers */,
 				53F8097D240D32B100E44651 /* CZSelectProvinceCell.h in Headers */,
 				53A3F79F241B6AF400E05F81 /* CZAllServiceShoolStarCell.h in Headers */,
+				D8868591241BCFE700B14680 /* CZAdvisorInfoModel.h in Headers */,
 				539484A423FFC5AC00770E99 /* MASLayoutConstraint.h in Headers */,
 				53AC45E224038F7600521C2F /* ItemModel.h in Headers */,
 				535E5DB824080AED00471453 /* MJRefreshFooter.h in Headers */,
@@ -2005,6 +2012,7 @@
 				535E5DA224080AED00471453 /* MJRefreshBackStateFooter.m in Sources */,
 				D8CD0C482415354800B2124C /* CZOrganizerDetailEvaluateCell.m in Sources */,
 				D8606AB6241A747B00932421 /* CZOrganizerDiaryCollectionView.m in Sources */,
+				D8868592241BCFE700B14680 /* CZAdvisorInfoModel.m in Sources */,
 				535E5DB724080AED00471453 /* MJRefreshComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

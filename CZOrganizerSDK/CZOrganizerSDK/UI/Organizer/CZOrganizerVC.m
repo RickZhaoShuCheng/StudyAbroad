@@ -13,6 +13,9 @@
 #import "CZOrganizerProjectVC.h"
 #import "CZOrganizerDiaryVC.h"
 #import "CZOrganizerAdvisorVC.h"
+#import "QSOrganizerHomeService.h"
+#import "QSCommonService.h"
+#import "CZOrganizerModel.h"
 
 #define PageMenuHeight          HeightRatio(60)
 
@@ -43,6 +46,7 @@
     [self initWithUI];
     [self initPageMenu];
     [self firstPageScrollHandle];
+    [self requestOrganizerDetail];
 }
 /**
  * 主页滚动处理导航条
@@ -91,6 +95,32 @@
 
 - (void)clickSearchBtn:(UIButton *)searchBtn{
     
+}
+
+/**
+ 获取机构详情
+ */
+- (void)requestOrganizerDetail{
+    WEAKSELF
+    QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
+    [service requestForApiOrganGetOrganDetails:self.organId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CZOrganizerModel *model = [CZOrganizerModel modelWithDict:data];
+                weakSelf.titleLab.text = model.name;
+                [weakSelf.rankView setRankByRate:[model.valStar floatValue]];
+                weakSelf.countLab.text = [NSString stringWithFormat:@"粉丝数 %@",[model.fanCount stringValue]];
+                if ([model.isFocus boolValue]) {
+                    [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                }else{
+                    [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+                }
+                
+                CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
+                baseVc.collectionView.model = model;
+            });
+        }
+    }];
 }
 
 /**
@@ -246,7 +276,7 @@
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-140, HeightRatio(30))];
     self.titleLab.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
     self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
-    self.titleLab.text = @"南京市海牛工作室";
+    self.titleLab.text = @"-";
     [self.titleView addSubview:self.titleLab];
     
     self.rankView = [CZRankView instanceRankViewByRate:3.1];

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDetailViewController : UIViewController
-
+@property (nonatomic ,strong) NSString *counselorId;//顾问id
 @end
 
 NS_ASSUME_NONNULL_END

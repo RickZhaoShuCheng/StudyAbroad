@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JCTagListView.h"
+#import "CZAdvisorInfoModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)UIImageView *bgImg;
 @property (nonatomic ,strong)UIVisualEffectView *effectView;
 @property (nonatomic ,strong)JCTagListView *tagList;
+@property (nonatomic ,strong) CZAdvisorInfoModel *model;
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr;
 @end

@@ -50,6 +50,11 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
 //
 -(void)requestForApiProductGetProductListByFilterByParam:(CZHomeParam *)param
                                                 callBack:(QSOrganizerHomeBack)callBack;
+/**
+ *获取机构详情
+ *organId 机构id
+ */
+-(void)requestForApiOrganGetOrganDetails:(NSString *)organId callBack:(QSOrganizerHomeBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

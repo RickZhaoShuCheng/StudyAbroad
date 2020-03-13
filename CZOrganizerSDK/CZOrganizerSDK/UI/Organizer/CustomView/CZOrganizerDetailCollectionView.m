@@ -42,6 +42,21 @@
     return self;
 }
 
+- (void)setModel:(CZOrganizerModel *)model{
+    _model = model;
+    self.headerView.model = model;
+    
+    CGRect frame = self.headerView.bgImg.frame;
+    CGFloat maxY = self.headerView.tagList.frame.origin.y + self.headerView.tagList.frame.size.height;
+    if (maxY >= self.headerView.bgImg.frame.size.height) {
+        frame.size.height = frame.size.height + self.headerView.tagList.contentHeight;
+        self.tagListHeight = self.headerView.tagList.contentHeight;
+        self.headerView.bgImg.frame = frame;
+    }
+    
+    [self reloadData];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
