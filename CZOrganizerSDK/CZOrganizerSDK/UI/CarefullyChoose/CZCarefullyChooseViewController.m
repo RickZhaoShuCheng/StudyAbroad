@@ -59,7 +59,8 @@
     self.dataCollectionView.alwaysBounceVertical = YES;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
-        make.left.right.bottom.mas_equalTo(0);
+        make.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(!self.model?0:-100);
     }];
     
     WEAKSELF

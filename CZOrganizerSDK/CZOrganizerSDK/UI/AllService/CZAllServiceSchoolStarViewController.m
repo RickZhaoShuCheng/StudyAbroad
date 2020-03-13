@@ -38,7 +38,8 @@
     self.dataView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataView];
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(0);
+        make.top.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(-50);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     

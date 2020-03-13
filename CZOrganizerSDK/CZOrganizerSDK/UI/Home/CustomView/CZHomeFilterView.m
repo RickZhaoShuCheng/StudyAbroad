@@ -54,18 +54,22 @@
     return self;
 }
 
--(void)pageMenu:(SPPageMenu *)pageMenu itemSelectedAtIndex:(NSInteger)index
+- (void)pageMenu:(SPPageMenu *)pageMenu itemSelectedFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
     if (pageMenu.selectedItemIndex != self.pageMenuOt.selectedItemIndex) {
-        [self.pageMenuOt setSelectedItemIndex:index];
+        [self.pageMenuOt setSelectedItemIndex:toIndex];
     }
     
     if (pageMenu.selectedItemIndex != self.pageMenu.selectedItemIndex) {
-        [self.pageMenu setSelectedItemIndex:index];
+        [self.pageMenu setSelectedItemIndex:toIndex];
+    }
+    
+    if (self.pageMenuOt == pageMenu) {
+        return;
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(filterView:itemSelectedAtIndex:)]) {
-        [self.delegate filterView:self itemSelectedAtIndex:index];
+        [self.delegate filterView:self itemSelectedAtIndex:toIndex];
     }
 }
 

@@ -288,6 +288,7 @@ typedef enum : NSUInteger {
         if (!self.homeFilterView) {
             self.homeFilterView = [[CZHomeFilterView alloc] initWithSuperView:self.homeFilterContainerView];
             self.homeFilterView.delegate = self;
+            [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
         }
         return self.homeFilterContainerView;
     }
@@ -650,11 +651,6 @@ typedef enum : NSUInteger {
     [CZCountryUtil sharedInstance].selectModel = model;
     [self.locationButton setTitle:model.country.area_name forState:UIControlStateNormal];
     [vc.navigationController popViewControllerAnimated:YES];
-}
-
--(void)scrollView:(CZPageScrollContentView *)scrollView atIndex:(NSInteger)index
-{
-    [self.homeFilterView.pageMenu setSelectedItemIndex:index];
 }
 
 @end

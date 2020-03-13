@@ -15,13 +15,13 @@
 /**
  *  MJ gif header
  */
-+ (MJRefreshStateHeader *)lb_headerWithAction:(dispatch_block_t)action;
-+ (MJRefreshStateHeader *)lb_headerWithTarget:(id)target Action:(SEL)action;
++ (MJRefreshNormalHeader *)lb_headerWithAction:(dispatch_block_t)action;
++ (MJRefreshNormalHeader *)lb_headerWithTarget:(id)target Action:(SEL)action;
 
 /**
  *  MJ normal footer
  */
-+ (MJRefreshAutoStateFooter *)lb_footerWithAction:(dispatch_block_t)action;
-+ (MJRefreshAutoStateFooter *)lb_footerWithTarget:(id)target Action:(SEL)action;
++ (MJRefreshBackStateFooter *)lb_footerWithAction:(dispatch_block_t)action;
++ (MJRefreshBackStateFooter *)lb_footerWithTarget:(id)target Action:(SEL)action;
 
 @end

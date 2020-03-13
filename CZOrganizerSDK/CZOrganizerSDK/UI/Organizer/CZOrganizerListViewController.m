@@ -53,7 +53,8 @@
         self.contentScrollView = self.dataView;
     }
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(0);
+        make.top.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(!self.model?0:-100);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     

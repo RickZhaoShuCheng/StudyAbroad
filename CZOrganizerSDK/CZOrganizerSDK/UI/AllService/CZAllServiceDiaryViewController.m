@@ -47,6 +47,10 @@
     self.dataCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
+    [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(-50);
+    }];
     
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
