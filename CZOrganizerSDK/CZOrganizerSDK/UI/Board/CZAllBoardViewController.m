@@ -15,6 +15,7 @@
 @interface CZAllBoardViewController () <SPPageMenuDelegate>
 @property (nonatomic , strong)CZPageScrollContentView *contentView;
 @property (nonatomic , strong) SPPageMenu *pageMenu;
+@property (nonatomic , assign) NSInteger selectIndex;
 @end
 
 @implementation CZAllBoardViewController
@@ -26,6 +27,14 @@
 
 -(void)initUI
 {
+    for (NSInteger i = 0; i < self.models.count; i++) {
+        CZHomeModel *iModel = self.models[i];
+        if (iModel.sort.integerValue == self.model.sort.integerValue) {
+            self.selectIndex = i;
+            break;
+        }
+    }
+    
     self.title = NSLocalizedString(@"榜单", nil);
     NSMutableArray *vcs = [[NSMutableArray alloc] init];
     CZBoardOrganizerViewController *controller1 = [[CZBoardOrganizerViewController alloc] init];
@@ -51,6 +60,9 @@
     [leftButton addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    [self.pageMenu setSelectedItemIndex:self.selectIndex];
+    [self.contentView.collectionView setContentOffset:CGPointMake(self.selectIndex*self.view.bounds.size.width, 0) animated:YES];
 }
 
 -(void)actionForBack

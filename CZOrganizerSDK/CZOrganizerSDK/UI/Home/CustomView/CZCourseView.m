@@ -8,6 +8,7 @@
 
 #import "CZCourseView.h"
 #import "CZCourseModel.h"
+#import "CZHomeModel.h"
 #import "UIImageView+WebCache.h"
 
 static CGFloat padding = 15;
@@ -60,6 +61,8 @@ static CGFloat padding = 15;
 {
     for (NSInteger index = 0; index < self.courses.count; index++) {
         UIImageView *cover = [[UIImageView alloc] init];
+        cover.userInteractionEnabled = YES;
+        [cover addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionForClickCover:)]];
         cover.tag = index;
         [self.covers addObject:cover];
         CZCourseModel *model = self.courses[index];
@@ -113,6 +116,13 @@ static CGFloat padding = 15;
             view.frame = CGRectMake(xPd*(15+width), yPd*(15+height), width, height);
             [self addSubview:view];
         }
+    }
+}
+
+-(void)actionForClickCover:(UIGestureRecognizer *)gesture
+{
+    if (self.clickBlock) {
+        self.clickBlock(self.courses[gesture.view.tag]);
     }
 }
 

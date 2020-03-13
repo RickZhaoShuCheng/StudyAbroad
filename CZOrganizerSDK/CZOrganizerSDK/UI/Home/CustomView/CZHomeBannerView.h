@@ -20,4 +20,6 @@
 
 @property (nonatomic , copy) NSArray *picsImages;
 
+@property (nonatomic , copy) NSArray *links;
+
 @end

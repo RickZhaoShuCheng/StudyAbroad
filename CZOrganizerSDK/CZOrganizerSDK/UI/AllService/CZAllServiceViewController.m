@@ -51,10 +51,7 @@
     
     self.contentView = [[CZPageScrollContentView alloc]initWithFrame:CGRectMake(0, self.pageMenu.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height-self.pageMenu.bounds.size.height) contentControllers:vcs rootController:self];
     [self.view addSubview:self.contentView];
-    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.pageMenu.mas_bottom);
-        make.left.right.bottom.mas_equalTo(0);
-    }];
+    
     self.pageMenu.bridgeScrollView = self.contentView.collectionView;
     self.pageMenu.delegate = self;
 

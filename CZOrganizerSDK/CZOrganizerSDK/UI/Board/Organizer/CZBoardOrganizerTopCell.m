@@ -108,7 +108,6 @@
     [self.contentView addSubview:self.tagList];
     
     self.middileView = [[UIView alloc] init];
-    self.middileView.backgroundColor = CZColorCreater(43, 120, 217, 1);
     [self.contentView addSubview:self.middileView];
     [self.middileView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.tagList.mas_bottom).offset(20);
@@ -224,14 +223,17 @@
         case CZBoardOrganizerTopTypeGold:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai"];
             self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai_bei_jing"];
+            self.middileView.backgroundColor = CZColorCreater(43, 120, 217, 1);
             break;
         case CZBoardOrganizerTopTypeSilver:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai"];
             self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
+            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
             break;
         case CZBoardOrganizerTopTypeCopper:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai"];
             self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
+            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
             break;
         default:
             break;

@@ -113,4 +113,14 @@ static dispatch_once_t onceToken;
     return nil;
 }
 
++(UIViewController *)instanceWebViewByOptions:(NSDictionary *)options
+{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(instanceWebViewByOptions:)]) {
+       return [client.delegate instanceWebViewByOptions:options];
+    }
+    
+    return nil;
+}
+
 @end

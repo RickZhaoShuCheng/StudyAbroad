@@ -151,6 +151,7 @@ typedef enum : NSUInteger {
     if (!_bannerBottomView) {
         CGFloat width = self.view.bounds.size.width;
         _bannerBottomView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width/375.0*41.0)];
+        [_bannerBottomView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionForBannerBottom)]];
     }
     return _bannerBottomView;
 }
@@ -161,6 +162,11 @@ typedef enum : NSUInteger {
         WEAKSELF
         _serviceBannerView = [[CZServiceBannerView alloc] initLayoutByHeight:0];
         _serviceBannerView.select = ^(CZHomeModel * _Nonnull model) {
+            
+            if (!model.zoneType) {
+                return ;
+            }
+            
             if (model.sort.integerValue == 1) {
                 CZAllServiceViewController *controller = [[CZAllServiceViewController alloc] init];
                 controller.hidesBottomBarWhenPushed = YES;
@@ -181,8 +187,14 @@ typedef enum : NSUInteger {
 
 -(CZCourseView *)courseView
 {
+    WEAKSELF
     if (!_courseView) {
         _courseView = [[CZCourseView alloc] initWithCourses:@[] container:self.courseContainerView];
+        _courseView.clickBlock = ^(CZCourseModel * _Nonnull model) {
+            UIViewController *controller = [QSClient instanceWebViewByOptions:@{@"url":model.link}];
+            controller.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        };
     }
     return _courseView;
 }
@@ -196,6 +208,7 @@ typedef enum : NSUInteger {
             CZAllBoardViewController *controller = [[CZAllBoardViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             controller.models = weakSelf.boardView.boards;
+            controller.model = model;
             [weakSelf.navigationController pushViewController:controller animated:YES];
         };
     }
@@ -522,13 +535,24 @@ typedef enum : NSUInteger {
 {
     NSMutableArray *items1 = self.dataDicts[@(1)];
     NSMutableArray *pics = [[NSMutableArray alloc] init];
+    NSMutableArray *links = [[NSMutableArray alloc] init];
     for (NSDictionary *dict in items1) {
         CZHomeModel *model = [CZHomeModel modelWithDict:dict];
         [pics addObject:PIC_URL(model.spImg)];
+        if (![model.url hasPrefix:@"http"]) {
+            model.url = [@"http://" stringByAppendingString:model.url];
+        }
+        [links addObject:model.url];
     }
     self.bannerView.picsURLs = pics;
-    
-    
+    self.bannerView.links = links;
+    WEAKSELF
+    self.bannerView.cycleScrollView.clickItemOperationBlock = ^(NSInteger currentIndex) {
+        UIViewController *controller = [QSClient instanceWebViewByOptions:@{@"url":weakSelf. bannerView.links[currentIndex]}];
+        controller.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:controller animated:YES];
+    };
+
     NSMutableArray *items2 = self.dataDicts[@(2)];
     CZHomeModel *model = [CZHomeModel modelWithDict:[items2 firstObject]];
     [self.bannerBottomView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.spImg)] placeholderImage:nil];
@@ -543,7 +567,6 @@ typedef enum : NSUInteger {
         [courses addObject:course];
     }
     [self.courseView updateLayoutByCourses:courses];
-    
     
     NSMutableArray *items3 = self.dataDicts[@(3)];
     NSMutableArray *services = [[NSMutableArray alloc] init];
@@ -634,6 +657,15 @@ typedef enum : NSUInteger {
             });
         }
     }];
+}
+
+-(void)actionForBannerBottom
+{
+    NSMutableArray *items2 = self.dataDicts[@(2)];
+    CZHomeModel *model = [CZHomeModel modelWithDict:[items2 firstObject]];
+    UIViewController *controller = [QSClient instanceWebViewByOptions:@{@"url":model.url}];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma - mark CZHomeFilterViewDelegate

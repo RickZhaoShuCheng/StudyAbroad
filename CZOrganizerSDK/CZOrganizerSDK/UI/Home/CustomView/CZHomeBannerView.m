@@ -45,6 +45,7 @@
 
 -(void)commonInit
 {
+    self.userInteractionEnabled = YES;
     self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:
                             CGRectMake(0, 0, ScreenWidth, BANNER_HEIGHT) delegate:nil placeholderImage:nil];
     [self addSubview:self.cycleScrollView];
@@ -77,6 +78,7 @@
 -(void)setCustomView:(UIView *)customView
 {
     _customView = customView;
+    customView.userInteractionEnabled = YES;
     CGRect rect = self.frame;
     rect.size.height = BANNER_HEIGHT + CGRectGetHeight(customView.bounds);
     self.frame = rect;
