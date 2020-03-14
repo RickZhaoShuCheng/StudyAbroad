@@ -122,16 +122,10 @@
         button.transform = transform;
         [UIView commitAnimations];
     }
-    if (self.headerView.tagList.contentHeight >= HeightRatio(140)) {
-        [self.headerView.arrowBtn setHidden:NO];
-        if (self.isOpen) {
-            self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), self.headerView.tagList.contentHeight);
-        }else{
-            self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), HeightRatio(120));
-        }
-    }else{
-        [self.headerView.arrowBtn setHidden:YES];
+    if (self.isOpen) {
         self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), self.headerView.tagList.contentHeight);
+    }else{
+        self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), HeightRatio(120));
     }
     [self reloadData];
 }

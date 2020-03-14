@@ -15,17 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDetailCollectionView : UICollectionView
 @property (nonatomic ,strong)CZAdvisorDetailHeaderView *headerView;
-@property (nonatomic ,strong)CZAdvisorDetailCollectionHeadView *projectHeader;
 @property (nonatomic ,strong)CZAdvisorDetailCollectionHeadView *diaryHeader;
 @property (nonatomic ,strong)CZAdvisorDetailCollectionHeadView *evaluateHeader;
-@property (nonatomic ,strong)CZAdvisorDetailCollectionFooterView *projectFooter;
-@property (nonatomic ,strong)CZAdvisorDetailCollectionFooterView *diaryFooter;
-@property (nonatomic ,strong)CZAdvisorDetailCollectionFooterView *evaluateFooter;
 @property (nonatomic ,assign)CGFloat tagListHeight;
 @property (nonatomic ,strong)NSMutableArray *diaryFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
 @property (nonatomic ,strong) CZAdvisorInfoModel *model;
+@property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
 
 
 /**

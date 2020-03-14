@@ -170,21 +170,23 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if (kind == UICollectionElementKindSectionHeader) {
         CZOrganizerDetailCollectionHeadView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZOrganizerDetailCollectionHeadView class]) forIndexPath:indexPath];
+        WEAKSELF
+        header.allBtnBlock = ^{
+            if (weakSelf.clickAllBlock) {
+                weakSelf.clickAllBlock(indexPath.section);
+            }
+        };
         if (indexPath.section == 0) {
             self.headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZOrganizerDetailHeaderView class]) forIndexPath:indexPath];
             return self.headerView;
         }else if (indexPath.section == 1){
-            self.projectHeader = header;
-            self.projectHeader.titleStr = @"为您推荐";
-            self.projectHeader.contentStr = @"查看全部";
-            self.projectHeader.tagList.hidden = YES;
-            return self.projectHeader;
+            header.titleStr = @"为您推荐";
+            header.contentStr = @"查看全部";
+            header.tagList.hidden = YES;
         }else if (indexPath.section == 2){
-            self.advisorHeader = header;
-            self.advisorHeader.titleStr = @"顾问团队";
-            self.advisorHeader.contentStr = @"共4个顾问";
-            self.advisorHeader.tagList.hidden = YES;
-            return self.advisorHeader;
+            header.titleStr = @"顾问团队";
+            header.contentStr = @"共4个顾问";
+            header.tagList.hidden = YES;
         }else if (indexPath.section == 3){
             self.diaryHeader = header;
             self.diaryHeader.titleStr = @"精华日记";
@@ -198,29 +200,31 @@
             [self.evaluateHeader setTags:self.evaluateFilterArr];
             return self.evaluateHeader;
         }
+        return header;
     }else{
         CZOrganizerDetailCollectionFooterView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass([CZOrganizerDetailCollectionFooterView class]) forIndexPath:indexPath];
+        WEAKSELF
+        [footer setAllBtnBlock:^{
+            if (weakSelf.clickAllBlock) {
+                weakSelf.clickAllBlock(indexPath.section);
+            }
+        }];
         if (indexPath.section == 0 || indexPath.section == 2) {
             return nil;
         }else if (indexPath.section == 1){
-            self.projectFooter = footer;
-            self.projectFooter.titleStr = @"查看全部20个商品";
-            self.projectFooter.backgroundColor = CZColorCreater(245, 245, 249, 1);
-            self.projectFooter.lineView.hidden = YES;
-            return self.projectFooter;
+            footer.titleStr = @"查看全部20个商品";
+            footer.backgroundColor = CZColorCreater(245, 245, 249, 1);
+            footer.lineView.hidden = YES;
         }else if (indexPath.section == 3){
-            self.diaryFooter = footer;
-            self.diaryFooter.titleStr = @"查看全部日记";
-            self.diaryFooter.backgroundColor = CZColorCreater(255, 255, 255, 1);
-            self.diaryFooter.lineView.hidden = NO;
-            return self.diaryFooter;
+            footer.titleStr = @"查看全部日记";
+            footer.backgroundColor = CZColorCreater(255, 255, 255, 1);
+            footer.lineView.hidden = NO;
         }else{
-            self.evaluateFooter = footer;
-            self.evaluateFooter.titleStr = @"查看全部评价";
-            self.evaluateFooter.backgroundColor = CZColorCreater(255, 255, 255, 1);
-            self.evaluateFooter.lineView.hidden = YES;
-            return self.evaluateFooter;
+            footer.titleStr = @"查看全部评价";
+            footer.backgroundColor = CZColorCreater(255, 255, 255, 1);
+            footer.lineView.hidden = YES;
         }
+        return footer;
     }
 }
 

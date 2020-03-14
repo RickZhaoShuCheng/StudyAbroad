@@ -9,6 +9,7 @@
 #import "CZOrganizerDetailCollectionFooterView.h"
 @interface CZOrganizerDetailCollectionFooterView()
 @property (nonatomic ,strong)UILabel *titleLab;
+@property (nonatomic ,strong) UIButton *allBtn;
 @end
 @implementation CZOrganizerDetailCollectionFooterView
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -18,6 +19,12 @@
         [self initWithUI];
     }
     return self;
+}
+
+- (void)allBtnClick{
+    if (self.allBtnBlock) {
+        self.allBtnBlock();
+    }
 }
 
 -(void)setTitleStr:(NSString *)titleStr{
@@ -52,6 +59,16 @@
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.mas_equalTo(self);
         make.height.mas_equalTo(HeightRatio(12));
+    }];
+    
+    self.allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.allBtn addTarget:self action:@selector(allBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.allBtn];
+    [self.allBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(arrowImg.mas_trailing);
+        make.centerY.mas_equalTo(self.titleLab);
+        make.leading.mas_equalTo(self.titleLab.mas_leading);
+        make.height.mas_equalTo(self.titleLab.mas_height);
     }];
 }
 @end

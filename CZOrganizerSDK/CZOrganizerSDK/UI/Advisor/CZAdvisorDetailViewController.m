@@ -11,6 +11,7 @@
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 #import "CZAdvisorInfoModel.h"
+#import "CZCommentsListVC.h"
 
 @interface CZAdvisorDetailViewController ()
 @property (nonatomic ,strong)CZAdvisorDetailCollectionView *collectionView;
@@ -30,8 +31,30 @@
     [self requestAdvisorDetail];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (self.collectionView.contentOffset.y > 0) {
+        [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
+        [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+        [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
+    }
+}
+
 - (void)actionMethod{
     WEAKSELF
+    //点击全部事件处理
+    [self.collectionView setClickAllBlock:^(NSInteger index) {
+        if (index == 1) {
+            //服务项目
+        }else if (index == 2){
+            //精华日记
+        }else if (index == 3){
+            //优秀评价
+            CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
+            [weakSelf.navigationController pushViewController:commentsList animated:YES];
+        }
+    }];
+    
     //滚动时设置导航条透明度
     [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
         //设置渐变透明度

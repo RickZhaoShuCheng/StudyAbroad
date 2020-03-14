@@ -11,6 +11,7 @@
 @interface CZAdvisorDetailCollectionHeadView()
 @property (nonatomic ,strong)UILabel *titleLab;
 @property (nonatomic ,strong)UILabel *contentLab;
+@property (nonatomic ,strong) UIButton *allBtn;
 @end
 
 @implementation CZAdvisorDetailCollectionHeadView
@@ -21,6 +22,12 @@
         [self initWithUI];
     }
     return self;
+}
+
+- (void)allBtnClick{
+    if (self.allBtnBlock) {
+        self.allBtnBlock();
+    }
 }
 
 //设置标签
@@ -103,5 +110,16 @@
     self.tagList.supportSelected = YES;
     self.tagList.tagContentInset = UIEdgeInsetsMake(HeightRatio(12), WidthRatio(20), HeightRatio(12), WidthRatio(20));
     [self addSubview:self.tagList];
+    
+    self.allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.allBtn addTarget:self action:@selector(allBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.allBtn];
+    [self.allBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(arrowImg.mas_trailing);
+        make.centerY.mas_equalTo(self.contentLab);
+        make.leading.mas_equalTo(self.contentLab.mas_leading);
+        make.height.mas_equalTo(self.contentLab.mas_height);
+    }];
 }
+
 @end

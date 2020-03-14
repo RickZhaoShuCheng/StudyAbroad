@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong)NSString *titleStr;
 @property (nonatomic,strong)NSString *contentStr;
 @property (nonatomic ,strong)JCTagListView *tagList;
+@property (nonatomic ,copy) dispatch_block_t allBtnBlock;
+
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr;
 @end

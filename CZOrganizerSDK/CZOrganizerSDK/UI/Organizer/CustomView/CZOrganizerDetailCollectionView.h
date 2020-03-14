@@ -16,18 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerDetailCollectionView : UICollectionView
 @property (nonatomic ,strong)CZOrganizerDetailHeaderView *headerView;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionHeadView *projectHeader;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionHeadView *advisorHeader;
 @property (nonatomic ,strong)CZOrganizerDetailCollectionHeadView *diaryHeader;
 @property (nonatomic ,strong)CZOrganizerDetailCollectionHeadView *evaluateHeader;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionFooterView *projectFooter;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionFooterView *diaryFooter;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionFooterView *evaluateFooter;
 @property (nonatomic ,assign)CGFloat tagListHeight;
 @property (nonatomic ,strong)NSMutableArray *diaryFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
 @property (nonatomic ,strong) CZOrganizerModel *model;
+@property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
 
 /**
  * 滚动值
