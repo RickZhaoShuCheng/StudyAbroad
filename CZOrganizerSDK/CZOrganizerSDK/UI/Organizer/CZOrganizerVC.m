@@ -109,7 +109,7 @@
                 CZOrganizerModel *model = [CZOrganizerModel modelWithDict:data];
                 weakSelf.titleLab.text = model.name;
                 [weakSelf.rankView setRankByRate:[model.valStar floatValue]];
-                weakSelf.countLab.text = [NSString stringWithFormat:@"粉丝数 %@",[model.fanCount stringValue]];
+                weakSelf.countLab.text = [NSString stringWithFormat:@"粉丝数 %@",[@([model.fanCount integerValue]) stringValue]];
                 if ([model.isFocus boolValue]) {
                     [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
                 }else{

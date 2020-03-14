@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *counselorImg;
 @property (nonatomic , strong) NSString *organId;
 @property (nonatomic , strong) NSNumber *valStar;
-@property (nonatomic , strong) NSString *ratePraise;
-@property (nonatomic , strong) NSString *rateComplaint;
-@property (nonatomic , strong) NSString *rateRepay;
+@property (nonatomic , strong) NSNumber *ratePraise;
+@property (nonatomic , strong) NSNumber *rateComplaint;
+@property (nonatomic , strong) NSNumber *rateRepay;
 @property (nonatomic , strong) NSNumber *productId;
 @property (nonatomic , strong) NSNumber *valService;
 @property (nonatomic , strong) NSNumber *valMajor;

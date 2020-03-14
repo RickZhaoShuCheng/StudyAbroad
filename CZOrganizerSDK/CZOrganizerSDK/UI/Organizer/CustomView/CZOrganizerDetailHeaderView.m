@@ -56,14 +56,14 @@
     }
     self.organizerLab.text = [NSString stringWithFormat:@"专业度: %.2f  服务: %.2f  价格: %.2f  响应: %.2f",[model.valProfessional floatValue] ,[model.valService floatValue],[model.valPrice floatValue],[model.valResponse floatValue]];
     self.serviceLab.text = [NSString stringWithFormat:@"%@条评价",model.commentsCount];
-    self.caseView.countLab.text = [model.caseCount stringValue];
-    self.fansView.countLab.text = [model.reserveCount stringValue];
-    self.serviceView.countLab.text = [model.serviceCount stringValue];
-    self.consultView.countLab.text = [model.askRanking stringValue];
-    self.praiseView.countLab.text = [NSString stringWithFormat:@"%@%@",model.ratePraise,@"%"];
-    self.complainView.countLab.text = [NSString stringWithFormat:@"%@%@",model.rateComplaint,@"%"];
-    self.refundView.countLab.text = [NSString stringWithFormat:@"%@%@",model.rateRepay,@"%"];
-    self.evaluationView.countLab.text = [model.counselorCount stringValue];
+    self.caseView.countLab.text = [@([model.caseCount integerValue]) stringValue];
+    self.fansView.countLab.text = [@([model.reserveCount integerValue]) stringValue];
+    self.serviceView.countLab.text = [@([model.serviceCount integerValue]) stringValue];
+    self.consultView.countLab.text = [@([model.askRanking integerValue]) stringValue];
+    self.praiseView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.ratePraise integerValue]) stringValue],@"%"];
+    self.complainView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.rateComplaint integerValue]) stringValue],@"%"];
+    self.refundView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.rateRepay integerValue]) stringValue],@"%"];
+    self.evaluationView.countLab.text = [@([model.counselorCount integerValue]) stringValue];
     self.locationContent.text = model.address;
     
     NSMutableArray *keyArr = [NSMutableArray array];

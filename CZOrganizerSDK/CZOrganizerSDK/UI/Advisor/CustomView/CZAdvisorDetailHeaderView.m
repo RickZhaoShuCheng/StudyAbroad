@@ -63,14 +63,14 @@
     }else{
         self.VImg.hidden = YES;
     }
-    self.caseView.countLab.text = [model.caseCount stringValue];
-    self.fansView.countLab.text = [model.fanCount stringValue];
-    self.serviceView.countLab.text = [model.serviceCount stringValue];
-    self.consultView.countLab.text = [model.askRanking stringValue];
-    self.praiseView.countLab.text = [NSString stringWithFormat:@"%@%@",[model.ratePraise stringValue],@"%"];
-    self.complainView.countLab.text = [NSString stringWithFormat:@"%@%@",[model.rateComplaint stringValue],@"%"];
-    self.refundView.countLab.text = [NSString stringWithFormat:@"%@%@",[model.rateRepay stringValue],@"%"];
-    self.evaluationView.countLab.text = [model.commentsCount stringValue];
+    self.caseView.countLab.text = [@([model.caseCount integerValue]) stringValue];
+    self.fansView.countLab.text = [@([model.fanCount integerValue]) stringValue];
+    self.serviceView.countLab.text = [@([model.serviceCount integerValue]) stringValue];
+    self.consultView.countLab.text = [@([model.askRanking integerValue]) stringValue];
+    self.praiseView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.ratePraise integerValue]) stringValue],@"%"];
+    self.complainView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.rateComplaint integerValue]) stringValue],@"%"];
+    self.refundView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.rateRepay integerValue]) stringValue],@"%"];
+    self.evaluationView.countLab.text = [@([model.commentsCount integerValue]) stringValue];
     
     self.locationTitle.text = model.organName;
     self.locationContent.text = [NSString stringWithFormat:@"%@%@%@%@",model.countryName,model.provinceName,model.cityName,model.disName];

@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *valPrice;
 @property (nonatomic , strong) NSNumber *valResponse;
 @property (nonatomic , strong) NSNumber *valStar;
-@property (nonatomic , strong) NSString *ratePraise;
-@property (nonatomic , strong) NSString *rateComplaint;
-@property (nonatomic , strong) NSString *rateRepay;
+@property (nonatomic , strong) NSNumber *ratePraise;
+@property (nonatomic , strong) NSNumber *rateComplaint;
+@property (nonatomic , strong) NSNumber *rateRepay;
 @property (nonatomic , strong) NSString *keywords;
 @property (nonatomic , strong) NSString *regCapital;
 @property (nonatomic , strong) NSString *regPersonName;
