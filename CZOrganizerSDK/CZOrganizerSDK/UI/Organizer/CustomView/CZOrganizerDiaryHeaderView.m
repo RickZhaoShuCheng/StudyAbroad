@@ -27,9 +27,9 @@
  * 初始化UI
  */
 - (void)initWithUI{
-    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), 0)];
+    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(ScreenScale(30),ScreenScale(30), kScreenWidth-ScreenScale(60), 0)];
     self.tagList.backgroundColor = [UIColor whiteColor];
-    self.tagList.tagCornerRadius = WidthRatio(28);
+    self.tagList.tagCornerRadius = ScreenScale(28);
     self.tagList.tagBorderWidth = 1;
     self.tagList.tagBorderColor = CZColorCreater(244, 244, 248, 1);
     self.tagList.tagBackgroundColor = CZColorCreater(244, 244, 248, 1);
@@ -37,9 +37,9 @@
     self.tagList.tagSelectedTextColor = CZColorCreater(51, 172, 253, 1);
     self.tagList.tagSelectedBackgroundColor = CZColorCreater(244, 244, 248, 1);
     self.tagList.tagTextColor = CZColorCreater(61, 67, 83, 1);
-    self.tagList.tagFont = [UIFont systemFontOfSize:WidthRatio(24)];
+    self.tagList.tagFont = [UIFont systemFontOfSize:ScreenScale(24)];
     self.tagList.supportSelected = YES;
-    self.tagList.tagContentInset = UIEdgeInsetsMake(HeightRatio(12), WidthRatio(20), HeightRatio(12), WidthRatio(20));
+    self.tagList.tagContentInset = UIEdgeInsetsMake(ScreenScale(12), ScreenScale(20), ScreenScale(12), ScreenScale(20));
     [self addSubview:self.tagList];
     
     self.arrowBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -48,7 +48,7 @@
     [self.arrowBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(self.mas_bottom);
         make.centerX.mas_equalTo(self);
-        make.size.mas_equalTo(WidthRatio(80));
+        make.size.mas_equalTo(ScreenScale(80));
     }];
 }
 @end

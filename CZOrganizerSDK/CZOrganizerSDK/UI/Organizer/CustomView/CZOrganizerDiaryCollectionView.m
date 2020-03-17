@@ -36,11 +36,11 @@
             [self.headerView.tagList.selectedTags addObject:tagsArr[0]];
         }
         self.headerView.tagList.tags = tagsArr;
-        if (self.headerView.tagList.contentHeight >= HeightRatio(140)) {
-            self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), HeightRatio(120));
+        if (self.headerView.tagList.contentHeight >= ScreenScale(140)) {
+            self.headerView.tagList.frame = CGRectMake(ScreenScale(30),ScreenScale(30), kScreenWidth-ScreenScale(60), ScreenScale(140));
             [self.headerView.arrowBtn setHidden:NO];
         }else{
-            self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), self.headerView.tagList.contentHeight);
+            self.headerView.tagList.frame = CGRectMake(ScreenScale(30),ScreenScale(30), kScreenWidth-ScreenScale(60), self.headerView.tagList.contentHeight);
             [self.headerView.arrowBtn setHidden:YES];
         }
         
@@ -55,18 +55,18 @@
     CZOrganizerDetailDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailDiaryCell class]) forIndexPath:indexPath];
     if (indexPath.row % 2 == 0) {
         [cell.iconImg mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(30));
+            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(30));
         }];
     }else{
         [cell.iconImg mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(15));
+            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(15));
         }];
     }
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(kScreenWidth/2.0, HeightRatio(660));
+    return CGSizeMake(kScreenWidth/2.0, ScreenScale(690));
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);
@@ -81,13 +81,13 @@
     if (!self.headerView || self.headerView.tagList.contentHeight == 0) {
         return CGSizeMake(kScreenWidth,0.01);
     }
-    if (self.headerView.tagList.contentHeight >= HeightRatio(140)) {
+    if (self.headerView.tagList.contentHeight >= ScreenScale(140)) {
         if (self.isOpen) {
-            return CGSizeMake(kScreenWidth, self.headerView.tagList.contentHeight + HeightRatio(80));
+            return CGSizeMake(kScreenWidth, self.headerView.tagList.contentHeight + ScreenScale(80));
         }
-        return CGSizeMake(kScreenWidth, HeightRatio(140) + HeightRatio(60));
+        return CGSizeMake(kScreenWidth, ScreenScale(140) + ScreenScale(90));
     }
-    return CGSizeMake(kScreenWidth, self.headerView.tagList.contentHeight + HeightRatio(40));
+    return CGSizeMake(kScreenWidth, self.headerView.tagList.contentHeight + ScreenScale(40));
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if (kind == UICollectionElementKindSectionHeader) {
@@ -123,22 +123,22 @@
         [UIView commitAnimations];
     }
     if (self.isOpen) {
-        self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), self.headerView.tagList.contentHeight);
+        self.headerView.tagList.frame = CGRectMake(ScreenScale(30),ScreenScale(30), kScreenWidth-ScreenScale(60), self.headerView.tagList.contentHeight);
     }else{
-        self.headerView.tagList.frame = CGRectMake(WidthRatio(30),HeightRatio(30), kScreenWidth-WidthRatio(60), HeightRatio(120));
+        self.headerView.tagList.frame = CGRectMake(ScreenScale(30),ScreenScale(30), kScreenWidth-ScreenScale(60), ScreenScale(140));
     }
     [self reloadData];
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat sectionHeaderHeight;
-    if (self.headerView.tagList.contentHeight >= HeightRatio(140)) {
+    if (self.headerView.tagList.contentHeight >= ScreenScale(140)) {
         if (self.isOpen) {
-            sectionHeaderHeight = self.headerView.tagList.contentHeight + HeightRatio(80);
+            sectionHeaderHeight = self.headerView.tagList.contentHeight + ScreenScale(80);
         }else{
-            sectionHeaderHeight = HeightRatio(140) + HeightRatio(60);
+            sectionHeaderHeight = ScreenScale(140) + ScreenScale(90);
         }
     }else{
-        sectionHeaderHeight = self.headerView.tagList.contentHeight + HeightRatio(40);
+        sectionHeaderHeight = self.headerView.tagList.contentHeight + ScreenScale(40);
     }
     
     if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {

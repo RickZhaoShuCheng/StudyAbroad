@@ -60,7 +60,7 @@
 //            CGRect rect = weakSelf.collectionView.headerView.bgImg.frame;
 //            //改变图片的y值和高度即可
 //            rect.origin.y = offsetY;
-//            rect.size.height = HeightRatio(540)+weakSelf.collectionView.tagListHeight - offsetY;
+//            rect.size.height = ScreenScale(540)+weakSelf.collectionView.tagListHeight - offsetY;
 //            weakSelf.collectionView.headerView.bgImg.frame = rect;
 //        }
     }];

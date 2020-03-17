@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerDetailCollectionView : UICollectionView
 @property (nonatomic ,strong)CZOrganizerDetailHeaderView *headerView;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionHeadView *diaryHeader;
-@property (nonatomic ,strong)CZOrganizerDetailCollectionHeadView *evaluateHeader;
 @property (nonatomic ,assign)CGFloat tagListHeight;
 @property (nonatomic ,strong)NSMutableArray *diaryFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;

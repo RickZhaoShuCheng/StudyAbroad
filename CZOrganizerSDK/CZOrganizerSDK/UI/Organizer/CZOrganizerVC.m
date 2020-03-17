@@ -17,7 +17,7 @@
 #import "QSCommonService.h"
 #import "CZOrganizerModel.h"
 
-#define PageMenuHeight          HeightRatio(60)
+#define PageMenuHeight          ScreenScale(88)
 
 @interface CZOrganizerVC ()<SPPageMenuDelegate,UIScrollViewDelegate>
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
@@ -86,7 +86,7 @@
             CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
             //改变图片的y值和高度即可
             rect.origin.y = offsetY;
-            rect.size.height = HeightRatio(540)+baseVc.collectionView.tagListHeight - offsetY;
+            rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight - offsetY;
             baseVc.collectionView.headerView.bgImg.frame = rect;
         }
         //悬浮
@@ -147,11 +147,11 @@
     
     self.titleArr = @[@"主页",@"项目",@"日记",@"顾问"];
     // trackerStyle:跟踪器的样式
-    self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(WidthRatio(200), 0, kScreenWidth-WidthRatio(216), PageMenuHeight) trackerStyle:SPPageMenuTrackerStyleLine];
+    self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(ScreenScale(200), 0, kScreenWidth-ScreenScale(216), PageMenuHeight) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
     self.pageMenu.selectedItemTitleColor = CZColorCreater(0, 0, 0, 1);
     self.pageMenu.unSelectedItemTitleColor = CZColorCreater(0, 0, 0, 1);
-    self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.pageMenu.tracker.backgroundColor = CZColorCreater(51, 172, 253, 1);
     // 传递数组，默认选中第0个
     [self.pageMenu setItems:self.titleArr selectedItemIndex:0];
@@ -184,7 +184,7 @@
     if (self.pageMenu.selectedItemIndex < self.myChildViewControllers.count) {
         UIViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
         [self.scrollView addSubview:baseVc.view];
-        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-HeightRatio(140));
+        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-ScreenScale(80));
         self.scrollView.contentOffset = CGPointMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0);
         self.scrollView.contentSize = CGSizeMake(self.titleArr.count*kScreenWidth, 0);
     }
@@ -193,20 +193,20 @@
     self.searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
     [self.searchBtn setTitleColor:CZColorCreater(188, 188, 201, 1) forState:UIControlStateNormal];
-    [self.searchBtn.titleLabel setFont:[UIFont systemFontOfSize:WidthRatio(28)]];
+    [self.searchBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.searchBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_xue_xiao_fang_da_jing"] forState:UIControlStateNormal];
     [self.searchBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_xue_xiao_fang_da_jing"] forState:UIControlStateHighlighted];
     [self.searchBtn setBackgroundColor:CZColorCreater(244, 244, 248, 1)];
-    [self.searchBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(16))];
+    [self.searchBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, ScreenScale(16))];
     [self.searchBtn.layer setMasksToBounds:YES];
-    [self.searchBtn.layer setCornerRadius:HeightRatio(50)/2];
+    [self.searchBtn.layer setCornerRadius:ScreenScale(50)/2];
     [self.searchBtn addTarget:self action:@selector(clickSearchBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:self.searchBtn];
     [self.searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.topView).offset(WidthRatio(40));
+        make.leading.mas_equalTo(self.topView).offset(ScreenScale(40));
         make.centerY.mas_equalTo(self.topView);
-        make.width.mas_equalTo(WidthRatio(140));
-        make.height.mas_equalTo(HeightRatio(50));
+        make.width.mas_equalTo(ScreenScale(140));
+        make.height.mas_equalTo(ScreenScale(50));
     }];
 }
 #pragma mark - SPPageMenu的代理方法
@@ -257,7 +257,7 @@
     if ([targetViewController isViewLoaded]){
         return;
     };
-    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - PageMenuHeight - NaviH - StatusBarHeight - HeightRatio(140));
+    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - NaviH - StatusBarHeight - ScreenScale(140));
     [self.scrollView addSubview:targetViewController.view];
 }
 
@@ -282,36 +282,36 @@
     
     self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
 
-    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-140, HeightRatio(30))];
-    self.titleLab.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenScale(20), kScreenWidth-140, ScreenScale(30))];
+    self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
     self.titleLab.text = @"-";
     [self.titleView addSubview:self.titleLab];
     
     self.rankView = [CZRankView instanceRankViewByRate:3.1];
-    self.rankView.frame = CGRectMake(0, HeightRatio(45), WidthRatio(150), HeightRatio(28));
+    self.rankView.frame = CGRectMake(0, ScreenScale(65), ScreenScale(150), ScreenScale(28));
     [self.titleView addSubview:self.rankView];
     
-    self.scoreLab = [[UILabel alloc]initWithFrame:CGRectMake(WidthRatio(135), HeightRatio(36), WidthRatio(50), HeightRatio(30))];
-    self.scoreLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.scoreLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155), ScreenScale(56), ScreenScale(50), ScreenScale(30))];
+    self.scoreLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.scoreLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.scoreLab.text = @"3.1";
     [self.titleView addSubview:self.scoreLab];
     
-    self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(WidthRatio(135)+WidthRatio(50)+WidthRatio(34), HeightRatio(36), WidthRatio(180), HeightRatio(30))];
-    self.countLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155)+ScreenScale(50)+ScreenScale(34), ScreenScale(56), ScreenScale(180), ScreenScale(30))];
+    self.countLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.countLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.countLab.text = @"粉丝数 8122";
     [self.titleView addSubview:self.countLab];
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-WidthRatio(116), HeightRatio(10), WidthRatio(116), HeightRatio(46))];
+    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(50), ScreenScale(30), ScreenScale(116), ScreenScale(46))];
     [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
     [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
     [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:WidthRatio(26)]];
+    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
     [self.focusBtn.layer setMasksToBounds:YES];
-    [self.focusBtn.layer setCornerRadius:HeightRatio(46)/2];
+    [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
     [self.titleView addSubview:self.focusBtn];
     
     //导航透明
@@ -325,24 +325,24 @@
     [self.view addSubview:bottomView];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.mas_equalTo(self.view);
-        make.height.mas_equalTo(HeightRatio(140));
+        make.height.mas_equalTo(ScreenScale(140));
     }];
     
     self.chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.chatBtn.layer.masksToBounds = YES;
-    self.chatBtn.layer.cornerRadius = HeightRatio(80)/2.0;
+    self.chatBtn.layer.cornerRadius = ScreenScale(80)/2.0;
     [self.chatBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
     [self.chatBtn setTitle:@"咨询一下" forState:UIControlStateNormal];
     [self.chatBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:WidthRatio(30)]];
+    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:ScreenScale(30)]];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
-    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(14))];
+    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, ScreenScale(14))];
     [bottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(bottomView);
-        make.height.mas_equalTo(HeightRatio(80));
-        make.width.mas_equalTo(WidthRatio(690));
+        make.height.mas_equalTo(ScreenScale(80));
+        make.width.mas_equalTo(ScreenScale(690));
         make.top.mas_equalTo(bottomView.mas_top);
     }];
 }

@@ -88,12 +88,12 @@
     
     self.tagList.tags = tagesArr;
     if (tagesArr.count == 0) {
-        self.tagList.frame = CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), 0,0);
+        self.tagList.frame = CGRectMake(ScreenScale(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+ScreenScale(40), kScreenWidth - ScreenScale(60),0);
     }else{
-        self.tagList.frame = CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), kScreenWidth - WidthRatio(60),self.tagList.contentHeight);
+        self.tagList.frame = CGRectMake(ScreenScale(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+ScreenScale(40), kScreenWidth - ScreenScale(60),self.tagList.contentHeight);
     }
     
-    self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, HeightRatio(540));
+    self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(540));
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -109,13 +109,13 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(WidthRatio(116), WidthRatio(116));
+    return CGSizeMake(ScreenScale(116), ScreenScale(116));
 }
 
 -(void)initWithUI{
     
     //根据标签高度调整背景高度
-    self.bgImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, HeightRatio(540))];
+    self.bgImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(540))];
     [self addSubview:self.bgImg];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -128,66 +128,66 @@
     
     self.avatarImg = [[UIImageView alloc]init];
     self.avatarImg.layer.masksToBounds = YES;
-    self.avatarImg.layer.cornerRadius = WidthRatio(100)/2;
+    self.avatarImg.layer.cornerRadius = ScreenScale(100)/2;
     [self addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.mas_leading).offset(WidthRatio(50));
-        make.top.mas_equalTo(self.mas_top).offset(HeightRatio(180));
-        make.width.height.mas_equalTo(WidthRatio(100));
+        make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(50));
+        make.top.mas_equalTo(self.mas_top).offset(ScreenScale(180));
+        make.width.height.mas_equalTo(ScreenScale(100));
     }];
     
     self.VImg = [[UIImageView alloc]init];
     self.VImg.image = [CZImageProvider imageNamed:@"shou_ye_ren_zheng_cell"];
     [self addSubview:self.VImg];
     [self.VImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-HeightRatio(18));
+        make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-ScreenScale(18));
         make.centerX.mas_equalTo(self.avatarImg);
-        make.width.mas_equalTo(WidthRatio(100));
-        make.height.mas_equalTo(HeightRatio(36));
+        make.width.mas_equalTo(ScreenScale(100));
+        make.height.mas_equalTo(ScreenScale(36));
     }];
     
     self.nameLab = [[UILabel alloc] init];
     self.nameLab.text = @"-";
     self.nameLab.textColor = CZColorCreater(255, 255, 255, 1);
-    self.nameLab.font = [UIFont boldSystemFontOfSize:WidthRatio(34)];
+    self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(34)];
     [self addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(20));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(20));
         make.top.mas_equalTo(self.avatarImg.mas_top);
-        make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
+        make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(30));
         make.height.mas_greaterThanOrEqualTo(0);
     }];
     
     self.organizerLab = [[UILabel alloc] init];
     self.organizerLab.text = @"-";
     self.organizerLab.textColor = CZColorCreater(255, 255, 255, 1);
-    self.organizerLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.organizerLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     [self addSubview:self.organizerLab];
     [self.organizerLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(20));
-        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(HeightRatio(8));
-        make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(20));
+        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(ScreenScale(8));
+        make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(30));
         make.height.mas_greaterThanOrEqualTo(0);
     }];
     
     self.rankView = [CZRankView instanceRankViewByRate:0];
     [self addSubview:self.rankView];
     [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(WidthRatio(150));
-        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(20));
+        make.width.mas_equalTo(ScreenScale(150));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(20));
         make.bottom.mas_equalTo(self.VImg.mas_bottom);
-        make.height.mas_equalTo(HeightRatio(28));
+        make.height.mas_equalTo(ScreenScale(28));
     }];
     
     self.serviceLab = [[UILabel alloc] init];
     self.serviceLab.text = @"服务-人";
     self.serviceLab.textColor = CZColorCreater(255, 255, 255, 1);
-    self.serviceLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.serviceLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     [self addSubview:self.serviceLab];
     [self.serviceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.rankView.mas_trailing);
-        make.top.mas_equalTo(self.rankView.mas_top).offset(-HeightRatio(4));
-        make.trailing.mas_equalTo(self.mas_trailing).offset(-WidthRatio(30));
+        make.top.mas_equalTo(self.rankView.mas_top).offset(-ScreenScale(4));
+        make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(30));
         make.height.mas_greaterThanOrEqualTo(0);
     }];
     
@@ -199,9 +199,9 @@
         [self addSubview:self.caseView];
         [self.caseView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.mas_leading);
-            make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(HeightRatio(40));
+            make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(ScreenScale(40));
             make.width.mas_equalTo(kScreenWidth/4);
-            make.height.mas_equalTo(HeightRatio(60));
+            make.height.mas_equalTo(ScreenScale(60));
         }];
         
         self.fansView = [[CZAdvisorDetailBtnView alloc]init];
@@ -240,9 +240,9 @@
         [self addSubview:self.praiseView];
         [self.praiseView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.mas_leading);
-            make.top.mas_equalTo(self.caseView.mas_bottom).offset(HeightRatio(50));
+            make.top.mas_equalTo(self.caseView.mas_bottom).offset(ScreenScale(50));
             make.width.mas_equalTo(kScreenWidth/4);
-            make.height.mas_equalTo(HeightRatio(60));
+            make.height.mas_equalTo(ScreenScale(60));
         }];
         
         self.complainView = [[CZAdvisorDetailBtnView alloc]init];
@@ -253,7 +253,7 @@
             make.leading.mas_equalTo(self.praiseView.mas_trailing);
             make.top.mas_equalTo(self.praiseView);
             make.width.mas_equalTo(kScreenWidth/4);
-            make.height.mas_equalTo(HeightRatio(60));
+            make.height.mas_equalTo(ScreenScale(60));
         }];
         
         self.refundView = [[CZAdvisorDetailBtnView alloc]init];
@@ -264,7 +264,7 @@
             make.leading.mas_equalTo(self.complainView.mas_trailing);
             make.top.mas_equalTo(self.complainView);
             make.width.mas_equalTo(kScreenWidth/4);
-            make.height.mas_equalTo(HeightRatio(60));
+            make.height.mas_equalTo(ScreenScale(60));
         }];
         
         self.evaluationView = [[CZAdvisorDetailBtnView alloc]init];
@@ -275,20 +275,20 @@
             make.leading.mas_equalTo(self.refundView.mas_trailing);
             make.top.mas_equalTo(self.refundView);
             make.width.mas_equalTo(kScreenWidth/4);
-            make.height.mas_equalTo(HeightRatio(60));
+            make.height.mas_equalTo(ScreenScale(60));
         }];
     }
     
     [self layoutIfNeeded];
-    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(WidthRatio(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+HeightRatio(40), kScreenWidth - WidthRatio(60),0)];
-    self.tagList.tagCornerRadius = WidthRatio(3);
+    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(ScreenScale(30), self.evaluationView.frame.origin.y+self.evaluationView.frame.size.height+ScreenScale(40), kScreenWidth - ScreenScale(60),0)];
+    self.tagList.tagCornerRadius = ScreenScale(3);
     self.tagList.tagBorderWidth = 0;
     self.tagList.tagBackgroundColor = CZColorCreater(52, 172, 255, 1);
     self.tagList.tagTextColor = [UIColor whiteColor];
-    self.tagList.tagFont = [UIFont systemFontOfSize:WidthRatio(22)];
-    self.tagList.tagItemSpacing = WidthRatio(16);
-    self.tagList.tagLineSpacing = WidthRatio(16);
-    self.tagList.tagContentInset = UIEdgeInsetsMake(HeightRatio(5), WidthRatio(10), HeightRatio(5), WidthRatio(10));
+    self.tagList.tagFont = [UIFont systemFontOfSize:ScreenScale(22)];
+    self.tagList.tagItemSpacing = ScreenScale(16);
+    self.tagList.tagLineSpacing = ScreenScale(16);
+    self.tagList.tagContentInset = UIEdgeInsetsMake(ScreenScale(5), ScreenScale(10), ScreenScale(5), ScreenScale(10));
     [self addSubview:self.tagList];
     
     
@@ -297,31 +297,31 @@
     [self addSubview:self.locationView];
     [self.locationView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self);
-        make.top.mas_equalTo(self.bgImg.mas_bottom).offset(HeightRatio(16));
-        make.height.mas_equalTo(HeightRatio(135));
+        make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(16));
+        make.height.mas_equalTo(ScreenScale(135));
     }];
     
     self.locationTitle = [[UILabel alloc] init];
     self.locationTitle.text = @"-";
     self.locationTitle.textColor = CZColorCreater(0, 0, 0, 1);
-    self.locationTitle.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    self.locationTitle.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     [self.locationView addSubview:self.locationTitle];
     [self.locationTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.locationView.mas_leading).offset(WidthRatio(30));
-        make.top.mas_equalTo(self.locationView.mas_top).offset(HeightRatio(30));
-        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-WidthRatio(94));
+        make.leading.mas_equalTo(self.locationView.mas_leading).offset(ScreenScale(30));
+        make.top.mas_equalTo(self.locationView.mas_top).offset(ScreenScale(30));
+        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(94));
         make.height.mas_greaterThanOrEqualTo(0);
     }];
     
     self.locationContent = [[UILabel alloc] init];
     self.locationContent.text = @"南京市雨花台区达州路32号软件谷科";
     self.locationContent.textColor = CZColorCreater(170, 170, 187, 1);
-    self.locationContent.font = [UIFont systemFontOfSize:WidthRatio(26)];
+    self.locationContent.font = [UIFont systemFontOfSize:ScreenScale(26)];
     [self.locationView addSubview:self.locationContent];
     [self.locationContent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.locationView.mas_leading).offset(WidthRatio(30));
-        make.top.mas_equalTo(self.locationTitle.mas_bottom).offset(HeightRatio(16));
-        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-WidthRatio(94));
+        make.leading.mas_equalTo(self.locationView.mas_leading).offset(ScreenScale(30));
+        make.top.mas_equalTo(self.locationTitle.mas_bottom).offset(ScreenScale(16));
+        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(94));
         make.height.mas_greaterThanOrEqualTo(0);
     }];
     
@@ -329,7 +329,7 @@
     self.locationImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"guwen_dingwei"]];
     [self.locationView addSubview:self.locationImg];
     [self.locationImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-WidthRatio(30));
+        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(30));
         make.centerY.mas_equalTo(self.locationView);
         make.size.mas_equalTo(self.locationImg.image.size);
     }];
@@ -338,9 +338,9 @@
     line.backgroundColor = CZColorCreater(241, 241, 245, 1);
     [self.locationView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.locationImg.mas_leading).offset(-WidthRatio(32));
+        make.trailing.mas_equalTo(self.locationImg.mas_leading).offset(-ScreenScale(32));
         make.centerY.mas_equalTo(self.locationView);
-        make.height.mas_equalTo(HeightRatio(64));
+        make.height.mas_equalTo(ScreenScale(64));
         make.width.mas_equalTo(1);
     }];
     
@@ -349,8 +349,8 @@
     [self addSubview:self.dynamicView];
     [self.dynamicView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self);
-        make.bottom.mas_equalTo(self.mas_bottom).offset(-HeightRatio(16));
-        make.height.mas_equalTo(HeightRatio(198));
+        make.bottom.mas_equalTo(self.mas_bottom).offset(-ScreenScale(16));
+        make.height.mas_equalTo(ScreenScale(198));
     }];
     
     UILabel *tips = [[UILabel alloc]init];
@@ -358,17 +358,17 @@
     [self.dynamicView addSubview:tips];
     [tips mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.centerY.mas_equalTo(self.dynamicView);
-        make.width.mas_equalTo(WidthRatio(8));
-        make.height.mas_equalTo(HeightRatio(26));
+        make.width.mas_equalTo(ScreenScale(8));
+        make.height.mas_equalTo(ScreenScale(26));
     }];
     
     UILabel *titleLab = [[UILabel alloc] init];
     titleLab.text = @"顾问动态";
     titleLab.textColor = CZColorCreater(0, 0, 0, 1);
-    titleLab.font = [UIFont boldSystemFontOfSize:WidthRatio(30)];
+    titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     [self.dynamicView addSubview:titleLab];
     [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(tips.mas_trailing).offset(WidthRatio(22));
+        make.leading.mas_equalTo(tips.mas_trailing).offset(ScreenScale(22));
         make.centerY.mas_equalTo(self.dynamicView);
         make.height.width.mas_greaterThanOrEqualTo(0);
     }];
@@ -376,14 +376,14 @@
     UIImageView *arrowImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"zhu_ye_you_jian_tou"]];
     [self.dynamicView addSubview:arrowImg];
     [arrowImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.dynamicView.mas_trailing).offset(-WidthRatio(30));
+        make.trailing.mas_equalTo(self.dynamicView.mas_trailing).offset(-ScreenScale(30));
         make.centerY.mas_equalTo(self.dynamicView);
         make.height.mas_equalTo(12);
         make.width.mas_equalTo(8);
     }];
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.minimumLineSpacing = WidthRatio(18);
+    layout.minimumLineSpacing = ScreenScale(18);
     self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -392,10 +392,10 @@
     [self.collectionView registerClass:[CZAdvisorDetailHeaderCell class] forCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderCell class])];
     [self.dynamicView addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(titleLab.mas_trailing).offset(WidthRatio(28));
+        make.leading.mas_equalTo(titleLab.mas_trailing).offset(ScreenScale(28));
         make.centerY.mas_equalTo(self.dynamicView);
         make.top.bottom.mas_equalTo(self.dynamicView);
-        make.trailing.mas_equalTo(arrowImg.mas_leading).offset(-WidthRatio(18));
+        make.trailing.mas_equalTo(arrowImg.mas_leading).offset(-ScreenScale(18));
     }];
 }
 @end

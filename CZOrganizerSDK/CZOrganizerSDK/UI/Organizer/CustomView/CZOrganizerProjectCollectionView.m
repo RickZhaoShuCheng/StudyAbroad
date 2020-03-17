@@ -34,18 +34,18 @@
     CZOrganizerDetailServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailServiceCell class]) forIndexPath:indexPath];
     if (indexPath.row % 2 == 0) {
         [cell.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(30));
+            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(30));
         }];
     }else{
         [cell.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(15));
+            make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(15));
         }];
     }
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(kScreenWidth/2.0, HeightRatio(460));
+    return CGSizeMake(kScreenWidth/2.0, ScreenScale(560));
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);

@@ -42,13 +42,13 @@
     #warning 图片高度没算，最多支持6张图片，有机会再优化，缺少内容高度，需动态计算
 //    if ([[self.commentsArr[indexPath.row] objectForKey:@"pics"] count] == 0) {
 //        //无图片
-//        return HeightRatio(300);
+//        return ScreenScale(300);
 //    }else if ([[self.commentsArr[indexPath.row] objectForKey:@"pics"] count] <= 3) {
 ////        1-3张
-//        return HeightRatio(480);
+//        return ScreenScale(480);
 //    }else{
 ////        4-6张
-        return HeightRatio(170);
+        return ScreenScale(170);
 //    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -62,7 +62,7 @@
 
 - (CZCommentsDetailHeaderView *)headerView{
     if (!_headerView) {
-        _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, HeightRatio(1220))];
+        _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1220))];
     }
     return _headerView;
 }

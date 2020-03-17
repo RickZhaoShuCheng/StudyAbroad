@@ -74,7 +74,7 @@
             CGRect rect = weakSelf.collectionView.headerView.bgImg.frame;
             //改变图片的y值和高度即可
             rect.origin.y = offsetY;
-            rect.size.height = HeightRatio(540)+weakSelf.collectionView.tagListHeight - offsetY;
+            rect.size.height = ScreenScale(540)+weakSelf.collectionView.tagListHeight - offsetY;
             weakSelf.collectionView.headerView.bgImg.frame = rect;
         }
         
@@ -107,25 +107,6 @@
         [self.collectionView reloadData];
     }
 }
-//测试筛选项
-- (void)testDiaryFilter{
-    NSMutableArray *arr = [NSMutableArray array];
-    [arr addObject:@"全部"];
-    [arr addObject:@"最新"];
-    [arr addObject:@"好评 50"];
-    [arr addObject:@"消费后评价 38"];
-    [self.collectionView.diaryFilterArr removeAllObjects];
-    [self.collectionView.diaryFilterArr addObjectsFromArray:arr];
-    
-    NSMutableArray *arr1 = [NSMutableArray array];
-    [arr1 addObject:@"全部"];
-    [arr1 addObject:@"最新"];
-    [arr1 addObject:@"好评 80"];
-    [arr1 addObject:@"消费后评价 128"];
-    [self.collectionView.evaluateFilterArr removeAllObjects];
-    [self.collectionView.evaluateFilterArr addObjectsFromArray:arr1];
-    
-}
 
 /**
  获取顾问详情
@@ -138,8 +119,6 @@
 //        dispatch_sync(dispatch_get_main_queue(), ^{
 //            ///展示个人标签
 //            [weakSelf testTags];
-//            //测试筛选项
-//            [weakSelf testDiaryFilter];
             
 //        });
          if (success){
@@ -212,24 +191,24 @@
     [self.view addSubview:bottomView];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.mas_equalTo(self.view);
-        make.height.mas_equalTo(HeightRatio(140));
+        make.height.mas_equalTo(ScreenScale(140));
     }];
     
     self.chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.chatBtn.layer.masksToBounds = YES;
-    self.chatBtn.layer.cornerRadius = HeightRatio(80)/2.0;
+    self.chatBtn.layer.cornerRadius = ScreenScale(80)/2.0;
     [self.chatBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
     [self.chatBtn setTitle:@"咨询一下" forState:UIControlStateNormal];
     [self.chatBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:WidthRatio(30)]];
+    [self.chatBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:ScreenScale(30)]];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
-    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, WidthRatio(14))];
+    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, ScreenScale(14))];
     [bottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(bottomView);
-        make.height.mas_equalTo(HeightRatio(80));
-        make.width.mas_equalTo(WidthRatio(690));
+        make.height.mas_equalTo(ScreenScale(80));
+        make.width.mas_equalTo(ScreenScale(690));
         make.top.mas_equalTo(bottomView.mas_top);
     }];
     
@@ -240,6 +219,7 @@
         make.top.mas_equalTo(self.view.mas_top).offset(-(NaviH+StatusBarHeight+5));
         make.bottom.mas_equalTo(bottomView.mas_top);
     }];
+
 }
 
 - (CZAdvisorDetailCollectionView *)collectionView{
@@ -254,7 +234,6 @@
 }
 - (void)rbackItemClick{
     [self testTags];
-    [self testDiaryFilter];
 }
 
 //返回

@@ -26,7 +26,7 @@
 - (void)initWithUI{
     self.avatarImg = [[UIImageView alloc]init];
     self.avatarImg.layer.masksToBounds = YES;
-    self.avatarImg.layer.cornerRadius = WidthRatio(5);
+    self.avatarImg.layer.cornerRadius = ScreenScale(5);
     [self.contentView addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.top.bottom.mas_equalTo(self.contentView);

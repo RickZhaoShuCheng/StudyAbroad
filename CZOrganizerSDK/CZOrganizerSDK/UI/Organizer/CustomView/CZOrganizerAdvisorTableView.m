@@ -43,21 +43,21 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return HeightRatio(160);
+    return ScreenScale(160);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return HeightRatio(20);
+    return ScreenScale(20);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, HeightRatio(20))];
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(20))];
     footerView.backgroundColor = CZColorCreater(245, 245, 249, 1);
     return footerView;
 }
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
 
-    CGFloat sectionFooterHeight = HeightRatio(20);
+    CGFloat sectionFooterHeight = ScreenScale(20);
 
     CGFloat ButtomHeight = scrollView.contentSize.height -self.frame.size.height;
     if (ButtomHeight - sectionFooterHeight <= scrollView.contentOffset.y && scrollView.contentSize.height >0) {

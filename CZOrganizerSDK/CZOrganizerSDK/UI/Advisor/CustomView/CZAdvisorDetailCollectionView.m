@@ -90,11 +90,11 @@
         CZAdvisorDetailServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailServiceCell class]) forIndexPath:indexPath];
         if (indexPath.row % 2 == 0) {
             [cell.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(30));
+                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(30));
             }];
         }else{
             [cell.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(15));
+                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(15));
             }];
         }
         return cell;
@@ -102,11 +102,11 @@
         CZAdvisorDetailDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailDiaryCell class]) forIndexPath:indexPath];
         if (indexPath.row % 2 == 0) {
             [cell.iconImg mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(30));
+                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(30));
             }];
         }else{
             [cell.iconImg mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(WidthRatio(15));
+                make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(15));
             }];
         }
         return cell;
@@ -118,20 +118,20 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-        return CGSizeMake(kScreenWidth/2.0, HeightRatio(460));
+        return CGSizeMake(kScreenWidth/2.0, ScreenScale(560));
     }else if (indexPath.section == 2){
-        return CGSizeMake(kScreenWidth/2.0, HeightRatio(660));
+        return CGSizeMake(kScreenWidth/2.0, ScreenScale(690));
     }
 #warning 图片高度没算，最多支持6张图片，有机会再优化，缺少内容高度，需动态计算
     if ([[self.evaluateArr[indexPath.row] objectForKey:@"pics"] count] == 0) {
         //无图片
-        return CGSizeMake(kScreenWidth, HeightRatio(300));
+        return CGSizeMake(kScreenWidth, ScreenScale(330));
     }else if ([[self.evaluateArr[indexPath.row] objectForKey:@"pics"] count] <= 3) {
         //1-3张
-        return CGSizeMake(kScreenWidth, HeightRatio(480));
+        return CGSizeMake(kScreenWidth, ScreenScale(550));
     }else{
         //4-6张
-        return CGSizeMake(kScreenWidth, HeightRatio(650));
+        return CGSizeMake(kScreenWidth, ScreenScale(750));
     }
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
@@ -147,21 +147,13 @@
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize size;
     if (section == 0) {
-        return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, HeightRatio(920)+self.tagListHeight);
+        return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(920)+self.tagListHeight);
     }else if (section == 2){
-        if (self.diaryFilterArr.count > 0) {
-            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, HeightRatio(92)+ self.diaryHeader.tagList.contentHeight) ;
-        }else{
-            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, HeightRatio(92)) ;
-        }
+        return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100)+ [self getSectionHeaderHeight:self.diaryFilterArr]) ;
     }else if (section == 3){
-        if (self.evaluateFilterArr.count > 0) {
-            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, HeightRatio(92) + self.evaluateHeader.tagList.contentHeight);
-        }else{
-            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, HeightRatio(92));
-        }
+        return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100) + [self getSectionHeaderHeight:self.evaluateFilterArr]);
     }else{
-        return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, HeightRatio(92));
+        return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100));
     }
 }
 
@@ -169,7 +161,7 @@
     if (section == 0) {
         return CGSizeZero;
     }else{
-        return CGSizeMake(kScreenWidth, HeightRatio(98));
+        return CGSizeMake(kScreenWidth, ScreenScale(130));
     }
 }
 
@@ -189,15 +181,11 @@
             header.titleStr = @"服务项目";
             header.tagList.hidden = YES;
         }else if (indexPath.section == 2){
-            self.diaryHeader = header;
-            self.diaryHeader.titleStr = @"精华日记";
-            [self.diaryHeader setTags:self.diaryFilterArr];
-            return self.diaryHeader;
+            header.titleStr = @"精华日记";
+            [header setTags:self.diaryFilterArr];
         }else{
-            self.evaluateHeader = header;
-            self.evaluateHeader.titleStr = @"优秀评价";
-            [self.evaluateHeader setTags:self.evaluateFilterArr];
-            return self.evaluateHeader;
+            header.titleStr = @"优秀评价";
+            [header setTags:self.evaluateFilterArr];
         }
         return header;
     }else{
@@ -225,6 +213,26 @@
         }
         return footer;
     }
+}
+
+- (CGFloat)getSectionHeaderHeight:(NSMutableArray *)arr{
+    if (arr.count == 0) {
+        return 0;
+    }
+    JCTagListView *tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-ScreenScale(60), 0)];
+    tagList.tagCornerRadius = ScreenScale(28);
+    tagList.tagBorderWidth = 1;
+    tagList.tagBorderColor = CZColorCreater(244, 244, 248, 1);
+    tagList.tagBackgroundColor = CZColorCreater(244, 244, 248, 1);
+    tagList.tagSelectedBorderColor = CZColorCreater(51, 172, 253, 1);
+    tagList.tagSelectedTextColor = CZColorCreater(51, 172, 253, 1);
+    tagList.tagSelectedBackgroundColor = CZColorCreater(244, 244, 248, 1);
+    tagList.tagTextColor = CZColorCreater(61, 67, 83, 1);
+    tagList.tagFont = [UIFont systemFontOfSize:ScreenScale(24)];
+    tagList.supportSelected = YES;
+    tagList.tagContentInset = UIEdgeInsetsMake(ScreenScale(12), ScreenScale(20), ScreenScale(12), ScreenScale(20));
+    tagList.tags = arr;
+    return tagList.contentHeight;
 }
 
 

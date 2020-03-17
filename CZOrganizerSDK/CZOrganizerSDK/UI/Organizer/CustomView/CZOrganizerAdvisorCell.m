@@ -38,67 +38,67 @@
     self.avatarImg = [[UIImageView alloc] init];
     self.avatarImg.backgroundColor = [UIColor redColor];
     self.avatarImg.layer.masksToBounds = YES;
-    self.avatarImg.layer.cornerRadius = WidthRatio(90)/2.0;
+    self.avatarImg.layer.cornerRadius = ScreenScale(90)/2.0;
     [self.contentView addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.contentView.mas_leading).offset(WidthRatio(30));
+        make.leading.mas_equalTo(self.contentView.mas_leading).offset(ScreenScale(30));
         make.centerY.mas_equalTo(self.contentView);
-        make.size.mas_equalTo(WidthRatio(90));
+        make.size.mas_equalTo(ScreenScale(90));
     }];
     
     self.VImg = [[UIImageView alloc]init];
     self.VImg.image = [CZImageProvider imageNamed:@"shou_ye_ren_zheng_cell"];
     [self addSubview:self.VImg];
     [self.VImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-HeightRatio(18));
+        make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-ScreenScale(18));
         make.centerX.mas_equalTo(self.avatarImg);
-        make.width.mas_equalTo(WidthRatio(78));
-        make.height.mas_equalTo(HeightRatio(36));
+        make.width.mas_equalTo(ScreenScale(78));
+        make.height.mas_equalTo(ScreenScale(36));
     }];
     
     self.nameLab = [[UILabel alloc]init];
-    self.nameLab.font = [UIFont boldSystemFontOfSize:WidthRatio(26)];
+    self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(26)];
     self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
     self.nameLab.text = @"郭静";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(16));
-        make.top.mas_equalTo(self.avatarImg.mas_top).offset(HeightRatio(2));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
+        make.top.mas_equalTo(self.avatarImg.mas_top).offset(ScreenScale(2));
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-WidthRatio(30));
+        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     self.advisorLab = [[UILabel alloc]init];
-    self.advisorLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.advisorLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.advisorLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.advisorLab.text = @"南京市海牛工作室";
     [self.contentView addSubview:self.advisorLab];
     [self.advisorLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(16));
-        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(HeightRatio(8));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
+        make.top.mas_equalTo(self.nameLab.mas_bottom).offset(ScreenScale(8));
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-WidthRatio(30));
+        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     self.rankView = [CZRankView instanceRankViewByRate:3.1];
-    self.rankView.frame = CGRectMake(0, 0, WidthRatio(150), HeightRatio(28));
+    self.rankView.frame = CGRectMake(0, 0, ScreenScale(150), ScreenScale(28));
     [self.contentView addSubview:self.rankView];
     [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(WidthRatio(16));
-        make.top.mas_equalTo(self.advisorLab.mas_bottom).offset(HeightRatio(10));
+        make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
+        make.top.mas_equalTo(self.advisorLab.mas_bottom).offset(ScreenScale(10));
         make.size.mas_equalTo(self.rankView.frame.size);
     }];
     
     self.countLab = [[UILabel alloc]init];
-    self.countLab.font = [UIFont systemFontOfSize:WidthRatio(22)];
+    self.countLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.countLab.textColor = CZColorCreater(170, 170, 187, 1);
     self.countLab.text = @"服务3637人";
     [self.contentView addSubview:self.countLab];
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.rankView.mas_trailing);
-        make.top.mas_equalTo(self.rankView.mas_top).offset(-HeightRatio(2));
+        make.top.mas_equalTo(self.rankView.mas_top).offset(-ScreenScale(2));
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-WidthRatio(30));
+        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
     }];
 }
 @end

@@ -97,14 +97,14 @@
     }];
     
     self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(11, CGRectGetMaxY(self.weekDetailLabel.frame)+12, self.contentView.bounds.size.width-22,0)];
-    self.tagList.tagCornerRadius = WidthRatio(2.5);
+    self.tagList.tagCornerRadius = ScreenScale(2.5);
     self.tagList.tagBorderWidth = 0;
     self.tagList.tagBackgroundColor = [UIColor whiteColor];
     self.tagList.tagTextColor = CZColorCreater(43, 120, 217, 1);
     self.tagList.tagFont = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     self.tagList.tagItemSpacing = 8;
     self.tagList.tagLineSpacing = 8;
-    self.tagList.tagContentInset = UIEdgeInsetsMake(HeightRatio(5), WidthRatio(10), HeightRatio(5), WidthRatio(10));
+    self.tagList.tagContentInset = UIEdgeInsetsMake(ScreenScale(5), ScreenScale(10), ScreenScale(5), ScreenScale(10));
     [self.contentView addSubview:self.tagList];
     
     self.middileView = [[UIView alloc] init];

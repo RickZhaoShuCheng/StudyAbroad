@@ -32,13 +32,13 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(WidthRatio(200), HeightRatio(250));
+    return CGSizeMake(ScreenScale(200), ScreenScale(250));
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(0, WidthRatio(25), HeightRatio(40), WidthRatio(25));
+    return UIEdgeInsetsMake(0, ScreenScale(25), 0, ScreenScale(25));
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return WidthRatio(20);
+    return ScreenScale(20);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 0;
@@ -59,7 +59,7 @@
     [self.contentView addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.top.mas_equalTo(self.contentView);
-        make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-HeightRatio(12));
+        make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-ScreenScale(12));
     }];
     
     UILabel *line = [[UILabel alloc]init];
@@ -67,7 +67,7 @@
     [self.contentView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.bottom.trailing.mas_equalTo(self.contentView);
-        make.height.mas_equalTo(HeightRatio(12));
+        make.height.mas_equalTo(ScreenScale(12));
     }];
 }
 @end
