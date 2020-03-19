@@ -9,5 +9,9 @@
 #import "CZAdvisorInfoModel.h"
 
 @implementation CZAdvisorInfoModel
++ (NSDictionary *)arrayContainModelClass
+{
+    return @{@"productVoList":@"CZProductVoListModel"};
+}
 
 @end

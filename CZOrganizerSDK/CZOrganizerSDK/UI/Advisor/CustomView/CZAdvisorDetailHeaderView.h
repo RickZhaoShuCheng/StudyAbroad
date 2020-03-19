@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)UIVisualEffectView *effectView;
 @property (nonatomic ,strong)JCTagListView *tagList;
 @property (nonatomic ,strong) CZAdvisorInfoModel *model;
+@property (nonatomic ,copy) dispatch_block_t locationClick;
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr;
 @end
