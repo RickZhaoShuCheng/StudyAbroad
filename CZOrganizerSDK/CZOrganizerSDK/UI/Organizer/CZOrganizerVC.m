@@ -184,7 +184,7 @@
     if (self.pageMenu.selectedItemIndex < self.myChildViewControllers.count) {
         UIViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
         [self.scrollView addSubview:baseVc.view];
-        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-ScreenScale(80));
+        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-NaviH-StatusBarHeight-5);
         self.scrollView.contentOffset = CGPointMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0);
         self.scrollView.contentSize = CGSizeMake(self.titleArr.count*kScreenWidth, 0);
     }
@@ -257,7 +257,7 @@
     if ([targetViewController isViewLoaded]){
         return;
     };
-    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - NaviH - StatusBarHeight - ScreenScale(140));
+    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - NaviH - StatusBarHeight - ScreenScale(140) - PageMenuHeight);
     [self.scrollView addSubview:targetViewController.view];
 }
 

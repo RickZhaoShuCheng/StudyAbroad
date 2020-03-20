@@ -35,6 +35,12 @@
     if (tagesArr.count > 0) {
         [self layoutIfNeeded];
         self.tagList.hidden = NO;
+        
+        if (self.tagList.selectedTags.count >0) {
+            if (![tagesArr containsObject:self.tagList.selectedTags[0]]) {
+                [self.tagList.selectedTags removeAllObjects];
+            }
+        }
         if (self.tagList.selectedTags.count <= 0) {
             [self.tagList.selectedTags addObject:tagesArr[0]];
         }

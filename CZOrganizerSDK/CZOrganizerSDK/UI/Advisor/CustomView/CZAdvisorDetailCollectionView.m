@@ -52,13 +52,6 @@
         self.headerView.bgImg.frame = frame;
     }
     
-    NSMutableArray *filterDiaryArr = [NSMutableArray array];
-    if (model.filterDiary.length) {
-        [filterDiaryArr addObjectsFromArray:[model.filterDiary componentsSeparatedByString:@","]];
-    }
-    [self.diaryFilterArr removeAllObjects];
-    [self.diaryFilterArr addObjectsFromArray:filterDiaryArr];
-    
     NSMutableArray *filterCommentArr = [NSMutableArray array];
     if (model.filterComment.length) {
         [filterCommentArr addObjectsFromArray:[model.filterComment componentsSeparatedByString:@","]];
@@ -68,13 +61,33 @@
     
     [self reloadData];
 }
+//设置日记筛选项
+- (void)setDiaryFilter:(NSString *)filterStr{
+    NSMutableArray *filterDiaryArr = [NSMutableArray array];
+    if (filterStr.length) {
+        [filterDiaryArr addObjectsFromArray:[filterStr componentsSeparatedByString:@","]];
+    }
+    [self.diaryFilterArr removeAllObjects];
+    [self.diaryFilterArr addObjectsFromArray:filterDiaryArr];
+}
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
-    }else if (section == 1 || section == 2){
-        return 4;
+    }else if (section == 1){
+        if ([self.model.productVoList isKindOfClass:[NSString class]]) {
+            return 0;
+        }
+        return self.model.productVoList.count;
+    }else if (section == 2){
+        if ([self.model.diaryVoList isKindOfClass:[NSString class]]) {
+            return 0;
+        }
+        if (self.model.diaryVoList.count > 4) {
+            return 4;
+        }
+        return self.model.diaryVoList.count;
     }else{
         if (self.evaluateArr.count >2) {
             return 2;
@@ -147,12 +160,21 @@
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize size;
     if (section == 0) {
+        if (self.model.dynamicVoList.count == 0) {
+            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(710)+self.tagListHeight);
+        }
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(920)+self.tagListHeight);
     }else if (section == 2){
+        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100)+ [self getSectionHeaderHeight:self.diaryFilterArr]) ;
     }else if (section == 3){
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100) + [self getSectionHeaderHeight:self.evaluateFilterArr]);
     }else{
+        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100));
     }
 }
@@ -160,6 +182,16 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
     if (section == 0) {
         return CGSizeZero;
+    }else if (section == 1){
+        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
+        return CGSizeMake(kScreenWidth, ScreenScale(130));
+    }else if (section == 2){
+        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0 || self.model.diaryVoList.count <= 4) {
+            return CGSizeMake(0, 0);
+        }
+        return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else{
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }
@@ -176,6 +208,11 @@
         };
         if (indexPath.section == 0) {
             self.headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderView class]) forIndexPath:indexPath];
+            self.headerView.locationClick = ^{
+                if (weakSelf.locationClick) {
+                    weakSelf.locationClick();
+                }
+            };
             return self.headerView;
         }else if (indexPath.section == 1){
             header.titleStr = @"服务项目";

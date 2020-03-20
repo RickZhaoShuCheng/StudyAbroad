@@ -80,7 +80,18 @@
         [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
     }
     [self setTags:keyArr];
+    if (model.dynamicVoList.count == 0) {
+        self.dynamicView.hidden = YES;
+    }else{
+        self.dynamicView.hidden = NO;
+    }
     
+}
+
+- (void)locationViewClick{
+    if (self.locationClick) {
+        self.locationClick();
+    }
 }
 
 //设置标签
@@ -97,7 +108,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 20;
+    return self.model.dynamicVoList.count;
 }
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
@@ -294,6 +305,8 @@
     
     self.locationView = [[UIView alloc]init];
     self.locationView.backgroundColor = [UIColor whiteColor];
+    self.locationView.userInteractionEnabled = YES;
+    [self.locationView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(locationViewClick)]];
     [self addSubview:self.locationView];
     [self.locationView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self);
@@ -346,6 +359,7 @@
     
     self.dynamicView = [[UIView alloc]init];
     self.dynamicView.backgroundColor = [UIColor whiteColor];
+    self.dynamicView.hidden = YES;
     [self addSubview:self.dynamicView];
     [self.dynamicView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self);

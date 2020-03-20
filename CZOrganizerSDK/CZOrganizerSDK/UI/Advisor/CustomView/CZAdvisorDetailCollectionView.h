@@ -21,12 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
 @property (nonatomic ,strong) CZAdvisorInfoModel *model;
 @property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
-
+@property (nonatomic ,copy) dispatch_block_t locationClick;
 
 /**
  * 滚动值
  */
 @property (nonatomic,copy) void (^scrollContentSize)(CGFloat offsetY);
+//设置日记筛选项
+- (void)setDiaryFilter:(NSString *)filterStr;
 @end
 
 NS_ASSUME_NONNULL_END

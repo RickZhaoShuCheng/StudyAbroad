@@ -12,6 +12,7 @@
 #import "QSCommonService.h"
 #import "CZAdvisorInfoModel.h"
 #import "CZCommentsListVC.h"
+#import "CZOrganizerVC.h"
 
 @interface CZAdvisorDetailViewController ()
 @property (nonatomic ,strong)CZAdvisorDetailCollectionView *collectionView;
@@ -19,6 +20,8 @@
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
 @property (nonatomic ,strong)UIButton *shareBtn;//分享按钮
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
+@property (nonatomic ,assign) NSInteger pageNo;
+@property (nonatomic ,assign) NSInteger pageSize;
 
 @end
 
@@ -26,9 +29,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.pageNo = 1;
+    self.pageSize = 20;
     [self initUI];
     [self actionMethod];
     [self requestAdvisorDetail];
+    [self requestAdvisorProduct];
+    [self requestForApiDiaryFindCaseListByFilter];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -53,6 +60,14 @@
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
+    }];
+    
+    //点击定位事件处理
+    [self.collectionView setLocationClick:^{
+        CZOrganizerVC *organizerVC = [[CZOrganizerVC alloc]init];
+        organizerVC.organId = weakSelf.collectionView.model.organId;
+        organizerVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:organizerVC animated:YES];
     }];
     
     //滚动时设置导航条透明度
@@ -149,11 +164,42 @@
                  CZAdvisorInfoModel *model = [CZAdvisorInfoModel modelWithDict:data];
                  weakSelf.collectionView.model = model;
                  weakSelf.titleLab.text = model.counselorName;
-                 
-                 
-                 
              });
          }
+    }];
+}
+
+/**
+ 获取服务项目
+ */
+- (void)requestAdvisorProduct{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiProductGetCounselorRecommendProduct:self.counselorId pageNum:self.pageNo pageSize:self.pageSize callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.collectionView.model.productVoList = data;
+                [weakSelf.collectionView reloadData];
+            });
+        }
+    }];
+}
+
+/**
+ 获取日记
+ */
+- (void)requestForApiDiaryFindCaseListByFilter{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiDiaryFindCaseListByFilter:@"2" idStr:self.counselorId filterSum:1 pageNum:self.pageNo pageSize:self.pageSize callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.collectionView.model.filterDiary = data[@"filterDiary"];
+                weakSelf.collectionView.model.diaryVoList = data[@"data"];
+                [weakSelf.collectionView setDiaryFilter:weakSelf.collectionView.model.filterDiary];
+                [weakSelf.collectionView reloadData];
+            });
+        }
     }];
 }
 
