@@ -40,6 +40,7 @@ NSString *const kkCollectionCellider = @"kkContentCollectionCellider";
         _contentControllers = controllers;
         // 视图加载
         [self setupViews];
+        
         // 配置
         [self setupPreference];
         //
@@ -56,6 +57,9 @@ NSString *const kkCollectionCellider = @"kkContentCollectionCellider";
 {
     [super layoutSubviews];
     _collectionView.frame = self.bounds;
+    if (self.layoutSuccess) {
+        self.layoutSuccess();
+    }
 }
 
 
@@ -80,7 +84,6 @@ NSString *const kkCollectionCellider = @"kkContentCollectionCellider";
     [self addSubview:collectionView];
     _collectionView = collectionView;
     [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kkCollectionCellider];
-    
 }
 
 // 配置

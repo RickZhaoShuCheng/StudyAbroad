@@ -25,6 +25,7 @@
 @property (nonatomic , strong) UIImageView *iconImageView;
 @property (nonatomic , strong) UILabel *iconDetailLabel;
 @property (nonatomic , strong) UIView *bottomView;
+@property (nonatomic , strong) UIView *tagView;
 
 @property (nonatomic , strong) UIImageView *addressIconView;
 @property (nonatomic , strong) UILabel *addressLabel;
@@ -96,6 +97,15 @@
         make.top.mas_equalTo(self.rankView.mas_bottom).offset(12);
     }];
     
+    self.tagView = [[UIView alloc] init];
+    [self.contentView addSubview:self.tagView];
+    [self.tagView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.weekDetailLabel.mas_bottom).offset(11);
+        make.left.mas_equalTo(11);
+        make.right.mas_equalTo(-11);
+        make.height.mas_equalTo(self.tagList.contentHeight);
+    }];
+    
     self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(11, CGRectGetMaxY(self.weekDetailLabel.frame)+12, self.contentView.bounds.size.width-22,0)];
     self.tagList.tagCornerRadius = ScreenScale(2.5);
     self.tagList.tagBorderWidth = 0;
@@ -105,7 +115,11 @@
     self.tagList.tagItemSpacing = 8;
     self.tagList.tagLineSpacing = 8;
     self.tagList.tagContentInset = UIEdgeInsetsMake(ScreenScale(5), ScreenScale(10), ScreenScale(5), ScreenScale(10));
-    [self.contentView addSubview:self.tagList];
+    [self.tagView addSubview:self.tagList];
+    [self.tagList mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
+    
     
     self.middileView = [[UIView alloc] init];
     [self.contentView addSubview:self.middileView];
@@ -136,8 +150,9 @@
     self.bottomView = [[UIView alloc] init];
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:self.bottomView];
+    [self.contentView sendSubviewToBack:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.middileView.mas_bottom);
+        make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
         make.left.right.mas_equalTo(0);
         make.height.mas_equalTo(223);
         make.bottom.mas_equalTo(-15);
@@ -179,6 +194,15 @@
         make.height.mas_equalTo(180);
         make.top.mas_equalTo(15);
     }];
+    
+    [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(self.middileView.mas_bottom);
+    }];
+    
+    self.bottomView.backgroundColor = [UIColor whiteColor];
+    self.bottomView.layer.cornerRadius = 10;
+    self.bottomView.layer.masksToBounds = YES;
 }
 
 -(void)setModel:(CZOrganizerModel *)model
@@ -208,13 +232,6 @@
     self.addressLabel.text = model.address;
 }
 
-
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.bgView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, CGRectGetMaxY(self.middileView.frame));
-    [self.bottomView setBorderWithCornerRadius:10 borderWidth:1 borderColor:[UIColor clearColor] type:UIRectCornerBottomRight | UIRectCornerBottomLeft];
-}
 
 -(void)setType:(CZBoardOrganizerTopType)type
 {

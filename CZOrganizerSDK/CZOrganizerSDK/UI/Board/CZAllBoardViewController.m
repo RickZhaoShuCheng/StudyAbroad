@@ -9,6 +9,7 @@
 #import "CZAllBoardViewController.h"
 #import "CZBoardOrganizerViewController.h"
 #import "CZBoardAdvisorViewController.h"
+#import "CZBoardSchoolStarViewController.h"
 #import "CZPageScrollContentView.h"
 #import "SPPageMenu.h"
 
@@ -41,6 +42,8 @@
     [vcs addObject:controller1];
     CZBoardAdvisorViewController *controller2 = [[CZBoardAdvisorViewController alloc] init];
     [vcs addObject:controller2];
+    CZBoardSchoolStarViewController *controller3 = [[CZBoardSchoolStarViewController alloc] init];
+    [vcs addObject:controller3];
     
     self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;

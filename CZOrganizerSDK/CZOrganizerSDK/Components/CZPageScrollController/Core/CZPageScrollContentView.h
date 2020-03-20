@@ -29,6 +29,9 @@
  */
 @property(nonatomic) NSInteger selectIndex;
 
+@property(nonatomic, strong) dispatch_block_t layoutSuccess;
+
+
 
 /**
  实例化

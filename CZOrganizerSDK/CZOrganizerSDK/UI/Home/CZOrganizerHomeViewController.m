@@ -85,6 +85,10 @@ typedef enum : NSUInteger {
         [weakSelf requestForHotActivities];
     }];
     
+    self.layoutSuccess = ^{
+        [weakSelf.homeFilterView setRelateScrollView:weakSelf.scrollContentView.collectionView];
+    };
+    
     [self requestForHomeData];
     [self requestForSchoolStars];
     [self requestForHotActivities];
@@ -303,7 +307,7 @@ typedef enum : NSUInteger {
         if (!self.homeFilterView) {
             self.homeFilterView = [[CZHomeFilterView alloc] initWithSuperView:self.homeFilterContainerView];
             self.homeFilterView.delegate = self;
-            [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
+//            [self.homeFilterView setRelateScrollView:self.scrollContentView.collectionView];
         }
         return self.homeFilterContainerView;
     }

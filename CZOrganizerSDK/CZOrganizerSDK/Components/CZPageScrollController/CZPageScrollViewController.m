@@ -107,6 +107,8 @@
             CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, self.view.frame.size.height-headersection);
             CZPageScrollContentView *contentView = [[CZPageScrollContentView alloc]initWithFrame:frame contentControllers:[self contentScrollers] rootController:self];
             contentView.delegate = self;
+            WEAKSELF
+            contentView.layoutSuccess = weakSelf.layoutSuccess;
             [cell.contentView addSubview:contentView];
             _scrollContentView = contentView;
             // 手势优先级 collectView的优先级 > tableView的优先级

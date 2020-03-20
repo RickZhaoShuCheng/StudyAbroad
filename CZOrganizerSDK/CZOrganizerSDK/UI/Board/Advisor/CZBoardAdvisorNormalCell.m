@@ -139,7 +139,7 @@
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekTitleLabel.mas_bottom);
         make.left.right.mas_equalTo(0);
-        make.height.mas_equalTo(223);
+        make.height.mas_equalTo(52);
         make.bottom.mas_equalTo(-15);
     }];
     
@@ -196,15 +196,9 @@
     
     CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     model.cellHeight = cellSize.height;
-    
-//    self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai"];
-//    self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai_bei_jing"];
+
     [self.rankView setRankByRate:model.valStar.floatValue];
-    
-//    NSString *rankDetail = [NSString stringWithFormat:@"%@ 条评价 | %@ 案例 | %@ 顾问" , [@(model.valResponse.integerValue) stringValue], [@(model.valSatisfaction.integerValue) stringValue], [@(model.valProfessional.integerValue) stringValue]];
-//    self.rankDetailLabel.text = rankDetail;
     self.nameLabel.text = model.counselorName;
-//    self.addressLabel.text = model.address;
 }
 
 

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E18BF942424FA8F00A62312 /* CZBoardSchoolStarTopCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BF922424FA8F00A62312 /* CZBoardSchoolStarTopCell.h */; };
+		1E18BF952424FA8F00A62312 /* CZBoardSchoolStarTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BF932424FA8F00A62312 /* CZBoardSchoolStarTopCell.m */; };
+		1E18BF982424FAA800A62312 /* CZBoardSchoolStarNormalCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BF962424FAA800A62312 /* CZBoardSchoolStarNormalCell.h */; };
+		1E18BF992424FAA800A62312 /* CZBoardSchoolStarNormalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BF972424FAA800A62312 /* CZBoardSchoolStarNormalCell.m */; };
+		1E18BF9C2424FB5C00A62312 /* CZBoardSchoolStarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BF9A2424FB5C00A62312 /* CZBoardSchoolStarView.h */; };
+		1E18BF9D2424FB5C00A62312 /* CZBoardSchoolStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BF9B2424FB5C00A62312 /* CZBoardSchoolStarView.m */; };
+		1E18BFA42424FBD800A62312 /* CZBoardSchoolStarViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BFA22424FBD800A62312 /* CZBoardSchoolStarViewController.h */; };
+		1E18BFA52424FBD800A62312 /* CZBoardSchoolStarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BFA32424FBD800A62312 /* CZBoardSchoolStarViewController.m */; };
+		1E18BFA82424FE2600A62312 /* CZBoardSchoolStarProductView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BFA62424FE2600A62312 /* CZBoardSchoolStarProductView.h */; };
+		1E18BFA92424FE2600A62312 /* CZBoardSchoolStarProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BFA72424FE2600A62312 /* CZBoardSchoolStarProductView.m */; };
 		530751AB240A4F9C0074A67E /* CZDiaryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 530751A9240A4F9C0074A67E /* CZDiaryViewController.h */; };
 		530751AC240A4F9C0074A67E /* CZDiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530751AA240A4F9C0074A67E /* CZDiaryViewController.m */; };
 		530751B5240A50BC0074A67E /* CZDiaryCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 530751B3240A50BC0074A67E /* CZDiaryCell.h */; };
@@ -402,6 +412,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E18BF922424FA8F00A62312 /* CZBoardSchoolStarTopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarTopCell.h; sourceTree = "<group>"; };
+		1E18BF932424FA8F00A62312 /* CZBoardSchoolStarTopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarTopCell.m; sourceTree = "<group>"; };
+		1E18BF962424FAA800A62312 /* CZBoardSchoolStarNormalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarNormalCell.h; sourceTree = "<group>"; };
+		1E18BF972424FAA800A62312 /* CZBoardSchoolStarNormalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarNormalCell.m; sourceTree = "<group>"; };
+		1E18BF9A2424FB5C00A62312 /* CZBoardSchoolStarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarView.h; sourceTree = "<group>"; };
+		1E18BF9B2424FB5C00A62312 /* CZBoardSchoolStarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarView.m; sourceTree = "<group>"; };
+		1E18BFA22424FBD800A62312 /* CZBoardSchoolStarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarViewController.h; sourceTree = "<group>"; };
+		1E18BFA32424FBD800A62312 /* CZBoardSchoolStarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarViewController.m; sourceTree = "<group>"; };
+		1E18BFA62424FE2600A62312 /* CZBoardSchoolStarProductView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarProductView.h; sourceTree = "<group>"; };
+		1E18BFA72424FE2600A62312 /* CZBoardSchoolStarProductView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarProductView.m; sourceTree = "<group>"; };
 		530751A9240A4F9C0074A67E /* CZDiaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDiaryViewController.h; sourceTree = "<group>"; };
 		530751AA240A4F9C0074A67E /* CZDiaryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZDiaryViewController.m; sourceTree = "<group>"; };
 		530751B3240A50BC0074A67E /* CZDiaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDiaryCell.h; sourceTree = "<group>"; };
@@ -811,6 +831,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E18BF912424FA7000A62312 /* SchoolStar */ = {
+			isa = PBXGroup;
+			children = (
+				1E18BF922424FA8F00A62312 /* CZBoardSchoolStarTopCell.h */,
+				1E18BF932424FA8F00A62312 /* CZBoardSchoolStarTopCell.m */,
+				1E18BF962424FAA800A62312 /* CZBoardSchoolStarNormalCell.h */,
+				1E18BF972424FAA800A62312 /* CZBoardSchoolStarNormalCell.m */,
+				1E18BF9A2424FB5C00A62312 /* CZBoardSchoolStarView.h */,
+				1E18BF9B2424FB5C00A62312 /* CZBoardSchoolStarView.m */,
+				1E18BFA22424FBD800A62312 /* CZBoardSchoolStarViewController.h */,
+				1E18BFA32424FBD800A62312 /* CZBoardSchoolStarViewController.m */,
+				1E18BFA62424FE2600A62312 /* CZBoardSchoolStarProductView.h */,
+				1E18BFA72424FE2600A62312 /* CZBoardSchoolStarProductView.m */,
+			);
+			path = SchoolStar;
+			sourceTree = "<group>";
+		};
 		530751A8240A4F7D0074A67E /* Diary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1092,6 +1129,7 @@
 		537D006824164CC300C47796 /* Board */ = {
 			isa = PBXGroup;
 			children = (
+				1E18BF912424FA7000A62312 /* SchoolStar */,
 				53A3F782241B527900E05F81 /* Advisor */,
 				537D006924164DE700C47796 /* Organizer */,
 				5359826E2418B68800BEA654 /* CZAllBoardViewController.h */,
@@ -1654,6 +1692,7 @@
 				535E5DB124080AED00471453 /* MJRefreshComponent.h in Headers */,
 				5331CAB82407FEE10069AC92 /* CZProductModel.h in Headers */,
 				D886859C241D1FE800B14680 /* CZCommentsListVC.h in Headers */,
+				1E18BF982424FAA800A62312 /* CZBoardSchoolStarNormalCell.h in Headers */,
 				53A3F791241B5DA200E05F81 /* CZBoardAdvisorViewController.h in Headers */,
 				530751B5240A50BC0074A67E /* CZDiaryCell.h in Headers */,
 				5394846323FFB03400770E99 /* CZPageScrollContentView.h in Headers */,
@@ -1663,6 +1702,7 @@
 				5394846923FFB03400770E99 /* CZPageScrollController.h in Headers */,
 				539484A623FFC5AC00770E99 /* MASConstraintMaker.h in Headers */,
 				5394844323FFB03400770E99 /* TAPageControl.h in Headers */,
+				1E18BFA42424FBD800A62312 /* CZBoardSchoolStarViewController.h in Headers */,
 				53A90CBF2413951100894E9D /* CZCommonInstance.h in Headers */,
 				53AC45E024038F7600521C2F /* DropMenuView.h in Headers */,
 				5320142024057D5E009B78AB /* NSObject+ORM.h in Headers */,
@@ -1705,6 +1745,7 @@
 				D8CD0C372415342900B2124C /* CZOrganizerDetailBtnView.h in Headers */,
 				53AC45DD24038F7600521C2F /* MenuAction.h in Headers */,
 				535E5D9A24080AED00471453 /* MJRefreshConst.h in Headers */,
+				1E18BFA82424FE2600A62312 /* CZBoardSchoolStarProductView.h in Headers */,
 				535F000023FFFC12003463B0 /* CZImageProvider.h in Headers */,
 				D85F7B022417E97D0069E6CD /* CZOrganizerVC.h in Headers */,
 				5394843623FFB03400770E99 /* UIView+SDExtension.h in Headers */,
@@ -1756,12 +1797,14 @@
 				D8606AB9241A780B00932421 /* CZOrganizerAdvisorTableView.h in Headers */,
 				D8CD0C052413D51D00B2124C /* CZAdvisorDetailHeaderCell.h in Headers */,
 				53A3F78D241B5B4700E05F81 /* CZBoardAdvisorNormalCell.h in Headers */,
+				1E18BF9C2424FB5C00A62312 /* CZBoardSchoolStarView.h in Headers */,
 				5394845623FFB03400770E99 /* SDWebImageManager.h in Headers */,
 				537E3D8A240A9E0900C080E9 /* CZSchoolStarViewController.h in Headers */,
 				535E5DAB24080AED00471453 /* MJRefreshStateHeader.h in Headers */,
 				537E3D5D240A8BC600C080E9 /* CZPersonInfoLocationCell.h in Headers */,
 				537E3D65240A8FD500C080E9 /* CZPersonInfoSubCell.h in Headers */,
 				53AC45DF24038F7600521C2F /* DropMenuBar.h in Headers */,
+				1E18BF942424FA8F00A62312 /* CZBoardSchoolStarTopCell.h in Headers */,
 				53A3F79B241B6ADC00E05F81 /* CZAllServiceSchoolStarView.h in Headers */,
 				53A3F797241B6AA600E05F81 /* CZAllServiceSchoolStarViewController.h in Headers */,
 				535F000723FFFF8B003463B0 /* CZServiceView.h in Headers */,
@@ -1978,6 +2021,7 @@
 				D8E5F1512422749B0074EB57 /* CZCommentsDetailOneCell.m in Sources */,
 				53A3F78A241B5A2D00E05F81 /* CZBoardAdvisorView.m in Sources */,
 				D8CD3E4A241692F60086B2EB /* CZOrganizerDetailAdvisorDetailCell.m in Sources */,
+				1E18BF952424FA8F00A62312 /* CZBoardSchoolStarTopCell.m in Sources */,
 				5320141724056807009B78AB /* QSOrganizerHomeService.m in Sources */,
 				535E5D9024080AED00471453 /* UIScrollView+MJRefresh.m in Sources */,
 				537E3D62240A8C6C00C080E9 /* CZPaddingLabel.m in Sources */,
@@ -2018,6 +2062,7 @@
 				53AAD110240274FB00A107B4 /* CZHomeFilterView.m in Sources */,
 				5359826D2418AD7300BEA654 /* CZBoardOrganizerView.m in Sources */,
 				535F001024000558003463B0 /* CZServiceBannerView.m in Sources */,
+				1E18BFA92424FE2600A62312 /* CZBoardSchoolStarProductView.m in Sources */,
 				532014122405678D009B78AB /* QSCommonService.m in Sources */,
 				539484B323FFC5AC00770E99 /* View+MASAdditions.m in Sources */,
 				5331CAB52407ED4B0069AC92 /* CZSCountryModel.m in Sources */,
@@ -2026,6 +2071,7 @@
 				53F80982240D52C300E44651 /* CZSelectCityCell.m in Sources */,
 				5320141C240576D2009B78AB /* CZHomeModel.m in Sources */,
 				535E5DAA24080AED00471453 /* MJRefreshNormalHeader.m in Sources */,
+				1E18BFA52424FBD800A62312 /* CZBoardSchoolStarViewController.m in Sources */,
 				535E5DA824080AED00471453 /* MJRefreshAutoGifFooter.m in Sources */,
 				53A3F786241B52D300E05F81 /* CZBoardAdvisorTopCell.m in Sources */,
 				5394844F23FFB03400770E99 /* SDWebImageCompat.m in Sources */,
@@ -2057,6 +2103,7 @@
 				5320140424056526009B78AB /* QSNetworkManager.m in Sources */,
 				5394847023FFB0B100770E99 /* CZOrganizerHomeViewController.m in Sources */,
 				D86B814A24193D78007F1595 /* CZOrganizerProjectCollectionView.m in Sources */,
+				1E18BF992424FAA800A62312 /* CZBoardSchoolStarNormalCell.m in Sources */,
 				5394846123FFB03400770E99 /* SPPageMenu.m in Sources */,
 				D85A4FAD2410082B003E45F4 /* CZAdvisorDetailBtnView.m in Sources */,
 				534C18E3240BC636007DD7EC /* CZOrganizerModel.m in Sources */,
@@ -2075,6 +2122,7 @@
 				D8CD0C20241531A600B2124C /* CZOrganizerDetailViewController.m in Sources */,
 				535E5DA124080AED00471453 /* MJRefreshBackGifFooter.m in Sources */,
 				D8CD0C182413E82000B2124C /* JCTagListViewFlowLayout.m in Sources */,
+				1E18BF9D2424FB5C00A62312 /* CZBoardSchoolStarView.m in Sources */,
 				D85A4FA1240FE384003E45F4 /* CZAdvisorDetailViewController.m in Sources */,
 				53A90CC92413D1D100894E9D /* CZAllServiceThirdViewController.m in Sources */,
 				537E3D87240A9A9100C080E9 /* CZProductVoListModel.m in Sources */,

@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) NSInteger stopSectionIndex;
 
+@property(nonatomic, strong) dispatch_block_t layoutSuccess;
+
 -(void)reloadData;
 
 #pragma mark - Override(子类化实现下面的方法)
