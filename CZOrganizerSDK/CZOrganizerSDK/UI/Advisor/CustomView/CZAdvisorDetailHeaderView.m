@@ -80,12 +80,18 @@
         [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
     }
     [self setTags:keyArr];
-    if (model.dynamicVoList.count == 0) {
-        self.dynamicView.hidden = YES;
-    }else{
+//    if (model.dynamicVoList.count == 0) {
+//        self.dynamicView.hidden = YES;
+//    }else{
         self.dynamicView.hidden = NO;
-    }
+//    }
     
+}
+
+- (void)dynamicViewClick{
+    if (self.dynamicClick) {
+        self.dynamicClick();
+    }
 }
 
 - (void)locationViewClick{
@@ -360,6 +366,8 @@
     self.dynamicView = [[UIView alloc]init];
     self.dynamicView.backgroundColor = [UIColor whiteColor];
     self.dynamicView.hidden = YES;
+    self.dynamicView.userInteractionEnabled = YES;
+    [self.dynamicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dynamicViewClick)]];
     [self addSubview:self.dynamicView];
     [self.dynamicView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self);

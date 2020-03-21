@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) CZAdvisorInfoModel *model;
 @property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
 @property (nonatomic ,copy) dispatch_block_t locationClick;
+@property (nonatomic ,copy) dispatch_block_t dynamicClick;
 
 /**
  * 滚动值

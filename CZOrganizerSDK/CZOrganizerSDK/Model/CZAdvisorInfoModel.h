@@ -72,6 +72,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) NSString *valStar;
 @property (nonatomic ,strong) NSNumber *visitCount;
 @property (nonatomic ,strong) NSNumber *workingTime;
+@property (nonatomic ,assign) BOOL introduceOpen;
+@property (nonatomic ,assign) CGFloat introduceHeight;
+@property (nonatomic ,assign) CGFloat singleHeight;
 @end
 
 NS_ASSUME_NONNULL_END

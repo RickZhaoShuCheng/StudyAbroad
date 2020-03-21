@@ -160,9 +160,9 @@
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize size;
     if (section == 0) {
-        if (self.model.dynamicVoList.count == 0) {
-            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(710)+self.tagListHeight);
-        }
+//        if (self.model.dynamicVoList.count == 0) {
+//            return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(710)+self.tagListHeight);
+//        }
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(920)+self.tagListHeight);
     }else if (section == 2){
         if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0) {
@@ -211,6 +211,11 @@
             self.headerView.locationClick = ^{
                 if (weakSelf.locationClick) {
                     weakSelf.locationClick();
+                }
+            };
+            self.headerView.dynamicClick = ^{
+                if (weakSelf.dynamicClick) {
+                    weakSelf.dynamicClick();
                 }
             };
             return self.headerView;

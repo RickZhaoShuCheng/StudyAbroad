@@ -13,6 +13,7 @@
 #import "CZAdvisorInfoModel.h"
 #import "CZCommentsListVC.h"
 #import "CZOrganizerVC.h"
+#import "AdvisorDynamicVC.h"
 
 @interface CZAdvisorDetailViewController ()
 @property (nonatomic ,strong)CZAdvisorDetailCollectionView *collectionView;
@@ -22,6 +23,7 @@
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
 @property (nonatomic ,assign) NSInteger pageNo;
 @property (nonatomic ,assign) NSInteger pageSize;
+@property (nonatomic ,assign) CGFloat alpha;
 
 @end
 
@@ -29,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.alpha = 0;
     self.pageNo = 1;
     self.pageSize = 20;
     [self initUI];
@@ -40,11 +43,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (self.collectionView.contentOffset.y > 0) {
-        [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
-        [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
-        [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-    }
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    [self.titleLab setAlpha:self.alpha];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.titleLab setAlpha:self.alpha];
 }
 
 - (void)actionMethod{
@@ -70,10 +74,18 @@
         [weakSelf.navigationController pushViewController:organizerVC animated:YES];
     }];
     
+    //点击动态事件处理
+    [self.collectionView setDynamicClick:^{
+        AdvisorDynamicVC *dynamicVC = [[AdvisorDynamicVC alloc]init];
+        dynamicVC.model = weakSelf.collectionView.model;
+        [weakSelf.navigationController pushViewController:dynamicVC animated:YES];
+    }];
+    
     //滚动时设置导航条透明度
     [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
         //设置渐变透明度
         CGFloat alpha = (offsetY / NaviH)>0.99?0.99:(offsetY / NaviH);
+        weakSelf.alpha = alpha;
         [weakSelf.navigationController.navigationBar.subviews.firstObject setAlpha:alpha];
         weakSelf.titleLab.alpha = alpha;
         weakSelf.titleLab.textColor = [UIColor blackColor];
