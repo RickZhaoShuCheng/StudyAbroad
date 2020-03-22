@@ -11,7 +11,6 @@
 #import "JCTagListView.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
-#import "CZBoardProductListView.h"
 
 @interface CZBoardAdvisorNormalCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -27,7 +26,6 @@
 
 @property (nonatomic , strong) UIImageView *addressIconView;
 @property (nonatomic , strong) UILabel *addressLabel;
-@property (nonatomic , strong) CZBoardProductListView *productListView;
 
 @end
 
@@ -59,7 +57,7 @@
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(68);
         make.top.mas_equalTo(15);
-        make.left.mas_equalTo(15);
+        make.left.mas_equalTo(30);
     }];
     
     self.nameLabel = [[UILabel alloc] init];
@@ -93,7 +91,7 @@
     
     self.workPlaceLabel = [[UILabel alloc] init];
     self.workPlaceLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
-    self.workPlaceLabel.textColor = [UIColor whiteColor];
+    self.workPlaceLabel.textColor = CZColorCreater(129, 129, 146, 1);
     [self.contentView addSubview:self.workPlaceLabel];
     [self.workPlaceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
@@ -121,10 +119,12 @@
     [self.weekTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
         make.top.mas_equalTo(self.tagList.mas_bottom).offset(15);
-        make.left.mas_equalTo(15);
+        make.left.mas_equalTo(30);
     }];
     
     self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:12];
+    self.weekDetailLabel.textColor = CZColorCreater(129, 129, 146, 1);
     [self.contentView addSubview:self.weekDetailLabel];
     [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
@@ -138,9 +138,10 @@
     [self.contentView addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekTitleLabel.mas_bottom);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(52);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.addressIconView = [[UIImageView alloc] init];
@@ -165,26 +166,19 @@
         make.right.mas_equalTo(-10);
     }];
     
-    
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.minimumLineSpacing = 15;
-    layout.itemSize = CGSizeMake(91, 91);
-    layout.minimumInteritemSpacing = 0;
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
-    self.productListView = [[CZBoardProductListView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    [self.bottomView addSubview:self.productListView];
-    [self.productListView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(0);
-        make.height.mas_equalTo(180);
-        make.top.mas_equalTo(15);
-    }];
 }
 
 -(void)setModel:(CZAdvisorModel *)model
 {
     _model = model;
-    self.tagList.tags = @[@"123123",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23"];
+    if (!model.keywords.length) {
+        self.tagList.tags = @[];
+    }
+    else
+    {
+        NSArray *keywords = [model.keywords componentsSeparatedByString:@","];
+        self.tagList.tags = keywords;
+    }
     
     [self.tagList mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
@@ -199,13 +193,18 @@
 
     [self.rankView setRankByRate:model.valStar.floatValue];
     self.nameLabel.text = model.counselorName;
+    
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
+    self.workPlaceLabel.text = model.organName;
+    self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
 }
 
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    self.bgView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, CGRectGetMaxY(self.bottomView.frame));
+    self.bgView.frame = CGRectMake(15, 0, self.contentView.bounds.size.width-30, CGRectGetMaxY(self.bottomView.frame));
 }
 
 @end

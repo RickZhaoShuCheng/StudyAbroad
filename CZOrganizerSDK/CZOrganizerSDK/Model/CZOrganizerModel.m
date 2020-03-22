@@ -23,5 +23,9 @@
     }
 }
 
++ (NSDictionary *)arrayContainModelClass
+{
+    return @{@"comments":@"CZCommentModel"};
+}
 
 @end

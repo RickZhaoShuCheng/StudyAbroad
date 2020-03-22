@@ -140,7 +140,7 @@
         make.top.mas_equalTo(self.weekTitleLabel.mas_bottom);
         make.left.right.mas_equalTo(0);
         make.height.mas_equalTo(52);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.addressIconView = [[UIImageView alloc] init];
@@ -184,7 +184,14 @@
 -(void)setModel:(CZSchoolStarModel *)model
 {
     _model = model;
-    self.tagList.tags = @[@"123123",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23"];
+    if (!model.keywords.length) {
+        self.tagList.tags = @[];
+    }
+    else
+    {
+        NSArray *keywords = [model.keywords componentsSeparatedByString:@","];
+        self.tagList.tags = keywords;
+    }
     
     [self.tagList mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
@@ -197,8 +204,15 @@
     CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     model.cellHeight = cellSize.height;
 
-    [self.rankView setRankByRate:model.valStar.floatValue];
-    self.nameLabel.text = model.userName;
+    self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
+
+    self.nameLabel.text = model.realName;
+    self.workPlaceLabel.text = model.schoolName;
+//    self.addressLabel.text = model.address;
+    
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+
+    self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
 }
 
 

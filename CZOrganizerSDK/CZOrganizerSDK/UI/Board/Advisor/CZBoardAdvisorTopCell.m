@@ -54,7 +54,7 @@
     self.goldImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.goldImageView];
     [self.goldImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(10);
+        make.left.mas_equalTo(25);
         make.top.mas_equalTo(7);
         make.width.mas_equalTo(28);
         make.height.mas_equalTo(31);
@@ -63,7 +63,7 @@
     self.avatarImageView = [[UIImageView alloc] init];
     self.avatarImageView.layer.cornerRadius = 32;
     self.avatarImageView.layer.masksToBounds = YES;
-    [self.contentView addSubview:self.avatarImageView];
+    [self.contentView insertSubview:self.avatarImageView belowSubview:self.goldImageView];
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(68);
         make.top.mas_equalTo(self.goldImageView).offset(8);
@@ -113,12 +113,12 @@
     [self.contentView addSubview:self.tagView];
     [self.tagView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
-        make.left.mas_equalTo(11);
-        make.right.mas_equalTo(-11);
+        make.left.mas_equalTo(self.avatarImageView.mas_right).offset(15);
+        make.right.mas_equalTo(-20);
         make.height.mas_equalTo(40);
     }];
     
-    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(11, 0, [UIScreen mainScreen].bounds.size.width-30, 300)];
+    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width-88-35, 300)];
     self.tagList.tagCornerRadius = ScreenScale(2.5);
     self.tagList.tagBorderWidth = 0;
     self.tagList.tagBackgroundColor = [UIColor whiteColor];
@@ -136,11 +136,14 @@
     [self.contentView addSubview:self.middileView];
     [self.middileView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.tagView.mas_bottom).offset(20);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(40);
     }];
     
     self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.textColor = [UIColor whiteColor];
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     [self.middileView addSubview:self.weekDetailLabel];
     [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(11);
@@ -157,9 +160,10 @@
     [self.contentView sendSubviewToBack:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(223);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.addressIconView = [[UIImageView alloc] init];
@@ -187,7 +191,7 @@
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.minimumLineSpacing = 15;
-    layout.itemSize = CGSizeMake(91, 91);
+    layout.itemSize = CGSizeMake(91, 180);
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
@@ -200,7 +204,9 @@
     }];
     
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.bottom.mas_equalTo(self.middileView.mas_bottom);
     }];
 }
@@ -208,7 +214,14 @@
 -(void)setModel:(CZAdvisorModel *)model
 {
     _model = model;
-    self.tagList.tags = @[@"123123",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23"];
+    if (!model.keywords.length) {
+        self.tagList.tags = @[];
+    }
+    else
+    {
+        NSArray *keywords = [model.keywords componentsSeparatedByString:@","];
+        self.tagList.tags = keywords;
+    }
     
     [self.tagView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(self.tagList.contentHeight);
@@ -218,6 +231,11 @@
     model.cellHeight = cellSize.height;
     [self.rankView setRankByRate:model.valStar.floatValue];
     self.nameLabel.text = model.counselorName;
+    
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
+    self.workPlaceLabel.text = model.organName;
+    self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
 }
 
 -(void)setType:(CZBoardAdvisorTopType)type

@@ -89,8 +89,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *popularity;
 @property (nonatomic , strong) NSString *sales;
 @property (nonatomic , strong) NSString *reputation;
-@property (nonatomic , strong) NSString *comments;
+@property (nonatomic , strong) NSArray *comments;
 @property (nonatomic , strong) NSString *description;
+@property (nonatomic , strong) NSString *userImg;
 @property (nonatomic , assign) CGFloat cellHeight;
 
 @end

@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
 #import "CZBoardProductListView.h"
+#import "CZCommentModel.h"
 
 @interface CZBoardOrganizerTopCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -54,8 +55,8 @@
     self.goldImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.goldImageView];
     [self.goldImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(12);
-        make.top.mas_equalTo(13);
+        make.left.mas_equalTo(27);
+        make.top.mas_equalTo(28);
         make.width.mas_equalTo(28);
         make.height.mas_equalTo(31);
     }];
@@ -74,7 +75,7 @@
     [self.contentView addSubview:self.rankView];
     [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(70);
-        make.left.mas_equalTo(self.nameLabel);
+        make.left.mas_equalTo(self.goldImageView);
         make.top.mas_equalTo(self.goldImageView.mas_bottom).offset(10);
         make.height.mas_equalTo(12);
     }];
@@ -90,9 +91,12 @@
     }];
     
     self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.textColor = [UIColor whiteColor];
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     [self.contentView addSubview:self.weekDetailLabel];
     [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.mas_greaterThanOrEqualTo(0);
+        make.width.mas_greaterThanOrEqualTo(0);
+        make.height.mas_equalTo(12);
         make.left.mas_equalTo(self.goldImageView);
         make.top.mas_equalTo(self.rankView.mas_bottom).offset(12);
     }];
@@ -101,12 +105,12 @@
     [self.contentView addSubview:self.tagView];
     [self.tagView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekDetailLabel.mas_bottom).offset(11);
-        make.left.mas_equalTo(11);
-        make.right.mas_equalTo(-11);
+        make.left.mas_equalTo(26);
+        make.right.mas_equalTo(-26);
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
     
-    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(11, CGRectGetMaxY(self.weekDetailLabel.frame)+12, self.contentView.bounds.size.width-22,0)];
+    self.tagList = [[JCTagListView alloc]initWithFrame:CGRectMake(26, CGRectGetMaxY(self.weekDetailLabel.frame)+12, self.contentView.bounds.size.width-53,0)];
     self.tagList.tagCornerRadius = ScreenScale(2.5);
     self.tagList.tagBorderWidth = 0;
     self.tagList.tagBackgroundColor = [UIColor whiteColor];
@@ -125,7 +129,8 @@
     [self.contentView addSubview:self.middileView];
     [self.middileView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.tagList.mas_bottom).offset(20);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(54);
     }];
     
@@ -139,10 +144,12 @@
     }];
     
     self.iconDetailLabel = [[UILabel alloc] init];
+    self.iconDetailLabel.textColor = [UIColor whiteColor];
+    self.iconDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:12];
     [self.middileView addSubview:self.iconDetailLabel];
     [self.iconDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.iconDetailLabel.mas_right).offset(5);
-        make.top.mas_equalTo(5);
+        make.left.mas_equalTo(self.iconImageView.mas_right).offset(5);
+        make.centerY.mas_equalTo(self.iconImageView);
         make.right.mas_equalTo(-22);
         make.height.mas_greaterThanOrEqualTo(0);
     }];
@@ -153,9 +160,10 @@
     [self.contentView sendSubviewToBack:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(223);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.addressIconView = [[UIImageView alloc] init];
@@ -183,7 +191,7 @@
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.minimumLineSpacing = 15;
-    layout.itemSize = CGSizeMake(91, 91);
+    layout.itemSize = CGSizeMake(91, 180);
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
@@ -196,7 +204,9 @@
     }];
     
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.bottom.mas_equalTo(self.middileView.mas_bottom);
     }];
     
@@ -208,7 +218,14 @@
 -(void)setModel:(CZOrganizerModel *)model
 {
     _model = model;
-    self.tagList.tags = @[@"123123",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23"];
+    if (!model.keywords.length) {
+        self.tagList.tags = @[];
+    }
+    else
+    {
+        NSArray *keywords = [model.keywords componentsSeparatedByString:@","];
+        self.tagList.tags = keywords;
+    }
     
     [self.tagList mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekDetailLabel.mas_bottom).offset(11);
@@ -225,11 +242,20 @@
 //    self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai_bei_jing"];
     [self.rankView setRankByRate:model.valStar.floatValue];
     
-    NSString *rankDetail = [NSString stringWithFormat:@"%@ 条评价 | %@ 案例 | %@ 顾问" , [@(model.valResponse.integerValue) stringValue], [@(model.valSatisfaction.integerValue) stringValue], [@(model.valProfessional.integerValue) stringValue]];
+    NSString *rankDetail = [NSString stringWithFormat:@"%@ 条评价 | %@ 案例 | %@ 顾问" , [@(model.commentsCount.integerValue) stringValue], [@(model.caseCount.integerValue) stringValue], [@(model.counselorCount.integerValue) stringValue]];
     self.rankDetailLabel.text = rankDetail;
     self.nameLabel.text = model.name;
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
     self.addressLabel.text = model.address;
+    
+    self.iconDetailLabel.text = @"";
+    self.iconImageView.image = [CZImageProvider imageNamed:@"default_avatar"];
+    if (![model.comments isKindOfClass:[NSString class]] && model.comments.count > 0) {
+        CZCommentModel *comment = [model.comments firstObject];
+        self.iconDetailLabel.text = comment.comment;
+        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(comment.userImg)] placeholderImage:nil];
+    }
+    
+    self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
 }
 
 

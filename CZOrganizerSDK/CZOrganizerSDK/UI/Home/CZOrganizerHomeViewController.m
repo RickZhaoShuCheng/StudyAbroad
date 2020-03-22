@@ -687,7 +687,11 @@ typedef enum : NSUInteger {
 -(void)selectCity:(CZSCountryModel *)model viewController:(nonnull UIViewController *)vc
 {
     [CZCountryUtil sharedInstance].selectModel = model;
-    [self.locationButton setTitle:model.country.area_name forState:UIControlStateNormal];
+    NSString *cityName = model.country.area_name;
+    if (cityName.length > 3) {
+        cityName = [[cityName substringToIndex:2] stringByAppendingFormat:@"..."];
+    }
+    [self.locationButton setTitle:cityName forState:UIControlStateNormal];
     [vc.navigationController popViewControllerAnimated:YES];
 }
 

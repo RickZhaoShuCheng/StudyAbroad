@@ -69,7 +69,7 @@
     [self.contentView addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
-        make.height.mas_greaterThanOrEqualTo(0);
+        make.height.mas_equalTo(12);
         make.left.mas_equalTo(5);
         make.right.mas_equalTo(-5);
     }];
@@ -114,7 +114,7 @@
 -(void)setModel:(CZSchoolStarModel *)model
 {
     _model = model;
-    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.nameLabel.text = model.realName;
     self.schoolNameLabel.text = model.schoolName;
     self.introduceLabel.text = model.sportIntroduction;
@@ -122,7 +122,7 @@
     NSDictionary *attribtDic1 = @{NSForegroundColorAttributeName:CZColorCreater(51, 172, 253, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]
     };
-    NSMutableAttributedString *attribtStr1 = [[NSMutableAttributedString alloc]initWithString:[@(model.reserveCount.integerValue) stringValue] attributes:attribtDic1];
+    NSMutableAttributedString *attribtStr1 = [[NSMutableAttributedString alloc]initWithString:[[@(model.reserveCount.integerValue) stringValue] stringByAppendingFormat:NSLocalizedString(@"次", nil)] attributes:attribtDic1];
     
     NSDictionary *attribtDic2 = @{NSForegroundColorAttributeName:CZColorCreater(170, 170, 187, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]
@@ -133,7 +133,7 @@
     NSDictionary *attribtDic3 = @{NSForegroundColorAttributeName:CZColorCreater(255, 68, 85, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]
     };
-    NSMutableAttributedString *attribtStr3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@元",model.lowPrice] attributes:attribtDic3];
+    NSMutableAttributedString *attribtStr3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.2f元",model.lowPrice.floatValue/100.0] attributes:attribtDic3];
     [attribtStr1 appendAttributedString:attribtStr3];
     
     NSDictionary *attribtDic4 = @{NSForegroundColorAttributeName:CZColorCreater(170, 170, 187, 1),

@@ -67,7 +67,7 @@
     _model = model;
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.banners)] placeholderImage:nil];
     self.nameLabel.text = model.title;
-    self.addressPriceLabel.text = model.address;
+    self.addressPriceLabel.text = model.extRangeUser;
 }
 
 @end
