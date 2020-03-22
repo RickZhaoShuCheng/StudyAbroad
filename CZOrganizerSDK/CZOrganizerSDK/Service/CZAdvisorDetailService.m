@@ -15,6 +15,7 @@
 static const NSString *ApiCounselorGetCounselorDetails = @"apiCounselor/getCounselorDetails";
 static const NSString *ApiProductGetCounselorRecommendProduct = @"apiProduct/getCounselorRecommendProduct";
 static const NSString *ApiDiaryFindCaseListByFilter = @"apiDiary/findCaseListByFilter";
+static const NSString *ApiObjectCommentsFindComments = @"apiObjectComments/findComments";
 
 @implementation CZAdvisorDetailService
 /**
@@ -112,7 +113,7 @@ static const NSString *ApiDiaryFindCaseListByFilter = @"apiDiary/findCaseListByF
         }
         
         if (data) {
-            data = [QSCommonService removeNullFromDictionary:data];
+            data = [QSCommonService removeNullFromArray:data];
         }
         
         if (callBack) {
@@ -136,6 +137,65 @@ static const NSString *ApiDiaryFindCaseListByFilter = @"apiDiary/findCaseListByF
     NSString *userId = [QSClient userId];
     
     NSDictionary *parameters = @{@"caseType":caseType,
+                                 @"userId":userId,
+                                 @"id":idStr,
+                                 @"filterSum":[NSString stringWithFormat:@"%ld",(long)filterSum],
+                                 @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
+                                 @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+/**
+ *获取评价
+ *commentsType 1.机构 2.顾问 3.达人 4.商品
+ *id 查询的类型id
+ *filterSum 过滤条件 智能排序
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiObjectCommentsFindComments:(NSString *)commentsType idStr:(NSString *)idStr filterSum:(NSInteger)filterSum pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiObjectCommentsFindComments];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"commentsType":commentsType,
                                  @"userId":userId,
                                  @"id":idStr,
                                  @"filterSum":[NSString stringWithFormat:@"%ld",(long)filterSum],

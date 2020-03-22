@@ -57,7 +57,7 @@
     [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
     [self.rankView setRankByRate:[model.valStar floatValue]];
     self.organizerLab.text = model.organName;
-    self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[model.servicePersonCount stringValue]];
+    self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.servicePersonCount integerValue]) stringValue]];
     if ([model.status integerValue] == 1) {
         self.VImg.hidden = NO;
     }else{

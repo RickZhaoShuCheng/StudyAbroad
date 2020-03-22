@@ -8,8 +8,10 @@
 //
 
 #import "AdvisorDynamicTableView.h"
+#import "AdvisorDynamicSectionHeaderView.h"
 
-@interface AdvisorDynamicTableView()<UITableViewDelegate,UITableViewDataSource>
+
+@interface AdvisorDynamicTableView()<UITableViewDelegate,UITableViewDataSource,SPPageMenuDelegate>
 
 @end
 @implementation AdvisorDynamicTableView
@@ -19,9 +21,12 @@
     if (self) {
         self.delegate = self;
         self.dataSource = self;
-//        self.showsVerticalScrollIndicator = NO;
+        self.showsVerticalScrollIndicator = NO;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        self.bounces = NO;
         self.backgroundColor = [UIColor whiteColor];
-        [self registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        [self registerClass:[AdvisorDynamicCell class] forCellReuseIdentifier:NSStringFromClass([AdvisorDynamicCell class])];
+        [self registerClass:[AdvisorDynamicSectionHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([AdvisorDynamicSectionHeaderView class])];
         self.tableHeaderView = self.headerView;
     }
     return self;
@@ -33,22 +38,84 @@
     [self reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
-    return cell;
+    self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AdvisorDynamicCell class]) forIndexPath:indexPath];
+    WEAKSELF
+    self.cell.scrollContentSize = ^(CGFloat offsetY) {
+        if (offsetY > 0) {
+            weakSelf.scrollEnabled = NO;
+//            NSLog(@"2222++++++++");
+        }else{
+            weakSelf.scrollEnabled = YES;
+//            NSLog(@"2222................");
+        }
+    };
+    return self.cell;
+}
+//(NaviH+StatusBarHeight+5)
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CGFloat height = 0.0;
+    
+    // 如果是刘海屏
+    if (@available(iOS 11.0, *)) {
+        if (self.superview.safeAreaInsets.bottom > 0) {
+            // do something
+            height = kScreenHeight - ScreenScale(90) - NaviH - StatusBarHeight - 39;
+        }else{
+            height = kScreenHeight - ScreenScale(90) - NaviH;
+        }
+    }else{
+        height = kScreenHeight - ScreenScale(90) - NaviH;
+    }
+    return height;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ScreenScale(200);
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return ScreenScale(90);
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    AdvisorDynamicSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([AdvisorDynamicSectionHeaderView class]) ];
+    headerView.pageMenu.bridgeScrollView = self.cell.scrollView;
+    headerView.pageMenu.delegate = self;
+    return headerView;
+}
+#pragma mark - SPPageMenu的代理方法
+- (void)pageMenu:(SPPageMenu *)pageMenu itemSelectedFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
+    
+    if (fromIndex == toIndex) {
+        return;
+    }
+    // 如果fromIndex与toIndex之差大于等于2,说明跨界面移动了,此时不动画.
+    if (labs(toIndex - fromIndex) >= 2) {
+        [self.cell.scrollView setContentOffset:CGPointMake(kScreenWidth * toIndex, 0) animated:NO];
+    } else {
+        [self.cell.scrollView setContentOffset:CGPointMake(kScreenWidth * toIndex, 0) animated:YES];
+    }
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"11111----->>%2.f",scrollView.contentOffset.y);
     if (self.scrollContentSize) {
         self.scrollContentSize(scrollView.contentOffset.y);
     }
 }
+//
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+//    //悬浮
+//    CGFloat header = self.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
+//    if (scrollView.contentOffset.y < (header - (NaviH+StatusBarHeight+5)) && scrollView.contentOffset.y >= 0) {
+//        //当视图滑动的距离小于header时
+//        self.cell.postVC.tableView.scrollEnabled = NO;
+//        self.scrollEnabled = YES;
+//    }else if(scrollView.contentOffset.y >= (header - (NaviH+StatusBarHeight+5))){
+//        //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
+//        self.cell.postVC.tableView.scrollEnabled = YES;
+//        self.scrollEnabled = NO;
+//    }
+//}
 
 - (AdvisorDynamicTableHeaderView *)headerView{
     if (!_headerView) {

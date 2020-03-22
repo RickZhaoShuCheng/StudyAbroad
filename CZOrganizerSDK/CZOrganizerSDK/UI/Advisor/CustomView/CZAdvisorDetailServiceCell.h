@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CZProductVoListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDetailServiceCell : UICollectionViewCell
 @property (nonatomic ,strong)UIView *bgView;
+@property (nonatomic ,strong) CZProductVoListModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

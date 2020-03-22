@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "AdvisorDynamicTableHeaderView.h"
 #import "CZAdvisorInfoModel.h"
+#import "AdvisorDynamicCell.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AdvisorDynamicTableView : UITableView
 @property (nonatomic ,strong) CZAdvisorInfoModel *model;
 @property (nonatomic ,strong) AdvisorDynamicTableHeaderView *headerView;
+@property (nonatomic ,strong) AdvisorDynamicCell *cell;
 /**
  * 滚动值
  */
