@@ -57,6 +57,7 @@
         weakSelf.pageIndex += 1;
         [weakSelf requestForAdvisors];
     }];
+    
     //点击cell
     self.dataView.selectedBlock = ^(NSString * _Nonnull counselorId) {
         CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];

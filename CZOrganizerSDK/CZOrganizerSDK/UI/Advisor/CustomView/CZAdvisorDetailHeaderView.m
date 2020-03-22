@@ -57,7 +57,7 @@
     [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
     [self.rankView setRankByRate:[model.valStar floatValue]];
     self.organizerLab.text = model.organName;
-    self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[model.servicePersonCount stringValue]];
+    self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.servicePersonCount integerValue]) stringValue]];
     if ([model.status integerValue] == 1) {
         self.VImg.hidden = NO;
     }else{
@@ -80,12 +80,18 @@
         [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
     }
     [self setTags:keyArr];
-    if (model.dynamicVoList.count == 0) {
-        self.dynamicView.hidden = YES;
-    }else{
+//    if (model.dynamicVoList.count == 0) {
+//        self.dynamicView.hidden = YES;
+//    }else{
         self.dynamicView.hidden = NO;
-    }
+//    }
     
+}
+
+- (void)dynamicViewClick{
+    if (self.dynamicClick) {
+        self.dynamicClick();
+    }
 }
 
 - (void)locationViewClick{
@@ -360,6 +366,8 @@
     self.dynamicView = [[UIView alloc]init];
     self.dynamicView.backgroundColor = [UIColor whiteColor];
     self.dynamicView.hidden = YES;
+    self.dynamicView.userInteractionEnabled = YES;
+    [self.dynamicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dynamicViewClick)]];
     [self addSubview:self.dynamicView];
     [self.dynamicView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self);

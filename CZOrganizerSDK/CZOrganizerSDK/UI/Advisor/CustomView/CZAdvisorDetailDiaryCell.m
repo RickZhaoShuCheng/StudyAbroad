@@ -22,11 +22,23 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initWithUI];
-        [self.iconImg sd_setImageWithURL:[NSURL URLWithString:@"http://pic1.win4000.com/pic/1/9f/509593ca21.jpg"] placeholderImage:nil];
-        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583430496699&di=2e9ba8fdb67aefd9577448dd47b6171e&imgtype=0&src=http%3A%2F%2Fp3.ssl.cdn.btime.com%2Ft01d5003ec96206de54.jpg%3Fsize%3D539x537"] placeholderImage:nil];
     }
     return self;
 }
+
+- (void)setModel:(CZDiaryModel *)model{
+    _model = model;
+    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.smdMainImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.countLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+    self.titleLab.text = model.diaryTitle;
+    self.tipsLab.text = [NSString stringWithFormat:@"#%@",model.topicTitle];
+    self.schoolLab.text = @"莫那什大学留学 | 1篇日记";
+    self.schoolLab.text = [NSString stringWithFormat:@"%@留学 | %@篇日记",model.schoolName,[@([model.diaryCount integerValue]) stringValue]];
+}
+
 - (void)initWithUI{
     self.backgroundColor = [UIColor whiteColor];
     

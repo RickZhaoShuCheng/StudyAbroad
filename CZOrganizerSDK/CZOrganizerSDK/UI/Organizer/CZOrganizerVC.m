@@ -16,6 +16,7 @@
 #import "QSOrganizerHomeService.h"
 #import "QSCommonService.h"
 #import "CZOrganizerModel.h"
+#import "CZOrganizerSearchVC.h"
 
 #define PageMenuHeight          ScreenScale(88)
 
@@ -103,7 +104,10 @@
 }
 
 - (void)clickSearchBtn:(UIButton *)searchBtn{
-    
+    CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
+    CZOrganizerSearchVC *serchVC = [[CZOrganizerSearchVC alloc]init];
+    serchVC.titleName = baseVc.collectionView.model.name;
+    [self.navigationController pushViewController:serchVC animated:YES];
 }
 
 /**
@@ -289,23 +293,23 @@
     [self.titleView addSubview:self.titleLab];
     
     self.rankView = [CZRankView instanceRankViewByRate:3.1];
-    self.rankView.frame = CGRectMake(0, ScreenScale(65), ScreenScale(150), ScreenScale(28));
+    self.rankView.frame = CGRectMake(0, ScreenScale(60), ScreenScale(150), ScreenScale(28));
     [self.titleView addSubview:self.rankView];
     
-    self.scoreLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155), ScreenScale(56), ScreenScale(50), ScreenScale(30))];
+    self.scoreLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155), ScreenScale(53), ScreenScale(50), ScreenScale(30))];
     self.scoreLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.scoreLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.scoreLab.text = @"3.1";
     [self.titleView addSubview:self.scoreLab];
     
-    self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155)+ScreenScale(50)+ScreenScale(34), ScreenScale(56), ScreenScale(180), ScreenScale(30))];
+    self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155)+ScreenScale(50)+ScreenScale(34), ScreenScale(53), ScreenScale(180), ScreenScale(30))];
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.countLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.countLab.text = @"粉丝数 8122";
     [self.titleView addSubview:self.countLab];
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(50), ScreenScale(30), ScreenScale(116), ScreenScale(46))];
+    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(75), ScreenScale(30), ScreenScale(116), ScreenScale(46))];
     [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
     [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
     [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];

@@ -24,10 +24,23 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initWithUI];
-        [self.iconImg sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583430496700&di=de4170c57a050cdb73902ad1c01ae3db&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F20182%2F7%2F20182711467_GsuwC.jpeg"] placeholderImage:nil];
     }
     return self;
 }
+
+- (void)setModel:(CZProductVoListModel *)model{
+    _model = model;
+    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    self.countLab.text = [NSString stringWithFormat:@"%@人付款",[@([model.payCount integerValue]) stringValue]];
+    self.addressLab.text = model.organName;
+    self.titleLab.text = model.title;
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",[@([model.price integerValue]) stringValue]]];
+    [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 1)];
+    [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(1, str.length-1)];
+    self.priceLab.attributedText = str;
+}
+
 - (void)initWithUI{
     
     self.backgroundColor = CZColorCreater(245, 245, 249, 1);

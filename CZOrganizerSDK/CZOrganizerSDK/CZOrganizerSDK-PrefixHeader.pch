@@ -17,19 +17,31 @@
 #import "NSObject+ORM.h"
 
 #define CZColorCreater(r, g, b, a) [UIColor colorWithRed:(r / 255.0) green:(g / 255.0) blue:(b / 255.0) alpha:a]
-
-#define aliyunPicURL @"https://develop-kingsuper.oss-cn-hangzhou.aliyuncs.com/"
-
-#define PIC_URL(x) ([(x) hasPrefix:@"http"] ? (x) : ([NSString stringWithFormat:@"%@%@",aliyunPicURL,x]))
-#define iPhoneX (( fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)812) < DBL_EPSILON ) || (fabs((double)[[UIScreen mainScreen] bounds].size.width - (double)812) < DBL_EPSILON ))
-#define WEAKSELF                            typeof(self) __weak weakSelf=self;
 #define kScreenWidth                        [[UIScreen mainScreen] bounds].size.width
 #define kScreenHeight                        [[UIScreen mainScreen] bounds].size.height
+#define aliyunPicURL @"https://develop-kingsuper.oss-cn-hangzhou.aliyuncs.com/"
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136),[[UIScreen mainScreen] currentMode].size) : NO)
+#define PIC_URL(x) ([(x) hasPrefix:@"http"] ? (x) : ([NSString stringWithFormat:@"%@%@",aliyunPicURL,x]))
+#define iPhoneX                             (( fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)812) < DBL_EPSILON ) || (fabs((double)[[UIScreen mainScreen] bounds].size.width - (double)812) < DBL_EPSILON ))
+#define WEAKSELF                            typeof(self) __weak weakSelf=self;
 #define NaviH                               (iPhoneX ? 88.0f : 64.0f)
 //TabBar高度
 #define TabBarHeight                        (iPhoneX ? 83.0f : 49.0f)
 #define StatusBarHeight                     (iPhoneX ? 44.0f : 20.0f)
+/*顶部安全区域远离高度*/
+#define kTopBarSafeHeight                   (CGFloat)(iPhoneX?(44.0):(0))
+/*底部安全区域远离高度*/
+#define kBottomSafeHeight                   (CGFloat)(iPhoneX?(34.0):(0))
+/*iPhoneX的状态栏高度差值*/
+#define kTopBarDifHeight                    (CGFloat)(iPhoneX?(24.0):(0))
 //#define WidthRatio(x)                       (iPhoneX ? ( x /750.0 * kScreenWidth) : ( x /750.0 * kScreenWidth))
 //#define HeightRatio(x)                      (iPhoneX ? ( x /1550.0 * kScreenHeight) : ( x /1334.0 * kScreenHeight))
 #define ScreenScale(x)                      (([UIScreen mainScreen].bounds.size.width / 375.0) * x)/2.0
 #endif /* CZOrganizerSDK_PrefixHeader_pch */
+
+
+#define kIs_iphone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define kIs_iPhoneX kScreenWidth >=375.0f && kScreenHeight >=812.0f&& kIs_iphone
+ 
+
+
