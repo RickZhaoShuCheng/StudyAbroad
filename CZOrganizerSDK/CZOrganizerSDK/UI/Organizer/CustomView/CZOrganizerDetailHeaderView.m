@@ -83,6 +83,14 @@
     
     self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(540));
 }
+
+//点击动态
+- (void)clickDynamicView{
+    if (self.clickDynamicBlock) {
+        self.clickDynamicBlock();
+    }
+}
+
 -(void)initWithUI{
     
     //根据标签高度调整背景高度
@@ -117,7 +125,7 @@
         [self.VImg mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-ScreenScale(18));
             make.centerX.mas_equalTo(self.avatarImg);
-            make.width.mas_equalTo(ScreenScale(78));
+            make.width.mas_equalTo(ScreenScale(80));
             make.height.mas_equalTo(ScreenScale(36));
         }];
         
@@ -322,6 +330,8 @@
     //动态信息
     {
         self.dynamicView = [[UIView alloc]init];
+        self.dynamicView.userInteractionEnabled = YES;
+        [self.dynamicView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickDynamicView)]];
         self.dynamicView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.dynamicView];
         [self.dynamicView mas_makeConstraints:^(MASConstraintMaker *make) {

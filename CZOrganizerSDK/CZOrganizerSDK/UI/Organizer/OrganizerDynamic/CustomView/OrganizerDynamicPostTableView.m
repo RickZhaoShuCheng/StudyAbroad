@@ -1,20 +1,21 @@
 
 
+
 //
-//  AdvisorDynamicPostTableView.m
+//  OrganizerDynamicPostTableView.m
 //  CZOrganizerSDK
 //
-//  Created by 谢朋远 on 2020/3/22.
+//  Created by 谢朋远 on 2020/3/23.
 //  Copyright © 2020 zsc. All rights reserved.
 //
 
-#import "AdvisorDynamicPostTableView.h"
-#import "AdvisorDynamicPostCell.h"
+#import "OrganizerDynamicPostTableView.h"
+#import "OrganizerDynamicPostCell.h"
 
-@interface AdvisorDynamicPostTableView()<UITableViewDelegate ,UITableViewDataSource>
+@interface OrganizerDynamicPostTableView()<UITableViewDelegate ,UITableViewDataSource>
 
 @end
-@implementation AdvisorDynamicPostTableView
+@implementation OrganizerDynamicPostTableView
 
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
@@ -26,7 +27,7 @@
         self.showsVerticalScrollIndicator = NO;
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.backgroundColor = [UIColor whiteColor];
-        [self registerClass:[AdvisorDynamicPostCell class] forCellReuseIdentifier:NSStringFromClass([AdvisorDynamicPostCell class])];
+        [self registerClass:[OrganizerDynamicPostCell class] forCellReuseIdentifier:NSStringFromClass([OrganizerDynamicPostCell class])];
     }
     return self;
 }
@@ -34,13 +35,13 @@
     return 20;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    AdvisorDynamicPostCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AdvisorDynamicPostCell class]) forIndexPath:indexPath];
+    OrganizerDynamicPostCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OrganizerDynamicPostCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 //(NaviH+StatusBarHeight+5)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ScreenScale(800);
+    return ScreenScale(770);
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
 //    NSLog(@"22222----->>%2.f",scrollView.contentOffset.y);

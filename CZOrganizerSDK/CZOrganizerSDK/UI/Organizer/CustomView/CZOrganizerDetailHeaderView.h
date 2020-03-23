@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)JCTagListView *tagList;
 @property (nonatomic ,strong)SDCycleScrollView *scrollDynamic;
 @property (nonatomic ,strong) CZOrganizerModel *model;
+@property (nonatomic ,copy) dispatch_block_t clickDynamicBlock;
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr;
 @end

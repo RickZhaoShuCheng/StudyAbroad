@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
 @property (nonatomic ,strong) CZOrganizerModel *model;
 @property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
-
+@property (nonatomic ,copy) dispatch_block_t clickDynamicBlock;
 /**
  * 滚动值
  */

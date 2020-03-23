@@ -159,7 +159,7 @@
     [self.VImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-ScreenScale(18));
         make.centerX.mas_equalTo(self.avatarImg);
-        make.width.mas_equalTo(ScreenScale(100));
+        make.width.mas_equalTo(ScreenScale(80));
         make.height.mas_equalTo(ScreenScale(36));
     }];
     

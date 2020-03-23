@@ -1,23 +1,17 @@
-
-
 //
-//  AdvisorDynamicTableHeaderView.m
+//  OrganizerDynamicTableHeaderView.m
 //  CZOrganizerSDK
 //
-//  Created by 谢朋远 on 2020/3/21.
+//  Created by 谢朋远 on 2020/3/23.
 //  Copyright © 2020 zsc. All rights reserved.
 //
 
-#import "AdvisorDynamicTableHeaderView.h"
+#import "OrganizerDynamicTableHeaderView.h"
 #import "UIImageView+WebCache.h"
-@interface AdvisorDynamicTableHeaderView()
+@interface OrganizerDynamicTableHeaderView()
 @property (nonatomic ,strong)UIImageView *avatarImg;
 @property (nonatomic ,strong)UIImageView *VImg;
 @property (nonatomic ,strong)UILabel *nameLab;
-@property (nonatomic ,strong)UIView *locationView;
-@property (nonatomic ,strong)UILabel *locationTitle;
-@property (nonatomic ,strong)UILabel *locationContent;
-@property (nonatomic ,strong)UIImageView *locationImg;
 @property (nonatomic ,strong) UIButton *chatBtn;
 @property (nonatomic ,strong) UIButton *focusBtn;
 @property (nonatomic ,strong)UILabel *focusContent;
@@ -25,7 +19,7 @@
 @property (nonatomic ,strong)UILabel *praiseContent;
 @property (nonatomic ,strong) UIButton *arrowBtn;
 @end
-@implementation AdvisorDynamicTableHeaderView
+@implementation OrganizerDynamicTableHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -35,23 +29,22 @@
     }
     return self;
 }
-- (void)setModel:(CZAdvisorInfoModel *)model{
+- (void)setModel:(CZOrganizerModel *)model{
     _model = model;
     if (!model) {
         return;
     }
-    self.nameLab.text = model.counselorName;
-    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
-    [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    self.nameLab.text = model.name;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
     if ([model.status integerValue] == 1) {
         self.VImg.hidden = NO;
     }else{
         self.VImg.hidden = YES;
     }
-    self.locationTitle.text = model.organName;
-    self.locationContent.text = [NSString stringWithFormat:@"%@%@%@%@",model.countryName,model.provinceName,model.cityName,model.disName];
-    self.contentLab.text = model.introduce;
-    CGFloat height = [self getStringHeightWithText:model.introduce font:[UIFont systemFontOfSize:ScreenScale(28)] viewWidth:kScreenWidth-ScreenScale(100)];
+    
+    self.contentLab.text = model.desc;
+    CGFloat height = [self getStringHeightWithText:model.desc font:[UIFont systemFontOfSize:ScreenScale(28)] viewWidth:kScreenWidth-ScreenScale(100)];
     _model.introduceHeight = height;
     CGFloat singleHeight = [self getStringHeightWithText:@"测试" font:[UIFont systemFontOfSize:ScreenScale(28)] viewWidth:kScreenWidth-ScreenScale(100)];
     _model.singleHeight = singleHeight;
@@ -61,7 +54,7 @@
         self.arrowBtn.hidden = YES;
     }
 //    self.focusContent.text =
-//    self.praiseContent.text = 
+//    self.praiseContent.text =
     self.fansContent.text = [@([model.fanCount integerValue]) stringValue];
     
 }
@@ -86,7 +79,7 @@
 -(void)initWithUI{
     
     //根据标签高度调整背景高度
-    self.bgImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(640))];
+    self.bgImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(630))];
     [self addSubview:self.bgImg];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -250,59 +243,6 @@
         make.size.mas_equalTo(ScreenScale(40));
         make.bottom.mas_equalTo(self.contentLab.mas_bottom).offset(ScreenScale(5));
     }];
-    
-    self.locationView = [[UIView alloc]init];
-    self.locationView.backgroundColor = [UIColor whiteColor];
-//    self.locationView.userInteractionEnabled = YES;
-//    [self.locationView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(locationViewClick)]];
-    [self addSubview:self.locationView];
-    [self.locationView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.mas_equalTo(self);
-        make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(16));
-        make.height.mas_equalTo(ScreenScale(135));
-    }];
-    
-    self.locationTitle = [[UILabel alloc] init];
-    self.locationTitle.text = @"-";
-    self.locationTitle.textColor = CZColorCreater(0, 0, 0, 1);
-    self.locationTitle.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
-    [self.locationView addSubview:self.locationTitle];
-    [self.locationTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.locationView.mas_leading).offset(ScreenScale(30));
-        make.top.mas_equalTo(self.locationView.mas_top).offset(ScreenScale(30));
-        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(94));
-        make.height.mas_greaterThanOrEqualTo(0);
-    }];
-    
-    self.locationContent = [[UILabel alloc] init];
-    self.locationContent.text = @"南京市雨花台区达州路32号软件谷科";
-    self.locationContent.textColor = CZColorCreater(170, 170, 187, 1);
-    self.locationContent.font = [UIFont systemFontOfSize:ScreenScale(26)];
-    [self.locationView addSubview:self.locationContent];
-    [self.locationContent mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.locationView.mas_leading).offset(ScreenScale(30));
-        make.top.mas_equalTo(self.locationTitle.mas_bottom).offset(ScreenScale(16));
-        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(94));
-        make.height.mas_greaterThanOrEqualTo(0);
-    }];
-    
-    
-    self.locationImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"guwen_dingwei"]];
-    [self.locationView addSubview:self.locationImg];
-    [self.locationImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(30));
-        make.centerY.mas_equalTo(self.locationView);
-        make.size.mas_equalTo(self.locationImg.image.size);
-    }];
-    
-    UILabel *line = [[UILabel alloc] init];
-    line.backgroundColor = CZColorCreater(241, 241, 245, 1);
-    [self.locationView addSubview:line];
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.locationImg.mas_leading).offset(-ScreenScale(32));
-        make.centerY.mas_equalTo(self.locationView);
-        make.height.mas_equalTo(ScreenScale(64));
-        make.width.mas_equalTo(1);
-    }];
 }
+
 @end

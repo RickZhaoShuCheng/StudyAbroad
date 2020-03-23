@@ -8,6 +8,7 @@
 
 #import "CZOrganizerDetailViewController.h"
 #import "CZCommentsListVC.h"
+#import "OrganizerDynamicVC.h"
 
 @interface CZOrganizerDetailViewController ()
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
@@ -39,6 +40,12 @@
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
+    }];
+    
+    [self.collectionView setClickDynamicBlock:^{
+        OrganizerDynamicVC *dynamic = [[OrganizerDynamicVC alloc]init];
+        dynamic.model = weakSelf.collectionView.model;
+        [weakSelf.navigationController pushViewController:dynamic animated:YES];
     }];
     
     //测试评价图片

@@ -1,20 +1,21 @@
 
+
 //
-//  AdvisorDynamicTableView.m
+//  OrganizerDynamicTableView.m
 //  CZOrganizerSDK
 //
-//  Created by 谢朋远 on 2020/3/21.
+//  Created by 谢朋远 on 2020/3/23.
 //  Copyright © 2020 zsc. All rights reserved.
 //
 
-#import "AdvisorDynamicTableView.h"
-#import "AdvisorDynamicSectionHeaderView.h"
+#import "OrganizerDynamicTableView.h"
+#import "OrganizerDynamicSectionHeaderView.h"
 
 
-@interface AdvisorDynamicTableView()<UITableViewDelegate,UITableViewDataSource,SPPageMenuDelegate>
+@interface OrganizerDynamicTableView()<UITableViewDelegate,UITableViewDataSource,SPPageMenuDelegate>
 
 @end
-@implementation AdvisorDynamicTableView
+@implementation OrganizerDynamicTableView
 
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
@@ -25,13 +26,13 @@
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
 //        self.bounces = NO;
         self.backgroundColor = [UIColor whiteColor];
-        [self registerClass:[AdvisorDynamicCell class] forCellReuseIdentifier:NSStringFromClass([AdvisorDynamicCell class])];
-        [self registerClass:[AdvisorDynamicSectionHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([AdvisorDynamicSectionHeaderView class])];
+        [self registerClass:[OrganizerDynamicCell class] forCellReuseIdentifier:NSStringFromClass([OrganizerDynamicCell class])];
+        [self registerClass:[OrganizerDynamicSectionHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([OrganizerDynamicSectionHeaderView class])];
         self.tableHeaderView = self.headerView;
     }
     return self;
 }
-- (void)setModel:(CZAdvisorInfoModel *)model{
+- (void)setModel:(CZOrganizerModel *)model{
     model.introduceOpen = NO;
     _model = model;
     self.headerView.model = _model;
@@ -41,7 +42,7 @@
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AdvisorDynamicCell class]) forIndexPath:indexPath];
+    self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OrganizerDynamicCell class]) forIndexPath:indexPath];
     WEAKSELF
     self.cell.scrollContentSize = ^(CGFloat offsetY) {
         if (offsetY > 0) {
@@ -77,7 +78,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    AdvisorDynamicSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([AdvisorDynamicSectionHeaderView class]) ];
+    OrganizerDynamicSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([OrganizerDynamicSectionHeaderView class]) ];
     if (!headerView.pageMenu.bridgeScrollView) {
         headerView.pageMenu.bridgeScrollView = self.cell.scrollView;
     }
@@ -121,9 +122,9 @@
 //    }
 //}
 
-- (AdvisorDynamicTableHeaderView *)headerView{
+- (OrganizerDynamicTableHeaderView *)headerView{
     if (!_headerView) {
-        _headerView = [[AdvisorDynamicTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(810))];
+        _headerView = [[OrganizerDynamicTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth-NaviH)];
         WEAKSELF
         _headerView.arrowBtnClick = ^(UIButton * _Nonnull button) {
             CGRect headerFrame = weakSelf.headerView.frame;

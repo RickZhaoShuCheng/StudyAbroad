@@ -1,23 +1,26 @@
-
 //
-//  AdvisorDynamicPostCell.m
+//  OrganizerDynamicPostCell.m
 //  CZOrganizerSDK
 //
-//  Created by 谢朋远 on 2020/3/22.
+//  Created by 谢朋远 on 2020/3/23.
 //  Copyright © 2020 zsc. All rights reserved.
 //
 
-#import "AdvisorDynamicPostCell.h"
+#import "OrganizerDynamicPostCell.h"
 #import "UIImageView+WebCache.h"
 
-@interface AdvisorDynamicPostCell()
+@interface OrganizerDynamicPostCell()
 @property (nonatomic ,strong) UIImageView *avatarImg;
 @property (nonatomic ,strong) UILabel *nameLab;
 @property (nonatomic ,strong) UILabel *timeLab;
 @property (nonatomic ,strong) UILabel *contentLab;
 @property (nonatomic ,strong) UIButton *tipBtn;
+@property (nonatomic ,strong) UIImageView *locationImg;
+@property (nonatomic ,strong) UILabel *locationLab;
+@property (nonatomic ,strong) UILabel *zanLab;
+@property (nonatomic ,strong) UILabel *commentLab;
 @end
-@implementation AdvisorDynamicPostCell
+@implementation OrganizerDynamicPostCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -107,6 +110,85 @@
         make.top.mas_equalTo(self.contentLab.mas_bottom).offset(ScreenScale(30));
         make.width.mas_equalTo(ScreenScale(170));
         make.height.mas_equalTo(ScreenScale(48));
+    }];
+    
+    self.locationImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"guwen_dingwei"]];
+    [self.contentView addSubview:self.locationImg];
+    [self.locationImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.contentView.mas_leading).offset(ScreenScale(30));
+        make.size.mas_equalTo(self.locationImg.image.size);
+        make.top.mas_equalTo(self.tipBtn.mas_bottom).offset(ScreenScale(30));
+    }];
+    
+    self.zanLab = [[UILabel alloc]init];
+    self.zanLab.font = [UIFont systemFontOfSize:ScreenScale(20)];
+    self.zanLab.textColor = CZColorCreater(107, 107, 124, 1);
+    self.zanLab.text = @"0";
+    [self.contentView addSubview:self.zanLab];
+    [self.zanLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
+        make.width.mas_equalTo(ScreenScale(40));
+        make.height.mas_greaterThanOrEqualTo(0);
+        make.centerY.mas_equalTo(self.locationImg);
+    }];
+    
+    UIImageView *zanImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"zhu_ye_zan"]];
+    [self.contentView addSubview:zanImg];
+    [zanImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.zanLab.mas_leading).offset(-ScreenScale(10));
+        make.size.mas_equalTo(zanImg.image.size);
+        make.centerY.mas_equalTo(self.zanLab);
+    }];
+    
+    self.commentLab = [[UILabel alloc]init];
+    self.commentLab.font = [UIFont systemFontOfSize:ScreenScale(20)];
+    self.commentLab.textColor = CZColorCreater(107, 107, 124, 1);
+    self.commentLab.text = @"0";
+    [self.contentView addSubview:self.commentLab];
+    [self.commentLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(zanImg.mas_leading).offset(-ScreenScale(10));
+        make.width.mas_equalTo(ScreenScale(40));
+        make.height.mas_greaterThanOrEqualTo(0);
+        make.centerY.mas_equalTo(self.locationImg);
+    }];
+    
+    UIImageView *commentImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"guwen_pinglun"]];
+    [self.contentView addSubview:commentImg];
+    [commentImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.commentLab.mas_leading).offset(-ScreenScale(10));
+        make.size.mas_equalTo(commentImg.image.size);
+        make.centerY.mas_equalTo(self.commentLab);
+    }];
+    
+    UIImageView *shareImg = [[UIImageView alloc]initWithImage:[CZImageProvider imageNamed:@"heise_fenxiang"]];
+    [self.contentView addSubview:shareImg];
+    [shareImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(commentImg.mas_leading).offset(-ScreenScale(50)).priorityHigh();
+        make.size.mas_equalTo(ScreenScale(18));
+        make.centerY.mas_equalTo(self.commentLab);
+    }];
+    
+    
+    self.locationLab = [[UILabel alloc]init];
+    self.locationLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
+    self.locationLab.textColor = CZColorCreater(116, 116, 132, 1);
+    self.locationLab.text = @"加利福尼亚州西南部";
+    [self.contentView addSubview:self.locationLab];
+    [self.locationLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.locationImg.mas_trailing).offset(ScreenScale(15));
+        make.height.mas_greaterThanOrEqualTo(0);
+        make.centerY.mas_equalTo(self.locationImg);
+        make.trailing.mas_equalTo(shareImg.mas_leading).offset(-ScreenScale(5)).priorityLow();
+    }];
+    
+    UILabel *line = [[UILabel alloc]init];
+    line.backgroundColor = CZColorCreater(242, 242, 246, 1);
+    line.text = @"";
+    [self.contentView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.mas_equalTo(self.contentView);
+        make.height.mas_equalTo(ScreenScale(1));
+        make.top.mas_equalTo(self.locationLab.mas_bottom).offset(ScreenScale(22));
     }];
 }
 @end

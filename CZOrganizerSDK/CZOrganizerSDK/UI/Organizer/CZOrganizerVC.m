@@ -51,12 +51,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    __weak CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
-    if (baseVc.collectionView.contentOffset.y > 0) {
-        [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
-        [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
-        [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-    }
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
 }
 /**
  * 主页滚动处理导航条

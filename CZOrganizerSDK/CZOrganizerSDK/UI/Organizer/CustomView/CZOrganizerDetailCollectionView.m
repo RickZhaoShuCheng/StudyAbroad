@@ -170,6 +170,11 @@
         };
         if (indexPath.section == 0) {
             self.headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZOrganizerDetailHeaderView class]) forIndexPath:indexPath];
+            [self.headerView setClickDynamicBlock:^{
+                if (weakSelf.clickDynamicBlock) {
+                    weakSelf.clickDynamicBlock();
+                }
+            }];
             return self.headerView;
         }else if (indexPath.section == 1){
             header.titleStr = @"为您推荐";
