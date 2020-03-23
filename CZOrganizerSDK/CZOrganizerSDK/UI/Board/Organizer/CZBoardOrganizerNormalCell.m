@@ -11,6 +11,7 @@
 #import "JCTagListView.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
+#import "CZCommentModel.h"
 
 @interface CZBoardOrganizerNormalCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -54,8 +55,8 @@
     self.coverImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.coverImageView];
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(12);
-        make.top.mas_equalTo(13);
+        make.left.mas_equalTo(30);
+        make.top.mas_equalTo(15);
         make.size.mas_equalTo(51);
     }];
     
@@ -79,7 +80,7 @@
     }];
     
     self.rankDetailLabel = [[UILabel alloc] init];
-    self.rankDetailLabel.textColor = [UIColor whiteColor];
+    self.rankDetailLabel.textColor = CZColorCreater(129, 129, 146, 1);
     self.rankDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     [self.contentView addSubview:self.rankDetailLabel];
     [self.rankDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -100,6 +101,8 @@
     }];
     
     self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.textColor = CZColorCreater(129, 129, 146, 1);
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:12];
     [self.contentView addSubview:self.weekDetailLabel];
     [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
@@ -132,9 +135,10 @@
     [self.contentView addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.commentDetailLabel.mas_bottom);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(50);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.addressIconView = [[UIImageView alloc] init];
@@ -170,17 +174,27 @@
 
     [self.rankView setRankByRate:model.valStar.floatValue];
     
-    NSString *rankDetail = [NSString stringWithFormat:@"%@ 条评价 | %@ 案例 | %@ 顾问" , [@(model.valResponse.integerValue) stringValue], [@(model.valSatisfaction.integerValue) stringValue], [@(model.valProfessional.integerValue) stringValue]];
+    NSString *rankDetail = [NSString stringWithFormat:@"%@ 条评价 | %@ 案例 | %@ 顾问" , [@(model.commentsCount.integerValue) stringValue], [@(model.caseCount.integerValue) stringValue], [@(model.counselorCount.integerValue) stringValue]];
     self.rankDetailLabel.text = rankDetail;
+    self.weekDetailLabel.text = [NSString stringWithFormat:@"销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
     self.nameLabel.text = model.name;
     self.addressLabel.text = model.address;
+    
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+    
+    self.commentDetailLabel.text = @"暂无";
+    if (![model.comments isKindOfClass:[NSString class]] && model.comments.count > 0) {
+        CZCommentModel *comment = [model.comments firstObject];
+        self.commentDetailLabel.text = comment.comment.length > 0 ? comment.comment:@"暂无";
+    }
+
 }
 
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    self.bgView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, CGRectGetMaxY(self.bottomView.frame));
+    self.bgView.frame = CGRectMake(15, 0, self.contentView.bounds.size.width-30, CGRectGetMaxY(self.bottomView.frame));
 }
 
 @end

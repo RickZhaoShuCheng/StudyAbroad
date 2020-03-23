@@ -57,7 +57,7 @@
     self.goldImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.goldImageView];
     [self.goldImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(10);
+        make.left.mas_equalTo(25);
         make.top.mas_equalTo(7);
         make.width.mas_equalTo(28);
         make.height.mas_equalTo(31);
@@ -66,7 +66,7 @@
     self.avatarImageView = [[UIImageView alloc] init];
     self.avatarImageView.layer.cornerRadius = 32;
     self.avatarImageView.layer.masksToBounds = YES;
-    [self.contentView addSubview:self.avatarImageView];
+    [self.contentView insertSubview:self.avatarImageView belowSubview:self.goldImageView];
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(68);
         make.top.mas_equalTo(self.goldImageView).offset(8);
@@ -116,8 +116,8 @@
     [self.contentView addSubview:self.tagView];
     [self.tagView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
-        make.left.mas_equalTo(11);
-        make.right.mas_equalTo(-11);
+        make.left.mas_equalTo(self.workPlaceLabel.mas_left);
+        make.right.mas_equalTo(-20);
         make.height.mas_equalTo(40);
     }];
     
@@ -136,6 +136,8 @@
     }];
     
     self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
+    self.weekDetailLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:self.weekDetailLabel];
     [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(28);
@@ -148,7 +150,8 @@
     [self.contentView addSubview:self.middileView];
     [self.middileView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekDetailLabel.mas_bottom).offset(20);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(54);
     }];
     
@@ -178,9 +181,10 @@
     [self.contentView sendSubviewToBack:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(50);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.addressIconView = [[UIImageView alloc] init];
@@ -214,7 +218,9 @@
     }];
     
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.right.mas_equalTo(-15);
+        make.left.mas_equalTo(15);
         make.bottom.mas_equalTo(self.middileView.mas_bottom);
     }];
 }
@@ -222,7 +228,14 @@
 -(void)setModel:(CZSchoolStarModel *)model
 {
     _model = model;
-    self.tagList.tags = @[@"123123",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23",@"123",@"23"];
+    if (!model.keywords.length) {
+        self.tagList.tags = @[];
+    }
+    else
+    {
+        NSArray *keywords = [model.keywords componentsSeparatedByString:@","];
+        self.tagList.tags = keywords;
+    }
     
     [self.tagView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(self.tagList.contentHeight);
@@ -234,8 +247,20 @@
     
     CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     model.cellHeight = cellSize.height;
+
     [self.rankView setRankByRate:model.valStar.floatValue];
-    self.nameLabel.text = model.userName;
+    
+    self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
+
+    self.nameLabel.text = model.realName;
+    self.workPlaceLabel.text = model.schoolName;
+//    self.addressLabel.text = model.address;
+    
+    self.iconDetailLabel.text = @"";
+    self.iconImageView.image = [CZImageProvider imageNamed:@"default_avatar"];
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+
+    self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
 }
 
 -(void)setType:(CZBoardSchoolStarTopType)type

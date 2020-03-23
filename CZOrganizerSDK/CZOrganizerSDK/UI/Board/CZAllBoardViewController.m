@@ -11,6 +11,7 @@
 #import "CZBoardAdvisorViewController.h"
 #import "CZBoardSchoolStarViewController.h"
 #import "CZPageScrollContentView.h"
+#import "CZBoardProductViewController.h"
 #import "SPPageMenu.h"
 
 @interface CZAllBoardViewController () <SPPageMenuDelegate>
@@ -39,11 +40,29 @@
     self.title = NSLocalizedString(@"榜单", nil);
     NSMutableArray *vcs = [[NSMutableArray alloc] init];
     CZBoardOrganizerViewController *controller1 = [[CZBoardOrganizerViewController alloc] init];
+    controller1.model = self.models[0];
     [vcs addObject:controller1];
     CZBoardAdvisorViewController *controller2 = [[CZBoardAdvisorViewController alloc] init];
+    controller2.model = self.models[1];
     [vcs addObject:controller2];
     CZBoardSchoolStarViewController *controller3 = [[CZBoardSchoolStarViewController alloc] init];
+    controller3.model = self.models[2];
     [vcs addObject:controller3];
+    
+    CZBoardProductViewController *controller4 = [[CZBoardProductViewController alloc] init];
+    controller4.model = self.models[3];
+    [vcs addObject:controller4];
+    controller4.type = CZBoardProductTypePopular;
+    
+    CZBoardProductViewController *controller5 = [[CZBoardProductViewController alloc] init];
+    controller5.model = self.models[4];
+    [vcs addObject:controller5];
+    controller5.type = CZBoardProductTypeHot;
+    
+    CZBoardProductViewController *controller6 = [[CZBoardProductViewController alloc] init];
+    controller6.model = self.models[5];
+    [vcs addObject:controller6];
+    controller6.type = CZBoardProductTypeGood;
     
     self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
@@ -59,6 +78,7 @@
     self.pageMenu.bridgeScrollView = self.contentView.collectionView;
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 44, 44);
     [leftButton setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];

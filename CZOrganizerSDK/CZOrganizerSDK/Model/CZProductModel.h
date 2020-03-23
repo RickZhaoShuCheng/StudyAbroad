@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSArray *sportUserAdeptList;
 @property (nonatomic , strong) NSNumber *askCount;
 @property (nonatomic , strong) NSNumber *clickCount;
-@property (nonatomic , strong) NSString *comments;
+@property (nonatomic , strong) NSArray *comments;
 @property (nonatomic , strong) NSString *description;
 
 @end

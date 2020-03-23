@@ -55,6 +55,30 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
  *organId 机构id
  */
 -(void)requestForApiOrganGetOrganDetails:(NSString *)organId callBack:(QSOrganizerHomeBack)callBack;
+
+//达人榜单
+-(void)requestForApiSportUserGetSportUserTopListByParam:(CZHomeParam *)param
+                                               callBack:(QSOrganizerHomeBack)callBack;
+
+//机构榜单
+-(void)requestForApiOrganGetOrganTopListByParam:(CZHomeParam *)param
+                                       callBack:(QSOrganizerHomeBack)callBack;
+
+//顾问榜
+-(void)requestForApiCounselorGetCounselorTopListByParam:(CZHomeParam *)param
+                                               callBack:(QSOrganizerHomeBack)callBack;
+
+//口碑榜
+-(void)requestForApiProductGetPublicPraiseListByParam:(CZHomeParam *)param
+                                             callBack:(QSOrganizerHomeBack)callBack;
+
+//热销榜
+-(void)requestForApiProductGetHotSaleByParam:(CZHomeParam *)param
+                                    callBack:(QSOrganizerHomeBack)callBack;
+
+//人气榜
+-(void)requestForApiProductGetPopularityListByParam:(CZHomeParam *)param
+                                           callBack:(QSOrganizerHomeBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

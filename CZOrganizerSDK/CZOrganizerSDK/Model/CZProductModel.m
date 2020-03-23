@@ -23,4 +23,10 @@
     }
 }
 
++ (NSDictionary *)arrayContainModelClass
+{
+    return @{@"productVoList":@"CZProductVoListModel",@"comments":@"CZCommentModel"};
+}
+
+
 @end
