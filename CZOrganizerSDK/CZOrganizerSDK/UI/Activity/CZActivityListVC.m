@@ -9,10 +9,13 @@
 //
 
 #import "CZActivityListVC.h"
+#import "CZActivityListTableView.h"
+#import "ActivityDetailVC.h"
 
 @interface CZActivityListVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
+@property (nonatomic ,strong) CZActivityListTableView *tableView;
 @end
 
 @implementation CZActivityListVC
@@ -21,6 +24,15 @@
     [super viewDidLoad];
     self.title = @"全部活动";
     [self initWithUI];
+    [self addActionHandle];
+}
+
+- (void)addActionHandle{
+    WEAKSELF
+    [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
+        ActivityDetailVC *detailVC = [[ActivityDetailVC alloc]init];
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    }];
 }
 
 /**
@@ -36,11 +48,25 @@
     self.navigationItem.leftBarButtonItem = backItem;
     //右边按钮
     self.searchBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
-    [self.searchBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_xue_xiao_fang_da_jing"] forState:UIControlStateNormal];
+    [self.searchBtn setImage:[CZImageProvider imageNamed:@"sousuo_heise"] forState:UIControlStateNormal];
     [self.searchBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.searchBtn];
     self.navigationItem.rightBarButtonItem = rbackItem;
+    
+    [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.bottom.mas_equalTo(self.view);
+        make.top.mas_equalTo(self.view.mas_top).offset(ScreenScale(80));
+    }];
 }
+
+- (CZActivityListTableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[CZActivityListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    }
+    return _tableView;
+}
+
 //返回
 -(void)actionForBack{
     [self.navigationController popViewControllerAnimated:YES];

@@ -317,6 +317,14 @@
 		53F8097E240D32B100E44651 /* CZSelectProvinceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F8097C240D32B100E44651 /* CZSelectProvinceCell.m */; };
 		53F80981240D52C300E44651 /* CZSelectCityCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 53F8097F240D52C300E44651 /* CZSelectCityCell.h */; };
 		53F80982240D52C300E44651 /* CZSelectCityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F80980240D52C300E44651 /* CZSelectCityCell.m */; };
+		D804BF8B242A44CB0050AB7D /* CZActivityListTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D804BF89242A44CB0050AB7D /* CZActivityListTableView.h */; };
+		D804BF8C242A44CB0050AB7D /* CZActivityListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF8A242A44CB0050AB7D /* CZActivityListTableView.m */; };
+		D804BF8F242A49460050AB7D /* CZActivityListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D804BF8D242A49460050AB7D /* CZActivityListCell.h */; };
+		D804BF90242A49460050AB7D /* CZActivityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF8E242A49460050AB7D /* CZActivityListCell.m */; };
+		D804BF95242A4EE90050AB7D /* ActivityDetailVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D804BF93242A4EE90050AB7D /* ActivityDetailVC.h */; };
+		D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */; };
+		D804BF9D242A4F630050AB7D /* ActivityDetailScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */; };
+		D804BF9E242A4F630050AB7D /* ActivityDetailScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */; };
 		D854099B2411485900A348B5 /* CZAdvisorDetailServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D85409992411485900A348B5 /* CZAdvisorDetailServiceCell.h */; };
 		D854099C2411485900A348B5 /* CZAdvisorDetailServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D854099A2411485900A348B5 /* CZAdvisorDetailServiceCell.m */; };
 		D854099F241151C100A348B5 /* CZAdvisorDetailDiaryCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D854099D241151C100A348B5 /* CZAdvisorDetailDiaryCell.h */; };
@@ -778,6 +786,14 @@
 		53F8097C240D32B100E44651 /* CZSelectProvinceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZSelectProvinceCell.m; sourceTree = "<group>"; };
 		53F8097F240D52C300E44651 /* CZSelectCityCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZSelectCityCell.h; sourceTree = "<group>"; };
 		53F80980240D52C300E44651 /* CZSelectCityCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZSelectCityCell.m; sourceTree = "<group>"; };
+		D804BF89242A44CB0050AB7D /* CZActivityListTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZActivityListTableView.h; sourceTree = "<group>"; };
+		D804BF8A242A44CB0050AB7D /* CZActivityListTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZActivityListTableView.m; sourceTree = "<group>"; };
+		D804BF8D242A49460050AB7D /* CZActivityListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZActivityListCell.h; sourceTree = "<group>"; };
+		D804BF8E242A49460050AB7D /* CZActivityListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZActivityListCell.m; sourceTree = "<group>"; };
+		D804BF93242A4EE90050AB7D /* ActivityDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailVC.h; sourceTree = "<group>"; };
+		D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailVC.m; sourceTree = "<group>"; };
+		D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailScrollView.h; sourceTree = "<group>"; };
+		D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailScrollView.m; sourceTree = "<group>"; };
 		D85409992411485900A348B5 /* CZAdvisorDetailServiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailServiceCell.h; sourceTree = "<group>"; };
 		D854099A2411485900A348B5 /* CZAdvisorDetailServiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailServiceCell.m; sourceTree = "<group>"; };
 		D854099D241151C100A348B5 /* CZAdvisorDetailDiaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailDiaryCell.h; sourceTree = "<group>"; };
@@ -1738,6 +1754,25 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
+		D804BF91242A4ED50050AB7D /* ActivityDetail */ = {
+			isa = PBXGroup;
+			children = (
+				D804BF92242A4ED50050AB7D /* CustomView */,
+				D804BF93242A4EE90050AB7D /* ActivityDetailVC.h */,
+				D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */,
+			);
+			path = ActivityDetail;
+			sourceTree = "<group>";
+		};
+		D804BF92242A4ED50050AB7D /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */,
+				D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		D8868597241D1FC700B14680 /* Comments */ = {
 			isa = PBXGroup;
 			children = (
@@ -1815,6 +1850,7 @@
 		D88AFC2A2429106B00F1E6CB /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				D804BF91242A4ED50050AB7D /* ActivityDetail */,
 				D88AFC2B2429106B00F1E6CB /* CustomView */,
 				D88AFC2C2429108B00F1E6CB /* CZActivityListVC.h */,
 				D88AFC2D2429108B00F1E6CB /* CZActivityListVC.m */,
@@ -1825,6 +1861,10 @@
 		D88AFC2B2429106B00F1E6CB /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				D804BF89242A44CB0050AB7D /* CZActivityListTableView.h */,
+				D804BF8A242A44CB0050AB7D /* CZActivityListTableView.m */,
+				D804BF8D242A49460050AB7D /* CZActivityListCell.h */,
+				D804BF8E242A49460050AB7D /* CZActivityListCell.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1914,6 +1954,7 @@
 				53A90CBF2413951100894E9D /* CZCommonInstance.h in Headers */,
 				D88AFC182428FB9F00F1E6CB /* OrganizerDynamicSectionHeaderView.h in Headers */,
 				53AC45E024038F7600521C2F /* DropMenuView.h in Headers */,
+				D804BF8F242A49460050AB7D /* CZActivityListCell.h in Headers */,
 				5320142024057D5E009B78AB /* NSObject+ORM.h in Headers */,
 				537D007024164EEE00C47796 /* CZBoardOrganizerTopCell.h in Headers */,
 				5320141B240576D2009B78AB /* CZHomeModel.h in Headers */,
@@ -1924,6 +1965,7 @@
 				1E8D87922427497A00E09FB2 /* CZBoardProductView.h in Headers */,
 				539484A523FFC5AC00770E99 /* NSArray+MASShorthandAdditions.h in Headers */,
 				537E3D77240A96DF00C080E9 /* CZHotActivityView.h in Headers */,
+				D804BF95242A4EE90050AB7D /* ActivityDetailVC.h in Headers */,
 				539484A923FFC5AC00770E99 /* MASUtilities.h in Headers */,
 				53F8097D240D32B100E44651 /* CZSelectProvinceCell.h in Headers */,
 				53A3F79F241B6AF400E05F81 /* CZAllServiceShoolStarCell.h in Headers */,
@@ -2051,6 +2093,7 @@
 				5359827C2418E4AF00BEA654 /* UIView+cz_anyCorners.h in Headers */,
 				D85A4FAC2410082B003E45F4 /* CZAdvisorDetailBtnView.h in Headers */,
 				D8CD0C1F241531A600B2124C /* CZOrganizerDetailViewController.h in Headers */,
+				D804BF9D242A4F630050AB7D /* ActivityDetailScrollView.h in Headers */,
 				5394844823FFB03400770E99 /* SDWebImageDownloaderOperation.h in Headers */,
 				D8606AC1241A82DD00932421 /* CZOrganizerDiaryHeaderView.h in Headers */,
 				53A90CD72414EBC100894E9D /* CZAllServiceSubViewController.h in Headers */,
@@ -2074,6 +2117,7 @@
 				534C18E8240BD7DE007DD7EC /* CZOrganizerListViewController.h in Headers */,
 				535E5DA024080AED00471453 /* MJRefreshBackNormalFooter.h in Headers */,
 				535E5DA524080AED00471453 /* MJRefreshAutoNormalFooter.h in Headers */,
+				D804BF8B242A44CB0050AB7D /* CZActivityListTableView.h in Headers */,
 				D86B814524193C9A007F1595 /* CZOrganizerProjectVC.h in Headers */,
 				D88685A0241D20AD00B14680 /* CZCommentsListTableView.h in Headers */,
 				D8CD0C23241531D300B2124C /* CZOrganizerDetailCollectionView.h in Headers */,
@@ -2235,7 +2279,9 @@
 				D8CD0C282415325900B2124C /* CZOrganizerDetailHeaderView.m in Sources */,
 				D8CD0C24241531D300B2124C /* CZOrganizerDetailCollectionView.m in Sources */,
 				53F8097A240D329600E44651 /* CZSelectCountryCell.m in Sources */,
+				D804BF9E242A4F630050AB7D /* ActivityDetailScrollView.m in Sources */,
 				537E3D7F240A97B700C080E9 /* CZSchoolStarListView.m in Sources */,
+				D804BF8C242A44CB0050AB7D /* CZActivityListTableView.m in Sources */,
 				537E3D52240A796C00C080E9 /* CZPersonInfoView.m in Sources */,
 				D8C40E7524265ACE00087987 /* AdvisorDynamicPostVC.m in Sources */,
 				D88AFC292429061D00F1E6CB /* OrganizerDynamicPostCell.m in Sources */,
@@ -2248,6 +2294,7 @@
 				539484B023FFC5AC00770E99 /* MASConstraintMaker.m in Sources */,
 				53A90CC52413D15600894E9D /* CZAllServiceViewController.m in Sources */,
 				535E5DB524080AED00471453 /* MJRefreshAutoFooter.m in Sources */,
+				D804BF90242A49460050AB7D /* CZActivityListCell.m in Sources */,
 				538B99672400CBB100D1A093 /* CZCourseModel.m in Sources */,
 				D88685A5241D223E00B14680 /* CZCommentsHeaderView.m in Sources */,
 				535E5DA324080AED00471453 /* MJRefreshBackNormalFooter.m in Sources */,
@@ -2313,6 +2360,7 @@
 				D88AFC1D2428FBDA00F1E6CB /* OrganizerDynamicCell.m in Sources */,
 				5331CAB52407ED4B0069AC92 /* CZSCountryModel.m in Sources */,
 				53B59A362406B79E000C8399 /* CZCarefullyChooseCell.m in Sources */,
+				D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */,
 				5394844B23FFB03400770E99 /* SDWebImageDownloader.m in Sources */,
 				53F80982240D52C300E44651 /* CZSelectCityCell.m in Sources */,
 				5320141C240576D2009B78AB /* CZHomeModel.m in Sources */,

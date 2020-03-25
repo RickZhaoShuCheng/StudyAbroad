@@ -35,7 +35,12 @@
     [cell setModel:self.dataArr[indexPath.row]];
     return cell;
 }
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    if (self.selectedBlock) {
+        self.selectedBlock(@"");
+    }
+}
 
 
 @end
