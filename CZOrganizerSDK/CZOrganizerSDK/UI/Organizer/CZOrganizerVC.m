@@ -88,12 +88,12 @@
         //悬浮
         CGFloat header = baseVc.collectionView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
         //此处需要加上pageMenu的高度
-        if (offsetY < (header - (NaviH+StatusBarHeight+5+PageMenuHeight)) && offsetY >= 0) {
+        if (offsetY < (header - (NaviH+PageMenuHeight)) && offsetY >= 0) {
             //当视图滑动的距离小于header时
             baseVc.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        }else if(baseVc.collectionView.contentOffset.y >= (header - (NaviH+StatusBarHeight+5+PageMenuHeight))){
+        }else if(baseVc.collectionView.contentOffset.y >= (header - (NaviH+PageMenuHeight))){
             //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
-            baseVc.collectionView.contentInset = UIEdgeInsetsMake(NaviH+StatusBarHeight+5+PageMenuHeight, 0, 0, 0);
+            baseVc.collectionView.contentInset = UIEdgeInsetsMake(NaviH+PageMenuHeight, 0, 0, 0);
         }
     }];
 }
@@ -168,7 +168,7 @@
         }
     }
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -(NaviH+StatusBarHeight+5), kScreenWidth,kScreenHeight)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -NaviH, kScreenWidth,kScreenHeight)];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -183,7 +183,7 @@
     if (self.pageMenu.selectedItemIndex < self.myChildViewControllers.count) {
         UIViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
         [self.scrollView addSubview:baseVc.view];
-        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-NaviH-StatusBarHeight-5);
+        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-NaviH);
         self.scrollView.contentOffset = CGPointMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0);
         self.scrollView.contentSize = CGSizeMake(self.titleArr.count*kScreenWidth, 0);
     }
@@ -256,7 +256,7 @@
     if ([targetViewController isViewLoaded]){
         return;
     };
-    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - NaviH - StatusBarHeight - ScreenScale(140) - PageMenuHeight);
+    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH, kScreenWidth, kScreenHeight - NaviH - ScreenScale(140) - PageMenuHeight);
     [self.scrollView addSubview:targetViewController.view];
 }
 

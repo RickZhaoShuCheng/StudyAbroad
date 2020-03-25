@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ActivityDetailVC : UIViewController
-
+@property (nonatomic ,assign) BOOL isEnd;
 @end
 
 NS_ASSUME_NONNULL_END

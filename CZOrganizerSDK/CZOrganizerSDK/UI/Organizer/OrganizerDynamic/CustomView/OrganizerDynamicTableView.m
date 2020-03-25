@@ -55,18 +55,11 @@
     };
     return self.cell;
 }
-//(NaviH+StatusBarHeight+5)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat height = 0.0;
-    
     // 如果是刘海屏
-    if (@available(iOS 11.0, *)) {
-        if (self.superview.safeAreaInsets.bottom > 0) {
-            // do something
-            height = kScreenHeight - ScreenScale(90) - NaviH - StatusBarHeight - 39;
-        }else{
-            height = kScreenHeight - ScreenScale(90) - NaviH;
-        }
+    if (IPHONE_X) {
+        height = kScreenHeight - ScreenScale(90) - NaviH - kBottomSafeHeight;
     }else{
         height = kScreenHeight - ScreenScale(90) - NaviH;
     }
@@ -111,11 +104,11 @@
 //- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 //    //悬浮
 //    CGFloat header = self.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
-//    if (scrollView.contentOffset.y < (header - (NaviH+StatusBarHeight+5)) && scrollView.contentOffset.y >= 0) {
+//    if (scrollView.contentOffset.y < (header - NaviH) && scrollView.contentOffset.y >= 0) {
 //        //当视图滑动的距离小于header时
 //        self.cell.postVC.tableView.scrollEnabled = NO;
 //        self.scrollEnabled = YES;
-//    }else if(scrollView.contentOffset.y >= (header - (NaviH+StatusBarHeight+5))){
+//    }else if(scrollView.contentOffset.y >= (header - NaviH)){
 //        //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
 //        self.cell.postVC.tableView.scrollEnabled = YES;
 //        self.scrollEnabled = NO;

@@ -325,6 +325,10 @@
 		D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */; };
 		D804BF9D242A4F630050AB7D /* ActivityDetailScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */; };
 		D804BF9E242A4F630050AB7D /* ActivityDetailScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */; };
+		D81F469E242B8CD1008C6D85 /* ActivityDetailTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81F469C242B8CD1008C6D85 /* ActivityDetailTableView.h */; };
+		D81F469F242B8CD1008C6D85 /* ActivityDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */; };
+		D81F46A6242B91BF008C6D85 /* ActivityDetailHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */; };
+		D81F46A7242B91BF008C6D85 /* ActivityDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D81F46A5242B91BF008C6D85 /* ActivityDetailHeaderView.m */; };
 		D854099B2411485900A348B5 /* CZAdvisorDetailServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D85409992411485900A348B5 /* CZAdvisorDetailServiceCell.h */; };
 		D854099C2411485900A348B5 /* CZAdvisorDetailServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D854099A2411485900A348B5 /* CZAdvisorDetailServiceCell.m */; };
 		D854099F241151C100A348B5 /* CZAdvisorDetailDiaryCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D854099D241151C100A348B5 /* CZAdvisorDetailDiaryCell.h */; };
@@ -794,6 +798,10 @@
 		D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailVC.m; sourceTree = "<group>"; };
 		D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailScrollView.h; sourceTree = "<group>"; };
 		D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailScrollView.m; sourceTree = "<group>"; };
+		D81F469C242B8CD1008C6D85 /* ActivityDetailTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailTableView.h; sourceTree = "<group>"; };
+		D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailTableView.m; sourceTree = "<group>"; };
+		D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailHeaderView.h; sourceTree = "<group>"; };
+		D81F46A5242B91BF008C6D85 /* ActivityDetailHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailHeaderView.m; sourceTree = "<group>"; };
 		D85409992411485900A348B5 /* CZAdvisorDetailServiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailServiceCell.h; sourceTree = "<group>"; };
 		D854099A2411485900A348B5 /* CZAdvisorDetailServiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailServiceCell.m; sourceTree = "<group>"; };
 		D854099D241151C100A348B5 /* CZAdvisorDetailDiaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailDiaryCell.h; sourceTree = "<group>"; };
@@ -1769,6 +1777,10 @@
 			children = (
 				D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */,
 				D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */,
+				D81F469C242B8CD1008C6D85 /* ActivityDetailTableView.h */,
+				D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */,
+				D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */,
+				D81F46A5242B91BF008C6D85 /* ActivityDetailHeaderView.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -2080,6 +2092,7 @@
 				5394844A23FFB03400770E99 /* SDImageCache.h in Headers */,
 				D8C40E64242649A900087987 /* CZOrganizerSearchCollectionView.h in Headers */,
 				D8CD0C472415354800B2124C /* CZOrganizerDetailEvaluateCell.h in Headers */,
+				D81F46A6242B91BF008C6D85 /* ActivityDetailHeaderView.h in Headers */,
 				539484B523FFC5AC00770E99 /* Masonry.h in Headers */,
 				535E5DB924080AED00471453 /* MJRefreshBackFooter.h in Headers */,
 				539484AA23FFC5AC00770E99 /* MASViewAttribute.h in Headers */,
@@ -2098,6 +2111,7 @@
 				D8606AC1241A82DD00932421 /* CZOrganizerDiaryHeaderView.h in Headers */,
 				53A90CD72414EBC100894E9D /* CZAllServiceSubViewController.h in Headers */,
 				5394843823FFB03400770E99 /* SDCollectionViewCell.h in Headers */,
+				D81F469E242B8CD1008C6D85 /* ActivityDetailTableView.h in Headers */,
 				537E3D59240A8A1A00C080E9 /* CZPersonInfoCell.h in Headers */,
 				535E5D9324080AED00471453 /* UIScrollView+MJExtension.h in Headers */,
 				D8C40E602426411500087987 /* CZOrganizerSearchVC.h in Headers */,
@@ -2286,6 +2300,7 @@
 				D8C40E7524265ACE00087987 /* AdvisorDynamicPostVC.m in Sources */,
 				D88AFC292429061D00F1E6CB /* OrganizerDynamicPostCell.m in Sources */,
 				D854099C2411485900A348B5 /* CZAdvisorDetailServiceCell.m in Sources */,
+				D81F46A7242B91BF008C6D85 /* ActivityDetailHeaderView.m in Sources */,
 				537E3D75240A96DF00C080E9 /* CZHotActivityView.m in Sources */,
 				5359827D2418E4AF00BEA654 /* UIView+cz_anyCorners.m in Sources */,
 				535E5DB424080AED00471453 /* MJRefreshBackFooter.m in Sources */,
@@ -2314,6 +2329,7 @@
 				539484B123FFC5AC00770E99 /* MASLayoutConstraint.m in Sources */,
 				53A90CD82414EBC100894E9D /* CZAllServiceSubViewController.m in Sources */,
 				537E3D5E240A8BC600C080E9 /* CZPersonInfoLocationCell.m in Sources */,
+				D81F469F242B8CD1008C6D85 /* ActivityDetailTableView.m in Sources */,
 				D8CD0C172413E82000B2124C /* JCTagCell.m in Sources */,
 				D8AA192924110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.m in Sources */,
 				539484B823FFC5AC00770E99 /* MASViewConstraint.m in Sources */,

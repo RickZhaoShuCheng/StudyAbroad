@@ -39,12 +39,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-//(NaviH+StatusBarHeight+5)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return ScreenScale(770);
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    NSLog(@"22222----->>%2.f",scrollView.contentOffset.y);
     if (self.scrollContentSize) {
         self.scrollContentSize(scrollView.contentOffset.y);
     }

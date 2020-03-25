@@ -99,7 +99,7 @@
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view.mas_top).offset(-(NaviH+StatusBarHeight+5));
+        make.top.mas_equalTo(self.view.mas_top).offset(-NaviH);
         make.bottom.mas_equalTo(self.view);
     }];
 }

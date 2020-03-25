@@ -31,6 +31,7 @@
     WEAKSELF
     [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
         ActivityDetailVC *detailVC = [[ActivityDetailVC alloc]init];
+        detailVC.isEnd = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }
