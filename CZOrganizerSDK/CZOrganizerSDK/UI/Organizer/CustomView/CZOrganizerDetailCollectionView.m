@@ -89,6 +89,7 @@
         return cell;
     }else if (indexPath.section == 2){
         CZOrganizerDetailAdvisorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailAdvisorCell class]) forIndexPath:indexPath];
+        cell.dataArr = self.model.advisorArray;
         return cell;
     }else if (indexPath.section == 3){
         CZOrganizerDetailDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailDiaryCell class]) forIndexPath:indexPath];
@@ -182,7 +183,7 @@
             header.tagList.hidden = YES;
         }else if (indexPath.section == 2){
             header.titleStr = @"顾问团队";
-            header.contentStr = @"共4个顾问";
+            header.contentStr = [NSString stringWithFormat:@"共%@个顾问",[@([self.model.counselorCount integerValue]) stringValue]];
             header.tagList.hidden = YES;
         }else if (indexPath.section == 3){
             header.titleStr = @"精华日记";

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CZAdvisorModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerDetailAdvisorDetailCell : UICollectionViewCell
-
+@property (nonatomic ,strong) CZAdvisorModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

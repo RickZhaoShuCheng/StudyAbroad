@@ -9,12 +9,27 @@
 #import "CZOrganizerDetailViewController.h"
 #import "CZCommentsListVC.h"
 #import "OrganizerDynamicVC.h"
+#import "QSCommonService.h"
+#import "CZAdvisorDetailService.h"
+#import "CZAdvisorModel.h"
 
 @interface CZOrganizerDetailViewController ()
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
 @end
 
 @implementation CZOrganizerDetailViewController
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self.collectionView.headerView.scrollDynamic stopTimer];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.collectionView.headerView.scrollDynamic startTimer];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.collectionView.headerView.scrollDynamic adjustWhenControllerViewWillAppera];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,18 +88,43 @@
     [weakSelf.collectionView reloadData];
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    [self.collectionView.headerView.scrollDynamic stopTimer];
+- (void)setOrganId:(NSString *)organId{
+    _organId = organId;
+    [self requestForApiProductGetOrganRecommendProduct];
+    [self requestForApiCounselorGetCounselorListByOrganId];
+    [self requestForApiCounselorGetCounselorListByOrganId];
 }
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self.collectionView.headerView.scrollDynamic startTimer];
+/**
+ 获取服务项目
+ */
+- (void)requestForApiProductGetOrganRecommendProduct{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiProductGetOrganRecommendProduct:self.organId pageNum:1 pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CZOrganizerModel *model = [CZOrganizerModel modelWithDict:data];
+                
+            });
+        }
+    }];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.collectionView.headerView.scrollDynamic adjustWhenControllerViewWillAppera];
+/**
+获取顾问
+*/
+- (void)requestForApiCounselorGetCounselorListByOrganId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiCounselorGetCounselorListByOrganId:self.organId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.collectionView.model.advisorArray = data;
+                [weakSelf.collectionView reloadSections:[NSIndexSet indexSetWithIndex:2]];
+            });
+        }
+    }];
 }
+
 /**
  加载UI
  */

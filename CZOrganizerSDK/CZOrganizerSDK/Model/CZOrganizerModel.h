@@ -96,6 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,assign) BOOL introduceOpen;
 @property (nonatomic ,assign) CGFloat introduceHeight;
 @property (nonatomic ,assign) CGFloat singleHeight;
+@property (nonatomic ,strong) NSMutableArray *advisorArray;
 @end
 
 NS_ASSUME_NONNULL_END

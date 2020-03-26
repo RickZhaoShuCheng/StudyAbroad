@@ -16,6 +16,8 @@ static const NSString *ApiCounselorGetCounselorDetails = @"apiCounselor/getCouns
 static const NSString *ApiProductGetCounselorRecommendProduct = @"apiProduct/getCounselorRecommendProduct";
 static const NSString *ApiDiaryFindCaseListByFilter = @"apiDiary/findCaseListByFilter";
 static const NSString *ApiObjectCommentsFindComments = @"apiObjectComments/findComments";
+static const NSString *ApiProductGetOrganRecommendProduct = @"apiProduct/getOrganRecommendProduct";
+static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/getCounselorListByOrganId";
 
 @implementation CZAdvisorDetailService
 /**
@@ -181,6 +183,109 @@ static const NSString *ApiObjectCommentsFindComments = @"apiObjectComments/findC
     }];
 }
 
+/**
+ *获取机构下的服务项目
+ *organId 机构id
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiProductGetOrganRecommendProduct:(NSString *)organId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductGetOrganRecommendProduct];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"organId":organId,
+                                 @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
+                                 @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+/**
+ *获取机构下的顾问
+ *organId 机构id
+ */
+-(void)requestForApiCounselorGetCounselorListByOrganId:(NSString *)organId callBack:(CZAdvisorDetailBack)callBack{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiCounselorGetCounselorListByOrganId];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"organId":organId,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
 /**
  *获取评价
  *commentsType 1.机构 2.顾问 3.达人 4.商品

@@ -27,5 +27,4 @@
 {
     return @{@"comments":@"CZCommentModel"};
 }
-
 @end

@@ -126,6 +126,7 @@
                 
                 CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
                 baseVc.collectionView.model = model;
+                baseVc.organId = model.organId;
             });
         }
     }];

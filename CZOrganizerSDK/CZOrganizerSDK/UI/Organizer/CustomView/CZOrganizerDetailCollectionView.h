@@ -11,6 +11,7 @@
 #import "CZOrganizerDetailCollectionHeadView.h"
 #import "CZOrganizerDetailCollectionFooterView.h"
 #import "CZOrganizerModel.h"
+#import "CZAdvisorModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateArr;
 @property (nonatomic ,strong) CZOrganizerModel *model;
+@property (nonatomic ,strong) CZAdvisorModel *advisorModel;
 @property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
 @property (nonatomic ,copy) dispatch_block_t clickDynamicBlock;
 /**

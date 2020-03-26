@@ -23,11 +23,12 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 8;
+    return self.dataArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZOrganizerDetailAdvisorDetailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailAdvisorDetailCell class]) forIndexPath:indexPath];
+    cell.model = [CZAdvisorModel modelWithDict:self.dataArr[indexPath.row]];
     return cell;
 }
 

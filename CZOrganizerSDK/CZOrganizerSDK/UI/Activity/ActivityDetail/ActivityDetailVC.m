@@ -22,10 +22,13 @@
 @property (nonatomic ,strong) UIButton *serviceBtn;
 @property (nonatomic ,strong) UIButton *cartBtn;
 @property (nonatomic ,strong) UILabel *cartCountLab;
-
-
+@property (nonatomic ,strong) UIButton *addCartBtn;
+@property (nonatomic ,strong) UIButton *buyBtn;
 
 @property (nonatomic ,strong) UIView *freeBottomView;
+@property (nonatomic ,strong) UIButton *chatBtn;
+@property (nonatomic ,strong) UIButton *applyBtn;
+
 @end
 
 @implementation ActivityDetailVC
@@ -156,63 +159,6 @@
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
   
-    self.bottomView = [[UIView alloc]init];
-    self.bottomView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:self.bottomView];
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.bottom.trailing.mas_equalTo(self.view);
-        // 如果是刘海屏
-        if (IPHONE_X) {
-            make.height.mas_equalTo(ScreenScale(100) + kBottomSafeHeight);
-        }else{
-            make.height.mas_equalTo(ScreenScale(100));
-        }
-    }];
-    
-    self.serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.serviceBtn setBackgroundColor:[UIColor yellowColor]];
-    [self.serviceBtn setTitle:@"客服" forState:UIControlStateNormal];
-    [self.serviceBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.serviceBtn setTitleColor:CZColorCreater(9, 9, 9, 1) forState:UIControlStateNormal];
-    [self.serviceBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(22)]];
-    [self.serviceBtn setImage:[CZImageProvider imageNamed:@"kefu"] forState:UIControlStateNormal];
-    [self.serviceBtn setImageEdgeInsets:UIEdgeInsetsMake(-ScreenScale(40), ScreenScale(25), 0, 0)];
-    [self.serviceBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(40), -ScreenScale(20), 0)];
-    [self.bottomView addSubview:self.serviceBtn];
-    [self.serviceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.top.mas_equalTo(self.bottomView);
-        make.width.mas_equalTo(ScreenScale(124));
-        make.height.mas_equalTo(ScreenScale(100));
-    }];
-    
-    self.cartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.cartBtn setTitle:@"购物车" forState:UIControlStateNormal];
-    [self.cartBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.cartBtn setTitleColor:CZColorCreater(9, 9, 9, 1) forState:UIControlStateNormal];
-    [self.cartBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(22)]];
-    [self.cartBtn setImage:[CZImageProvider imageNamed:@"gouwuche"] forState:UIControlStateNormal];
-    [self.bottomView addSubview:self.cartBtn];
-    [self.cartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.bottomView);
-        make.width.mas_equalTo(ScreenScale(124));
-        make.leading.mas_equalTo(self.serviceBtn.mas_trailing);
-        make.height.mas_equalTo(ScreenScale(100));
-    }];
-    
-    self.cartCountLab = [[UILabel alloc]init];
-    self.cartCountLab.font = [UIFont systemFontOfSize:ScreenScale(20)];
-    self.cartCountLab.textColor = CZColorCreater(255, 255, 255, 1);
-    self.cartCountLab.text = @"12";
-    self.cartCountLab.textAlignment = NSTextAlignmentCenter;
-    self.cartCountLab.layer.masksToBounds = YES;
-    self.cartCountLab.layer.cornerRadius = ScreenScale(30)/2.0;
-    self.cartCountLab.backgroundColor = CZColorCreater(255, 68, 85, 1);
-    [self.cartBtn addSubview:self.cartCountLab];
-    [self.cartCountLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.top.mas_equalTo(self.cartBtn);
-        make.size.mas_equalTo(ScreenScale(30));
-    }];
-    
 }
 
 - (void)setIsEnd:(BOOL)isEnd{
@@ -227,11 +173,17 @@
             make.top.mas_equalTo(self.view.mas_top).offset(-NaviH);
             // 如果是刘海屏
             if (IPHONE_X) {
-                make.bottom.mas_equalTo(self.view.mas_bottom).offset(-(ScreenScale(100) + kBottomSafeHeight));
+                make.bottom.mas_equalTo(self.view.mas_bottom).offset(kBottomSafeHeight);
             }else{
-                make.bottom.mas_equalTo(self.view.mas_bottom).offset(-ScreenScale(100));
+                make.bottom.mas_equalTo(self.view.mas_bottom);
             }
         }];
+        if (_bottomView) {
+            [self.bottomView removeFromSuperview];
+        }
+        if (_freeBottomView) {
+            [self.freeBottomView removeFromSuperview];
+        }
     }else{
         if (_tableView) {
             [self.tableView removeFromSuperview];
@@ -247,7 +199,157 @@
                 make.bottom.mas_equalTo(self.view.mas_bottom).offset(-ScreenScale(100));
             }
         }];
+//        [self addBottomView];
+        [self addFreeBottomView];
     }
+}
+/**
+ * 添加免费底部view
+ */
+- (void)addFreeBottomView{
+    self.freeBottomView = [[UIView alloc]init];
+    self.freeBottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.freeBottomView];
+    [self.freeBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.bottom.trailing.mas_equalTo(self.view);
+        // 如果是刘海屏
+        if (IPHONE_X) {
+            make.height.mas_equalTo(ScreenScale(100) + kBottomSafeHeight);
+        }else{
+            make.height.mas_equalTo(ScreenScale(100));
+        }
+    }];
+    
+    self.chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.chatBtn setTitle:@"咨询" forState:UIControlStateNormal];
+    [self.chatBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
+    [self.chatBtn setTitleColor:CZColorCreater(0, 0, 0, 1) forState:UIControlStateNormal];
+    [self.chatBtn setBackgroundColor:CZColorCreater(255, 255, 255, 1)];
+    [self.chatBtn setImage:[CZImageProvider imageNamed:@"kefu"] forState:UIControlStateNormal];
+    [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(20), 0, 0)];
+    [self.freeBottomView addSubview:self.chatBtn];
+    [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.freeBottomView.mas_leading);
+        make.top.mas_equalTo(self.freeBottomView);
+        make.height.mas_equalTo(ScreenScale(100));
+        make.width.mas_equalTo(kScreenWidth/2.0);
+    }];
+    
+    self.applyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.applyBtn setTitle:@"报名" forState:UIControlStateNormal];
+    [self.applyBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
+    [self.applyBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.applyBtn setBackgroundColor:CZColorCreater(76, 182, 253, 1)];
+    [self.freeBottomView addSubview:self.applyBtn];
+    [self.applyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.chatBtn.mas_trailing);
+        make.top.mas_equalTo(self.freeBottomView);
+        make.height.mas_equalTo(ScreenScale(100));
+        make.width.mas_equalTo(kScreenWidth/2.0);
+    }];
+}
+
+/**
+ * 添加付费底部view
+ */
+- (void)addBottomView{
+    self.bottomView = [[UIView alloc]init];
+    self.bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.bottom.trailing.mas_equalTo(self.view);
+        // 如果是刘海屏
+        if (IPHONE_X) {
+            make.height.mas_equalTo(ScreenScale(100) + kBottomSafeHeight);
+        }else{
+            make.height.mas_equalTo(ScreenScale(100));
+        }
+    }];
+    
+    self.serviceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.serviceBtn setBackgroundColor:[UIColor whiteColor]];
+    [self.serviceBtn setTitle:@"客服" forState:UIControlStateNormal];
+    [self.serviceBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.serviceBtn setTitleColor:CZColorCreater(9, 9, 9, 1) forState:UIControlStateNormal];
+    [self.serviceBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(22)]];
+    [self.serviceBtn setImage:[CZImageProvider imageNamed:@"kefu"] forState:UIControlStateNormal];
+    [self.serviceBtn setImageEdgeInsets:UIEdgeInsetsMake(-ScreenScale(30), ScreenScale(45), 0, 0)];
+    [self.serviceBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(35), -ScreenScale(35), 0)];
+    [self.bottomView addSubview:self.serviceBtn];
+    [self.serviceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.top.mas_equalTo(self.bottomView);
+        make.width.mas_equalTo(ScreenScale(124));
+        make.height.mas_equalTo(ScreenScale(100));
+    }];
+    
+    self.cartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.cartBtn setTitle:@"购物车" forState:UIControlStateNormal];
+    [self.cartBtn setBackgroundColor:[UIColor whiteColor]];
+    [self.cartBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.cartBtn setTitleColor:CZColorCreater(9, 9, 9, 1) forState:UIControlStateNormal];
+    [self.cartBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(22)]];
+    [self.cartBtn setImage:[CZImageProvider imageNamed:@"gouwuche"] forState:UIControlStateNormal];
+    [self.cartBtn setImageEdgeInsets:UIEdgeInsetsMake(-ScreenScale(30), ScreenScale(44), 0, 0)];
+    [self.cartBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(35), -ScreenScale(35), 0)];
+    [self.bottomView addSubview:self.cartBtn];
+    [self.cartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.bottomView);
+        make.width.mas_equalTo(ScreenScale(124));
+        make.leading.mas_equalTo(self.serviceBtn.mas_trailing);
+        make.height.mas_equalTo(ScreenScale(100));
+    }];
+    
+    UILabel *line = [[UILabel alloc]init];
+    line.text = @"";
+    line.backgroundColor = CZColorCreater(241, 241, 241, 1);
+    [self.bottomView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.bottomView);
+        make.height.mas_equalTo(ScreenScale(100));
+        make.leading.mas_equalTo(self.serviceBtn.mas_trailing);
+        make.width.mas_equalTo(ScreenScale(1));
+    }];
+    
+    self.cartCountLab = [[UILabel alloc]init];
+    self.cartCountLab.font = [UIFont systemFontOfSize:ScreenScale(20)];
+    self.cartCountLab.textColor = CZColorCreater(255, 255, 255, 1);
+    self.cartCountLab.text = @"12";
+    self.cartCountLab.textAlignment = NSTextAlignmentCenter;
+    self.cartCountLab.layer.masksToBounds = YES;
+    self.cartCountLab.layer.cornerRadius = ScreenScale(30)/2.0;
+    self.cartCountLab.backgroundColor = CZColorCreater(255, 68, 85, 1);
+    [self.cartBtn addSubview:self.cartCountLab];
+    [self.cartCountLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.cartBtn.mas_top).offset(ScreenScale(5));
+        make.size.mas_equalTo(ScreenScale(30));
+        make.trailing.mas_equalTo(self.cartBtn.mas_trailing).offset(-ScreenScale(30));
+    }];
+    
+    self.addCartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.addCartBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
+    [self.addCartBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
+    [self.addCartBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.addCartBtn setBackgroundColor:CZColorCreater(137, 144, 166, 0.8)];
+    [self.bottomView addSubview:self.addCartBtn];
+    [self.addCartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.cartBtn.mas_trailing);
+        make.top.mas_equalTo(self.bottomView);
+        make.height.mas_equalTo(ScreenScale(100));
+        make.width.mas_equalTo((kScreenWidth-ScreenScale(124)*2)/2.0);
+    }];
+    
+    self.buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+    [self.buyBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
+    [self.buyBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.buyBtn setBackgroundColor:CZColorCreater(255, 68, 85, 1)];
+    [self.bottomView addSubview:self.buyBtn];
+    [self.buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.addCartBtn.mas_trailing);
+        make.top.mas_equalTo(self.bottomView);
+        make.height.mas_equalTo(ScreenScale(100));
+        make.width.mas_equalTo((kScreenWidth-ScreenScale(124)*2)/2.0);
+    }];
 }
 
 - (ActivityDetailScrollView *)scrollView{
