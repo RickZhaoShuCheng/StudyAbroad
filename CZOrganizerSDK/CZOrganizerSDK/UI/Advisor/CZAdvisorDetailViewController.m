@@ -86,6 +86,11 @@
         [weakSelf requestForApiDiaryFindCaseListByFilter:index+1];
     }];
     
+    //评价筛选
+    [self.collectionView setSelectCommentIndex:^(NSInteger index) {
+        [weakSelf requestForApiObjectCommentsFindComments:index+1];
+    }];
+    
     //滚动时设置导航条透明度
     [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
         //设置渐变透明度
@@ -151,6 +156,8 @@
              dispatch_async(dispatch_get_main_queue(), ^{
                  
                  CZAdvisorInfoModel *model = [CZAdvisorInfoModel modelWithDict:data];
+//                 [model.dynamicVoList addObject:@{@"smdImgs":@"1582631546241.png,1582631546242.png,1582631546243.png"}];
+//                 [model.dynamicVoList addObject:@{@"smdImgs":@"1582631546241.png,1582631546242.png,1582631546243.png"}];
 //                 model.keywords = @"哈哈哈,askdh,卡对接开发,按时肯定会焚枯食淡,askdh,卡对接开发,按时肯定会焚枯食淡";
                  weakSelf.collectionView.model = model;
                  weakSelf.titleLab.text = model.counselorName;
@@ -207,7 +214,7 @@
                 weakSelf.collectionView.model.filterComment = data[@"filterComment"];
                 weakSelf.collectionView.model.commentList = data[@"list"];
                 weakSelf.collectionView.model.commentsCount = data[@"totalSize"];
-                [weakSelf.collectionView setDiaryFilter:weakSelf.collectionView.model.filterComment];
+                [weakSelf.collectionView setCommentFilter:weakSelf.collectionView.model.filterComment];
                 [weakSelf.collectionView reloadData];
             });
         }

@@ -230,7 +230,7 @@
     UILabel *detailTitle = [[UILabel alloc]init];
     detailTitle.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     detailTitle.textColor = CZColorCreater(0, 0, 0, 1);
-    detailTitle.text = @"活动场次";
+    detailTitle.text = @"活动详情";
     [self addSubview:detailTitle];
     [detailTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
@@ -263,7 +263,8 @@
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
     CGFloat contentHeight = self.webView.scrollView.contentSize.height;
-    self.contentSize = CGSizeMake(kScreenWidth, kScreenHeight + contentHeight);
+    
+    self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + contentHeight);
     [self.webView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(contentHeight);
     }];

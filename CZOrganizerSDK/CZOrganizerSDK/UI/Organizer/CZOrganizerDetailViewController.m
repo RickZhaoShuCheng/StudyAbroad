@@ -11,7 +11,7 @@
 #import "OrganizerDynamicVC.h"
 #import "QSCommonService.h"
 #import "CZAdvisorDetailService.h"
-#import "CZAdvisorModel.h"
+#import "CZProductVoListModel.h"
 
 @interface CZOrganizerDetailViewController ()
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
@@ -56,13 +56,22 @@
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];
-    
+    //点击动态
     [self.collectionView setClickDynamicBlock:^{
         OrganizerDynamicVC *dynamic = [[OrganizerDynamicVC alloc]init];
         dynamic.model = weakSelf.collectionView.model;
         [weakSelf.navigationController pushViewController:dynamic animated:YES];
     }];
     
+    //日记筛选
+    [self.collectionView setSelectDiaryIndex:^(NSInteger index) {
+        [weakSelf requestForApiDiaryFindCaseListByFilter:index+1];
+    }];
+    
+    //评价筛选
+    [self.collectionView setSelectCommentIndex:^(NSInteger index) {
+        [weakSelf requestForApiObjectCommentsFindComments:index+1];
+    }];
     //测试评价图片
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     NSMutableArray *tempArr = [NSMutableArray array];
@@ -90,9 +99,10 @@
 
 - (void)setOrganId:(NSString *)organId{
     _organId = organId;
+    [self requestForApiCounselorGetCounselorListByOrganId];
     [self requestForApiProductGetOrganRecommendProduct];
-    [self requestForApiCounselorGetCounselorListByOrganId];
-    [self requestForApiCounselorGetCounselorListByOrganId];
+    [self requestForApiDiaryFindCaseListByFilter:1];
+    [self requestForApiObjectCommentsFindComments:1];
 }
 /**
  获取服务项目
@@ -103,8 +113,13 @@
     [service requestForApiProductGetOrganRecommendProduct:self.organId pageNum:1 pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                CZOrganizerModel *model = [CZOrganizerModel modelWithDict:data];
-                
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in data) {
+                    CZProductVoListModel *model = [CZProductVoListModel modelWithDict:dic];
+                    [array addObject:model];
+                }
+                weakSelf.collectionView.model.productVoList = array;
+                [weakSelf.collectionView reloadData];
             });
         }
     }];
@@ -119,12 +134,48 @@
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.collectionView.model.advisorArray = data;
-                [weakSelf.collectionView reloadSections:[NSIndexSet indexSetWithIndex:2]];
+                [weakSelf.collectionView reloadData];
             });
         }
     }];
 }
 
+/**
+ 获取日记
+ */
+- (void)requestForApiDiaryFindCaseListByFilter:(NSInteger)index{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiDiaryFindCaseListByFilter:@"1" idStr:self.organId filterSum:index pageNum:1 pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.collectionView.model.filterDiary = data[@"filterDiary"];
+                weakSelf.collectionView.model.diaryVoList = data[@"data"];
+                weakSelf.collectionView.model.diaryCount = data[@"totalSize"];
+                [weakSelf.collectionView setDiaryFilter:weakSelf.collectionView.model.filterDiary];
+                [weakSelf.collectionView reloadData];
+            });
+        }
+    }];
+}
+/**
+ 获取评价
+ */
+- (void)requestForApiObjectCommentsFindComments:(NSInteger)index{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiObjectCommentsFindComments:@"1" idStr:self.organId filterSum:index pageNum:1 pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+       if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.collectionView.model.filterComment = data[@"filterComment"];
+                weakSelf.collectionView.model.commentList = data[@"list"];
+                weakSelf.collectionView.model.commentsCount = data[@"totalSize"];
+                [weakSelf.collectionView setCommentFilter:weakSelf.collectionView.model.filterComment];
+                [weakSelf.collectionView reloadData];
+            });
+        }
+    }];
+}
 /**
  加载UI
  */

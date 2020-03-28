@@ -26,7 +26,7 @@
         self.delegate = self;
         self.dataSource = self;
         self.alwaysBounceVertical = YES;
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = CZColorCreater(245, 245, 249, 1);
         self.showsVerticalScrollIndicator = NO;
         [self registerClass:[CZAdvisorDetailEvaluateCell class] forCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailEvaluateCell class])];
         [self registerClass:[CZAdvisorDetailServiceCell class] forCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailServiceCell class])];
@@ -53,13 +53,6 @@
         self.headerView.bgImg.frame = frame;
     }
     
-    NSMutableArray *filterCommentArr = [NSMutableArray array];
-    if (model.filterComment.length) {
-        [filterCommentArr addObjectsFromArray:[model.filterComment componentsSeparatedByString:@","]];
-    }
-    [self.evaluateFilterArr removeAllObjects];
-    [self.evaluateFilterArr addObjectsFromArray:filterCommentArr];
-    
     [self reloadData];
 }
 //设置日记筛选项
@@ -70,6 +63,16 @@
     }
     [self.diaryFilterArr removeAllObjects];
     [self.diaryFilterArr addObjectsFromArray:filterDiaryArr];
+}
+
+//设置评价筛选项
+- (void)setCommentFilter:(NSString *)filterStr{
+    NSMutableArray *filterCommentArr = [NSMutableArray array];
+    if (filterStr.length) {
+        [filterCommentArr addObjectsFromArray:[filterStr componentsSeparatedByString:@","]];
+    }
+    [self.evaluateFilterArr removeAllObjects];
+    [self.evaluateFilterArr addObjectsFromArray:filterCommentArr];
 }
 
 
@@ -189,9 +192,9 @@
     }else if (section == 3){
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100) + [self getSectionHeaderHeight:self.evaluateFilterArr]);
     }else{
-        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
-            return CGSizeMake(0, 0);
-        }
+//        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
+//            return CGSizeMake(0, 0);
+//        }
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100));
     }
 }
@@ -200,16 +203,19 @@
     if (section == 0) {
         return CGSizeZero;
     }else if (section == 1){
-        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0 || [self.model.productCount integerValue] <= 4) {
+        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
             return CGSizeMake(0, 0);
         }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else if (section == 2){
-//        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0 || [self.model.diaryCount integerValue] <= 4) {
-//            return CGSizeMake(0, 0);
-//        }
+        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else{
+        if ([self.model.commentList isKindOfClass:[NSString class]] || self.model.commentList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }
 }
@@ -247,13 +253,13 @@
                     weakSelf.clickAllBlock(indexPath.section);
                 }
             };
-            header.titleStr = @"精华日记";
-            [header setTags:self.diaryFilterArr];
             [header.tagList didSelectItem:^(NSInteger index) {
                 if (weakSelf.selectDiaryIndex) {
                     weakSelf.selectDiaryIndex(index);
                 }
             }];
+            header.titleStr = @"精华日记";
+            [header setTags:self.diaryFilterArr];
             return header;
         }else{
             CZAdvisorDetailCollectionHeadView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"evaluateHeader" forIndexPath:indexPath];
@@ -262,6 +268,11 @@
                     weakSelf.clickAllBlock(indexPath.section);
                 }
             };
+            [header.tagList didSelectItem:^(NSInteger index) {
+                if (weakSelf.selectCommentIndex) {
+                    weakSelf.selectCommentIndex(index);
+                }
+            }];
             header.titleStr = @"优秀评价";
             [header setTags:self.evaluateFilterArr];
             return header;
@@ -277,12 +288,12 @@
         if (indexPath.section == 0) {
             return nil;
         }else if (indexPath.section == 1){
-            footer.titleStr = [NSString stringWithFormat:@"查看全部%@个商品",[@([self.model.productCount integerValue]) stringValue]];
+            footer.titleStr = [NSString stringWithFormat:@"查看全部%lu个商品",(unsigned long)self.model.productVoList.count];
             footer.backgroundColor = CZColorCreater(245, 245, 249, 1);
             footer.lineView.hidden = YES;
         }else if (indexPath.section == 2){
             footer.titleStr = @"查看全部日记";
-            footer.backgroundColor = CZColorCreater(255, 255, 255, 1);
+            footer.backgroundColor = CZColorCreater(245, 245, 249, 1);
             footer.lineView.hidden = NO;
         }else{
             footer.titleStr = @"查看全部评价";

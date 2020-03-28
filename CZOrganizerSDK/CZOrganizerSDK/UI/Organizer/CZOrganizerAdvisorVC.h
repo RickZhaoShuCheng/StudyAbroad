@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerAdvisorVC : UIViewController
-
+@property (nonatomic ,strong) NSString *organId;
 @end
 
 NS_ASSUME_NONNULL_END

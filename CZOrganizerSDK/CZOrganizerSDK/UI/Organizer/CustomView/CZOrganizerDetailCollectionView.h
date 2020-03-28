@@ -29,6 +29,18 @@ NS_ASSUME_NONNULL_BEGIN
  * 滚动值
  */
 @property (nonatomic,copy) void (^scrollContentSize)(CGFloat offsetY);
+/**
+ * 选择日记筛选index
+ */
+@property (nonatomic,copy) void (^selectDiaryIndex)(NSInteger index);
+/**
+ * 选择评价筛选index
+ */
+@property (nonatomic,copy) void (^selectCommentIndex)(NSInteger index);
+//设置日记筛选项
+- (void)setDiaryFilter:(NSString *)filterStr;
+//设置评价筛选项
+- (void)setCommentFilter:(NSString *)filterStr;
 @end
 
 NS_ASSUME_NONNULL_END

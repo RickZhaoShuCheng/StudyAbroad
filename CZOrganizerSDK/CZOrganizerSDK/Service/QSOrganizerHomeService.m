@@ -454,6 +454,9 @@ static const NSString *ApiProductGetPublicPraiseList = @"apiProduct/getPublicPra
  *organId 机构id
  */
 -(void)requestForApiOrganGetOrganDetails:(NSString *)organId callBack:(QSOrganizerHomeBack)callBack{
+    if (!organId) {
+        return;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiOrganGetOrganDetails];
     NSURL *url = [NSURL URLWithString:urlString];

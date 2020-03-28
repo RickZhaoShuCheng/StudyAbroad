@@ -25,6 +25,9 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
  *counselorId 顾问id
  */
 -(void)requestForApiCounselorGetCounselorDetails:(NSString *)counselorId callBack:(CZAdvisorDetailBack)callBack{
+    if (!counselorId) {
+        return;;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiCounselorGetCounselorDetails];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -76,6 +79,9 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
  *pageSize 数
  */
 -(void)requestForApiProductGetCounselorRecommendProduct:(NSString *)counselorId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    if (!counselorId) {
+        return;;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductGetCounselorRecommendProduct];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -133,6 +139,9 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
  *pageSize 数
  */
 -(void)requestForApiDiaryFindCaseListByFilter:(NSString *)caseType idStr:(NSString *)idStr filterSum:(NSInteger)filterSum pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    if (!idStr) {
+        return;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiDiaryFindCaseListByFilter];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -190,6 +199,9 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
  *pageSize 数
  */
 -(void)requestForApiProductGetOrganRecommendProduct:(NSString *)organId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    if (!organId) {
+        return;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductGetOrganRecommendProduct];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -242,6 +254,9 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
  *organId 机构id
  */
 -(void)requestForApiCounselorGetCounselorListByOrganId:(NSString *)organId callBack:(CZAdvisorDetailBack)callBack{
+    if (!organId) {
+        return;;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiCounselorGetCounselorListByOrganId];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -295,6 +310,9 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
  *pageSize 数
  */
 -(void)requestForApiObjectCommentsFindComments:(NSString *)commentsType idStr:(NSString *)idStr filterSum:(NSInteger)filterSum pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    if (!idStr) {
+        return;;
+    }
     NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiObjectCommentsFindComments];
     NSURL *url = [NSURL URLWithString:urlString];

@@ -27,9 +27,21 @@
     }
     return self;
 }
+- (void)setModel:(CZProductVoListModel *)model{
+    _model = model;
+    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    self.countLab.text = [NSString stringWithFormat:@"%@人付款",[@([model.payCount integerValue]) stringValue]];
+    self.addressLab.text = model.organName;
+    self.titleLab.text = model.title;
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",[@([model.price integerValue]) stringValue]]];
+    [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 1)];
+    [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(1, str.length-1)];
+    self.priceLab.attributedText = str;
+}
 - (void)initWithUI{
     
-    self.backgroundColor = CZColorCreater(245, 245, 249, 1);
+    self.contentView.backgroundColor = CZColorCreater(245, 245, 249, 1);
     
     self.bgView = [[UIView alloc]init];
     self.bgView.backgroundColor = [UIColor whiteColor];

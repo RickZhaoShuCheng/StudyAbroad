@@ -97,6 +97,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,assign) CGFloat introduceHeight;
 @property (nonatomic ,assign) CGFloat singleHeight;
 @property (nonatomic ,strong) NSMutableArray *advisorArray;
+@property (nonatomic ,strong) NSMutableArray *productVoList;
+@property (nonatomic ,strong) NSMutableArray *diaryVoList;
+@property (nonatomic ,strong) NSMutableArray *commentList;
+@property (nonatomic ,strong) NSString *filterDiary;
+@property (nonatomic ,strong) NSString *filterComment;
 @end
 
 NS_ASSUME_NONNULL_END

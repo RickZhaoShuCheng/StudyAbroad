@@ -22,6 +22,11 @@
     return self;
 }
 
+- (void)setDataArr:(NSMutableArray *)dataArr{
+    _dataArr = dataArr;
+    [self.collectionView reloadData];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.dataArr.count;
 }

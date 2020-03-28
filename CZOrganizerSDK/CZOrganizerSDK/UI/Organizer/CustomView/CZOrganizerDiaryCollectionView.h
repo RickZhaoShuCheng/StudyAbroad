@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZOrganizerDiaryCollectionView : UICollectionView
 @property (nonatomic ,strong) CZOrganizerDiaryHeaderView *headerView;
 - (void)setTagListTags:(NSMutableArray *)tagsArr;
+@property (nonatomic ,strong) NSMutableArray *dataArr;
 @end
 
 NS_ASSUME_NONNULL_END

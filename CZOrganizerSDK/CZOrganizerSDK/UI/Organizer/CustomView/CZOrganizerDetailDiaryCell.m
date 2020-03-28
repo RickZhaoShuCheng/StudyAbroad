@@ -27,6 +27,20 @@
     }
     return self;
 }
+
+- (void)setModel:(CZDiaryModel *)model{
+    _model = model;
+    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.smdMainImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.countLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+    self.titleLab.text = model.diaryTitle;
+    self.tipsLab.text = [NSString stringWithFormat:@"#%@",model.topicTitle];
+    self.schoolLab.text = @"莫那什大学留学 | 1篇日记";
+    self.schoolLab.text = [NSString stringWithFormat:@"%@留学 | %@篇日记",model.schoolName,[@([model.diaryCount integerValue]) stringValue]];
+}
+
 - (void)initWithUI{
     self.backgroundColor = [UIColor whiteColor];
     

@@ -18,9 +18,17 @@
     if (self) {
         [self initWithUI];
         self.backgroundColor = [UIColor whiteColor];
-        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011"] placeholderImage:nil];
     }
     return self;
+}
+
+- (void)setModel:(CZDiaryModel *)model{
+    _model = model;
+    NSMutableArray *imgArr = [NSMutableArray array];
+    if (model.smdImgs.length) {
+        [imgArr addObjectsFromArray:[model.smdImgs componentsSeparatedByString:@","]];
+    }
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(imgArr[0])] placeholderImage:nil];
 }
 
 - (void)initWithUI{
