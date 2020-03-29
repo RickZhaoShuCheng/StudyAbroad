@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerAdvisorTableView : UITableView
-
+@property (nonatomic ,strong) NSMutableArray *dataArr;
 @end
 
 NS_ASSUME_NONNULL_END

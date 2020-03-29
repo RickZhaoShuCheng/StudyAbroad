@@ -325,6 +325,8 @@
 		D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */; };
 		D804BF9D242A4F630050AB7D /* ActivityDetailScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */; };
 		D804BF9E242A4F630050AB7D /* ActivityDetailScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */; };
+		D80B06CA2430C73E00B4AB27 /* NSDate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D80B06C82430C73E00B4AB27 /* NSDate+Utils.m */; };
+		D80B06CB2430C73E00B4AB27 /* NSDate+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = D80B06C92430C73E00B4AB27 /* NSDate+Utils.h */; };
 		D81F469E242B8CD1008C6D85 /* ActivityDetailTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81F469C242B8CD1008C6D85 /* ActivityDetailTableView.h */; };
 		D81F469F242B8CD1008C6D85 /* ActivityDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */; };
 		D81F46A6242B91BF008C6D85 /* ActivityDetailHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */; };
@@ -798,6 +800,8 @@
 		D804BF94242A4EE90050AB7D /* ActivityDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailVC.m; sourceTree = "<group>"; };
 		D804BF9B242A4F630050AB7D /* ActivityDetailScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailScrollView.h; sourceTree = "<group>"; };
 		D804BF9C242A4F630050AB7D /* ActivityDetailScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailScrollView.m; sourceTree = "<group>"; };
+		D80B06C82430C73E00B4AB27 /* NSDate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utils.m"; sourceTree = "<group>"; };
+		D80B06C92430C73E00B4AB27 /* NSDate+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utils.h"; sourceTree = "<group>"; };
 		D81F469C242B8CD1008C6D85 /* ActivityDetailTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailTableView.h; sourceTree = "<group>"; };
 		D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailTableView.m; sourceTree = "<group>"; };
 		D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailHeaderView.h; sourceTree = "<group>"; };
@@ -1251,6 +1255,8 @@
 		535FFFF023FFE559003463B0 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				D80B06C92430C73E00B4AB27 /* NSDate+Utils.h */,
+				D80B06C82430C73E00B4AB27 /* NSDate+Utils.m */,
 				5320141E24057D5E009B78AB /* NSObject+ORM.h */,
 				5320141D24057D5E009B78AB /* NSObject+ORM.m */,
 				535FFFF523FFE5EC003463B0 /* UIColor+PureColorImage.h */,
@@ -2027,6 +2033,7 @@
 				D88AFC2E2429108B00F1E6CB /* CZActivityListVC.h in Headers */,
 				5394845D23FFB03400770E99 /* SDWebImageCompat.h in Headers */,
 				5394845523FFB03400770E99 /* SDWebImageDecoder.h in Headers */,
+				D80B06CB2430C73E00B4AB27 /* NSDate+Utils.h in Headers */,
 				53A90CB3241378A100894E9D /* CZCommonFilterManager.h in Headers */,
 				5331CAB02407EC0D0069AC92 /* CZCountryModel.h in Headers */,
 				D88AFC202429059D00F1E6CB /* OrganizerDynamicPostVC.h in Headers */,
@@ -2419,6 +2426,7 @@
 				1E18BF992424FAA800A62312 /* CZBoardSchoolStarNormalCell.m in Sources */,
 				5394846123FFB03400770E99 /* SPPageMenu.m in Sources */,
 				D85A4FAD2410082B003E45F4 /* CZAdvisorDetailBtnView.m in Sources */,
+				D80B06CA2430C73E00B4AB27 /* NSDate+Utils.m in Sources */,
 				534C18E3240BC636007DD7EC /* CZOrganizerModel.m in Sources */,
 				538B99622400CB6400D1A093 /* CZCourseView.m in Sources */,
 				537E3D5A240A8A1A00C080E9 /* CZPersonInfoCell.m in Sources */,

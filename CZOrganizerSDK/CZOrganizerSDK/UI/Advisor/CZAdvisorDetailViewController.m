@@ -14,6 +14,7 @@
 #import "CZCommentsListVC.h"
 #import "CZOrganizerVC.h"
 #import "AdvisorDynamicVC.h"
+#import "CZCommentsDetailVC.h"
 
 @interface CZAdvisorDetailViewController ()
 @property (nonatomic ,strong)CZAdvisorDetailCollectionView *collectionView;
@@ -62,6 +63,8 @@
         }else if (index == 3){
             //优秀评价
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
+            commentsList.idStr = weakSelf.counselorId;
+            commentsList.commentsType = @"2";
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];
@@ -89,6 +92,13 @@
     //评价筛选
     [self.collectionView setSelectCommentIndex:^(NSInteger index) {
         [weakSelf requestForApiObjectCommentsFindComments:index+1];
+    }];
+    
+    //点击评价
+    [self.collectionView setSelectCommentBlock:^(CZCommentModel * _Nonnull model) {
+        CZCommentsDetailVC *detailVC = [[CZCommentsDetailVC alloc]init];
+        detailVC.idStr = model.socId;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     
     //滚动时设置导航条透明度

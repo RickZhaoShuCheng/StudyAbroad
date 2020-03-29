@@ -7,7 +7,8 @@
 //
 
 #import "CZCommentsDetailOneCell.h"
-
+#import "UIImageView+WebCache.h"
+#import "NSDate+Utils.h"
 @interface CZCommentsDetailOneCell()
 @property (nonatomic ,strong) UIImageView *avatarImg;
 @property (nonatomic ,strong) UILabel *nameLab;
@@ -15,22 +16,70 @@
 @property (nonatomic ,strong) UILabel *timeLab;
 @property (nonatomic ,strong) UILabel *countLab;
 @property (nonatomic ,strong) UIImageView *likeImg;
+@property (nonatomic ,strong) NSMutableArray *picsArr;
 @end
 @implementation CZCommentsDetailOneCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.picsArr = [NSMutableArray array];
         [self initWithUI];
     }
     return self;
+}
+- (void)setModel:(CZCommentModel *)model{
+    _model = model;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    self.contentLab.text = model.comment;
+    self.countLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+    self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
+    NSMutableArray *imgsArr = [NSMutableArray array];
+    if (model.imgs.length) {
+        [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
+    }
+    [self.picsArr removeAllObjects];
+    self.picsArr = imgsArr;
+}
+
+- (void)setPicsArr:(NSMutableArray *)picsArr{
+    _picsArr = picsArr;
+    [self loadPicsImg];
+}
+
+//加载图片
+- (void)loadPicsImg{
+    WEAKSELF
+    if (self.picsArr.count > 0) {
+        [self.picsArr enumerateObjectsUsingBlock:^(NSString *  _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIImageView *pic = [[UIImageView alloc]init];
+            pic.tag = idx + 500;
+            [pic sd_setImageWithURL:[NSURL URLWithString:PIC_URL(url)] placeholderImage:nil];
+            [weakSelf.contentView addSubview:pic];
+            [pic mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.leading.mas_equalTo(weakSelf.contentLab.mas_leading).offset(idx%3 * (ScreenScale(193.5)+ScreenScale(10)));
+                make.top.mas_equalTo(weakSelf.contentLab.mas_bottom).offset(ScreenScale(20)+idx/3 *(ScreenScale(193.5)+ScreenScale(10)));
+                make.size.mas_equalTo(ScreenScale(193.5));
+            }];
+        }];
+    }else{
+        NSMutableArray *pic = [NSMutableArray array];
+        [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isMemberOfClass:[UIImageView class]] && obj.tag >= 500) {
+                [pic addObject:obj];
+            }
+        }];
+        [pic enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj removeFromSuperview];
+        }];
+    }
 }
 /**
  * 初始化UI
  */
 - (void)initWithUI{
     self.avatarImg = [[UIImageView alloc]init];
-    self.avatarImg.backgroundColor = [UIColor redColor];
     self.avatarImg.layer.masksToBounds = YES;
     self.avatarImg.layer.cornerRadius = ScreenScale(70)/2.0;
     [self.contentView addSubview:self.avatarImg];
@@ -43,7 +92,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.nameLab.textColor = CZColorCreater(32, 32, 32, 1);
-    self.nameLab.text = @"最甜的芥末";
+    self.nameLab.text = @"-";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
@@ -55,7 +104,7 @@
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.contentLab.textColor = CZColorCreater(0, 0, 0, 1);
-    self.contentLab.text = @"沙发";
+    self.contentLab.text = @"-";
     [self.contentView addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
@@ -67,7 +116,7 @@
     self.timeLab = [[UILabel alloc]init];
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.timeLab.textColor = CZColorCreater(159, 159, 178, 1);
-    self.timeLab.text = @"2天前";
+    self.timeLab.text = @"-";
     [self.contentView addSubview:self.timeLab];
     [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(20));
@@ -77,7 +126,7 @@
     
     self.countLab = [[UILabel alloc]init];
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
-    self.countLab.text = @"8";
+    self.countLab.text = @"-";
     self.countLab.textColor = CZColorCreater(150, 150, 171, 1);
     self.countLab.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:self.countLab];

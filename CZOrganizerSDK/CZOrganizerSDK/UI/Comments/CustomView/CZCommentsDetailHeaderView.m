@@ -13,7 +13,7 @@
 #import "CZCommentsDetailHeaderView.h"
 #import "UIImageView+WebCache.h"
 #import "CZRankView.h"
-
+#import "NSDate+Utils.h"
 
 @interface CZCommentsDetailHeaderView()<SDCycleScrollViewDelegate>
 @property (nonatomic ,strong) UILabel *imgCountLab;
@@ -39,10 +39,31 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self initWithUI];
-        [self.avatarView sd_setImageWithURL:[NSURL URLWithString:@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011"] placeholderImage:nil];
         [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:@"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1782152781,1392496249&fm=26&gp=0.jpg"] placeholderImage:nil];
     }
     return self;
+}
+
+- (void)setModel:(CZCommentModel *)model{
+    _model = model;
+    NSMutableArray *imgsArr = [NSMutableArray array];
+    NSMutableArray *imgUrlArr = [NSMutableArray array];
+    if (model.imgs.length) {
+        [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
+    }
+    [imgsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [imgUrlArr addObject:PIC_URL(obj)];
+    }];
+    [self setImgArr:imgUrlArr];
+    
+    [self.avatarView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    [self.rankView setRankByRate:[model.valStar floatValue]];
+    self.evaluateLab.text = [NSString stringWithFormat:@"专业度: %.1f  服务: %.1f  价格: %.1f",[model.valMajor floatValue],[model.valService floatValue],[model.valPrice floatValue]];
+    self.contentLab.text = model.comment;
+    self.browseLab.text = [NSString stringWithFormat:@"%@人已看",[@([model.visitCount integerValue]) stringValue]];
+    self.countLab.text = [NSString stringWithFormat:@"%@条",[@([model.replyCount integerValue]) stringValue]];
+    self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
 }
 
 - (void)setImgArr:(NSMutableArray *)imgArr{
@@ -93,13 +114,13 @@
     self.browseLab = [[UILabel alloc]init];
     self.browseLab.textColor = CZColorCreater(159, 159, 178, 1);
     self.browseLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
-    self.browseLab.text = @"浏览1522";
+    self.browseLab.text = @"浏览-";
     [self addSubview:self.browseLab];
     
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.textColor = CZColorCreater(32, 32, 32, 1);
     self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(26)];
-    self.nameLab.text = @"百世可乐";
+    self.nameLab.text = @"-";
     [self addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarView.mas_trailing).offset(ScreenScale(20));
@@ -117,7 +138,7 @@
     self.timeLab = [[UILabel alloc]init];
     self.timeLab.textColor = CZColorCreater(159, 159, 178, 1);
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
-    self.timeLab.text = @"6小时前";
+    self.timeLab.text = @"-";
     [self addSubview:self.timeLab];
     [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarView.mas_trailing).offset(ScreenScale(20));
@@ -128,7 +149,7 @@
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.textColor = CZColorCreater(51, 51, 51, 1);
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
-    self.contentLab.text = @"力学课内全部内容及相关自招考试内容掌握热学电学的基础内容，培养完整的抽象思维方式";
+    self.contentLab.text = @"-";
     self.contentLab.numberOfLines = 0;
     [self addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,7 +187,7 @@
     self.evaluateLab = [[UILabel alloc]init];
     self.evaluateLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.evaluateLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.evaluateLab.text = @"专业度: 4.9  服务: 4.9  价格: 4.9";
+    self.evaluateLab.text = @"专业度: -  服务: -  价格: -";
     [self addSubview:self.evaluateLab];
     [self.evaluateLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
@@ -270,7 +291,7 @@
     self.countLab = [[UILabel alloc]init];
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.countLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.countLab.text = @"9条";
+    self.countLab.text = @"-条";
     [self addSubview:self.countLab];
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(allCommentsLab.mas_trailing).offset(ScreenScale(16));

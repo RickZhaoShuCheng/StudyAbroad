@@ -12,6 +12,7 @@
 #import "QSCommonService.h"
 #import "CZAdvisorDetailService.h"
 #import "CZProductVoListModel.h"
+#import "CZCommentsDetailVC.h"
 
 @interface CZOrganizerDetailViewController ()
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
@@ -53,6 +54,8 @@
         }else if (index == 4){
             //优秀评价
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
+            commentsList.idStr = weakSelf.organId;
+            commentsList.commentsType = @"1";
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];
@@ -72,29 +75,12 @@
     [self.collectionView setSelectCommentIndex:^(NSInteger index) {
         [weakSelf requestForApiObjectCommentsFindComments:index+1];
     }];
-    //测试评价图片
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    NSMutableArray *tempArr = [NSMutableArray array];
-    [tempArr addObject:@"http://pic1.win4000.com/wallpaper/c/57ad6e8f410eb.jpg"];
-    [tempArr addObject:@"http://up.enterdesk.com/edpic/c3/84/b0/c384b0e8f05432c78c72f8d0cd1ab9ac.jpg"];
-    [dic setValue:tempArr forKey:@"pics"];
-    
-    NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
-    NSMutableArray *tempArr1 = [NSMutableArray array];
-    [tempArr1 addObject:@"http://uploadfile.bizhizu.cn/2015/0720/20150720033105173.jpg.source.jpg"];
-    [tempArr1 addObject:@"http://pic1.win4000.com/wallpaper/2018-10-12/5bc00af5751a2.jpg"];
-    [tempArr1 addObject:@"http://uploadfile.bizhizu.cn/2015/0720/20150720033105173.jpg.source.jpg"];
-    [tempArr1 addObject:@"http://pic1.win4000.com/wallpaper/2018-10-12/5bc00af5751a2.jpg"];
-    [dic1 setValue:tempArr1 forKey:@"pics"];
-    
-    NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
-    NSMutableArray *tempArr2 = [NSMutableArray array];
-    [dic2 setValue:tempArr2 forKey:@"pics"];
-               
-    [weakSelf.collectionView.evaluateArr addObject:dic];
-    [weakSelf.collectionView.evaluateArr addObject:dic1];
-    [weakSelf.collectionView.evaluateArr addObject:dic2];
-    [weakSelf.collectionView reloadData];
+    //点击评价
+    [self.collectionView setSelectCommentBlock:^(CZCommentModel * _Nonnull model) {
+        CZCommentsDetailVC *detailVC = [[CZCommentsDetailVC alloc]init];
+        detailVC.idStr = model.socId;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    }];
 }
 
 - (void)setOrganId:(NSString *)organId{

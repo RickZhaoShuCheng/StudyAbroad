@@ -12,6 +12,7 @@
 #import "CZOrganizerDetailCollectionFooterView.h"
 #import "CZOrganizerModel.h"
 #import "CZAdvisorModel.h"
+#import "CZCommentModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,assign)CGFloat tagListHeight;
 @property (nonatomic ,strong)NSMutableArray *diaryFilterArr;
 @property (nonatomic ,strong)NSMutableArray *evaluateFilterArr;
-@property (nonatomic ,strong)NSMutableArray *evaluateArr;
 @property (nonatomic ,strong) CZOrganizerModel *model;
 @property (nonatomic ,strong) CZAdvisorModel *advisorModel;
 @property (nonatomic ,copy) void (^clickAllBlock)(NSInteger index);
@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 选择评价筛选index
  */
 @property (nonatomic,copy) void (^selectCommentIndex)(NSInteger index);
+//点击评价
+@property (nonatomic ,copy) void (^selectCommentBlock)(CZCommentModel *model);
 //设置日记筛选项
 - (void)setDiaryFilter:(NSString *)filterStr;
 //设置评价筛选项

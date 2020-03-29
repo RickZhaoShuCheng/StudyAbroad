@@ -10,6 +10,8 @@
 #import "CZOrganizerAdvisorVC.h"
 #import "CZOrganizerAdvisorTableView.h"
 #import "CZMJRefreshHelper.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
 
 @interface CZOrganizerAdvisorVC ()
 @property (nonatomic ,strong) CZOrganizerAdvisorTableView *tableView;
@@ -22,10 +24,29 @@
     [self initWithUI];
     WEAKSELF
     self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf requestForApiCounselorGetCounselorListByOrganId];
     }];
-    self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+//    self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        
+//    }];
+    [self requestForApiCounselorGetCounselorListByOrganId];
+}
+
+/**
+获取顾问
+*/
+- (void)requestForApiCounselorGetCounselorListByOrganId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiCounselorGetCounselorListByOrganId:self.title callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView.dataArr removeAllObjects];
+                [weakSelf.tableView.dataArr addObjectsFromArray:data];
+                [weakSelf.tableView reloadData];
+                [weakSelf.tableView.mj_header endRefreshing];
+            });
+        }
     }];
 }
 

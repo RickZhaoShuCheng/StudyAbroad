@@ -9,6 +9,7 @@
 #import "CZAdvisorDetailEvaluateCell.h"
 #import "CZRankView.h"
 #import "UIImageView+WebCache.h"
+#import "NSDate+Utils.h"
 
 @interface CZAdvisorDetailEvaluateCell()
 @property (nonatomic, strong)UIImageView *avatarImg;
@@ -45,6 +46,7 @@
     self.lookLab.text = [NSString stringWithFormat:@"%@人已看",[@([model.visitCount integerValue]) stringValue]];
     self.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.replyCount integerValue]) stringValue]];
     self.likeLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+    self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
     NSMutableArray *imgsArr = [NSMutableArray array];
     if (model.imgs.length) {
         [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
@@ -92,7 +94,7 @@
     self.timeLab = [[UILabel alloc]init];
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.timeLab.textColor = CZColorCreater(159, 159, 178, 1);
-    self.timeLab.text = @"6小时前";
+    self.timeLab.text = @"-";
     [self.contentView addSubview:self.timeLab];
     [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
@@ -104,7 +106,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.nameLab.textColor = CZColorCreater(32, 32, 32, 1);
-    self.nameLab.text = @"百事可乐";
+    self.nameLab.text = @"-";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(18));
@@ -113,7 +115,7 @@
         make.trailing.mas_equalTo (self.timeLab.mas_leading).offset(ScreenScale(20)).priorityLow();
     }];
     
-    self.rankView = [CZRankView instanceRankViewByRate:3.1];
+    self.rankView = [CZRankView instanceRankViewByRate:0.0];
     [self.contentView addSubview:self.rankView];
     [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(ScreenScale(150));
@@ -141,7 +143,7 @@
     self.evaluateLab = [[UILabel alloc]init];
     self.evaluateLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.evaluateLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.evaluateLab.text = @"专业度: 4.9  服务: 4.9  价格: 4.9";
+    self.evaluateLab.text = @"专业度: -  服务: -  价格: -";
     [self.contentView addSubview:self.evaluateLab];
     [self.evaluateLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.nameLab.mas_leading);
@@ -153,7 +155,7 @@
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.contentLab.textColor = CZColorCreater(51, 51, 51, 1);
-    self.contentLab.text = @"力学课内全部内容及相关自招考试内容。掌握热学电学的基础内容，培养完整的抽象思维方式";
+    self.contentLab.text = @"-";
     self.contentLab.numberOfLines = 0;
     [self.contentView addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,7 +168,7 @@
     self.lookLab = [[UILabel alloc]init];
     self.lookLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.lookLab.textColor = CZColorCreater(159, 159, 178, 1);
-    self.lookLab.text = @"1522人已看";
+    self.lookLab.text = @"-人已看";
     [self.contentView addSubview:self.lookLab];
     [self.lookLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.nameLab.mas_leading);
@@ -177,7 +179,7 @@
     self.likeLab = [[UILabel alloc]init];
     self.likeLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.likeLab.textColor = CZColorCreater(150, 150, 171, 1);
-    self.likeLab.text = @"1522";
+    self.likeLab.text = @"-";
     [self.contentView addSubview:self.likeLab];
     [self.likeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(24));
@@ -198,7 +200,7 @@
     self.commentLab = [[UILabel alloc]init];
     self.commentLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.commentLab.textColor = CZColorCreater(150, 150, 171, 1);
-    self.commentLab.text = @"1522";
+    self.commentLab.text = @"-";
     [self.contentView addSubview:self.commentLab];
     [self.commentLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.likeImg.mas_leading).offset(-ScreenScale(70));

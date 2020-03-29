@@ -22,7 +22,6 @@
         self.tagListHeight = 0.0;
         self.diaryFilterArr = [NSMutableArray array];
         self.evaluateFilterArr = [NSMutableArray array];
-        self.evaluateArr = [NSMutableArray array];
         self.delegate = self;
         self.dataSource = self;
         self.alwaysBounceVertical = YES;
@@ -160,22 +159,23 @@
     }else if (indexPath.section == 3){
         return CGSizeMake(kScreenWidth/2.0, ScreenScale(690));
     }
-#warning 图片高度没算，最多支持6张图片，有机会再优化，缺少内容高度，需动态计算
-
+#warning 图片高度没算，最多支持6张图片，有机会再优化
     CZCommentModel *model = [CZCommentModel modelWithDict:self.model.commentList[indexPath.row]];
+    CGFloat height = [self getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(142)];
+    model.commentHeight = height;
     NSMutableArray *imgsArr = [NSMutableArray array];
     if (model.imgs.length) {
         [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
     }
     if ([imgsArr count] == 0) {
         //无图片
-        return CGSizeMake(kScreenWidth, ScreenScale(330));
+        return CGSizeMake(kScreenWidth, ScreenScale(280) + model.commentHeight);
     }else if ([imgsArr count] <= 3) {
         //1-3张
-        return CGSizeMake(kScreenWidth, ScreenScale(550));
+        return CGSizeMake(kScreenWidth, ScreenScale(500) + model.commentHeight);
     }else{
         //4-6张
-        return CGSizeMake(kScreenWidth, ScreenScale(750));
+        return CGSizeMake(kScreenWidth, ScreenScale(700) + model.commentHeight);
     }
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
@@ -186,6 +186,14 @@
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 0;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 4) {
+        if (self.selectCommentBlock) {
+            self.selectCommentBlock([CZCommentModel modelWithDict:self.model.commentList[indexPath.row]]);
+        }
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -335,5 +343,17 @@
         self.scrollContentSize(scrollView.contentOffset.y);
     }
 }
+- (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
+    // 设置文字属性 要和label的一致
+    NSDictionary *attrs = @{NSFontAttributeName :font};
+    CGSize maxSize = CGSizeMake(width, MAXFLOAT);
 
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
+    // 计算文字占据的宽高
+    CGSize size = [text boundingRectWithSize:maxSize options:options attributes:attrs context:nil].size;
+
+   // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
+    return  ceilf(size.height);
+}
 @end
