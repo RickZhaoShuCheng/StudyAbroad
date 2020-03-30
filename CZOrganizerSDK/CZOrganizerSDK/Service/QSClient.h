@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIViewController *)instanceWebViewByOptions:(NSDictionary *)options;
 
+-(UIViewController *)instanceProductDetailVCByOptions:(NSDictionary *)options;
+
 @end
 
 @interface QSClient : NSObject
@@ -47,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)showCartInNavi:(UINavigationController *)controller;
 +(UIViewController *)instanceDiaryViewControllerByParam:(CZHomeParam *)param;
 +(UIViewController *)instanceWebViewByOptions:(NSDictionary *)options;
++(UIViewController *)instanceProductDetailVCByOptions:(NSDictionary *)options;
 @end
 
 NS_ASSUME_NONNULL_END

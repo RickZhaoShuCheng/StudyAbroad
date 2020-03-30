@@ -8,6 +8,7 @@
 
 #import "CZCarefullyChooseView.h"
 #import "CZCarefullyChooseCell.h"
+#import "QSClient.h"
 
 @interface CZCarefullyChooseView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -34,6 +35,14 @@
     CZCarefullyChooseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZCarefullyChooseCell class]) forIndexPath:indexPath];
     [cell setModel:self.dataArr[indexPath.row]];
     return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CZProductModel *model = self.dataArr[indexPath.row];
+    UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+    prodDetailVC.hidesBottomBarWhenPushed = YES;
+    [self.currentVC.navigationController pushViewController:prodDetailVC animated:YES];
 }
 
 -(NSMutableArray *)dataArr
