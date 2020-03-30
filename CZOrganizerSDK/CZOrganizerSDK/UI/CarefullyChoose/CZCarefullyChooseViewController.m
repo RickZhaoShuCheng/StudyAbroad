@@ -57,6 +57,7 @@
         self.contentScrollView = self.dataCollectionView;
     }
     self.dataCollectionView.alwaysBounceVertical = YES;
+    self.dataCollectionView.currentVC = self;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
         make.left.right.mas_equalTo(0);

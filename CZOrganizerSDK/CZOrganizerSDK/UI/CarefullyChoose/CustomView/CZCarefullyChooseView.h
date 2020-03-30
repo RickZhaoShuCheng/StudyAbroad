@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSMutableArray *dataArr;
 
+@property (nonatomic, assign) UIViewController *currentVC;
+
 @end
 
 NS_ASSUME_NONNULL_END

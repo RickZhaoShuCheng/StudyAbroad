@@ -17,6 +17,8 @@
 		1E18BFA52424FBD800A62312 /* CZBoardSchoolStarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BFA32424FBD800A62312 /* CZBoardSchoolStarViewController.m */; };
 		1E18BFA82424FE2600A62312 /* CZBoardSchoolStarProductView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BFA62424FE2600A62312 /* CZBoardSchoolStarProductView.h */; };
 		1E18BFA92424FE2600A62312 /* CZBoardSchoolStarProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BFA72424FE2600A62312 /* CZBoardSchoolStarProductView.m */; };
+		1E2C6BE524322D190006A0DE /* CZCustomFilterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E2C6BE324322D190006A0DE /* CZCustomFilterView.h */; };
+		1E2C6BE624322D190006A0DE /* CZCustomFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E2C6BE424322D190006A0DE /* CZCustomFilterView.m */; };
 		1E8D878A2427494500E09FB2 /* CZBoardProductTopCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8D87882427494500E09FB2 /* CZBoardProductTopCell.h */; };
 		1E8D878B2427494500E09FB2 /* CZBoardProductTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D87892427494500E09FB2 /* CZBoardProductTopCell.m */; };
 		1E8D878F2427495C00E09FB2 /* CZBoardProductNormalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D878D2427495C00E09FB2 /* CZBoardProductNormalCell.m */; };
@@ -486,6 +488,8 @@
 		1E18BFA32424FBD800A62312 /* CZBoardSchoolStarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarViewController.m; sourceTree = "<group>"; };
 		1E18BFA62424FE2600A62312 /* CZBoardSchoolStarProductView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarProductView.h; sourceTree = "<group>"; };
 		1E18BFA72424FE2600A62312 /* CZBoardSchoolStarProductView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarProductView.m; sourceTree = "<group>"; };
+		1E2C6BE324322D190006A0DE /* CZCustomFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZCustomFilterView.h; sourceTree = "<group>"; };
+		1E2C6BE424322D190006A0DE /* CZCustomFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZCustomFilterView.m; sourceTree = "<group>"; };
 		1E8D87882427494500E09FB2 /* CZBoardProductTopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardProductTopCell.h; sourceTree = "<group>"; };
 		1E8D87892427494500E09FB2 /* CZBoardProductTopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardProductTopCell.m; sourceTree = "<group>"; };
 		1E8D878D2427495C00E09FB2 /* CZBoardProductNormalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardProductNormalCell.m; sourceTree = "<group>"; };
@@ -1343,6 +1347,8 @@
 				53A90CBA2413924100894E9D /* CZLastFilterView.m */,
 				53A90CBD2413951100894E9D /* CZCommonInstance.h */,
 				53A90CBE2413951100894E9D /* CZCommonInstance.m */,
+				1E2C6BE324322D190006A0DE /* CZCustomFilterView.h */,
+				1E2C6BE424322D190006A0DE /* CZCustomFilterView.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2070,6 +2076,7 @@
 				537E3D94240AB65000C080E9 /* CZAdvisorView.h in Headers */,
 				537E3D55240A7F4300C080E9 /* CZRankView.h in Headers */,
 				5331CAB42407ED4B0069AC92 /* CZSCountryModel.h in Headers */,
+				1E2C6BE524322D190006A0DE /* CZCustomFilterView.h in Headers */,
 				D8CD0C00241295FA00B2124C /* CZAdvisorDetailCollectionFooterView.h in Headers */,
 				539484A723FFC5AC00770E99 /* View+MASAdditions.h in Headers */,
 				D8CD0BFC24128AE500B2124C /* CZAdvisorDetailEvaluateCell.h in Headers */,
@@ -2386,6 +2393,7 @@
 				D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */,
 				5394844B23FFB03400770E99 /* SDWebImageDownloader.m in Sources */,
 				53F80982240D52C300E44651 /* CZSelectCityCell.m in Sources */,
+				1E2C6BE624322D190006A0DE /* CZCustomFilterView.m in Sources */,
 				5320141C240576D2009B78AB /* CZHomeModel.m in Sources */,
 				1E8D878B2427494500E09FB2 /* CZBoardProductTopCell.m in Sources */,
 				535E5DAA24080AED00471453 /* MJRefreshNormalHeader.m in Sources */,
