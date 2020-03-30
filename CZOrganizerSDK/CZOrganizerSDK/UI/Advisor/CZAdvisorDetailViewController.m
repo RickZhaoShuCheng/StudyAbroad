@@ -14,6 +14,7 @@
 #import "CZCommentsListVC.h"
 #import "CZOrganizerVC.h"
 #import "AdvisorDynamicVC.h"
+#import "CZCommentsDetailVC.h"
 
 @interface CZAdvisorDetailViewController ()
 @property (nonatomic ,strong)CZAdvisorDetailCollectionView *collectionView;
@@ -62,6 +63,8 @@
         }else if (index == 3){
             //优秀评价
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
+            commentsList.idStr = weakSelf.counselorId;
+            commentsList.commentsType = @"2";
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];
@@ -84,6 +87,18 @@
     //日记筛选
     [self.collectionView setSelectDiaryIndex:^(NSInteger index) {
         [weakSelf requestForApiDiaryFindCaseListByFilter:index+1];
+    }];
+    
+    //评价筛选
+    [self.collectionView setSelectCommentIndex:^(NSInteger index) {
+        [weakSelf requestForApiObjectCommentsFindComments:index+1];
+    }];
+    
+    //点击评价
+    [self.collectionView setSelectCommentBlock:^(CZCommentModel * _Nonnull model) {
+        CZCommentsDetailVC *detailVC = [[CZCommentsDetailVC alloc]init];
+        detailVC.idStr = model.socId;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     
     //滚动时设置导航条透明度
@@ -112,12 +127,12 @@
         
         //悬浮
         CGFloat header = weakSelf.collectionView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
-        if (offsetY < (header - (NaviH+StatusBarHeight+5)) && offsetY >= 0) {
+        if (offsetY < (header - NaviH) && offsetY >= 0) {
             //当视图滑动的距离小于header时
             weakSelf.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        }else if(weakSelf.collectionView.contentOffset.y >= (header - (NaviH+StatusBarHeight+5))){
+        }else if(weakSelf.collectionView.contentOffset.y >= (header - NaviH)){
             //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
-        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(NaviH+StatusBarHeight+5, 0, 0, 0);
+        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(NaviH, 0, 0, 0);
         }
     }];
 }
@@ -151,6 +166,8 @@
              dispatch_async(dispatch_get_main_queue(), ^{
                  
                  CZAdvisorInfoModel *model = [CZAdvisorInfoModel modelWithDict:data];
+//                 [model.dynamicVoList addObject:@{@"smdImgs":@"1582631546241.png,1582631546242.png,1582631546243.png"}];
+//                 [model.dynamicVoList addObject:@{@"smdImgs":@"1582631546241.png,1582631546242.png,1582631546243.png"}];
 //                 model.keywords = @"哈哈哈,askdh,卡对接开发,按时肯定会焚枯食淡,askdh,卡对接开发,按时肯定会焚枯食淡";
                  weakSelf.collectionView.model = model;
                  weakSelf.titleLab.text = model.counselorName;
@@ -207,7 +224,7 @@
                 weakSelf.collectionView.model.filterComment = data[@"filterComment"];
                 weakSelf.collectionView.model.commentList = data[@"list"];
                 weakSelf.collectionView.model.commentsCount = data[@"totalSize"];
-                [weakSelf.collectionView setDiaryFilter:weakSelf.collectionView.model.filterComment];
+                [weakSelf.collectionView setCommentFilter:weakSelf.collectionView.model.filterComment];
                 [weakSelf.collectionView reloadData];
             });
         }
@@ -273,7 +290,7 @@
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.edges.mas_equalTo(self.view);
         make.leading.trailing.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view.mas_top).offset(-(NaviH+StatusBarHeight+5));
+        make.top.mas_equalTo(self.view.mas_top).offset(-NaviH);
         make.bottom.mas_equalTo(bottomView.mas_top);
     }];
 

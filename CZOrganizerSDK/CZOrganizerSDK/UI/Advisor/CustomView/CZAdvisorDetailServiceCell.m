@@ -43,7 +43,7 @@
 
 - (void)initWithUI{
     
-    self.backgroundColor = CZColorCreater(245, 245, 249, 1);
+    self.contentView.backgroundColor = CZColorCreater(245, 245, 249, 1);
     
     self.bgView = [[UIView alloc]init];
     self.bgView.backgroundColor = [UIColor whiteColor];

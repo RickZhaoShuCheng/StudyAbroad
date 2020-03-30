@@ -34,7 +34,7 @@
 @property (nonatomic ,strong)UIImageView *locationImg;
 @property (nonatomic ,strong)UIView *dynamicView;
 @property (nonatomic ,strong)UICollectionView *collectionView;
-
+@property (nonatomic ,strong) UIButton *notDataBtn;
 @end
 @implementation CZAdvisorDetailHeaderView
 
@@ -80,11 +80,14 @@
         [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
     }
     [self setTags:keyArr];
-//    if (model.dynamicVoList.count == 0) {
-//        self.dynamicView.hidden = YES;
-//    }else{
-        self.dynamicView.hidden = NO;
-//    }
+    if (model.dynamicVoList.count == 0) {
+        self.collectionView.hidden = YES;
+        self.notDataBtn.hidden = NO;
+    }else{
+        self.collectionView.hidden = NO;
+        self.notDataBtn.hidden = YES;
+        [self.collectionView reloadData];
+    }
     
 }
 
@@ -122,6 +125,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     CZAdvisorDetailHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderCell class]) forIndexPath:indexPath];
+    cell.model = [CZDiaryModel modelWithDict:self.model.dynamicVoList[indexPath.row]];
     return cell;
 }
 
@@ -159,7 +163,7 @@
     [self.VImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(-ScreenScale(18));
         make.centerX.mas_equalTo(self.avatarImg);
-        make.width.mas_equalTo(ScreenScale(100));
+        make.width.mas_equalTo(ScreenScale(80));
         make.height.mas_equalTo(ScreenScale(36));
     }];
     
@@ -365,7 +369,6 @@
     
     self.dynamicView = [[UIView alloc]init];
     self.dynamicView.backgroundColor = [UIColor whiteColor];
-    self.dynamicView.hidden = YES;
     self.dynamicView.userInteractionEnabled = YES;
     [self.dynamicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dynamicViewClick)]];
     [self addSubview:self.dynamicView];
@@ -418,6 +421,21 @@
         make.centerY.mas_equalTo(self.dynamicView);
         make.top.bottom.mas_equalTo(self.dynamicView);
         make.trailing.mas_equalTo(arrowImg.mas_leading).offset(-ScreenScale(18));
+    }];
+    
+    self.notDataBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.notDataBtn setTitle:@"暂无动态" forState:UIControlStateNormal];
+    [self.notDataBtn setTitleColor:CZColorCreater(153, 153, 153, 1) forState:UIControlStateNormal];
+    [self.notDataBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
+    [self.notDataBtn setImage:[CZImageProvider imageNamed:@"guwen_chazhao"] forState:UIControlStateNormal];
+    [self.notDataBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, ScreenScale(20), 0, 0 )];
+    self.notDataBtn.enabled = NO;
+    [self.dynamicView addSubview:self.notDataBtn];
+    [self.notDataBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(titleLab.mas_trailing).offset(ScreenScale(28));
+        make.centerY.mas_equalTo(self.dynamicView);
+        make.width.mas_equalTo(ScreenScale(200));
+        make.height.mas_equalTo(ScreenScale(50));
     }];
 }
 @end

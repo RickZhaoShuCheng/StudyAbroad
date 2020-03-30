@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) NSNumber *valService;
 @property (nonatomic ,strong) NSNumber *valStar;
 @property (nonatomic ,strong) NSNumber *visitCount;
+@property (nonatomic ,assign) CGFloat commentHeight;
+@property (nonatomic ,assign) NSInteger level;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCommentsDetailTableView : UITableView
 @property (nonatomic ,strong) CZCommentsDetailHeaderView *headerView;
+@property (nonatomic ,strong) NSMutableArray *dataArr;
 /**
  * 滚动值
  */

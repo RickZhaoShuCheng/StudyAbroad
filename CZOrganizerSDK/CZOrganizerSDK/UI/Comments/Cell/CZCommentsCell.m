@@ -9,6 +9,7 @@
 #import "CZCommentsCell.h"
 #import "CZRankView.h"
 #import "UIImageView+WebCache.h"
+#import "NSDate+Utils.h"
 
 @interface CZCommentsCell()
 @property (nonatomic, strong)UIImageView *avatarImg;
@@ -34,6 +35,26 @@
     }
     return self;
 }
+- (void)setModel:(CZCommentModel *)model{
+    _model = model;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    [self.rankView setRankByRate:[model.valStar floatValue]];
+    self.evaluateLab.text = [NSString stringWithFormat:@"专业度: %.1f  服务: %.1f  价格: %.1f",[model.valMajor floatValue],[model.valService floatValue],[model.valPrice floatValue]];
+    self.contentLab.text = model.comment;
+    self.lookLab.text = [NSString stringWithFormat:@"%@人已看",[@([model.visitCount integerValue]) stringValue]];
+    self.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.replyCount integerValue]) stringValue]];
+    self.likeLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+    self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
+    NSMutableArray *imgsArr = [NSMutableArray array];
+    if (model.imgs.length) {
+        [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
+    }
+    [self.picsArr removeAllObjects];
+    self.picsArr = imgsArr;
+    
+}
+
 - (void)setPicsArr:(NSMutableArray *)picsArr{
     _picsArr = picsArr;
     [self loadPicsImg];
@@ -41,11 +62,12 @@
 
 //加载图片
 - (void)loadPicsImg{
-    if (self.picsArr.count>0) {
-        WEAKSELF
+    WEAKSELF
+    if (self.picsArr.count > 0) {
         [self.picsArr enumerateObjectsUsingBlock:^(NSString *  _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
             UIImageView *pic = [[UIImageView alloc]init];
-            [pic sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
+            pic.tag = idx + 500;
+            [pic sd_setImageWithURL:[NSURL URLWithString:PIC_URL(url)] placeholderImage:nil];
             [weakSelf.contentView addSubview:pic];
             [pic mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.leading.mas_equalTo(weakSelf.contentLab.mas_leading).offset(idx%3 * (ScreenScale(193.5)+ScreenScale(10)));
@@ -53,15 +75,22 @@
                 make.size.mas_equalTo(ScreenScale(193.5));
             }];
         }];
-        
+    }else{
+        NSMutableArray *pic = [NSMutableArray array];
+        [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isMemberOfClass:[UIImageView class]] && obj.tag >= 500) {
+                [pic addObject:obj];
+            }
+        }];
+        [pic enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj removeFromSuperview];
+        }];
     }
 }
-
 - (void)initWithUI{
     self.backgroundColor = CZColorCreater(255, 255, 255, 1);
     
     self.avatarImg = [[UIImageView alloc]init];
-    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://img.tupianzj.com/uploads/allimg/160411/9-1604110SJ0.jpg"] placeholderImage:nil];
     self.avatarImg.layer.masksToBounds = YES;
     self.avatarImg.layer.cornerRadius = ScreenScale(70)/2.0;
     [self.contentView addSubview:self.avatarImg];

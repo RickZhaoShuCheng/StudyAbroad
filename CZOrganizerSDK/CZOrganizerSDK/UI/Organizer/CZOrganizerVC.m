@@ -51,12 +51,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    __weak CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
-    if (baseVc.collectionView.contentOffset.y > 0) {
-        [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
-        [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
-        [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-    }
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
 }
 /**
  * 主页滚动处理导航条
@@ -93,12 +88,12 @@
         //悬浮
         CGFloat header = baseVc.collectionView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
         //此处需要加上pageMenu的高度
-        if (offsetY < (header - (NaviH+StatusBarHeight+5+PageMenuHeight)) && offsetY >= 0) {
+        if (offsetY < (header - (NaviH+PageMenuHeight)) && offsetY >= 0) {
             //当视图滑动的距离小于header时
             baseVc.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        }else if(baseVc.collectionView.contentOffset.y >= (header - (NaviH+StatusBarHeight+5+PageMenuHeight))){
+        }else if(baseVc.collectionView.contentOffset.y >= (header - (NaviH+PageMenuHeight))){
             //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
-            baseVc.collectionView.contentInset = UIEdgeInsetsMake(NaviH+StatusBarHeight+5+PageMenuHeight, 0, 0, 0);
+            baseVc.collectionView.contentInset = UIEdgeInsetsMake(NaviH+PageMenuHeight, 0, 0, 0);
         }
     }];
 }
@@ -131,6 +126,7 @@
                 
                 CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
                 baseVc.collectionView.model = model;
+                baseVc.organId = model.organId;
             });
         }
     }];
@@ -167,13 +163,14 @@
     for (int i = 0; i < self.titleArr.count; i++) {
         if (controllerClassNames.count > i) {
             UIViewController *baseVC = [[NSClassFromString(controllerClassNames[i]) alloc] init];
+            baseVC.title = self.organId;
             [self addChildViewController:baseVC];
         //控制器本来自带childViewControllers,但是遗憾的是该数组的元素顺序永远无法改变，只要是addChildViewController,都是添加到最后一个，而控制器不像数组那样，可以插入或删除任意位置，所以这里自己定义可变数组，以便插入(删除)(如果没有插入(删除)功能，直接用自带的childViewControllers即可)
             [self.myChildViewControllers addObject:baseVC];
         }
     }
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -(NaviH+StatusBarHeight+5), kScreenWidth,kScreenHeight)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -NaviH, kScreenWidth,kScreenHeight)];
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -188,7 +185,7 @@
     if (self.pageMenu.selectedItemIndex < self.myChildViewControllers.count) {
         UIViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
         [self.scrollView addSubview:baseVc.view];
-        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-NaviH-StatusBarHeight-5);
+        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-NaviH);
         self.scrollView.contentOffset = CGPointMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0);
         self.scrollView.contentSize = CGSizeMake(self.titleArr.count*kScreenWidth, 0);
     }
@@ -261,7 +258,7 @@
     if ([targetViewController isViewLoaded]){
         return;
     };
-    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH + StatusBarHeight, kScreenWidth, kScreenHeight - NaviH - StatusBarHeight - ScreenScale(140) - PageMenuHeight);
+    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH, kScreenWidth, kScreenHeight - NaviH - ScreenScale(140) - PageMenuHeight);
     [self.scrollView addSubview:targetViewController.view];
 }
 

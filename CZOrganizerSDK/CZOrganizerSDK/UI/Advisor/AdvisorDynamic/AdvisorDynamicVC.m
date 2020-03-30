@@ -60,15 +60,15 @@
         
         //悬浮
         CGFloat header = weakSelf.tableView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
-        if (offsetY < (header - (NaviH+StatusBarHeight+5)) && offsetY >= 0) {
+        if (offsetY < (header - (NaviH)) && offsetY >= 0) {
             //当视图滑动的距离小于header时
             weakSelf.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
             weakSelf.tableView.cell.postVC.tableView.scrollEnabled = NO;
             weakSelf.tableView.scrollEnabled = YES;
 //            NSLog(@"1111................");
-        }else if(offsetY >= (header - (NaviH+StatusBarHeight+5))){
+        }else if(offsetY >= (header - (NaviH))){
             //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
-            weakSelf.tableView.contentInset = UIEdgeInsetsMake(NaviH+StatusBarHeight+5, 0, 0, 0);
+            weakSelf.tableView.contentInset = UIEdgeInsetsMake(NaviH, 0, 0, 0);
             weakSelf.tableView.cell.postVC.tableView.scrollEnabled = YES;
             weakSelf.tableView.scrollEnabled = NO;
 //            NSLog(@"1111++++++++");
@@ -111,7 +111,7 @@
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view.mas_top).offset(-(NaviH+StatusBarHeight+5));
+        make.top.mas_equalTo(self.view.mas_top).offset(-NaviH);
     }];
     
     

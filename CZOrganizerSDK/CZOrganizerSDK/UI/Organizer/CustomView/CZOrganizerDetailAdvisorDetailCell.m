@@ -23,6 +23,18 @@
     }
     return self;
 }
+
+- (void)setModel:(CZAdvisorModel *)model{
+    _model = model;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    self.nameLab.text = model.counselorName;
+    self.countLab.text = [NSString stringWithFormat:@"%@个案例",[@([model.caseCount integerValue]) stringValue]];
+    if ([model.status integerValue] == 1) {
+        self.VImg.hidden = NO;
+    }else{
+        self.VImg.hidden = YES;
+    }
+}
 /**
  * 初始化UI
  */
@@ -42,7 +54,6 @@
     self.avatarImg.layer.cornerRadius = ScreenScale(108)/2;
     self.avatarImg.layer.borderColor = CZColorCreater(229, 239, 248, 1).CGColor;
     self.avatarImg.layer.borderWidth = ScreenScale(6);
-    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://b-ssl.duitang.com/uploads/item/201812/10/20181210163023_xXazM.thumb.700_0.jpeg"] placeholderImage:nil];
     [self.contentView addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.bgView.mas_top);
@@ -61,7 +72,7 @@
     }];
     
     self.nameLab = [[UILabel alloc]init];
-    self.nameLab.text = @"俞敏洪";
+    self.nameLab.text = @"-";
     self.nameLab.font = [UIFont systemFontOfSize:ScreenScale(28)];
     self.nameLab.textColor = CZColorCreater(53, 53, 53, 1);
     self.nameLab.textAlignment = NSTextAlignmentCenter;
@@ -73,7 +84,7 @@
     }];
     
     self.countLab = [[UILabel alloc]init];
-    self.countLab.text = @"3980个案例";
+    self.countLab.text = @"-个案例";
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.countLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.countLab.textAlignment = NSTextAlignmentCenter;

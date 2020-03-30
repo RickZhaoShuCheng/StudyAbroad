@@ -26,9 +26,22 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self initWithUI];
-        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=dc636c57845494ee87220d191dce91c3/8718367adab44aed01ce530cbb1c8701a08bfb52.jpg"] placeholderImage:nil];
     }
     return self;
+}
+
+- (void)setModel:(CZAdvisorModel *)model{
+    _model = model;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    self.nameLab.text = model.counselorName;
+    self.advisorLab.text = model.organName;
+    self.countLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.serviceCount integerValue]) stringValue]];
+    [self.rankView setRankByRate:[model.valStar floatValue]];
+    if ([model.status integerValue] == 1) {
+        self.VImg.hidden = NO;
+    }else{
+        self.VImg.hidden = YES;
+    }
 }
 
 /**
@@ -36,7 +49,6 @@
  */
 - (void)initWithUI{
     self.avatarImg = [[UIImageView alloc] init];
-    self.avatarImg.backgroundColor = [UIColor redColor];
     self.avatarImg.layer.masksToBounds = YES;
     self.avatarImg.layer.cornerRadius = ScreenScale(90)/2.0;
     [self.contentView addSubview:self.avatarImg];
@@ -59,7 +71,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(26)];
     self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
-    self.nameLab.text = @"郭静";
+    self.nameLab.text = @"-";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
@@ -71,7 +83,7 @@
     self.advisorLab = [[UILabel alloc]init];
     self.advisorLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.advisorLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.advisorLab.text = @"南京市海牛工作室";
+    self.advisorLab.text = @"-";
     [self.contentView addSubview:self.advisorLab];
     [self.advisorLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
@@ -80,7 +92,7 @@
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
     }];
     
-    self.rankView = [CZRankView instanceRankViewByRate:3.1];
+    self.rankView = [CZRankView instanceRankViewByRate:0.0];
     self.rankView.frame = CGRectMake(0, 0, ScreenScale(150), ScreenScale(28));
     [self.contentView addSubview:self.rankView];
     [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -92,7 +104,7 @@
     self.countLab = [[UILabel alloc]init];
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.countLab.textColor = CZColorCreater(170, 170, 187, 1);
-    self.countLab.text = @"服务3637人";
+    self.countLab.text = @"服务--人";
     [self.contentView addSubview:self.countLab];
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.rankView.mas_trailing);

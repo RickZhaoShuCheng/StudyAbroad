@@ -17,6 +17,7 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
     if (self) {
+        self.dataArr = [NSMutableArray array];
         self.delegate = self;
         self.dataSource = self;
         self.showsVerticalScrollIndicator = NO;
@@ -30,11 +31,12 @@
     return 1;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 10;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CZOrganizerAdvisorCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZOrganizerAdvisorCell class]) forIndexPath:indexPath];
+    cell.model = [CZAdvisorModel modelWithDict:self.dataArr[indexPath.section]];
     return cell;
 }
 

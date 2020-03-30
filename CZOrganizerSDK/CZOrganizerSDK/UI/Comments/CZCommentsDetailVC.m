@@ -8,11 +8,15 @@
 
 #import "CZCommentsDetailVC.h"
 #import "CZCommentsDetailTableView.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
+#import "CZMJRefreshHelper.h"
 @interface CZCommentsDetailVC ()
 @property (nonatomic ,strong)UILabel *titleLab;//标题
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
 @property (nonatomic ,strong)UIButton *shareBtn;//分享按钮
 @property (nonatomic ,strong) CZCommentsDetailTableView *tableView;
+@property (nonatomic ,assign) NSInteger pageNum;
 @end
 
 @implementation CZCommentsDetailVC
@@ -28,15 +32,10 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.pageNum = 1;
     [self initWithUI];
     [self actionMethod];
-    
-    NSMutableArray *imgArr = [NSMutableArray arrayWithObjects:
-                              @"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2261487146,3191619974&fm=26&gp=0.jpg",
-                              @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584214058429&di=3b61a48930e0edaf6edfbefe6d84dcc9&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D1510410409%2C1802478552%26fm%3D214%26gp%3D0.jpg",
-                              @"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=228295424,1615952080&fm=26&gp=0.jpg",
-                              nil];
-    [self.tableView.headerView setImgArr:imgArr];
+    [self requestForApiObjectCommentsFindObjectCommentsBySocId];
 }
 - (void)actionMethod{
     WEAKSELF
@@ -63,6 +62,59 @@
 //            rect.size.height = ScreenScale(540)+weakSelf.collectionView.tagListHeight - offsetY;
 //            weakSelf.collectionView.headerView.bgImg.frame = rect;
 //        }
+    }];
+    
+    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        weakSelf.pageNum = 1;
+        [weakSelf requestForApiObjectCommentsFindObjectCommentsBySocId];
+    }];
+    
+    self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        weakSelf.pageNum ++;
+        [weakSelf requestForApiObjectCommentsFindObjectCommentsBySocId];
+    }];
+}
+
+- (void)requestForApiObjectCommentsFindObjectCommentsBySocId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiObjectCommentsFindObjectCommentsBySocId:self.idStr pageNum:self.pageNum pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.tableView.headerView.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(1340));
+                CZCommentModel *model = [CZCommentModel modelWithDict:data[@"myDynamicCommentsVo"]];
+//                model.comment = @"操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功";
+                model.commentHeight = [weakSelf getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
+                weakSelf.tableView.headerView.model = model;
+                CGRect rect = weakSelf.tableView.headerView.frame;
+                weakSelf.tableView.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight);
+                NSMutableArray *tempArr = data[@"discussCommentsList"];
+                NSMutableArray *replyArr = [NSMutableArray array];
+                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    CZCommentModel *replyModel = [CZCommentModel modelWithDict:obj];
+                    replyModel.commentHeight = [weakSelf getStringHeightWithText:replyModel.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
+                    replyModel.level = 1;
+                    [replyArr addObject:replyModel];
+                }];
+                
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.dataArr removeAllObjects];
+                    [weakSelf.tableView.dataArr addObjectsFromArray:replyArr];
+                }else{
+                    [weakSelf.tableView.dataArr addObjectsFromArray:replyArr];
+                }
+                [weakSelf.tableView reloadData];
+
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.mj_header endRefreshing];
+                }
+                if (replyArr.count < 20) {
+                    [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+                }else{
+                    [weakSelf.tableView.mj_footer endRefreshing];
+                }
+            });
+        }
     }];
 }
 
@@ -99,10 +151,25 @@
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view.mas_top).offset(-(NaviH+StatusBarHeight+5));
+        make.top.mas_equalTo(self.view.mas_top).offset(-NaviH);
         make.bottom.mas_equalTo(self.view);
     }];
 }
+
+- (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
+    // 设置文字属性 要和label的一致
+    NSDictionary *attrs = @{NSFontAttributeName :font};
+    CGSize maxSize = CGSizeMake(width, MAXFLOAT);
+
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
+    // 计算文字占据的宽高
+    CGSize size = [text boundingRectWithSize:maxSize options:options attributes:attrs context:nil].size;
+
+   // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
+    return  ceilf(size.height);
+}
+
 
 - (CZCommentsDetailTableView *)tableView{
     if (!_tableView) {

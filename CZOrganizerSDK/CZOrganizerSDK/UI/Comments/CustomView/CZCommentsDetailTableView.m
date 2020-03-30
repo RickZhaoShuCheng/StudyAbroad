@@ -13,7 +13,7 @@
 #import "CZCommentsDetailMoreCell.h"
 
 @interface CZCommentsDetailTableView()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic ,strong) NSMutableArray *dataArr;
+
 @end
 @implementation CZCommentsDetailTableView
 
@@ -21,13 +21,6 @@
     self = [super initWithFrame:frame style:style];
     if (self) {
         self.dataArr = [NSMutableArray array];
-        [self.dataArr addObject:@{@"level":@"0",@"name":@"最甜的芥末",@"content":@"沙发",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"0"}];
-        [self.dataArr addObject:@{@"level":@"1",@"name":@"百世可乐",@"content":@"手速够快",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"0"}];
-        [self.dataArr addObject:@{@"level":@"1",@"name":@"百世可乐",@"content":@"手速够快",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"0"}];
-        [self.dataArr addObject:@{@"level":@"1",@"name":@"百世可乐",@"content":@"手速够快",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"0"}];
-        [self.dataArr addObject:@{@"level":@"2",@"name":@"百世可乐",@"content":@"手速够快",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"0"}];
-         [self.dataArr addObject:@{@"level":@"0",@"name":@"最甜的芥末",@"content":@"沙发",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"2"}];
-        [self.dataArr addObject:@{@"level":@"0",@"name":@"最甜的芥末",@"content":@"沙发",@"img":@"http://pics2.baidu.com/feed/6f061d950a7b0208861260d9c2b4e9d5562cc8a7.png?token=a660efbc8f229953136baa823633d889&s=9F1405CE8E9000D4F395A8BA0300D011",@"photo":@"4"}];
         self.delegate = self;
         self.dataSource = self;
         [self registerClass:[CZCommentsDetailOneCell class] forCellReuseIdentifier:NSStringFromClass([CZCommentsDetailOneCell class])];
@@ -43,13 +36,14 @@
     return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableDictionary *tempDic = self.dataArr[indexPath.row];
-    if ([tempDic[@"level"] isEqualToString:@"0"]) {
+    CZCommentModel *model = self.dataArr[indexPath.row];
+    if (model.level == 1) {
         CZCommentsDetailOneCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailOneCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.model = model;
         return cell;
     }
-    if ([tempDic[@"level"] isEqualToString:@"1"]) {
+    if (model.level == 2) {
         CZCommentsDetailTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailTwoCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -59,23 +53,31 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableDictionary *tempDic = self.dataArr[indexPath.row];
-    if ([tempDic[@"level"] isEqualToString:@"0"]) {
-        if ([tempDic[@"photo"] integerValue] == 0) {
+    CZCommentModel *model = self.dataArr[indexPath.row];
+    if (model.level == 1) {
+        NSMutableArray *imgsArr = [NSMutableArray array];
+        if (model.imgs.length) {
+            [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
+        }
+        
+        if ([imgsArr count] == 0) {
             //无图片
-            return ScreenScale(200);
-        }else if ([tempDic[@"photo"] integerValue] <= 3) {
+            return ScreenScale(150) + model.commentHeight;
+        }else if ([imgsArr count] <= 3) {
             //1-3张
-            return ScreenScale(480);
+            return ScreenScale(370) + model.commentHeight;
         }else{
             //4-6张
-            return ScreenScale(750);
+            return ScreenScale(570) + model.commentHeight;
         }
     }
-    if ([tempDic[@"level"] isEqualToString:@"1"]) {
-        return ScreenScale(160);
+    if (model.level == 2) {
+        return ScreenScale(160) + model.commentHeight;
     }
-    return ScreenScale(114);
+    if (model.level == 3) {
+        return ScreenScale(114);
+    }
+    return 0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -88,7 +90,7 @@
 
 - (CZCommentsDetailHeaderView *)headerView{
     if (!_headerView) {
-        _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1380))];
+        _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1340))];
     }
     return _headerView;
 }

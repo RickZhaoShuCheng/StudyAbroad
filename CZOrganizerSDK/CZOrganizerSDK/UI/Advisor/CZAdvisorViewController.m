@@ -14,6 +14,7 @@
 #import "QSClient.h"
 #import "CZAdvisorModel.h"
 #import "CZAdvisorDetailViewController.h"
+#import "CZActivityListVC.h"
 
 @interface CZAdvisorViewController ()
 
@@ -64,6 +65,9 @@
         detailVC.counselorId = counselorId;
         detailVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
+//        CZActivityListVC *listVC = [[CZActivityListVC alloc]init];
+//        listVC.hidesBottomBarWhenPushed = YES;
+//        [weakSelf.navigationController pushViewController:listVC animated:YES];
     };
 }
 

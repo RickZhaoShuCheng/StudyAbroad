@@ -27,6 +27,13 @@
     }
     return self;
 }
+
+
+
+- (void)setAvgMajor:(NSString *)avgMajor avgPrice:(NSString *)avgPrice avgService:(NSString *)avgService{    
+    self.organizerLab.text = [NSString stringWithFormat:@"专业度: %@  服务: %@  价格: %@",avgMajor,avgService,avgPrice];
+}
+
 /**
  * 初始化UI
  */
@@ -52,7 +59,7 @@
     }];
     
     self.organizerLab = [[UILabel alloc] init];
-    self.organizerLab.text = @"专业度: 4.9  服务: 4.9  价格: 4.9";
+    self.organizerLab.text = @"专业度: -  服务: -  价格: -";
     self.organizerLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.organizerLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     [self addSubview:self.organizerLab];

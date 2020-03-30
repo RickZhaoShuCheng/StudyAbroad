@@ -9,38 +9,78 @@
 #import "CZOrganizerDiaryVC.h"
 #import "CZOrganizerDiaryCollectionView.h"
 #import "CZMJRefreshHelper.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
+#import "CZDiaryModel.h"
 
 @interface CZOrganizerDiaryVC ()
 @property (nonatomic ,strong) CZOrganizerDiaryCollectionView *collectionView;
+@property (nonatomic ,assign) NSInteger pageNum;
 @end
 
 @implementation CZOrganizerDiaryVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.pageNum = 1;
     [self initWithUI];
     WEAKSELF
-    __block int i = 0;
     self.collectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        [weakSelf.collectionView.mj_header endRefreshing];
-        if (i == 0) {
-            NSMutableArray *tagesArr = [NSMutableArray array];
-            [tagesArr addObject:@"全部"];
-            [tagesArr addObject:@"最新"];
-            [tagesArr addObject:@"好评 50"];
-            [tagesArr addObject:@"消费后评价 38"];
-            [tagesArr addObject:@"消费评价 38"];
-            [tagesArr addObject:@"消费后价 38"];
-            [tagesArr addObject:@"消后评价 38"];
-            [tagesArr addObject:@"差评 50"];
-            [weakSelf.collectionView setTagListTags:tagesArr];
-            i++;
-        }
+        weakSelf.pageNum = 1;
+        [weakSelf requestForApiDiaryFindCaseListByFilter:1];
     }];
     self.collectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
+        weakSelf.pageNum ++;
+        [weakSelf requestForApiDiaryFindCaseListByFilter:1];
+    }];
+    [self requestForApiDiaryFindCaseListByFilter:1];
+}
+
+/**
+ 获取日记
+ */
+- (void)requestForApiDiaryFindCaseListByFilter:(NSInteger)index{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiDiaryFindCaseListByFilter:@"1" idStr:self.title filterSum:index pageNum:self.pageNum pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary *dic in data[@"data"]) {
+                    CZDiaryModel *model = [CZDiaryModel modelWithDict:dic];
+                    [array addObject:model];
+                }
+                
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.collectionView.dataArr removeAllObjects];
+                    [weakSelf.collectionView.dataArr addObjectsFromArray:array];
+                }else{
+                    [weakSelf.collectionView.dataArr addObjectsFromArray:array];
+                }
+                
+                NSMutableArray *keyArr = [NSMutableArray array];
+                if ([data[@"filterDiary"] length]) {
+                    [keyArr addObjectsFromArray:[data[@"filterDiary"] componentsSeparatedByString:@","]];
+                }
+                
+                [weakSelf.collectionView setTagListTags:keyArr];
+                [weakSelf.collectionView reloadData];
+                
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.collectionView.mj_header endRefreshing];
+                }
+                if (array.count < 20) {
+                    [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
+                }else{
+                    [weakSelf.collectionView.mj_footer endRefreshing];
+                }
+            });
+        }
     }];
 }
+
+
 /**
  * 初始化UI
  */

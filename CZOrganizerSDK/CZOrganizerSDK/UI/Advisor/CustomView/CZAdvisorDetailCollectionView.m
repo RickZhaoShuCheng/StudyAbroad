@@ -26,7 +26,7 @@
         self.delegate = self;
         self.dataSource = self;
         self.alwaysBounceVertical = YES;
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = CZColorCreater(245, 245, 249, 1);
         self.showsVerticalScrollIndicator = NO;
         [self registerClass:[CZAdvisorDetailEvaluateCell class] forCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailEvaluateCell class])];
         [self registerClass:[CZAdvisorDetailServiceCell class] forCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailServiceCell class])];
@@ -53,13 +53,6 @@
         self.headerView.bgImg.frame = frame;
     }
     
-    NSMutableArray *filterCommentArr = [NSMutableArray array];
-    if (model.filterComment.length) {
-        [filterCommentArr addObjectsFromArray:[model.filterComment componentsSeparatedByString:@","]];
-    }
-    [self.evaluateFilterArr removeAllObjects];
-    [self.evaluateFilterArr addObjectsFromArray:filterCommentArr];
-    
     [self reloadData];
 }
 //设置日记筛选项
@@ -70,6 +63,16 @@
     }
     [self.diaryFilterArr removeAllObjects];
     [self.diaryFilterArr addObjectsFromArray:filterDiaryArr];
+}
+
+//设置评价筛选项
+- (void)setCommentFilter:(NSString *)filterStr{
+    NSMutableArray *filterCommentArr = [NSMutableArray array];
+    if (filterStr.length) {
+        [filterCommentArr addObjectsFromArray:[filterStr componentsSeparatedByString:@","]];
+    }
+    [self.evaluateFilterArr removeAllObjects];
+    [self.evaluateFilterArr addObjectsFromArray:filterCommentArr];
 }
 
 
@@ -146,22 +149,23 @@
     }else if (indexPath.section == 2){
         return CGSizeMake(kScreenWidth/2.0, ScreenScale(690));
     }
-#warning 图片高度没算，最多支持6张图片，有机会再优化，缺少内容高度，需动态计算
-    
+#warning 图片高度没算，最多支持6张图片，有机会再优化
     CZCommentModel *model = [CZCommentModel modelWithDict:self.model.commentList[indexPath.row]];
+    CGFloat height = [self getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(142)];
+    model.commentHeight = height;
     NSMutableArray *imgsArr = [NSMutableArray array];
     if (model.imgs.length) {
         [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
     }
     if ([imgsArr count] == 0) {
         //无图片
-        return CGSizeMake(kScreenWidth, ScreenScale(330));
+        return CGSizeMake(kScreenWidth, ScreenScale(280) + model.commentHeight);
     }else if ([imgsArr count] <= 3) {
         //1-3张
-        return CGSizeMake(kScreenWidth, ScreenScale(550));
+        return CGSizeMake(kScreenWidth, ScreenScale(500) + model.commentHeight);
     }else{
         //4-6张
-        return CGSizeMake(kScreenWidth, ScreenScale(750));
+        return CGSizeMake(kScreenWidth, ScreenScale(700) + model.commentHeight);
     }
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
@@ -173,6 +177,15 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 0;
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 3) {
+        if (self.selectCommentBlock) {
+            self.selectCommentBlock([CZCommentModel modelWithDict:self.model.commentList[indexPath.row]]);
+        }
+    }
+}
+
 
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize size;
@@ -189,9 +202,9 @@
     }else if (section == 3){
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100) + [self getSectionHeaderHeight:self.evaluateFilterArr]);
     }else{
-        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
-            return CGSizeMake(0, 0);
-        }
+//        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
+//            return CGSizeMake(0, 0);
+//        }
         return size = CGSizeMake([UIScreen mainScreen].bounds.size.width, ScreenScale(100));
     }
 }
@@ -200,16 +213,19 @@
     if (section == 0) {
         return CGSizeZero;
     }else if (section == 1){
-        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0 || [self.model.productCount integerValue] <= 4) {
+        if ([self.model.productVoList isKindOfClass:[NSString class]] || self.model.productVoList.count == 0) {
             return CGSizeMake(0, 0);
         }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else if (section == 2){
-//        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0 || [self.model.diaryCount integerValue] <= 4) {
-//            return CGSizeMake(0, 0);
-//        }
+        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else{
+        if ([self.model.commentList isKindOfClass:[NSString class]] || self.model.commentList.count == 0) {
+            return CGSizeMake(0, 0);
+        }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }
 }
@@ -247,13 +263,13 @@
                     weakSelf.clickAllBlock(indexPath.section);
                 }
             };
-            header.titleStr = @"精华日记";
-            [header setTags:self.diaryFilterArr];
             [header.tagList didSelectItem:^(NSInteger index) {
                 if (weakSelf.selectDiaryIndex) {
                     weakSelf.selectDiaryIndex(index);
                 }
             }];
+            header.titleStr = @"精华日记";
+            [header setTags:self.diaryFilterArr];
             return header;
         }else{
             CZAdvisorDetailCollectionHeadView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"evaluateHeader" forIndexPath:indexPath];
@@ -262,6 +278,11 @@
                     weakSelf.clickAllBlock(indexPath.section);
                 }
             };
+            [header.tagList didSelectItem:^(NSInteger index) {
+                if (weakSelf.selectCommentIndex) {
+                    weakSelf.selectCommentIndex(index);
+                }
+            }];
             header.titleStr = @"优秀评价";
             [header setTags:self.evaluateFilterArr];
             return header;
@@ -277,12 +298,12 @@
         if (indexPath.section == 0) {
             return nil;
         }else if (indexPath.section == 1){
-            footer.titleStr = [NSString stringWithFormat:@"查看全部%@个商品",[@([self.model.productCount integerValue]) stringValue]];
+            footer.titleStr = [NSString stringWithFormat:@"查看全部%lu个商品",(unsigned long)self.model.productVoList.count];
             footer.backgroundColor = CZColorCreater(245, 245, 249, 1);
             footer.lineView.hidden = YES;
         }else if (indexPath.section == 2){
             footer.titleStr = @"查看全部日记";
-            footer.backgroundColor = CZColorCreater(255, 255, 255, 1);
+            footer.backgroundColor = CZColorCreater(245, 245, 249, 1);
             footer.lineView.hidden = NO;
         }else{
             footer.titleStr = @"查看全部评价";
@@ -318,5 +339,18 @@
     if (self.scrollContentSize) {
         self.scrollContentSize(scrollView.contentOffset.y);
     }
+}
+- (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
+    // 设置文字属性 要和label的一致
+    NSDictionary *attrs = @{NSFontAttributeName :font};
+    CGSize maxSize = CGSizeMake(width, MAXFLOAT);
+
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
+    // 计算文字占据的宽高
+    CGSize size = [text boundingRectWithSize:maxSize options:options attributes:attrs context:nil].size;
+
+   // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
+    return  ceilf(size.height);
 }
 @end

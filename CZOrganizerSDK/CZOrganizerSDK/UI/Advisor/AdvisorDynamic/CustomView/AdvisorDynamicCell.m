@@ -30,7 +30,7 @@
     
     self.scrollView = [[UIScrollView alloc]init];
     self.scrollView.delegate = self;
-    self.scrollView.backgroundColor = [UIColor redColor];
+    self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.alwaysBounceHorizontal = YES;
     self.scrollView.pagingEnabled = YES;
     [self.contentView addSubview:self.scrollView];

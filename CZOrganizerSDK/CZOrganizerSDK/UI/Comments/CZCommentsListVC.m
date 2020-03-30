@@ -12,9 +12,13 @@
 #import "CZCommentsListTableView.h"
 #import "CZMJRefreshHelper.h"
 #import "CZCommentsDetailVC.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
 @interface CZCommentsListVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) CZCommentsListTableView *tableView;
+@property (nonatomic ,assign) NSInteger pageNum;
+@property (nonatomic ,assign) NSInteger filterNum;
 @end
 
 @implementation CZCommentsListVC
@@ -22,23 +26,93 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"评价列表";
+    self.pageNum = 1;
+    self.filterNum = 1;
     [self initWithUI];
     [self actionHandle];
+    [self requestForApiObjectCommentsFindComments:1];
 }
 
 - (void)actionHandle{
     WEAKSELF
     self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        [weakSelf.tableView.mj_header endRefreshing];
+        weakSelf.pageNum = 1;
+        [weakSelf requestForApiObjectCommentsFindComments:weakSelf.filterNum];
     }];
     
     self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+        weakSelf.pageNum ++;
+        [weakSelf requestForApiObjectCommentsFindComments:weakSelf.filterNum];
     }];
-    [self.tableView setSelectedBlock:^{
+    
+    [self.tableView setSelectedBlock:^(CZCommentModel * _Nonnull model) {
         CZCommentsDetailVC *detailVC = [[CZCommentsDetailVC alloc]init];
+        detailVC.idStr = model.socId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
+    
+    //评价筛选
+    [self.tableView setSelectCommentIndex:^(NSInteger index) {
+        weakSelf.filterNum = index + 1;
+        [weakSelf requestForApiObjectCommentsFindComments:weakSelf.filterNum];
+    }];
+}
+/**
+ 获取评价
+ */
+- (void)requestForApiObjectCommentsFindComments:(NSInteger)index{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiObjectCommentsFindComments:self.commentsType idStr:self.idStr filterSum:index pageNum:self.pageNum pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+       if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *filterCommentArr = [NSMutableArray array];
+                if ([data[@"filterComment"] length]) {
+                    [filterCommentArr addObjectsFromArray:[data[@"filterComment"] componentsSeparatedByString:@","]];
+                }
+                [weakSelf.tableView setTagListTags:filterCommentArr];
+                
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in data[@"list"]) {
+                    CZCommentModel *model = [CZCommentModel modelWithDict:dic];
+                    CGFloat height = [weakSelf getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(142)];
+                    model.commentHeight = height;
+                    [array addObject:model];
+                }
+                [weakSelf.tableView.headerView setAvgMajor:[NSString stringWithFormat:@"%.1f",[data[@"avgMajor"] floatValue]] avgPrice:[NSString stringWithFormat:@"%.1f",[data[@"avgPrice"] floatValue]] avgService:[NSString stringWithFormat:@"%.1f",[data[@"avgService"] floatValue]]];
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.commentsArr removeAllObjects];
+                    [weakSelf.tableView.commentsArr addObjectsFromArray:array];
+                }else{
+                    [weakSelf.tableView.commentsArr addObjectsFromArray:array];
+                }
+                [weakSelf.tableView reloadData];
+                
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.mj_header endRefreshing];
+                }
+                if (array.count < 20) {
+                    [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+                }else{
+                    [weakSelf.tableView.mj_footer endRefreshing];
+                }
+            });
+        }
+    }];
+}
+
+- (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
+    // 设置文字属性 要和label的一致
+    NSDictionary *attrs = @{NSFontAttributeName :font};
+    CGSize maxSize = CGSizeMake(width, MAXFLOAT);
+
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
+    // 计算文字占据的宽高
+    CGSize size = [text boundingRectWithSize:maxSize options:options attributes:attrs context:nil].size;
+
+   // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
+    return  ceilf(size.height);
 }
 
 /**
@@ -58,41 +132,6 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
     }];
-    
-    NSMutableArray *tagesArr = [NSMutableArray array];
-    [tagesArr addObject:@"全部"];
-    [tagesArr addObject:@"最新"];
-    [tagesArr addObject:@"好评 50"];
-    [tagesArr addObject:@"消费后评价 38"];
-    [tagesArr addObject:@"消费评价 38"];
-    [tagesArr addObject:@"消费后价 38"];
-    [tagesArr addObject:@"消后评价 38"];
-    [tagesArr addObject:@"差评 50"];
-    [self.tableView setTagListTags:tagesArr];
-    
-    //测试评价图片
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    NSMutableArray *tempArr = [NSMutableArray array];
-    [tempArr addObject:@"http://pic1.win4000.com/wallpaper/c/57ad6e8f410eb.jpg"];
-    [tempArr addObject:@"http://up.enterdesk.com/edpic/c3/84/b0/c384b0e8f05432c78c72f8d0cd1ab9ac.jpg"];
-    [dic setValue:tempArr forKey:@"pics"];
-    
-    NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
-    NSMutableArray *tempArr1 = [NSMutableArray array];
-    [tempArr1 addObject:@"http://uploadfile.bizhizu.cn/2015/0720/20150720033105173.jpg.source.jpg"];
-    [tempArr1 addObject:@"http://pic1.win4000.com/wallpaper/2018-10-12/5bc00af5751a2.jpg"];
-    [tempArr1 addObject:@"http://uploadfile.bizhizu.cn/2015/0720/20150720033105173.jpg.source.jpg"];
-    [tempArr1 addObject:@"http://pic1.win4000.com/wallpaper/2018-10-12/5bc00af5751a2.jpg"];
-    [dic1 setValue:tempArr1 forKey:@"pics"];
-    
-    NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
-    NSMutableArray *tempArr2 = [NSMutableArray array];
-    [dic2 setValue:tempArr2 forKey:@"pics"];
-               
-    [self.tableView.commentsArr addObject:dic];
-    [self.tableView.commentsArr addObject:dic1];
-    [self.tableView.commentsArr addObject:dic2];
-    [self.tableView reloadData];
 }
 //返回
 -(void)actionForBack{

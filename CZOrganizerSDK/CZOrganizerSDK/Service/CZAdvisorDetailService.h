@@ -33,6 +33,18 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  */
 -(void)requestForApiDiaryFindCaseListByFilter:(NSString *)caseType idStr:(NSString *)idStr filterSum:(NSInteger)filterSum pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
 /**
+ *获取机构下的服务项目
+ *organId 机构id
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiProductGetOrganRecommendProduct:(NSString *)organId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取机构下的顾问
+ *organId 机构id
+ */
+-(void)requestForApiCounselorGetCounselorListByOrganId:(NSString *)organId callBack:(CZAdvisorDetailBack)callBack;
+/**
  *获取评价
  *commentsType 1.机构 2.顾问 3.达人 4.商品
  *id 查询的类型id
@@ -41,6 +53,13 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *pageSize 数
  */
 -(void)requestForApiObjectCommentsFindComments:(NSString *)commentsType idStr:(NSString *)idStr filterSum:(NSInteger)filterSum pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取评价详情
+ *socId 评价id
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiObjectCommentsFindObjectCommentsBySocId:(NSString *)socId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

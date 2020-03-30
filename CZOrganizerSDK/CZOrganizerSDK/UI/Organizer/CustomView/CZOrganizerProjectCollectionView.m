@@ -17,6 +17,7 @@
 -(instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
+        self.dataArr = [NSMutableArray array];
         self.delegate = self;
         self.dataSource = self;
         self.alwaysBounceVertical = YES;
@@ -28,10 +29,11 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZOrganizerDetailServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailServiceCell class]) forIndexPath:indexPath];
+    cell.model = self.dataArr[indexPath.row];
     if (indexPath.row % 2 == 0) {
         [cell.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(cell.contentView.mas_leading).offset(ScreenScale(30));
