@@ -54,6 +54,9 @@
         self.tagListHeight = self.headerView.tagList.contentHeight;
         self.headerView.bgImg.frame = frame;
     }
+    if (model.myDynamicVo.count <= 0) {
+        self.tagListHeight = self.tagListHeight - ScreenScale(96);
+    }
     
     [self reloadData];
 }

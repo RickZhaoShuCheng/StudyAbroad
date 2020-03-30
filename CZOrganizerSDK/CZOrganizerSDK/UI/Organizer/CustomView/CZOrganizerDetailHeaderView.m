@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "CZRankView.h"
 #import "CZOrganizerDetailBtnView.h"
+#import "CZDiaryModel.h"
 @interface CZOrganizerDetailHeaderView()<SDCycleScrollViewDelegate>
 @property (nonatomic ,strong)UIImageView *avatarImg;
 @property (nonatomic ,strong)UIImageView *VImg;
@@ -71,6 +72,74 @@
         [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
     }
     [self setTags:keyArr];
+    
+    if ([model.myDynamicVo isKindOfClass:[NSMutableArray class]]) {
+        if (model.myDynamicVo.count >0) {
+            self.dynamicView.hidden = NO;
+            NSMutableArray *tempArr = [NSMutableArray array];
+            NSMutableArray *titleArr = [NSMutableArray array];
+            NSMutableArray *imgArr = [NSMutableArray array];
+            [model.myDynamicVo enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                CZDiaryModel *model = [CZDiaryModel modelWithDict:obj];
+                [tempArr addObject:model];
+                if ([model.smdType isEqualToString:@"1"] || [model.smdType isEqualToString:@"2"]) {
+                    [imgArr addObject:@"jigou_tiezi"];
+                }else if ([model.smdType isEqualToString:@"4"]){
+                    [imgArr addObject:@"jigou_riji"];
+                }else if ([model.smdType isEqualToString:@"5"] || [model.smdType isEqualToString:@"6"]){
+                    [imgArr addObject:@"jigou_wenzhang"];
+                }
+                
+                if (model.diaryTitle.length >0) {
+                    [titleArr addObject:model.diaryTitle];
+                }else{
+                    if (model.smdContent.length >0) {
+                        [titleArr addObject:model.smdContent];
+                    }
+                }
+            }];
+            NSMutableArray *attributeTitleArr = [NSMutableArray array];
+            [titleArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:obj];
+                //NSTextAttachment可以将要插入的图片作为特殊字符处理
+                NSTextAttachment *attch = [[NSTextAttachment alloc] init];
+                //定义图片内容及位置和大小
+                attch.image = [CZImageProvider imageNamed:imgArr[idx]];
+                attch.bounds = CGRectMake(0, -ScreenScale(4), ScreenScale(54), ScreenScale(24));
+                //创建带有图片的富文本
+                NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:attch];
+                //将图片放在第一位
+                [attri insertAttributedString:string atIndex:0];
+                //设置空格文本
+                [attri insertAttributedString:[[NSAttributedString alloc] initWithString:@" "] atIndex:1];
+                //设置间距
+                [attri addAttribute:NSKernAttributeName value:@(8)
+                                    range:NSMakeRange(1,1)];
+                [attributeTitleArr addObject:attri];
+            }];
+            self.scrollDynamic.titlesGroup = [attributeTitleArr copy];
+            [self.dynamicView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.leading.trailing.mas_equalTo(self);
+                make.bottom.mas_equalTo(self.mas_bottom).offset(-ScreenScale(16));
+                make.height.mas_equalTo(ScreenScale(96));
+            }];
+        }else{
+            self.dynamicView.hidden = YES;
+            [self.dynamicView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.leading.trailing.mas_equalTo(self);
+                make.bottom.mas_equalTo(self.mas_bottom).offset(0);
+                make.height.mas_equalTo(0);
+            }];
+        }
+    }else{
+        self.dynamicView.hidden = YES;
+        [self.dynamicView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.leading.trailing.mas_equalTo(self);
+            make.bottom.mas_equalTo(self.mas_bottom).offset(0);
+            make.height.mas_equalTo(0);
+        }];
+    }
+    
 }
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr{
@@ -83,6 +152,8 @@
     
     self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(540));
 }
+
+
 
 //点击动态
 - (void)clickDynamicView{
@@ -357,31 +428,6 @@
         self.scrollDynamic.titleLabelTextColor = CZColorCreater(53, 53, 53, 1);
         self.scrollDynamic.titleLabelTextFont = [UIFont systemFontOfSize:ScreenScale(26)];
         self.scrollDynamic.titleLabelBackgroundColor = [UIColor whiteColor];
-        
-        
-        
-        NSMutableArray *attributeTitleArr = [NSMutableArray array];
-        NSArray *titleArr = [NSArray arrayWithObjects:@"2019年入选「移民服务排行榜」出炉啦~",@"这场人民战争统帅心中的三个“第一”",@"下好一盘棋 京津冀战疫进行时 习近平讲话单行本出版",@"大国数字 | 走近“一亿分之一”", nil];
-        [titleArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:obj];
-            //NSTextAttachment可以将要插入的图片作为特殊字符处理
-            NSTextAttachment *attch = [[NSTextAttachment alloc] init];
-            //定义图片内容及位置和大小
-            attch.image = [CZImageProvider imageNamed:@"jigou_tiezi"];
-            attch.bounds = CGRectMake(0, -ScreenScale(4), ScreenScale(54), ScreenScale(24));
-            //创建带有图片的富文本
-            NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:attch];
-            //将图片放在第一位
-            [attri insertAttributedString:string atIndex:0];
-            //设置空格文本
-            [attri insertAttributedString:[[NSAttributedString alloc] initWithString:@" "] atIndex:1];
-            //设置间距
-            [attri addAttribute:NSKernAttributeName value:@(8)
-                                range:NSMakeRange(1,1)];
-            [attributeTitleArr addObject:attri];
-        }];
-        
-        self.scrollDynamic.titlesGroup = [attributeTitleArr copy];
         [self.dynamicView addSubview:self.scrollDynamic];
         [self.scrollDynamic mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(dynamic.mas_trailing).offset(ScreenScale(14));

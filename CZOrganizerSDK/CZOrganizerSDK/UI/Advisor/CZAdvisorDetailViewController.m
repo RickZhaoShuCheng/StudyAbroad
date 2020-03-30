@@ -38,8 +38,6 @@
     [self initUI];
     [self actionMethod];
     [self requestAdvisorDetail];
-    [self requestForApiDiaryFindCaseListByFilter:1];
-    [self requestForApiObjectCommentsFindComments:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -65,6 +63,7 @@
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
             commentsList.idStr = weakSelf.counselorId;
             commentsList.commentsType = @"2";
+            commentsList.varStar = weakSelf.collectionView.model.valStar;
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];
@@ -172,6 +171,8 @@
                  weakSelf.collectionView.model = model;
                  weakSelf.titleLab.text = model.counselorName;
                  [weakSelf requestAdvisorProduct];
+                 [weakSelf requestForApiDiaryFindCaseListByFilter:1];
+                 [weakSelf requestForApiObjectCommentsFindComments:1];
              });
          }
     }];

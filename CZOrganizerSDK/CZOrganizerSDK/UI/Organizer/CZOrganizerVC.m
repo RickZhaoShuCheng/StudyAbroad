@@ -82,7 +82,12 @@
             CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
             //改变图片的y值和高度即可
             rect.origin.y = offsetY;
-            rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight - offsetY;
+            //动态展示动态时，判断高度
+            if (baseVc.collectionView.model.myDynamicVo.count <= 0) {
+                rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight + ScreenScale(96) - offsetY;
+            }else{
+                rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight - offsetY;
+            }
             baseVc.collectionView.headerView.bgImg.frame = rect;
         }
         //悬浮
@@ -123,7 +128,7 @@
                 }else{
                     [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
                 }
-                
+                model.myDynamicVo = [NSMutableArray arrayWithObjects:@{@"smdType":@"1",@"diaryTitle":@"测试标题哈哈哈哈1",@"smdContent":@"标题嘿嘿嘿1"},@{@"smdType":@"4",@"diaryTitle":@"",@"smdContent":@"测试标题嘿嘿嘿2"},@{@"smdType":@"5",@"diaryTitle":@"测试标题哈哈哈哈3",@"smdContent":@"标题嘿嘿嘿3"}, nil];
                 CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
                 baseVc.collectionView.model = model;
                 baseVc.organId = model.organId;

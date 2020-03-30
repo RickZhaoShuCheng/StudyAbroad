@@ -28,7 +28,10 @@
     return self;
 }
 
-
+- (void)setVarStar:(NSNumber *)varStar{
+    self.starLab.text = [NSString stringWithFormat:@"%.1f",[varStar floatValue]];
+    [self.rankView setRankByRate:[varStar floatValue]];
+}
 
 - (void)setAvgMajor:(NSString *)avgMajor avgPrice:(NSString *)avgPrice avgService:(NSString *)avgService{    
     self.organizerLab.text = [NSString stringWithFormat:@"专业度: %@  服务: %@  价格: %@",avgMajor,avgService,avgPrice];
@@ -41,7 +44,7 @@
     self.starLab = [[UILabel alloc]init];
     self.starLab.font = [UIFont boldSystemFontOfSize:ScreenScale(37)];
     self.starLab.textColor = CZColorCreater(51, 51, 51, 1);
-    self.starLab.text = @"5.0";
+    self.starLab.text = @"-";
     [self addSubview:self.starLab];
     [self.starLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
@@ -49,7 +52,7 @@
         make.height.width.mas_greaterThanOrEqualTo(0);
     }];
     
-    self.rankView = [CZRankView instanceRankViewByRate:3.1];
+    self.rankView = [CZRankView instanceRankViewByRate:0.0];
     [self addSubview:self.rankView];
     [self.rankView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(ScreenScale(150));

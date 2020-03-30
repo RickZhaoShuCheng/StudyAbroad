@@ -79,6 +79,7 @@
                     model.commentHeight = height;
                     [array addObject:model];
                 }
+                [weakSelf.tableView.headerView setVarStar:weakSelf.varStar];
                 [weakSelf.tableView.headerView setAvgMajor:[NSString stringWithFormat:@"%.1f",[data[@"avgMajor"] floatValue]] avgPrice:[NSString stringWithFormat:@"%.1f",[data[@"avgPrice"] floatValue]] avgService:[NSString stringWithFormat:@"%.1f",[data[@"avgService"] floatValue]]];
                 if (weakSelf.pageNum == 1) {
                     [weakSelf.tableView.commentsArr removeAllObjects];

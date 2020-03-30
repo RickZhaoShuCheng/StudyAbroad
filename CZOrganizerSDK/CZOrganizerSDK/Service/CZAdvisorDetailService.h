@@ -60,6 +60,11 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *pageSize 数
  */
 -(void)requestForApiObjectCommentsFindObjectCommentsBySocId:(NSString *)socId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取商品信息
+ *productId 商品id
+ */
+-(void)requestForApiProductGetProductDetail:(NSString *)productId callBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

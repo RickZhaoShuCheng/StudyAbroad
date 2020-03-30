@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *smdVideo;
 @property (nonatomic , strong) NSString *userId;
 @property (nonatomic , strong) NSNumber *createTime;
-@property (nonatomic , strong) NSNumber *smdType;
+@property (nonatomic , strong) NSString *smdType;
 @property (nonatomic , strong) NSNumber *topicType;
 @property (nonatomic , strong) NSString *topicTitle;
 @property (nonatomic , strong) NSString *topicUserId;

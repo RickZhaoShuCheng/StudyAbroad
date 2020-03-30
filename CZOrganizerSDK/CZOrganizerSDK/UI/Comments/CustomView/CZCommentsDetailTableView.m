@@ -46,6 +46,7 @@
     if (model.level == 2) {
         CZCommentsDetailTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailTwoCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.model = model;
         return cell;
     }
     CZCommentsDetailMoreCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailMoreCell class]) forIndexPath:indexPath];
