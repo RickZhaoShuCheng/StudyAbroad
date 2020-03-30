@@ -692,6 +692,9 @@ typedef enum : NSUInteger {
     }
     
     //热门活动 TO DO
+    CZActivityListVC *listVC = [[CZActivityListVC alloc]init];
+    listVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:listVC animated:YES];
 }
 
 #pragma - mark CZHomeFilterViewDelegate
