@@ -104,7 +104,52 @@
     return @[smartSort,servicesSort,locationSort];
 }
 
+//增加地点筛选
+-(MenuAction *)addSelectCityAction
+{
+    MenuAction *locationSort = [MenuAction actionWithTitle:NSLocalizedString(@"地点", nil) style:MenuActionTypeCustom];
+    locationSort.tag = 1;
+    CZSelectCityViewController *vc = [[CZSelectCityViewController alloc] init];
+    vc.delegate = self;
+    locationSort.displayCustomWithMenu = ^UIView *{
+        return vc.view;
+    };
+    return locationSort;
+}
 
+//增加智能排序筛选
+-(MenuAction *)addSmartActionByData:(NSArray *)data
+{
+    MenuAction *smartSort = [MenuAction actionWithTitle:NSLocalizedString(@"智能排序", nil) style:MenuActionTypeList];
+    smartSort.ListDataSource = data;
+    return smartSort;
+}
+
+//增加服务类型
+-(MenuAction *)addServiceAction
+{
+    MenuAction *servicesSort = [MenuAction actionWithTitle:NSLocalizedString(@"服务类型", nil) style:MenuActionTypeList];
+    NSArray *services = [CZCommonInstance sharedInstance].servies;
+    NSMutableArray *datas2 = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < services.count; i++) {
+        NSString *name = [[services objectAtIndex:i] content1];
+        ItemModel *model = [ItemModel modelWithText:name  currentID:[@(i) stringValue] isSelect:NO];
+        [datas2 addObject:model];
+    }
+    
+    if (datas2.count >0) {
+        servicesSort.ListDataSource = datas2;
+    }
+    
+    return servicesSort;
+}
+
+//增加自定义筛选
+-(MenuAction *)addCustomFilterAction
+{
+    MenuAction *customFilterSort = [MenuAction actionWithTitle:NSLocalizedString(@"地点", nil) style:MenuActionTypeCustom];
+    return customFilterSort;
+}
 
 -(void)selectCity:(CZSCountryModel *)model viewController:(UIViewController *)vc
 {

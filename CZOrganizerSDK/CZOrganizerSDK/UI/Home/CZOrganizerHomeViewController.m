@@ -340,6 +340,7 @@ typedef enum : NSUInteger {
                 nameLabel.text = NSLocalizedString(@"留学达人", nil);
                 break;
             case CZTableSectionHotActivity:
+                header.tag = 1;
                 [self addMoreButton:header];
                 nameLabel.text = NSLocalizedString(@"热门活动", nil);
                 break;
@@ -479,6 +480,8 @@ typedef enum : NSUInteger {
 -(void)addMoreButton:(UIView *)view
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = view.tag;
+    [button addTarget:self action:@selector(actionForMore:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(view);
@@ -678,6 +681,17 @@ typedef enum : NSUInteger {
     UIViewController *controller = [QSClient instanceWebViewByOptions:@{@"url":model.url}];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+-(void)actionForMore:(UIButton *)btn
+{
+    //留学达人
+    if (!btn.tag) {
+        //TO DO
+        return;
+    }
+    
+    //热门活动 TO DO
 }
 
 #pragma - mark CZHomeFilterViewDelegate

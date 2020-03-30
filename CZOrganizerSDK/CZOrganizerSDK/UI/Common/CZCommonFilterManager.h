@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "DropMenuBar.h"
 
+
 typedef enum : NSUInteger {
     CZCommonFilterTypeCarefulyChoose,
     CZCommonFilterTypeDiary,
@@ -19,6 +20,12 @@ typedef enum : NSUInteger {
     CZCommonFilterTypeServiceThird,
     CZCommonFilterTypeServiceSchoolStar,
     CZCommonFilterTypeServiceDiary,
+    
+    CZCommonFilterTypeHomeCarefulyChoose,
+    CZCommonFilterTypeHomeDiary,
+    CZCommonFilterTypeHomeSchoolStar,
+    CZCommonFilterTypeHomeAdvisor,
+    CZCommonFilterTypeHomeOrganizer,
 
 } CZCommonFilterType;
 
