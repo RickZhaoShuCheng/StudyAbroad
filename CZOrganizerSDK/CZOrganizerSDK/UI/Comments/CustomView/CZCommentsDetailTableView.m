@@ -92,7 +92,13 @@
 - (CZCommentsDetailHeaderView *)headerView{
     if (!_headerView) {
         _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1340))];
+        [_headerView.goodsView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickGoods)]];
     }
     return _headerView;
+}
+- (void)clickGoods{
+    if (self.selectProductBlock) {
+        self.selectProductBlock(self.headerView.productModel);
+    }
 }
 @end

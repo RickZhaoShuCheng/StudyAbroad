@@ -219,10 +219,10 @@
         make.trailing.mas_equalTo (self.mas_trailing).offset(-ScreenScale(30));
     }];
     
-    UIView *goodsView = [[UIView alloc]init];
-    goodsView.backgroundColor = CZColorCreater(76, 182, 253, 0.05);
-    [self addSubview:goodsView];
-    [goodsView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.goodsView = [[UIView alloc]init];
+    self.goodsView.backgroundColor = CZColorCreater(76, 182, 253, 0.05);
+    [self addSubview:self.goodsView];
+    [self.goodsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
         make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(30));
         make.top.mas_equalTo(self.evaluateLab.mas_bottom).offset(ScreenScale(50));
@@ -230,11 +230,11 @@
     }];
     
     self.goodsImg = [[UIImageView alloc]init];
-    [goodsView addSubview:self.goodsImg];
+    [self.goodsView addSubview:self.goodsImg];
     [self.goodsImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(goodsView.mas_leading).offset(ScreenScale(18));
-        make.top.mas_equalTo(goodsView.mas_top).offset(ScreenScale(18));
-        make.bottom.mas_equalTo(goodsView.mas_bottom).offset(-ScreenScale(18));
+        make.leading.mas_equalTo(self.goodsView.mas_leading).offset(ScreenScale(18));
+        make.top.mas_equalTo(self.goodsView.mas_top).offset(ScreenScale(18));
+        make.bottom.mas_equalTo(self.goodsView.mas_bottom).offset(-ScreenScale(18));
         make.width.mas_equalTo(self.goodsImg.mas_height);
     }];
     
@@ -242,12 +242,12 @@
     self.goodsName.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.goodsName.textColor = CZColorCreater(0, 0, 0, 1);
     self.goodsName.numberOfLines = 2;
-    [goodsView addSubview:self.goodsName];
+    [self.goodsView addSubview:self.goodsName];
     [self.goodsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.goodsImg.mas_trailing).offset(ScreenScale(20));
         make.top.mas_equalTo(self.goodsImg.mas_top);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo (goodsView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo (self.goodsView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     self.organizerName = [[UILabel alloc]init];
@@ -259,7 +259,7 @@
         make.leading.mas_equalTo(self.goodsImg.mas_trailing).offset(ScreenScale(20));
         make.top.mas_equalTo(self.goodsName.mas_bottom).offset(ScreenScale(10));
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo (goodsView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo (self.goodsView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     
@@ -291,7 +291,7 @@
         make.leading.mas_equalTo(self.priceLab.mas_trailing).offset(ScreenScale(16));
         make.centerY.mas_equalTo(self.priceLab);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo (goodsView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo (self.goodsView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     UILabel *allCommentsLab = [[UILabel alloc]init];
@@ -301,7 +301,7 @@
     [self addSubview:allCommentsLab];
     [allCommentsLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
-        make.top.mas_equalTo(goodsView.mas_bottom).offset(ScreenScale(48));
+        make.top.mas_equalTo(self.goodsView.mas_bottom).offset(ScreenScale(48));
         make.width.height.mas_greaterThanOrEqualTo(0);
     }];
     

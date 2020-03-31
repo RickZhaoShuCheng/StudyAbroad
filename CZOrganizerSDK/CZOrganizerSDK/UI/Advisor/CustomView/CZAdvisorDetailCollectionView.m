@@ -183,6 +183,10 @@
         if (self.selectCommentBlock) {
             self.selectCommentBlock([CZCommentModel modelWithDict:self.model.commentList[indexPath.row]]);
         }
+    }else if (indexPath.section == 1){
+        if (self.selectProductBlock) {
+            self.selectProductBlock([CZProductVoListModel modelWithDict:self.model.productVoList[indexPath.row]]);
+        }
     }
 }
 
@@ -298,7 +302,7 @@
         if (indexPath.section == 0) {
             return nil;
         }else if (indexPath.section == 1){
-            footer.titleStr = [NSString stringWithFormat:@"查看全部%lu个商品",(unsigned long)self.model.productVoList.count];
+            footer.titleStr = [NSString stringWithFormat:@"查看全部%lu个项目",(unsigned long)self.model.productVoList.count];
             footer.backgroundColor = CZColorCreater(245, 245, 249, 1);
             footer.lineView.hidden = YES;
         }else if (indexPath.section == 2){

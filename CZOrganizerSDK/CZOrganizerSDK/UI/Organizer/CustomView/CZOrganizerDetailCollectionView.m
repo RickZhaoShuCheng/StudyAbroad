@@ -133,6 +133,12 @@
     }else if (indexPath.section == 2){
         CZOrganizerDetailAdvisorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailAdvisorCell class]) forIndexPath:indexPath];
         cell.dataArr = self.model.advisorArray;
+        WEAKSELF
+        cell.selectAdvisorBlock = ^(CZAdvisorModel * _Nonnull model) {
+            if (weakSelf.selectAdvisorBlock) {
+                weakSelf.selectAdvisorBlock(model);
+            }
+        };
         return cell;
     }else if (indexPath.section == 3){
         CZOrganizerDetailDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailDiaryCell class]) forIndexPath:indexPath];

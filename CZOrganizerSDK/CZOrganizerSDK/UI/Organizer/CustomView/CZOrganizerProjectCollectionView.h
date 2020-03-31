@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CZProductVoListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerProjectCollectionView : UICollectionView
 @property (nonatomic ,strong) NSMutableArray *dataArr;
+//点击服务项目
+@property (nonatomic ,copy) void (^selectProductBlock)(CZProductVoListModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

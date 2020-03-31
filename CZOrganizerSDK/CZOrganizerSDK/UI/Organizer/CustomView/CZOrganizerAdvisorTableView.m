@@ -42,6 +42,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.selectAdvisorBlock) {
+        self.selectAdvisorBlock([CZAdvisorModel modelWithDict:self.dataArr[indexPath.section]]);
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -57,6 +60,7 @@
     footerView.backgroundColor = CZColorCreater(245, 245, 249, 1);
     return footerView;
 }
+
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
 
     CGFloat sectionFooterHeight = ScreenScale(20);

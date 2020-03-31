@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) SDCycleScrollView *cycleScrollView;
 @property (nonatomic ,strong) CZCommentModel *model;
 @property (nonatomic ,strong) CZProductModel *productModel;
-
+@property (nonatomic ,strong) UIView *goodsView;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,6 +12,7 @@
 #import "CZAdvisorDetailCollectionFooterView.h"
 #import "CZAdvisorInfoModel.h"
 #import "CZCommentModel.h"
+#import "CZProductVoListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDetailCollectionView : UICollectionView
@@ -38,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void (^selectCommentIndex)(NSInteger index);
 //点击评价
 @property (nonatomic ,copy) void (^selectCommentBlock)(CZCommentModel *model);
+//点击服务项目
+@property (nonatomic ,copy) void (^selectProductBlock)(CZProductVoListModel *model);
 //设置日记筛选项
 - (void)setDiaryFilter:(NSString *)filterStr;
 //设置评价筛选项

@@ -168,7 +168,12 @@
     for (int i = 0; i < self.titleArr.count; i++) {
         if (controllerClassNames.count > i) {
             UIViewController *baseVC = [[NSClassFromString(controllerClassNames[i]) alloc] init];
-            baseVC.title = self.organId;
+            if (i != 0) {
+                id caseType = [baseVC performSelector:@selector(caseType)];
+                caseType = @"1";
+                id idStr = [baseVC performSelector:@selector(idStr)];
+                idStr = self.organId;
+            }
             [self addChildViewController:baseVC];
         //控制器本来自带childViewControllers,但是遗憾的是该数组的元素顺序永远无法改变，只要是addChildViewController,都是添加到最后一个，而控制器不像数组那样，可以插入或删除任意位置，所以这里自己定义可变数组，以便插入(删除)(如果没有插入(删除)功能，直接用自带的childViewControllers即可)
             [self.myChildViewControllers addObject:baseVC];

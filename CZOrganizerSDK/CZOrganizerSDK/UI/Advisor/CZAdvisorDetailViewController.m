@@ -15,6 +15,9 @@
 #import "CZOrganizerVC.h"
 #import "AdvisorDynamicVC.h"
 #import "CZCommentsDetailVC.h"
+#import "CZOrganizerProjectVC.h"
+#import "QSClient.h"
+#import "CZOrganizerDiaryVC.h"
 
 @interface CZAdvisorDetailViewController ()
 @property (nonatomic ,strong)CZAdvisorDetailCollectionView *collectionView;
@@ -56,8 +59,16 @@
     [self.collectionView setClickAllBlock:^(NSInteger index) {
         if (index == 1) {
             //服务项目
+            CZOrganizerProjectVC *projectVC = [[CZOrganizerProjectVC alloc]init];
+            projectVC.caseType = @"2";
+            projectVC.idStr = weakSelf.counselorId;
+            [weakSelf.navigationController pushViewController:projectVC animated:YES];
         }else if (index == 2){
             //精华日记
+            CZOrganizerDiaryVC *diaryVC = [[CZOrganizerDiaryVC alloc]init];
+            diaryVC.caseType = @"2";
+            diaryVC.idStr = weakSelf.counselorId;
+            [weakSelf.navigationController pushViewController:diaryVC animated:YES];
         }else if (index == 3){
             //优秀评价
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
@@ -99,6 +110,11 @@
         detailVC.idStr = model.socId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
+    //点击项目
+    [self.collectionView setSelectProductBlock:^(CZProductVoListModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
     
     //滚动时设置导航条透明度
     [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
@@ -135,25 +151,6 @@
         }
     }];
 }
-//测试标签
--(void)testTags{
-    NSMutableArray *arr = [NSMutableArray array];
-    [arr addObject:@"留学5年"];
-    [arr addObject:@"擅长澳洲留学问答"];
-    [arr addObject:@"留学之家2019年问答排名第一"];
-    [arr addObject:@"留学之家2019年问答排名第一"];
-
-    [self.collectionView.headerView setTags:arr];
-    CGRect frame = self.collectionView.headerView.bgImg.frame;
-    CGFloat maxY = self.collectionView.headerView.tagList.frame.origin.y + self.collectionView.headerView.tagList.frame.size.height;
-    if (maxY >= self.collectionView.headerView.bgImg.frame.size.height) {
-        frame.size.height = frame.size.height + self.collectionView.headerView.tagList.contentHeight;
-        self.collectionView.tagListHeight = self.collectionView.headerView.tagList.contentHeight;
-        self.collectionView.headerView.bgImg.frame = frame;
-        [self.collectionView reloadData];
-    }
-}
-
 /**
  获取顾问详情
  */
@@ -308,7 +305,7 @@
     return _collectionView;
 }
 - (void)rbackItemClick{
-    [self testTags];
+    
 }
 
 //返回

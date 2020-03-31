@@ -14,6 +14,7 @@
 #import "CZDiaryModel.h"
 
 @interface CZOrganizerDiaryVC ()
+@property (nonatomic ,strong) UIButton *backBtn;//返回按钮
 @property (nonatomic ,strong) CZOrganizerDiaryCollectionView *collectionView;
 @property (nonatomic ,assign) NSInteger pageNum;
 @end
@@ -22,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"全部日记";
     self.pageNum = 1;
     [self initWithUI];
     WEAKSELF
@@ -33,6 +35,12 @@
         weakSelf.pageNum ++;
         [weakSelf requestForApiDiaryFindCaseListByFilter:1];
     }];
+    
+    //日记筛选
+    [self.collectionView setSelectDiaryIndex:^(NSInteger index) {
+        [weakSelf requestForApiDiaryFindCaseListByFilter:index+1];
+    }];
+    
     [self requestForApiDiaryFindCaseListByFilter:1];
 }
 
@@ -42,7 +50,7 @@
 - (void)requestForApiDiaryFindCaseListByFilter:(NSInteger)index{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service requestForApiDiaryFindCaseListByFilter:@"1" idStr:self.title filterSum:index pageNum:self.pageNum pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiDiaryFindCaseListByFilter:self.caseType idStr:self.idStr filterSum:index pageNum:self.pageNum pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -86,6 +94,14 @@
  */
 - (void)initWithUI{
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    //返回按钮
+    self.backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//baise_fanhui@2x  tong_yong_fan_hui
+    [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+    [self.backBtn addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithCustomView:self.backBtn];
+    self.navigationItem.leftBarButtonItem = backItem;
+    
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
@@ -101,4 +117,8 @@
     return _collectionView;
 }
 
+//返回
+-(void)actionForBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

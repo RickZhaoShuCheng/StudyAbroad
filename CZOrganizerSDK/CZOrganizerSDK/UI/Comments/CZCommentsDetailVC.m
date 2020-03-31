@@ -12,6 +12,7 @@
 #import "QSCommonService.h"
 #import "CZMJRefreshHelper.h"
 #import "CZProductModel.h"
+#import "QSClient.h"
 @interface CZCommentsDetailVC ()
 @property (nonatomic ,strong)UILabel *titleLab;//标题
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
@@ -73,6 +74,11 @@
     self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageNum ++;
         [weakSelf requestForApiObjectCommentsFindObjectCommentsBySocId];
+    }];
+    
+    [self.tableView setSelectProductBlock:^(CZProductModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
     }];
 }
 //获取评价详情
