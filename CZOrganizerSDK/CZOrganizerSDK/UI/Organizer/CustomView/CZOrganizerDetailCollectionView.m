@@ -196,6 +196,11 @@
         if (self.selectCommentBlock) {
             self.selectCommentBlock([CZCommentModel modelWithDict:self.model.commentList[indexPath.row]]);
         }
+    }else if (indexPath.section == 1){
+        CZProductVoListModel *model = self.model.productVoList[indexPath.row];
+        if (self.selectProductBlock) {
+            self.selectProductBlock(model);
+        }
     }
 }
 

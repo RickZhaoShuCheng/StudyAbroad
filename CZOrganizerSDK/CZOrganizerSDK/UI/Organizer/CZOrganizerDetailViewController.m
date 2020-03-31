@@ -13,6 +13,7 @@
 #import "CZAdvisorDetailService.h"
 #import "CZProductVoListModel.h"
 #import "CZCommentsDetailVC.h"
+#import "QSClient.h"
 
 @interface CZOrganizerDetailViewController ()
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
@@ -81,6 +82,11 @@
         CZCommentsDetailVC *detailVC = [[CZCommentsDetailVC alloc]init];
         detailVC.idStr = model.socId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    }];
+    
+    [self.collectionView setSelectProductBlock:^(CZProductVoListModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
     }];
 }
 

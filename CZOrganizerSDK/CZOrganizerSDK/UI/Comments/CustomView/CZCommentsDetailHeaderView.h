@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SDCycleScrollView.h"
 #import "CZCommentModel.h"
+#import "CZProductModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCommentsDetailHeaderView : UIView
 @property (nonatomic ,strong) SDCycleScrollView *cycleScrollView;
 @property (nonatomic ,strong) CZCommentModel *model;
+@property (nonatomic ,strong) CZProductModel *productModel;
 
 @end
 

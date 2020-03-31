@@ -39,6 +39,7 @@
     [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 1)];
     [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(1, str.length-1)];
     self.priceLab.attributedText = str;
+    self.distanceLab.text =[NSString stringWithFormat:@"%.2f" , model.distance.floatValue];
 }
 
 - (void)initWithUI{
@@ -66,7 +67,7 @@
     
     self.titleLab = [[UILabel alloc]init];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(28)];
-    self.titleLab.text = @"精品预告名师1V1定制咨询30分钟";
+    self.titleLab.text = @"-";
     self.titleLab.numberOfLines = 2;
     self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
     [self.bgView addSubview:self.titleLab];
@@ -79,7 +80,7 @@
     
     self.distanceLab = [[UILabel alloc]init];
     self.distanceLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
-    self.distanceLab.text = @"6.98km";
+    self.distanceLab.text = @"-";
     self.distanceLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.distanceLab.textAlignment = NSTextAlignmentRight;
     [self.bgView addSubview:self.distanceLab];
@@ -92,7 +93,7 @@
     
     self.addressLab = [[UILabel alloc]init];
     self.addressLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
-    self.addressLab.text = @"海牛留学工作室";
+    self.addressLab.text = @"-";
     self.addressLab.textColor = CZColorCreater(129, 129, 146, 1);
     [self.bgView addSubview:self.addressLab];
     [self.addressLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,13 +102,9 @@
         make.bottom.mas_equalTo(self.bgView.mas_bottom).offset(-ScreenScale(20));
         make.height.mas_greaterThanOrEqualTo(0);
     }];
-    
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"¥4555"];
-    [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 1)];
-    [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(1, str.length-1)];
-    
+    [self.distanceLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+
     self.priceLab = [[UILabel alloc]init];
-    self.priceLab.attributedText = str;
     self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);
     [self.bgView addSubview:self.priceLab];
     [self.priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -118,7 +115,7 @@
     
     self.countLab = [[UILabel alloc]init];
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
-    self.countLab.text = @"15人付款";
+    self.countLab.text = @"-人付款";
     self.countLab.textColor = CZColorCreater(183, 183, 196, 1);
     [self.bgView addSubview:self.countLab];
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {

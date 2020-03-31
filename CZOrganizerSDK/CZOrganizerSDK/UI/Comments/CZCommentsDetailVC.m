@@ -11,6 +11,7 @@
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 #import "CZMJRefreshHelper.h"
+#import "CZProductModel.h"
 @interface CZCommentsDetailVC ()
 @property (nonatomic ,strong)UILabel *titleLab;//标题
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
@@ -84,7 +85,7 @@
                 weakSelf.tableView.headerView.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(1340));
                 CZCommentModel *model = [CZCommentModel modelWithDict:data[@"myDynamicCommentsVo"]];
                 //获取商品信息
-                [weakSelf requestForApiProductGetProductDetail:model.orderId];
+                [weakSelf requestForApiProductGetProductDetail:model.objId];
 //                model.comment = @"操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功";
                 model.commentHeight = [weakSelf getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
                 weakSelf.tableView.headerView.model = model;
@@ -133,7 +134,8 @@
     [service requestForApiProductGetProductDetail:productId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"....%@",data);
+                CZProductModel *model = [CZProductModel modelWithDict:data];
+                weakSelf.tableView.headerView.productModel = model;
             });
         }
     }];

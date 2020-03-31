@@ -9,6 +9,9 @@
 #import "ActivityDetailVC.h"
 #import "ActivityDetailScrollView.h"
 #import "ActivityDetailTableView.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
+#import "CZActivityModel.h"
 
 @interface ActivityDetailVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
@@ -59,6 +62,7 @@
     self.alpha = 0.0;
     [self initWithUI];
     [self addActionHandle];
+    [self requestForApiProductActivitySelectProductActivityInfo:self.activityId];
 }
 
 - (void)addActionHandle{
@@ -119,7 +123,19 @@
 //        }
     }];
 }
-
+//获取商品详情
+- (void)requestForApiProductActivitySelectProductActivityInfo:(NSString *)productId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiProductActivitySelectProductActivityInfo:productId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CZActivityModel *model = [CZActivityModel modelWithDict:data];
+                NSLog(@"....");
+            });
+        }
+    }];
+}
 /**
  * 初始化UI
  */
