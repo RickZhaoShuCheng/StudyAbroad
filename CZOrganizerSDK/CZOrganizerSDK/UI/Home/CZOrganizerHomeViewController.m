@@ -38,6 +38,7 @@
 #import "CZAllBoardViewController.h"
 #import "CZActivityListVC.h"
 #import "ActivityDetailVC.h"
+#import "CZMoreSchoolStarVC.h"
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 50;
 
@@ -689,6 +690,10 @@ typedef enum : NSUInteger {
     //留学达人
     if (!btn.tag) {
         //TO DO
+        
+        CZMoreSchoolStarVC *moreVC = [[CZMoreSchoolStarVC alloc]init];
+        moreVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:moreVC animated:YES];
         return;
     }
     
