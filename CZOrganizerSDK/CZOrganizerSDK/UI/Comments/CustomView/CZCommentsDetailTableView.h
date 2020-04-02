@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CZCommentsDetailHeaderView.h"
+#import "CZProductModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCommentsDetailTableView : UITableView
@@ -17,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 滚动值
  */
 @property (nonatomic,copy) void (^scrollContentSize)(CGFloat offsetY);
+//点击商品
+@property (nonatomic ,copy) void (^selectProductBlock)(CZProductModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

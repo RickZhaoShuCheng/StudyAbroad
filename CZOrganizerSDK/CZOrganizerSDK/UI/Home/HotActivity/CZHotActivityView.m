@@ -8,6 +8,7 @@
 
 #import "CZHotActivityView.h"
 #import "CZHotActivityCell.h"
+#import "CZActivityModel.h"
 
 @interface CZHotActivityView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -37,8 +38,9 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    CZActivityModel *model = self.dataArr[indexPath.row];
     if (self.selectedBlock) {
-        self.selectedBlock(@"");
+        self.selectedBlock(model.productActivityId);
     }
 }
 

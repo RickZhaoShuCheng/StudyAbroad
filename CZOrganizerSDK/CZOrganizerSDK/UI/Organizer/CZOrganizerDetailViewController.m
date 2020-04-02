@@ -13,6 +13,11 @@
 #import "CZAdvisorDetailService.h"
 #import "CZProductVoListModel.h"
 #import "CZCommentsDetailVC.h"
+#import "QSClient.h"
+#import "CZOrganizerProjectVC.h"
+#import "CZOrganizerAdvisorVC.h"
+#import "CZOrganizerDiaryVC.h"
+#import "CZAdvisorDetailViewController.h"
 
 @interface CZOrganizerDetailViewController ()
 @property (nonatomic ,strong)UIButton *chatBtn;//咨询按钮
@@ -47,15 +52,28 @@
     [self.collectionView setClickAllBlock:^(NSInteger index) {
         if (index == 1) {
             //为您推荐
+            CZOrganizerProjectVC *projectVC = [[CZOrganizerProjectVC alloc]init];
+            projectVC.caseType = @"1";
+            projectVC.idStr = weakSelf.organId;
+            [weakSelf.navigationController pushViewController:projectVC animated:YES];
         }else if (index == 2){
             //顾问团队
+            CZOrganizerAdvisorVC *advisorVC = [[CZOrganizerAdvisorVC alloc]init];
+            advisorVC.caseType = @"1";
+            advisorVC.idStr = weakSelf.organId;
+            [weakSelf.navigationController pushViewController:advisorVC animated:YES];
         }else if (index == 3){
             //精华日记
+            CZOrganizerDiaryVC *diaryVC = [[CZOrganizerDiaryVC alloc]init];
+            diaryVC.caseType = @"1";
+            diaryVC.idStr = weakSelf.organId;
+            [weakSelf.navigationController pushViewController:diaryVC animated:YES];
         }else if (index == 4){
             //优秀评价
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
             commentsList.idStr = weakSelf.organId;
             commentsList.commentsType = @"1";
+            commentsList.varStar = weakSelf.collectionView.model.valStar;
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];
@@ -79,6 +97,17 @@
     [self.collectionView setSelectCommentBlock:^(CZCommentModel * _Nonnull model) {
         CZCommentsDetailVC *detailVC = [[CZCommentsDetailVC alloc]init];
         detailVC.idStr = model.socId;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    }];
+    //点击项目
+    [self.collectionView setSelectProductBlock:^(CZProductVoListModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
+    //点击顾问
+    [self.collectionView setSelectAdvisorBlock:^(CZAdvisorModel * _Nonnull model) {
+        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
+        detailVC.counselorId = model.counselorId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }

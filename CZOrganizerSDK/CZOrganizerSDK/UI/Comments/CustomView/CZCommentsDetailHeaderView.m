@@ -39,9 +39,32 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self initWithUI];
-        [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:@"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1782152781,1392496249&fm=26&gp=0.jpg"] placeholderImage:nil];
     }
     return self;
+}
+
+- (void)setProductModel:(CZProductModel *)productModel{
+    _productModel = productModel;
+    
+    [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(productModel.logo)] placeholderImage:nil];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:productModel.title];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = ScreenScale(15); // 调整行间距
+    NSRange range = NSMakeRange(0, [productModel.title length]);
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
+    self.goodsName.attributedText = attributedString;
+    self.organizerName.text = productModel.organName;
+    
+    NSString *price = [NSString stringWithFormat:@"¥%@",productModel.price];
+    NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc]initWithString:price];
+    [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
+    [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, priceStr.length -1)];
+    self.priceLab.attributedText = priceStr;
+    
+    NSString *oldPrice = [NSString stringWithFormat:@"¥%@",productModel.oldPrice];
+    NSMutableAttributedString *oldPriceStr = [[NSMutableAttributedString alloc]initWithString:oldPrice];
+    [oldPriceStr addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle)} range:NSMakeRange(0, oldPrice.length)];
+    self.oldPriceLab.attributedText = oldPriceStr;
 }
 
 - (void)setModel:(CZCommentModel *)model{
@@ -196,10 +219,10 @@
         make.trailing.mas_equalTo (self.mas_trailing).offset(-ScreenScale(30));
     }];
     
-    UIView *goodsView = [[UIView alloc]init];
-    goodsView.backgroundColor = CZColorCreater(76, 182, 253, 0.05);
-    [self addSubview:goodsView];
-    [goodsView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.goodsView = [[UIView alloc]init];
+    self.goodsView.backgroundColor = CZColorCreater(76, 182, 253, 0.05);
+    [self addSubview:self.goodsView];
+    [self.goodsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
         make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(30));
         make.top.mas_equalTo(self.evaluateLab.mas_bottom).offset(ScreenScale(50));
@@ -207,46 +230,40 @@
     }];
     
     self.goodsImg = [[UIImageView alloc]init];
-    [goodsView addSubview:self.goodsImg];
+    [self.goodsView addSubview:self.goodsImg];
     [self.goodsImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(goodsView.mas_leading).offset(ScreenScale(18));
-        make.top.mas_equalTo(goodsView.mas_top).offset(ScreenScale(18));
-        make.bottom.mas_equalTo(goodsView.mas_bottom).offset(-ScreenScale(18));
+        make.leading.mas_equalTo(self.goodsView.mas_leading).offset(ScreenScale(18));
+        make.top.mas_equalTo(self.goodsView.mas_top).offset(ScreenScale(18));
+        make.bottom.mas_equalTo(self.goodsView.mas_bottom).offset(-ScreenScale(18));
         make.width.mas_equalTo(self.goodsImg.mas_height);
     }];
     
     self.goodsName = [[UILabel alloc]init];
     self.goodsName.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.goodsName.textColor = CZColorCreater(0, 0, 0, 1);
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"学了就会用的思维导图课——思维导图世锦赛冠军总教练刘艳独家开讲"];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = ScreenScale(15); // 调整行间距
-    NSRange range = NSMakeRange(0, [@"学了就会用的思维导图课——思维导图世锦赛冠军总教练刘艳独家开讲" length]);
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
-    self.goodsName.attributedText = attributedString;
     self.goodsName.numberOfLines = 2;
-    [goodsView addSubview:self.goodsName];
+    [self.goodsView addSubview:self.goodsName];
     [self.goodsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.goodsImg.mas_trailing).offset(ScreenScale(20));
         make.top.mas_equalTo(self.goodsImg.mas_top);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo (goodsView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo (self.goodsView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     self.organizerName = [[UILabel alloc]init];
     self.organizerName.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.organizerName.textColor = CZColorCreater( 170, 170, 187, 1);
-    self.organizerName.text = @"海牛留学工作室";
+    self.organizerName.text = @"-";
     [self addSubview:self.organizerName];
     [self.organizerName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.goodsImg.mas_trailing).offset(ScreenScale(20));
         make.top.mas_equalTo(self.goodsName.mas_bottom).offset(ScreenScale(10));
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo (goodsView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo (self.goodsView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     
-    NSString *str = @"¥1229.00";
+    NSString *str = @"¥-";
     NSMutableAttributedString *tempStr = [[NSMutableAttributedString alloc]initWithString:str];
     [tempStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
     [tempStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, str.length -1)];
@@ -261,7 +278,7 @@
         make.bottom.mas_equalTo(self.goodsImg.mas_bottom);
     }];
     
-    NSString *str1 = @"¥1980.00";
+    NSString *str1 = @"¥-";
     NSMutableAttributedString *tempStr1 = [[NSMutableAttributedString alloc]initWithString:str1];
     [tempStr1 addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle)} range:NSMakeRange(0, str1.length)];
     
@@ -274,7 +291,7 @@
         make.leading.mas_equalTo(self.priceLab.mas_trailing).offset(ScreenScale(16));
         make.centerY.mas_equalTo(self.priceLab);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo (goodsView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo (self.goodsView.mas_trailing).offset(-ScreenScale(30));
     }];
     
     UILabel *allCommentsLab = [[UILabel alloc]init];
@@ -284,7 +301,7 @@
     [self addSubview:allCommentsLab];
     [allCommentsLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
-        make.top.mas_equalTo(goodsView.mas_bottom).offset(ScreenScale(48));
+        make.top.mas_equalTo(self.goodsView.mas_bottom).offset(ScreenScale(48));
         make.width.height.mas_greaterThanOrEqualTo(0);
     }];
     

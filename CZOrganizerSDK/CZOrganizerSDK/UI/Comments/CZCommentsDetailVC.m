@@ -11,6 +11,8 @@
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 #import "CZMJRefreshHelper.h"
+#import "CZProductModel.h"
+#import "QSClient.h"
 @interface CZCommentsDetailVC ()
 @property (nonatomic ,strong)UILabel *titleLab;//标题
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
@@ -73,8 +75,13 @@
         weakSelf.pageNum ++;
         [weakSelf requestForApiObjectCommentsFindObjectCommentsBySocId];
     }];
+    
+    [self.tableView setSelectProductBlock:^(CZProductModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
 }
-
+//获取评价详情
 - (void)requestForApiObjectCommentsFindObjectCommentsBySocId{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
@@ -83,6 +90,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.tableView.headerView.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(1340));
                 CZCommentModel *model = [CZCommentModel modelWithDict:data[@"myDynamicCommentsVo"]];
+                //获取商品信息
+                [weakSelf requestForApiProductGetProductDetail:model.objId];
 //                model.comment = @"操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功";
                 model.commentHeight = [weakSelf getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
                 weakSelf.tableView.headerView.model = model;
@@ -95,6 +104,13 @@
                     replyModel.commentHeight = [weakSelf getStringHeightWithText:replyModel.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
                     replyModel.level = 1;
                     [replyArr addObject:replyModel];
+                    if (replyModel.list.count > 0) {
+                        [replyModel.list enumerateObjectsUsingBlock:^(CZCommentModel *  _Nonnull obj1, NSUInteger idx, BOOL * _Nonnull stop) {
+                            model.commentHeight = [weakSelf getStringHeightWithText:[model.comment stringByAppendingFormat:@"回复%@ ",model.toUserNickName] font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(230)];
+                            obj1.level = 2;
+                            [replyArr addObject:obj1];
+                        }];
+                    }
                 }];
                 
                 if (weakSelf.pageNum == 1) {
@@ -113,6 +129,19 @@
                 }else{
                     [weakSelf.tableView.mj_footer endRefreshing];
                 }
+            });
+        }
+    }];
+}
+//获取商品详情
+- (void)requestForApiProductGetProductDetail:(NSString *)productId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiProductGetProductDetail:productId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CZProductModel *model = [CZProductModel modelWithDict:data];
+                weakSelf.tableView.headerView.productModel = model;
             });
         }
     }];

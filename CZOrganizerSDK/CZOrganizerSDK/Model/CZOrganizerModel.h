@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *serviceCount;
 @property (nonatomic , strong) NSNumber *askRanking;
 @property (nonatomic , strong) NSNumber *counselorCount;
-@property (nonatomic , strong) NSString *myDynamicVo;
+@property (nonatomic , strong) NSMutableArray *myDynamicVo;
 @property (nonatomic , strong) NSNumber *productCount;
 @property (nonatomic , strong) NSNumber *diaryCount;
 @property (nonatomic , strong) NSString *defaultCounselorVo;

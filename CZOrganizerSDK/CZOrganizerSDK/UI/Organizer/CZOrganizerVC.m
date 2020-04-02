@@ -82,7 +82,12 @@
             CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
             //改变图片的y值和高度即可
             rect.origin.y = offsetY;
-            rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight - offsetY;
+            //动态展示动态时，判断高度
+            if (baseVc.collectionView.model.myDynamicVo.count <= 0) {
+                rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight + ScreenScale(96) - offsetY;
+            }else{
+                rect.size.height = ScreenScale(540)+baseVc.collectionView.tagListHeight - offsetY;
+            }
             baseVc.collectionView.headerView.bgImg.frame = rect;
         }
         //悬浮
@@ -123,7 +128,7 @@
                 }else{
                     [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
                 }
-                
+                model.myDynamicVo = [NSMutableArray arrayWithObjects:@{@"smdType":@"1",@"diaryTitle":@"测试标题哈哈哈哈1",@"smdContent":@"标题嘿嘿嘿1"},@{@"smdType":@"4",@"diaryTitle":@"",@"smdContent":@"测试标题嘿嘿嘿2"},@{@"smdType":@"5",@"diaryTitle":@"测试标题哈哈哈哈3",@"smdContent":@"标题嘿嘿嘿3"}, nil];
                 CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
                 baseVc.collectionView.model = model;
                 baseVc.organId = model.organId;
@@ -163,7 +168,12 @@
     for (int i = 0; i < self.titleArr.count; i++) {
         if (controllerClassNames.count > i) {
             UIViewController *baseVC = [[NSClassFromString(controllerClassNames[i]) alloc] init];
-            baseVC.title = self.organId;
+            if (i != 0) {
+                id caseType = [baseVC performSelector:@selector(caseType)];
+                caseType = @"1";
+                id idStr = [baseVC performSelector:@selector(idStr)];
+                idStr = self.organId;
+            }
             [self addChildViewController:baseVC];
         //控制器本来自带childViewControllers,但是遗憾的是该数组的元素顺序永远无法改变，只要是addChildViewController,都是添加到最后一个，而控制器不像数组那样，可以插入或删除任意位置，所以这里自己定义可变数组，以便插入(删除)(如果没有插入(删除)功能，直接用自带的childViewControllers即可)
             [self.myChildViewControllers addObject:baseVC];

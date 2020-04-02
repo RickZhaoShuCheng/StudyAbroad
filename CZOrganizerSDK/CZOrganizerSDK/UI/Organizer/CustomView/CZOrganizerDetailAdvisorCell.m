@@ -49,6 +49,11 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 0;
 }
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.selectAdvisorBlock) {
+        self.selectAdvisorBlock([CZAdvisorModel modelWithDict:self.dataArr[indexPath.row]]);
+    }
+}
 
 - (void)initWithUI{
     

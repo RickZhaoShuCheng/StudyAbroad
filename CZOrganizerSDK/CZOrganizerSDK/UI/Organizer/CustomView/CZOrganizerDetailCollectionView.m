@@ -54,6 +54,9 @@
         self.tagListHeight = self.headerView.tagList.contentHeight;
         self.headerView.bgImg.frame = frame;
     }
+    if (model.myDynamicVo.count <= 0) {
+        self.tagListHeight = self.tagListHeight - ScreenScale(96);
+    }
     
     [self reloadData];
 }
@@ -130,6 +133,12 @@
     }else if (indexPath.section == 2){
         CZOrganizerDetailAdvisorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailAdvisorCell class]) forIndexPath:indexPath];
         cell.dataArr = self.model.advisorArray;
+        WEAKSELF
+        cell.selectAdvisorBlock = ^(CZAdvisorModel * _Nonnull model) {
+            if (weakSelf.selectAdvisorBlock) {
+                weakSelf.selectAdvisorBlock(model);
+            }
+        };
         return cell;
     }else if (indexPath.section == 3){
         CZOrganizerDetailDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailDiaryCell class]) forIndexPath:indexPath];
@@ -192,6 +201,11 @@
     if (indexPath.section == 4) {
         if (self.selectCommentBlock) {
             self.selectCommentBlock([CZCommentModel modelWithDict:self.model.commentList[indexPath.row]]);
+        }
+    }else if (indexPath.section == 1){
+        CZProductVoListModel *model = self.model.productVoList[indexPath.row];
+        if (self.selectProductBlock) {
+            self.selectProductBlock(model);
         }
     }
 }

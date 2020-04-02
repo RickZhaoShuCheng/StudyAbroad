@@ -46,6 +46,7 @@
     if (model.level == 2) {
         CZCommentsDetailTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailTwoCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.model = model;
         return cell;
     }
     CZCommentsDetailMoreCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailMoreCell class]) forIndexPath:indexPath];
@@ -91,7 +92,13 @@
 - (CZCommentsDetailHeaderView *)headerView{
     if (!_headerView) {
         _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1340))];
+        [_headerView.goodsView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickGoods)]];
     }
     return _headerView;
+}
+- (void)clickGoods{
+    if (self.selectProductBlock) {
+        self.selectProductBlock(self.headerView.productModel);
+    }
 }
 @end

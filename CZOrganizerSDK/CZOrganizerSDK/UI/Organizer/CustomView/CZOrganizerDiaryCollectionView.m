@@ -93,8 +93,14 @@
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if (kind == UICollectionElementKindSectionHeader) {
+        WEAKSELF
         self.headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CZOrganizerDiaryHeaderView class]) forIndexPath:indexPath];
         [self.headerView.arrowBtn addTarget:self action:@selector(openFilter:) forControlEvents:UIControlEventTouchUpInside];
+        [self.headerView.tagList didSelectItem:^(NSInteger index) {
+            if (weakSelf.selectDiaryIndex) {
+                weakSelf.selectDiaryIndex(index);
+            }
+        }];
         return self.headerView;
     }
     return nil;
