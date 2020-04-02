@@ -16,11 +16,17 @@
 #import "CZAdvisorDetailViewController.h"
 #import "CZOrganizerDetailViewController.h"
 #import "CZOrganizerVC.h"
+#import "CZSchoolStarModel.h"
+#import "DropMenuBar.h"
+#import "CZCommonFilterManager.h"
 
 @interface CZOrganizerListViewController ()
 
 @property (nonatomic ,strong) CZOrganizerListView *dataView;
 @property (nonatomic, assign) NSInteger pageIndex;
+@property (nonatomic, strong) CZHomeParam *param;
+@property (nonatomic, strong) DropMenuBar *menuScreeningView;
+@property (nonatomic, strong)CZCommonFilterManager *manager;
 
 @end
 
@@ -38,13 +44,18 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-//    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
-//    
-//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-//    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
-//    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
-//    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    if (!self.param) {
+        self.param = [[CZHomeParam alloc] init];
+    }
+    self.param.userId = [QSClient userId];
+    if (self.model) {
+        NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        self.param.productCategory = dic[@"productCategory"];
+    }
+    
+    [self createDefaultFilterMenu];
+
     
     self.dataView = [[CZOrganizerListView alloc] init];
     self.dataView.backgroundColor = [UIColor whiteColor];
@@ -53,7 +64,8 @@
         self.contentScrollView = self.dataView;
     }
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
+        make.left.right.mas_equalTo(0);
         make.bottom.mas_equalTo(!self.model?0:-100);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
@@ -134,6 +146,17 @@
     }];
 }
 
-
+-(void)createDefaultFilterMenu
+{
+    WEAKSELF
+    self.manager = [[CZCommonFilterManager alloc] init];
+    self.manager.param = self.param;
+    self.menuScreeningView = [self.manager actionsForType:self.model?CZCommonFilterTypeOrganizer:CZCommonFilterTypeHomeOrganizer];
+    [self.view addSubview:self.menuScreeningView];
+    self.manager.selectBlock = ^(CZHomeParam * _Nonnull param) {
+        weakSelf.pageIndex = 1;
+        [weakSelf requestForOrganizers];
+    };
+}
 @end
 

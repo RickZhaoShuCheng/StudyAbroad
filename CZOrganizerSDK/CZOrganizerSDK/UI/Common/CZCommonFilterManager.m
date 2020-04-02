@@ -46,6 +46,30 @@
         case CZCommonFilterTypeMoreActivity:
             actions = [self createMoreActivityActions];
             break;
+        case CZCommonFilterTypeHomeDiary:
+            actions = [self createHomeDiaryActions];
+            break;
+        case CZCommonFilterTypeDiary:
+            actions = [self createDiaryActions];
+            break;
+        case CZCommonFilterTypeHomeSchoolStar:
+            actions = [self createHomeSchoolStarActions];
+            break;
+        case CZCommonFilterTypeSchoolStar:
+            actions = [self createSchoolStarActions];
+            break;
+        case CZCommonFilterTypeHomeOrganizer:
+            actions = [self createHomeAdvisorAndOrganizerActions];
+            break;
+        case CZCommonFilterTypeOrganizer:
+            actions = [self createAdvisorAndOrganizerActions];
+            break;
+        case CZCommonFilterTypeHomeAdvisor:
+            actions = [self createHomeAdvisorAndOrganizerActions];
+            break;
+        case CZCommonFilterTypeAdvisor:
+            actions = [self createAdvisorAndOrganizerActions];
+            break;
         default:
             break;
     }
@@ -57,6 +81,121 @@
     self.menuScreeningView = menuScreeningView;
     return menuScreeningView;
 }
+
+-(NSArray *)createHomeAdvisorAndOrganizerActions
+{
+    MenuAction *locationSort = [self addCountryFilterAction];
+    
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    MenuAction *servicesSort = [self addServiceAction];
+    
+    MenuAction *customSort = [self addCustomFilterAction:NO];
+    
+    return @[locationSort , smartSort , servicesSort , customSort];
+}
+
+-(NSArray *)createAdvisorAndOrganizerActions
+{
+    MenuAction *locationSort = [self addCountryFilterAction];
+    
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+        
+    MenuAction *customSort = [self addCustomFilterAction:NO];
+    
+    return @[locationSort , smartSort , customSort];
+}
+
+-(NSArray *)createHomeSchoolStarActions
+{
+       
+    MenuAction *countrySort = [self addCountryFilterAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    MenuAction *servicesSort = [self addServiceAction];
+    
+    MenuAction *customSort = [self addCustomFilterAction:YES];
+
+    return @[countrySort,smartSort,servicesSort,customSort];
+}
+
+-(NSArray *)createSchoolStarActions
+{
+      
+    MenuAction *countrySort = [self addCountryFilterAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    MenuAction *customSort = [self addCustomFilterAction:YES];
+
+    return @[countrySort,smartSort,customSort];
+
+}
+
+-(NSArray *)createHomeDiaryActions
+{
+       
+    MenuAction *countrySort = [self addCountryFilterAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"最新日记", nil),NSLocalizedString(@"最新回复", nil),NSLocalizedString(@"最热日记", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    return @[countrySort,smartSort];
+}
+
+-(NSArray *)createDiaryActions
+{
+      
+    MenuAction *countrySort = [self addCountryFilterAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"最新日记", nil),NSLocalizedString(@"最新回复", nil),NSLocalizedString(@"最热日记", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    return @[countrySort,smartSort];
+
+}
+
 
 -(NSArray *)createMoreSchoolStarActions
 {

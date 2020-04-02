@@ -13,11 +13,16 @@
 #import "QSClient.h"
 #import "CZMJRefreshHelper.h"
 #import "CZDiaryModel.h"
+#import "DropMenuBar.h"
+#import "CZCommonFilterManager.h"
 
 @interface CZDiaryViewController ()
 
 @property (nonatomic ,strong) CZDiaryView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
+@property (nonatomic, strong) CZHomeParam *param;
+@property (nonatomic, strong) DropMenuBar *menuScreeningView;
+@property (nonatomic, strong)CZCommonFilterManager *manager;
 
 @end
 
@@ -35,6 +40,18 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (!self.param) {
+        self.param = [[CZHomeParam alloc] init];
+    }
+    self.param.userId = [QSClient userId];
+    if (self.model) {
+        NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        self.param.productCategory = dic[@"productCategory"];
+    }
+    
+    [self createDefaultFilterMenu];
+    
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat coverWidth = (screenWidth - 15*3)/2.0;
     
@@ -51,7 +68,8 @@
     }
     self.dataCollectionView.alwaysBounceVertical = YES;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
+        make.left.right.mas_equalTo(0);
         make.bottom.mas_equalTo(!self.model?0:-100);
     }];
     
@@ -65,12 +83,6 @@
         weakSelf.pageIndex += 1;
         [weakSelf requestForDiaryList];
     }];
-}
-
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    self.dataCollectionView.frame = self.view.bounds;
 }
 
 -(void)requestForDiaryList
@@ -128,6 +140,19 @@
         }
         
     }];
+}
+
+-(void)createDefaultFilterMenu
+{
+    WEAKSELF
+    self.manager = [[CZCommonFilterManager alloc] init];
+    self.manager.param = self.param;
+    self.menuScreeningView = [self.manager actionsForType:self.model?CZCommonFilterTypeDiary:CZCommonFilterTypeHomeDiary];
+    [self.view addSubview:self.menuScreeningView];
+    self.manager.selectBlock = ^(CZHomeParam * _Nonnull param) {
+        weakSelf.pageIndex = 1;
+        [weakSelf requestForDiaryList];
+    };
 }
 
 

@@ -13,8 +13,8 @@
 #import "CZSchoolStarViewController.h"
 #import "CZAdvisorViewController.h"
 #import "CZOrganizerListViewController.h"
-
 #import "SPPageMenu.h"
+#import "QSClient.h"
 
 @interface CZAllServiceSubViewController ()<SPPageMenuDelegate>
 @property (nonatomic , strong)CZPageScrollContentView *contentView;
@@ -55,7 +55,32 @@
     [leftButton addTarget:self action:@selector(actionForBack) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    UIButton *shopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    shopButton.frame = CGRectMake(0, 0, 30, 30);
+    [shopButton addTarget:self action:@selector(actionForShowCart) forControlEvents:UIControlEventTouchUpInside];
+    [shopButton setImage:[CZImageProvider imageNamed:@"zhu_ye_dao_hang_gou_wu_che_an_niu"] forState:UIControlStateNormal];
+    UIBarButtonItem *shopBarItem = [[UIBarButtonItem alloc] initWithCustomView:shopButton];
+    
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchButton.frame = CGRectMake(0, 0, 30, 30);
+    [searchButton addTarget:self action:@selector(actionForSearch) forControlEvents:UIControlEventTouchUpInside];
+    [searchButton setImage:[CZImageProvider imageNamed:@"sousuo_heise"] forState:UIControlStateNormal];
+    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    
+    self.navigationItem.rightBarButtonItems = @[shopBarItem , searchBarItem];
 }
+
+-(void)actionForShowCart
+{
+    [QSClient showCartInNavi:self.navigationController];
+}
+
+-(void)actionForSearch
+{
+    
+}
+
 
 
 // 子类化实现

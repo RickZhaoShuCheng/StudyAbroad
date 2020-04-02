@@ -13,11 +13,16 @@
 #import "QSCommonService.h"
 #import "QSClient.h"
 #import "CZSchoolStarModel.h"
+#import "DropMenuBar.h"
+#import "CZCommonFilterManager.h"
 
 @interface CZSchoolStarViewController ()
 
 @property (nonatomic ,strong) CZSchoolStarListView *dataView;
 @property (nonatomic, assign) NSInteger pageIndex;
+@property (nonatomic, strong) CZHomeParam *param;
+@property (nonatomic, strong) DropMenuBar *menuScreeningView;
+@property (nonatomic, strong)CZCommonFilterManager *manager;
 
 @end
 
@@ -35,6 +40,18 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (!self.param) {
+        self.param = [[CZHomeParam alloc] init];
+    }
+    self.param.userId = [QSClient userId];
+    if (self.model) {
+        NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        self.param.productCategory = dic[@"productCategory"];
+    }
+    
+    [self createDefaultFilterMenu];
+    
     self.dataView = [[CZSchoolStarListView alloc] init];
     self.dataView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataView];
@@ -42,7 +59,8 @@
         self.contentScrollView = self.dataView;
     }
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
+        make.left.right.mas_equalTo(0);
         make.bottom.mas_equalTo(!self.model?0:-100);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
@@ -115,5 +133,16 @@
     }];
 }
 
-
+-(void)createDefaultFilterMenu
+{
+    WEAKSELF
+    self.manager = [[CZCommonFilterManager alloc] init];
+    self.manager.param = self.param;
+    self.menuScreeningView = [self.manager actionsForType:self.model?CZCommonFilterTypeSchoolStar:CZCommonFilterTypeHomeSchoolStar];
+    [self.view addSubview:self.menuScreeningView];
+    self.manager.selectBlock = ^(CZHomeParam * _Nonnull param) {
+        weakSelf.pageIndex = 1;
+        [weakSelf requestForSchoolStars];
+    };
+}
 @end
