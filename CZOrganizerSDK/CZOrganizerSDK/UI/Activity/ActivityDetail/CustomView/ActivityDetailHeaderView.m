@@ -28,6 +28,27 @@
     }
     return self;
 }
+
+- (void)setModel:(CZActivityModel *)model{
+    _model = model;
+    NSMutableArray *imgsArr = [NSMutableArray array];
+    NSMutableArray *imgUrlArr = [NSMutableArray array];
+    if (model.banners.length) {
+        [imgsArr addObjectsFromArray:[model.banners componentsSeparatedByString:@","]];
+    }
+    [imgsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [imgUrlArr addObject:PIC_URL(obj)];
+    }];
+    self.cycleView.imageURLStringsGroup = imgUrlArr;
+    
+    self.nameLab.text = model.title;
+    if (model.status == 0) {
+        self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+    }else{
+        self.priceLab.text = @"免费";
+    }
+}
+
 /**
  * 初始化UI
  */
@@ -43,7 +64,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(32)];
     self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
-    self.nameLab.text = @"零基础达流利生活口语零基础达流利生活口语零基础达流利生活口语";
+    self.nameLab.text = @"-";
     [self addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self).offset(ScreenScale(30));
@@ -55,7 +76,7 @@
     self.priceLab = [[UILabel alloc]init];
     self.priceLab.font = [UIFont boldSystemFontOfSize:ScreenScale(32)];
     self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);
-    self.priceLab.text = @"¥7728";
+    self.priceLab.text = @"¥-";
     [self addSubview:self.priceLab];
     [self.priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self).offset(ScreenScale(30));

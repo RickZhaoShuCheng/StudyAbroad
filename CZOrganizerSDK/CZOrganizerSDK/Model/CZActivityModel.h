@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *extRangeUser;
 @property (nonatomic , strong) NSString *extOrganization;
 @property (nonatomic , strong) NSString *extAddress;
-@property (nonatomic , strong) NSString *status;
+@property (nonatomic , assign) NSInteger status;
 @property (nonatomic , strong) NSNumber *createTime;
 @property (nonatomic , strong) NSNumber *activityType;
 @property (nonatomic , strong) NSString *logo;

@@ -40,7 +40,7 @@
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     CZActivityModel *model = self.dataArr[indexPath.row];
     if (self.selectedBlock) {
-        self.selectedBlock(model.productActivityId);
+        self.selectedBlock(model.productId);
     }
 }
 
