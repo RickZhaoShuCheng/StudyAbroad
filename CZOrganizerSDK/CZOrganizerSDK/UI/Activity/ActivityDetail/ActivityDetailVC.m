@@ -131,7 +131,7 @@
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 CZActivityModel *model = [CZActivityModel modelWithDict:data];
-                NSLog(@"....");
+        
                 if (model.status == 0) {
                     weakSelf.isFree = NO;
                     weakSelf.isEnd = NO;
