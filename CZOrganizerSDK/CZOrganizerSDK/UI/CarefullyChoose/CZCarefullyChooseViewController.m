@@ -21,6 +21,7 @@
 @property (nonatomic ,strong) CZCarefullyChooseView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
 @property (nonatomic, strong) DropMenuBar *menuScreeningView;
+@property (nonatomic, strong) CZHomeParam *param;
 
 @property (nonatomic, strong)CZCommonFilterManager *manager;
 
@@ -80,17 +81,19 @@
 {
     WEAKSELF
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
-    CZHomeParam *param = [[CZHomeParam alloc] init];
-    param.userId = [QSClient userId];
-    param.serviceSource = @(1);
+    if (!self.param) {
+        self.param = [[CZHomeParam alloc] init];
+    }
+    self.param.userId = [QSClient userId];
+    self.param.serviceSource = @(1);
     if (self.model) {
         NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-        param.productCategory = dic[@"productCategory"];
+        self.param.productCategory = dic[@"productCategory"];
     }
-    param.pageNum = @(self.pageIndex);
-    param.pageSize = @(10);
-    [service requestForApiProductGetDefaultProductListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    self.param.pageNum = @(self.pageIndex);
+    self.param.pageSize = @(10);
+    [service requestForApiProductGetDefaultProductListByParam:self.param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         
         if (success) {
         
@@ -141,9 +144,15 @@
 
 -(void)createDefaultFilterMenu
 {
+    WEAKSELF
     self.manager = [[CZCommonFilterManager alloc] init];
+    self.manager.param = self.param;
     self.menuScreeningView = [self.manager actionsForType:self.model?CZCommonFilterTypeCarefulyChoose:CZCommonFilterTypeHomeCarefulyChoose];
     [self.view addSubview:self.menuScreeningView];
+    self.manager.selectBlock = ^(CZHomeParam * _Nonnull param) {
+        weakSelf.pageIndex = 1;
+        [weakSelf requestForCarefullyChoose];
+    };
 }
 
 @end

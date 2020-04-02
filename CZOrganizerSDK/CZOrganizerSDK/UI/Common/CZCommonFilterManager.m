@@ -69,7 +69,7 @@
 
 -(NSArray *)createMoreActivityActions
 {
-    return [self createMoreActivityActions];
+    return [self createServiceThirdActions];
 }
 
 -(NSArray *)createServiceThirdActions
