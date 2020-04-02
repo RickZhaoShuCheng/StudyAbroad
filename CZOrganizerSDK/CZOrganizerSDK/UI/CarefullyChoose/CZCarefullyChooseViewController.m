@@ -41,6 +41,17 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (!self.param) {
+        self.param = [[CZHomeParam alloc] init];
+    }
+    self.param.userId = [QSClient userId];
+    self.param.serviceSource = @(1);
+    if (self.model) {
+        NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        self.param.productCategory = dic[@"productCategory"];
+    }
+    
     [self createDefaultFilterMenu];
     
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
@@ -81,16 +92,6 @@
 {
     WEAKSELF
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
-    if (!self.param) {
-        self.param = [[CZHomeParam alloc] init];
-    }
-    self.param.userId = [QSClient userId];
-    self.param.serviceSource = @(1);
-    if (self.model) {
-        NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-        self.param.productCategory = dic[@"productCategory"];
-    }
     self.param.pageNum = @(self.pageIndex);
     self.param.pageSize = @(10);
     [service requestForApiProductGetDefaultProductListByParam:self.param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {

@@ -123,7 +123,7 @@
     self.lowPriceTextField = [[UITextField alloc] init];
     self.lowPriceTextField.textAlignment = NSTextAlignmentCenter;
     self.lowPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
-    [self.lowPriceTextField addTarget:self action:@selector(actionForLowPrice:) forControlEvents:UIControlEventValueChanged];
+    [self.lowPriceTextField addTarget:self action:@selector(actionForLowPrice:) forControlEvents:UIControlEventEditingChanged];
     [self addSubview:self.lowPriceTextField];
     self.lowPriceTextField.layer.masksToBounds = YES;
     self.lowPriceTextField.layer.cornerRadius = 5;
@@ -156,7 +156,7 @@
     self.highPriceTextField = [[UITextField alloc] init];
     self.highPriceTextField.textAlignment = NSTextAlignmentCenter;
     self.highPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
-    [self.highPriceTextField addTarget:self action:@selector(actionForHighPrice:) forControlEvents:UIControlEventValueChanged];
+    [self.highPriceTextField addTarget:self action:@selector(actionForHighPrice:) forControlEvents:UIControlEventEditingChanged];
     [self addSubview:self.highPriceTextField];
     self.highPriceTextField.layer.masksToBounds = YES;
     self.highPriceTextField.layer.cornerRadius = 5;

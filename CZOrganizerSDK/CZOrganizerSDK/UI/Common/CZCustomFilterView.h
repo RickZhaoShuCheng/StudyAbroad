@@ -13,6 +13,8 @@ typedef enum : NSUInteger {
     CZCustomFilteServiceTypePayed,
 } CZCustomFilteServiceType;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CZCustomFilterModel : NSObject
 
 @property (nonatomic , strong) NSNumber *type;
@@ -22,8 +24,6 @@ typedef enum : NSUInteger {
 @property (nonatomic , strong) NSString *highPrice;
 
 @end
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCustomFilterView : UIView
 
