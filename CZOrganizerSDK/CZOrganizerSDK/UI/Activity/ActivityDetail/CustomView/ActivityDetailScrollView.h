@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "SDCycleScrollView.h"
+#import "CZActivityModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ActivityDetailScrollView : UIScrollView
 @property (nonatomic ,strong) SDCycleScrollView *cycleView;
+@property (nonatomic ,strong) CZActivityModel *model;
 /**
  * 滚动值
  */

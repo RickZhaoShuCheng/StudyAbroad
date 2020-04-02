@@ -62,7 +62,7 @@
     self.alpha = 0.0;
     [self initWithUI];
     [self addActionHandle];
-    [self requestForApiProductActivitySelectProductActivityInfo:self.activityId];
+    [self requestForApiProductActivitySelectProductActivityInfo];
 }
 
 - (void)addActionHandle{
@@ -124,14 +124,27 @@
     }];
 }
 //获取商品详情
-- (void)requestForApiProductActivitySelectProductActivityInfo:(NSString *)productId{
+- (void)requestForApiProductActivitySelectProductActivityInfo{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service requestForApiProductActivitySelectProductActivityInfo:productId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiProductActivitySelectProductActivityInfo:self.activityId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 CZActivityModel *model = [CZActivityModel modelWithDict:data];
                 NSLog(@"....");
+                if (model.status == 0) {
+                    weakSelf.isFree = NO;
+                    weakSelf.isEnd = NO;
+                }else{
+                    weakSelf.isFree = YES;
+                    weakSelf.isEnd = YES;
+                }
+                
+                if (weakSelf.isEnd) {
+                    weakSelf.tableView.headerView.model = model;
+                }else{
+                    weakSelf.scrollView.model = model;
+                }
             });
         }
     }];
@@ -215,14 +228,21 @@
                 make.bottom.mas_equalTo(self.view.mas_bottom).offset(-ScreenScale(100));
             }
         }];
-//        [self addBottomView];
-        [self addFreeBottomView];
+        if (self.isFree) {
+            [self addFreeBottomView];
+        }else{
+            [self addBottomView];
+        }
     }
 }
 /**
  * 添加免费底部view
  */
 - (void)addFreeBottomView{
+    
+    if (_bottomView) {
+        [self.bottomView removeFromSuperview];
+    }
     self.freeBottomView = [[UIView alloc]init];
     self.freeBottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.freeBottomView];
@@ -269,6 +289,11 @@
  * 添加付费底部view
  */
 - (void)addBottomView{
+    
+    if (_freeBottomView) {
+        [self.freeBottomView removeFromSuperview];
+    }
+    
     self.bottomView = [[UIView alloc]init];
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.bottomView];

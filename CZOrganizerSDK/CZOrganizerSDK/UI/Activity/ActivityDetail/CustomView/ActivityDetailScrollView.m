@@ -24,17 +24,36 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
+        self.bounces = YES;
         self.backgroundColor = [UIColor whiteColor];
         [self initWithUI];
-        NSMutableArray *imgArr = [NSMutableArray arrayWithObjects:
-        @"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2261487146,3191619974&fm=26&gp=0.jpg",
-        @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584214058429&di=3b61a48930e0edaf6edfbefe6d84dcc9&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D1510410409%2C1802478552%26fm%3D214%26gp%3D0.jpg",
-        @"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=228295424,1615952080&fm=26&gp=0.jpg",
-        nil];
-        self.cycleView.imageURLStringsGroup = imgArr;
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]]];
     }
     return self;
+}
+
+- (void)setModel:(CZActivityModel *)model{
+    _model = model;
+    NSMutableArray *imgsArr = [NSMutableArray array];
+    NSMutableArray *imgUrlArr = [NSMutableArray array];
+    if (model.banners.length) {
+        [imgsArr addObjectsFromArray:[model.banners componentsSeparatedByString:@","]];
+    }
+    [imgsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [imgUrlArr addObject:PIC_URL(obj)];
+    }];
+    self.cycleView.imageURLStringsGroup = imgUrlArr;
+    
+    self.nameLab.text = model.title;
+    if (model.status == 0) {
+        self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+    }else{
+        self.priceLab.text = @"免费";
+    }
+    
+    self.crowdLab.text = [NSString stringWithFormat:@"适合人群：%@",model.extRangeUser];
+    self.organizerLab.text = [NSString stringWithFormat:@"组织机构：%@",model.extOrganization];
+    self.addressLab.text = [NSString stringWithFormat:@"地       址：%@",model.extAddress];
+    [self.webView loadHTMLString:model.desc baseURL:nil];
 }
 
 /**
@@ -51,7 +70,7 @@
         self.nameLab = [[UILabel alloc]init];
         self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(32)];
         self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
-        self.nameLab.text = @"零基础达流利生活口语零基础达流利生活口语零基础达流利生活口语";
+        self.nameLab.text = @"-";
         [self addSubview:self.nameLab];
         [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self).offset(ScreenScale(30));
@@ -63,7 +82,7 @@
         self.priceLab = [[UILabel alloc]init];
         self.priceLab.font = [UIFont boldSystemFontOfSize:ScreenScale(32)];
         self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);
-        self.priceLab.text = @"¥7728";
+        self.priceLab.text = @"¥-";
         [self addSubview:self.priceLab];
         [self.priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self).offset(ScreenScale(30));
@@ -144,7 +163,7 @@
         self.crowdLab = [[UILabel alloc]init];
         self.crowdLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
         self.crowdLab.textColor = CZColorCreater(129, 129, 146, 1);
-        self.crowdLab.text = @"适合人群：高中生及以上";
+        self.crowdLab.text = @"适合人群：-";
         [self addSubview:self.crowdLab];
         [self.crowdLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(70));
@@ -175,7 +194,7 @@
         self.organizerLab = [[UILabel alloc]init];
         self.organizerLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
         self.organizerLab.textColor = CZColorCreater(129, 129, 146, 1);
-        self.organizerLab.text = @"组织机构：留学之家&南京航空航天大学";
+        self.organizerLab.text = @"组织机构：-";
         [self addSubview:self.organizerLab];
         [self.organizerLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(70));
@@ -206,7 +225,7 @@
         self.addressLab = [[UILabel alloc]init];
         self.addressLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
         self.addressLab.textColor = CZColorCreater(129, 129, 146, 1);
-        self.addressLab.text = @"地       址：南京航空航天大学（将军路校区）大学生活动中心生活动中心生活动中心";
+        self.addressLab.text = @"地       址：-";
         [self addSubview:self.addressLab];
         [self.addressLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(70));
@@ -263,8 +282,11 @@
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
     CGFloat contentHeight = self.webView.scrollView.contentSize.height;
-    
-    self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + contentHeight);
+    if (contentHeight == 0) {
+        self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + ScreenScale(80));
+    }else{
+        self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + contentHeight);
+    }
     [self.webView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(contentHeight);
     }];
