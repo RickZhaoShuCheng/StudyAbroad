@@ -8,21 +8,30 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    CZCustomFilteServiceTypeCash,
+    CZCustomFilteServiceTypePayed,
+} CZCustomFilteServiceType;
+
 @interface CZCustomFilterModel : NSObject
 
-@property (nonatomic , assign) BOOL isCash;
+@property (nonatomic , strong) NSNumber *type;
 
-@property (nonatomic , assign) BOOL isPayed;
+@property (nonatomic , strong) NSString *lowPrice;
 
-@property (nonatomic , assign) CGFloat lowPrice;
-
-@property (nonatomic , assign) CGFloat highPrice;
+@property (nonatomic , strong) NSString *highPrice;
 
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCustomFilterView : UIView
+
+@property (nonatomic , strong) void (^select)(CZCustomFilterModel *model);
+
+-(void)layoutViews;
+
+-(void)layoutPriceView:(UIView *)targetView;
 
 @end
 

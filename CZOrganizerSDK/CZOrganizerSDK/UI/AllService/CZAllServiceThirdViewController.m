@@ -134,7 +134,7 @@
 -(void)createDefaultFilterMenu
 {
     self.manager = [[CZCommonFilterManager alloc] init];
-    self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeCarefulyChoose];
+    self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeServiceThird];
     [self.view addSubview:self.menuScreeningView];
 }
 

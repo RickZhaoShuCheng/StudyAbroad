@@ -83,6 +83,11 @@
     CZHomeParam *param = [[CZHomeParam alloc] init];
     param.userId = [QSClient userId];
     param.serviceSource = @(1);
+    if (self.model) {
+        NSData *data = [self.model.jsonParams dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        param.productCategory = dic[@"productCategory"];
+    }
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
     [service requestForApiProductGetDefaultProductListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
@@ -137,7 +142,7 @@
 -(void)createDefaultFilterMenu
 {
     self.manager = [[CZCommonFilterManager alloc] init];
-    self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeCarefulyChoose];
+    self.menuScreeningView = [self.manager actionsForType:self.model?CZCommonFilterTypeCarefulyChoose:CZCommonFilterTypeHomeCarefulyChoose];
     [self.view addSubview:self.menuScreeningView];
 }
 

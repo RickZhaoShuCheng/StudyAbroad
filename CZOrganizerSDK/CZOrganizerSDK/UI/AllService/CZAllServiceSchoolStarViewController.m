@@ -13,12 +13,14 @@
 #import "QSCommonService.h"
 #import "QSClient.h"
 #import "CZSchoolStarModel.h"
+#import "CZCommonFilterManager.h"
 
 @interface CZAllServiceSchoolStarViewController ()
 
 @property (nonatomic ,strong) CZAllServiceSchoolStarView *dataView;
 @property (nonatomic, assign) NSInteger pageIndex;
-
+@property (nonatomic, strong)CZCommonFilterManager *manager;
+@property (nonatomic, strong) DropMenuBar *menuScreeningView;
 @end
 
 @implementation CZAllServiceSchoolStarViewController
@@ -34,12 +36,14 @@
 -(void)initUI
 {
     self.view.backgroundColor = [UIColor whiteColor];
+    [self createDefaultFilterMenu];
     self.dataView = [[CZAllServiceSchoolStarView alloc] init];
     self.dataView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataView];
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-50);
+        make.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(CGRectGetMaxY(self.menuScreeningView.frame));
+        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame));
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     
@@ -111,5 +115,10 @@
     }];
 }
 
-
+-(void)createDefaultFilterMenu
+{
+    self.manager = [[CZCommonFilterManager alloc] init];
+    self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeServiceSchoolStar];
+    [self.view addSubview:self.menuScreeningView];
+}
 @end
