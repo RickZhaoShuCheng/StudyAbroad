@@ -13,11 +13,14 @@
 #import "QSClient.h"
 #import "CZMJRefreshHelper.h"
 #import "CZDiaryModel.h"
+#import "CZCommonFilterManager.h"
 
 @interface CZAllServiceDiaryViewController ()
 
 @property (nonatomic ,strong) CZDiaryView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
+@property (nonatomic, strong)CZCommonFilterManager *manager;
+@property (nonatomic, strong) DropMenuBar *menuScreeningView;
 
 @end
 
@@ -35,6 +38,8 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self createDefaultFilterMenu];
+    
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat coverWidth = (screenWidth - 15*3)/2.0;
     
@@ -48,8 +53,9 @@
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-50);
+        make.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(CGRectGetMaxY(self.menuScreeningView.frame));
+        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame));
     }];
     
     WEAKSELF
@@ -121,5 +127,11 @@
     }];
 }
 
+-(void)createDefaultFilterMenu
+{
+    self.manager = [[CZCommonFilterManager alloc] init];
+    self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeServiceDiary];
+    [self.view addSubview:self.menuScreeningView];
+}
 
 @end

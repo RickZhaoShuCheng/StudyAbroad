@@ -18,6 +18,8 @@
 // 多级列表时，存储下一级的数据。
 @property (nonatomic, strong) NSArray *dataSource;
 
+@property (nonatomic, strong) id jsonParam;
+
 + (instancetype) modelWithText:(NSString *)text currentID:(NSString *)currentID isSelect:(BOOL)select;
 
 @end

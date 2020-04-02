@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *majorId;
 @property (nonatomic , strong) NSNumber *productCategory;
 @property (nonatomic , strong) NSString *educationType;
-@property (nonatomic , strong) NSString *superviseType;
+@property (nonatomic , strong) NSNumber *superviseType;
 @property (nonatomic , strong) NSString *minPrice;
 @property (nonatomic , strong) NSString *maxPrice;
 @property (nonatomic , strong) NSNumber *pageNum;

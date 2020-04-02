@@ -12,6 +12,7 @@
 #import "CZCountryUtil.h"
 #import "CZCommonInstance.h"
 #import "CZSelectCityViewController.h"
+#import "CZCustomFilterView.h"
 
 @interface CZCommonFilterManager ()<DropMenuBarDelegate,CZSelectCityViewControllerDelegate>
 @property (nonatomic , strong)DropMenuBar *menuScreeningView;
@@ -21,55 +22,60 @@
 
 -(DropMenuBar *)actionsForType:(CZCommonFilterType)filterType
 {
-    NSArray *actions = [self createServiceThirdActions];
+    NSArray *actions = nil;
 
+    switch (filterType) {
+        case CZCommonFilterTypeServiceThird:
+            actions = [self createServiceThirdActions];
+            break;
+        case CZCommonFilterTypeServiceSchoolStar:
+            actions = [self createServiceSchoolStarActions];
+            break;
+        case CZCommonFilterTypeServiceDiary:
+            actions = [self createServiceDiaryActions];
+            break;
+        case CZCommonFilterTypeCarefulyChoose:
+            actions = [self createCarefulyChooseActions];
+            break;
+        case CZCommonFilterTypeHomeCarefulyChoose:
+            actions = [self createHomeCarefulyChooseActions];
+            break;
+        case CZCommonFilterTypeMoreSchoolStar:
+            actions = [self createMoreSchoolStarActions];
+            break;
+        case CZCommonFilterTypeMoreActivity:
+            actions = [self createMoreActivityActions];
+            break;
+        default:
+            break;
+    }
+    
     DropMenuBar *menuScreeningView = [[DropMenuBar alloc] initWithAction:actions];
     menuScreeningView.delegate = self;
     menuScreeningView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 45);
     menuScreeningView.backgroundColor = [UIColor whiteColor];
     self.menuScreeningView = menuScreeningView;
     return menuScreeningView;
-    
-//    MenuAction *smartSort = [MenuAction actionWithTitle:NSLocalizedString(@"智能排序", nil) style:MenuActionTypeList];
-//    smartSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-//        NSLog(@"1111 === %@", selecModel.displayText);
-//    };
-//
-//    NSMutableArray *countrys = [[NSMutableArray alloc] init];
-//    NSMutableArray *countryDatas = [CZCountryUtil sharedInstance].datas;
-//    for (int i = 0; i < countryDatas.count; i++) {
-//        CZSCountryModel *country = countryDatas[i];
-//        BOOL select = i == 0;
-//        ItemModel *model = [ItemModel modelWithText:country.country.area_name currentID:country.country.ID isSelect:select];
-//        [countrys addObject:model];
-//    }
-//
-//    MenuAction *countrySort = [MenuAction actionWithTitle:NSLocalizedString(@"国家", nil) style:MenuActionTypeList];
-//    countrySort.ListDataSource = countrys;
-//    countrySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-//        NSLog(@"1111 === %@", selecModel.displayText);
-//    };
-//
-//    MenuAction *profassionnalSort = [MenuAction actionWithTitle:NSLocalizedString(@"专业", nil) style:MenuActionTypeList];
-//    profassionnalSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-//        NSLog(@"1111 === %@", selecModel.displayText);
-//    };
-//
-//    MenuAction *citySort = [MenuAction actionWithTitle:NSLocalizedString(@"城市", nil) style:MenuActionTypeList];
-//    citySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-//        NSLog(@"1111 === %@", selecModel.displayText);
-//    };
-//
-//    MenuAction *filterSort = [MenuAction actionWithTitle:NSLocalizedString(@"筛选", nil) style:MenuActionTypeList];
-//    filterSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
-//        NSLog(@"1111 === %@", selecModel.displayText);
-//    };
-//
-//    return @[smartSort,citySort,countrySort,profassionnalSort,filterSort];
+}
+
+-(NSArray *)createMoreSchoolStarActions
+{
+    MenuAction *locationSort = [self addSelectCityAction];
+
+    MenuAction *customSort = [self addCustomFilterAction:NO];
+
+    return @[locationSort,customSort];
+}
+
+-(NSArray *)createMoreActivityActions
+{
+    return [self createMoreActivityActions];
 }
 
 -(NSArray *)createServiceThirdActions
 {
+    MenuAction *locationSort = [self addSelectCityAction];
+
     NSMutableArray *datas = [[NSMutableArray alloc] init];
     NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
     for (NSInteger i = 0; i < titles.count; i++) {
@@ -77,32 +83,76 @@
         [datas addObject:model];
     }
     
-    MenuAction *smartSort = [MenuAction actionWithTitle:NSLocalizedString(@"智能排序", nil) style:MenuActionTypeList];
-    smartSort.ListDataSource = datas;
+    MenuAction *smartSort = [self addSmartActionByData:datas];
     
-    MenuAction *servicesSort = [MenuAction actionWithTitle:NSLocalizedString(@"服务类型", nil) style:MenuActionTypeList];
-    NSArray *services = [CZCommonInstance sharedInstance].servies;
-    NSMutableArray *datas2 = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < services.count; i++) {
-        NSString *name = [[services objectAtIndex:i] content1];
-        ItemModel *model = [ItemModel modelWithText:name  currentID:[@(i) stringValue] isSelect:NO];
-        [datas2 addObject:model];
-    }
+    MenuAction *servicesSort = [self addServiceAction];
     
-    if (datas2.count >0) {
-        servicesSort.ListDataSource = datas2;
-    }
-        
-    MenuAction *locationSort = [MenuAction actionWithTitle:NSLocalizedString(@"地点", nil) style:MenuActionTypeCustom];
-    locationSort.tag = 1;
-    CZSelectCityViewController *vc = [[CZSelectCityViewController alloc] init];
-    vc.delegate = self;
-    locationSort.displayCustomWithMenu = ^UIView *{
-        return vc.view;
-    };
-    
-    return @[smartSort,servicesSort,locationSort];
+    MenuAction *customSort = [self addCustomFilterAction:NO];
+
+    return @[locationSort,smartSort,servicesSort,customSort];
 }
+
+-(NSArray *)createServiceSchoolStarActions
+{
+    MenuAction *countrySort = [self addCountryFilterAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    MenuAction *servicesSort = [self addServiceAction];
+    
+    MenuAction *customSort = [self addCustomFilterAction:YES];
+
+    return @[countrySort,smartSort,servicesSort,customSort];
+}
+
+-(NSArray *)createServiceDiaryActions
+{
+    MenuAction *countrySort = [self addCountryFilterAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"最新日记", nil),NSLocalizedString(@"最新回复", nil),NSLocalizedString(@"最热日记", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+    
+    MenuAction *schoolSort = [self addServiceAction];
+    
+    return @[countrySort,smartSort,schoolSort];
+}
+
+- (NSArray *)createHomeCarefulyChooseActions
+{
+    return [self createServiceThirdActions];
+}
+
+- (NSArray *)createCarefulyChooseActions
+{
+    MenuAction *locationSort = [self addSelectCityAction];
+
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
+        
+    MenuAction *customSort = [self addCustomFilterAction:NO];
+
+    return @[locationSort,smartSort,customSort];
+}
+
 
 //增加地点筛选
 -(MenuAction *)addSelectCityAction
@@ -120,8 +170,15 @@
 //增加智能排序筛选
 -(MenuAction *)addSmartActionByData:(NSArray *)data
 {
+    WEAKSELF
     MenuAction *smartSort = [MenuAction actionWithTitle:NSLocalizedString(@"智能排序", nil) style:MenuActionTypeList];
     smartSort.ListDataSource = data;
+    smartSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
+        weakSelf.param.smartSort = @(index);
+        if (weakSelf.selectBlock) {
+            weakSelf.selectBlock(weakSelf.param);
+        }
+    };
     return smartSort;
 }
 
@@ -133,22 +190,99 @@
     NSMutableArray *datas2 = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < services.count; i++) {
         NSString *name = [[services objectAtIndex:i] content1];
-        ItemModel *model = [ItemModel modelWithText:name  currentID:[@(i) stringValue] isSelect:NO];
+        NSString *jsonParam = [[services objectAtIndex:i] jsonParams];
+        ItemModel *model = [ItemModel modelWithText:name currentID:[@(i) stringValue] isSelect:NO];
+        model.jsonParam = jsonParam;
         [datas2 addObject:model];
     }
     
     if (datas2.count >0) {
         servicesSort.ListDataSource = datas2;
     }
-    
+    WEAKSELF
+    servicesSort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
+        NSData *data = [selecModel.jsonParam dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        weakSelf.param.productCategory = dic[@"productCategory"];
+        if (weakSelf.selectBlock) {
+            weakSelf.selectBlock(weakSelf.param);
+        }
+    };
     return servicesSort;
 }
 
 //增加自定义筛选
--(MenuAction *)addCustomFilterAction
+-(MenuAction *)addCustomFilterAction:(BOOL)withoutService
 {
-    MenuAction *customFilterSort = [MenuAction actionWithTitle:NSLocalizedString(@"地点", nil) style:MenuActionTypeCustom];
+    MenuAction *customFilterSort = [MenuAction actionWithTitle:NSLocalizedString(@"筛选", nil) style:MenuActionTypeCustom];
+    WEAKSELF
+    CZCustomFilterView *view = [[CZCustomFilterView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, !withoutService?304:200)];
+    if (!withoutService) {
+        [view layoutViews];
+    }
+    else
+    {
+        [view layoutPriceView:nil];
+    }
+    __block MenuAction *sort = customFilterSort;
+    customFilterSort.displayCustomWithMenu = ^UIView *{
+        view.select = ^(CZCustomFilterModel * _Nonnull model) {
+            [weakSelf.menuScreeningView actionDidClick:sort];
+            weakSelf.param.maxPrice = model.highPrice;
+            weakSelf.param.minPrice = model.lowPrice;
+            weakSelf.param.superviseType = model.type;
+            if (weakSelf.selectBlock) {
+                weakSelf.selectBlock(weakSelf.param);
+            }
+        };
+        return view;
+    };
     return customFilterSort;
+}
+
+//增加国家筛选
+-(MenuAction *)addCountryFilterAction
+{
+    WEAKSELF
+    NSArray *countries = [CZCountryUtil sharedInstance].datas;
+    NSMutableArray *datas2 = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < countries.count; i++) {
+        NSString *name = [[countries objectAtIndex:i] country].area_name;
+        ItemModel *model = [ItemModel modelWithText:name currentID:[[countries objectAtIndex:i] country].ID isSelect:NO];
+        [datas2 addObject:model];
+    }
+    
+    
+    MenuAction *countrySort = [MenuAction actionWithTitle:NSLocalizedString(@"国家", nil) style:MenuActionTypeList];
+    countrySort.ListDataSource = datas2;
+    countrySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
+        weakSelf.param.countryId = selecModel.currentID;
+        if (weakSelf.selectBlock) {
+            weakSelf.selectBlock(weakSelf.param);
+        }
+    };
+    return countrySort;
+}
+
+//增加学校筛选
+-(MenuAction *)addSchoolFilterAction
+{
+    WEAKSELF
+//    NSArray *countries = [CZCountryUtil sharedInstance].datas;
+//    NSMutableArray *datas2 = [[NSMutableArray alloc] init];
+//    for (NSInteger i = 0; i < countries.count; i++) {
+//        NSString *name = [[countries objectAtIndex:i] country].area_name;
+//        ItemModel *model = [ItemModel modelWithText:name currentID:[[countries objectAtIndex:i] country].ID isSelect:NO];
+//        [datas2 addObject:model];
+//    }
+    
+    
+    MenuAction *schoolSort = [MenuAction actionWithTitle:NSLocalizedString(@"学校", nil) style:MenuActionTypeList];
+//    countrySort.ListDataSource = datas2;
+//    countrySort.didSelectedMenuResult = ^(NSInteger index, ItemModel *selecModel) {
+//        weakSelf.param.countryId = selecModel.currentID;
+//    };
+    return schoolSort;
 }
 
 -(void)selectCity:(CZSCountryModel *)model viewController:(UIViewController *)vc
@@ -159,7 +293,12 @@
             action = obj;
         }
     }];
-    [action adjustTitle:model.country.area_name textColor:[UIColor redColor]];;
+    self.param.cityId = model.country.ID;
+    self.param.countryId = model.upLevelCountry.upLevelCountry.country.ID;
+    [action adjustTitle:model.country.area_name textColor:[UIColor redColor]];
+    if (self.selectBlock) {
+        self.selectBlock(self.param);
+    }
 }
 
 - (void)dropMenuViewWillAppear:(DropMenuBar *)view selectAction:(MenuAction *)action
@@ -170,6 +309,14 @@
 - (void)dropMenuViewWillDisAppear:(DropMenuBar *)view selectAction:(MenuAction *)action
 {
     
+}
+
+-(CZHomeParam *)param
+{
+    if (!_param) {
+        _param = [[CZHomeParam alloc] init];
+    }
+    return _param;
 }
 
 @end

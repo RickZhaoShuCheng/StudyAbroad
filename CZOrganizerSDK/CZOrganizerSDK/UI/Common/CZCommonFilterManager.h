@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DropMenuBar.h"
-
+#import "CZHomeParam.h"
 
 typedef enum : NSUInteger {
     CZCommonFilterTypeCarefulyChoose,
@@ -26,15 +26,18 @@ typedef enum : NSUInteger {
     CZCommonFilterTypeHomeSchoolStar,
     CZCommonFilterTypeHomeAdvisor,
     CZCommonFilterTypeHomeOrganizer,
+    
+    CZCommonFilterTypeMoreSchoolStar,
+    CZCommonFilterTypeMoreActivity,
 
 } CZCommonFilterType;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCommonFilterManager : NSObject
-
+@property (nonatomic , strong)CZHomeParam *param;
+@property (nonatomic , strong)void(^selectBlock)(CZHomeParam *param);
 -(DropMenuBar *)actionsForType:(CZCommonFilterType)filterType;
-
 @end
 
 NS_ASSUME_NONNULL_END
