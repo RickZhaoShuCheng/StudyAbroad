@@ -8,10 +8,14 @@
 
 #import "CZMoreSchoolStarVC.h"
 #import "CZMoreSchoolStarTableView.h"
+#import "CZCommonFilterManager.h"
+#import "DropMenuBar.h"
 @interface CZMoreSchoolStarVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
 @property (nonatomic ,strong) CZMoreSchoolStarTableView *tableView;
+@property (nonatomic ,strong) DropMenuBar *menuBar;
+@property (nonatomic ,strong) CZCommonFilterManager *manager;
 @end
 
 @implementation CZMoreSchoolStarVC
@@ -19,6 +23,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initWithUI];
+    
+    [self.manager setSelectBlock:^(CZHomeParam * _Nonnull param) {
+        NSLog(@"..");
+    }];
 }
 
 
@@ -41,6 +49,13 @@
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.searchBtn];
     self.navigationItem.rightBarButtonItem = rbackItem;
     
+    self.manager = [[CZCommonFilterManager alloc]init];
+    self.menuBar = [self.manager actionsForType:CZCommonFilterTypeMoreSchoolStar];
+    [self.view addSubview:self.menuBar];
+    [self.menuBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.top.mas_equalTo(self.view);
+        make.height.mas_equalTo(ScreenScale(80));
+    }];
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
