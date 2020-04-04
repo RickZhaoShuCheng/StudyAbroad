@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ActivityDetailTableView : UITableView
 @property (nonatomic ,strong) ActivityDetailHeaderView *headerView;
+@property (nonatomic ,strong) NSMutableArray *dataArr;
+@property (nonatomic ,copy) void (^didSelectCell)(NSString *str);
 /**
  * 滚动值
  */

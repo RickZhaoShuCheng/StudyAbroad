@@ -23,6 +23,22 @@
     return self;
 }
 
+- (void)setModel:(CZProductVoListModel *)model{
+    _model = model;
+    self.nameLab.text = model.title;
+    if ([model.priceType isEqualToString:@"RMB"]) {
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥ %.2f",[model.price floatValue]]];
+        [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 2)];
+        [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(28)]} range:NSMakeRange(2, str.length -2)];
+        self.priceLab.attributedText = str;
+    }else{
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"A$ %.2f",[model.price floatValue]]];
+        [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 3)];
+        [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(28)]} range:NSMakeRange(3, str.length -3)];
+        self.priceLab.attributedText = str;
+    }
+}
+
 /**
  * 初始化UI
  */
@@ -46,7 +62,7 @@
         make.centerY.mas_equalTo(self.contentView);
     }];
     
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"¥ 4580.00"];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"¥ -"];
     [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 2)];
     [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(28)]} range:NSMakeRange(2, str.length -2)];
     
@@ -55,7 +71,7 @@
     self.priceLab.attributedText = str;
     [self.contentView addSubview:self.priceLab];
     [self.priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
+        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30)).priorityHigh();
         make.centerY.mas_equalTo(self.contentView);
         make.width.height.mas_greaterThanOrEqualTo(0);
     }];
@@ -64,16 +80,17 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.nameLab.textColor = CZColorCreater(61, 67, 83, 1);
-    self.nameLab.text = @"ACT名师一对一 短时间迅速提升";
+    self.nameLab.text = @"-";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.buyImg.mas_trailing).offset(ScreenScale(14));
         make.centerY.mas_equalTo(self.contentView);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.trailing.mas_equalTo(self.priceLab.mas_leading).offset(-ScreenScale(20));
+        make.trailing.mas_equalTo(self.priceLab.mas_leading).offset(-ScreenScale(20)).priorityLow();
     }];
     
-    [self.priceLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-    [self.nameLab setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [self.priceLab setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [self.nameLab setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    
 }
 @end

@@ -17,6 +17,7 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
     if (self) {
+        self.dataArr = [NSMutableArray array];
         self.delegate = self;
         self.dataSource = self;
         self.tableHeaderView = self.headerView;
@@ -27,10 +28,11 @@
     return self;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CZActivityListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZActivityListCell class]) forIndexPath:indexPath];
+    cell.model = self.dataArr[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -68,6 +70,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CZActivityModel *model = self.dataArr[indexPath.row];
+    if (self.didSelectCell) {
+        self.didSelectCell(model.productId);
+    }
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.scrollContentSize) {

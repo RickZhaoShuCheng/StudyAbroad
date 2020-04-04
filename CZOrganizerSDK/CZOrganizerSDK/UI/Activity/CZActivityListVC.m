@@ -13,12 +13,19 @@
 #import "ActivityDetailVC.h"
 #import "CZCommonFilterManager.h"
 #import "DropMenuBar.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
+#import "CZActivityModel.h"
+#import "CZMJRefreshHelper.h"
 @interface CZActivityListVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
 @property (nonatomic ,strong) CZActivityListTableView *tableView;
 @property (nonatomic ,strong) DropMenuBar *menuBar;
 @property (nonatomic ,strong) CZCommonFilterManager *manager;
+@property (nonatomic ,assign) NSInteger pageNum;
+@property (nonatomic ,assign) NSInteger pageSize;
+@property (nonatomic ,strong) NSDictionary *paramDic;
 @end
 
 @implementation CZActivityListVC
@@ -26,20 +33,70 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"全部活动";
+    self.pageNum = 1;
+    self.pageSize = 20;
     [self initWithUI];
     [self addActionHandle];
+    self.paramDic = @{@"serviceSource":@"1",@"smartSort":@"",@"countryId":@"",@"cityId":@"",@"majorId":@"",@"productCategory":@"",@"educationType":@"",@"superviseType":@"",@"minPrice":@"",@"maxPrice":@""};
+    [self requestForApiProductActivitySelectProductActivityByFilter:self.paramDic];
 }
 
 - (void)addActionHandle{
     WEAKSELF
     [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
         ActivityDetailVC *detailVC = [[ActivityDetailVC alloc]init];
-        detailVC.isEnd = NO;
+        detailVC.activityId = str;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     
+    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        weakSelf.pageNum = 1;
+        [weakSelf requestForApiProductActivitySelectProductActivityByFilter:weakSelf.paramDic];
+    }];
+    
+    self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        weakSelf.pageNum ++;
+        [weakSelf requestForApiProductActivitySelectProductActivityByFilter:weakSelf.paramDic];
+    }];
+    
     [self.manager setSelectBlock:^(CZHomeParam * _Nonnull param) {
-        NSLog(@"..");
+        weakSelf.pageNum = 1;
+        weakSelf.paramDic = [param dictonary];
+        [weakSelf requestForApiProductActivitySelectProductActivityByFilter:weakSelf.paramDic];
+    }];
+}
+
+/**
+ 获取活动
+ */
+- (void)requestForApiProductActivitySelectProductActivityByFilter:(NSDictionary *)filterDic{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiProductActivitySelectProductActivityByFilter:filterDic pageNum:self.pageNum pageSize:self.pageSize callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in data) {
+                    CZActivityModel *model = [CZActivityModel modelWithDict:dic];
+                    [array addObject:model];
+                }
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.dataArr removeAllObjects];
+                    [weakSelf.tableView.dataArr addObjectsFromArray:array];
+                }else{
+                    [weakSelf.tableView.dataArr addObjectsFromArray:array];
+                }
+                [weakSelf.tableView reloadData];
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.mj_header endRefreshing];
+                }
+                if (array.count < weakSelf.pageSize) {
+                    [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+                }else{
+                    [weakSelf.tableView.mj_footer endRefreshing];
+                }
+            });
+        }
     }];
 }
 

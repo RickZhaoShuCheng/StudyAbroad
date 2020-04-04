@@ -21,6 +21,8 @@ static const NSString *ApiCounselorGetCounselorListByOrganId = @"apiCounselor/ge
 static const NSString *ApiObjectCommentsFindObjectCommentsBySocId = @"apiObjectComments/findObjectCommentsBySocId";
 static const NSString *ApiProductGetProductDetail = @"apiProduct/getProductDetail";
 static const NSString *ApiProductActivitySelectProductActivityInfo = @"apiProductActivity/selectProductActivityInfo";
+static const NSString *ApiProductActivitySelectProductActivityByFilter = @"apiProductActivity/selectProductActivityByFilter";
+static const NSString *ApiProductActivitySelectRecommendProductActivityList = @"apiProductActivity/selectRecommendProductActivityList";
 
 
 @implementation CZAdvisorDetailService
@@ -477,7 +479,59 @@ static const NSString *ApiProductActivitySelectProductActivityInfo = @"apiProduc
         }
     }];
 }
-
+/**
+ *筛选查询活动
+ *filterDic 筛选条件
+ *pageNum 页数
+ *pageSize 每页条数
+ */
+-(void)requestForApiProductActivitySelectProductActivityByFilter:(NSDictionary *)filterDic pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductActivitySelectProductActivityByFilter];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:filterDic];
+    [parameters setValue:userId forKey:@"userId"];
+    [parameters setValue:[NSString stringWithFormat:@"%ld",(long)pageNum] forKey:@"pageNum"];
+    [parameters setValue:[NSString stringWithFormat:@"%ld",(long)pageSize] forKey:@"pageSize"];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
 /**
  *获取活动详情
  *productId 商品id
@@ -530,4 +584,60 @@ static const NSString *ApiProductActivitySelectProductActivityInfo = @"apiProduc
     }];
 }
 
+/**
+ *获取推荐活动
+ *productCategory 活动详情中的productCategory
+ *productActivityId 当前活动详情中的productActivityId
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiProductActivitySelectRecommendProductActivityList:(NSString *)productCategory productActivityId:(NSString *)productActivityId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductActivitySelectRecommendProductActivityList];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"productCategory":productCategory,
+                                 @"productActivityId":productActivityId,
+                                 @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
+                                 @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
 @end

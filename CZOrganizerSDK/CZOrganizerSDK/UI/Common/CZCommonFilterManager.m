@@ -200,10 +200,19 @@
 -(NSArray *)createMoreSchoolStarActions
 {
     MenuAction *locationSort = [self addSelectCityAction];
+    
+    NSMutableArray *datas = [[NSMutableArray alloc] init];
+    NSArray *titles = @[NSLocalizedString(@"销量最多", nil),NSLocalizedString(@"案例最多", nil),NSLocalizedString(@"评分最高", nil),NSLocalizedString(@"离我最近", nil),NSLocalizedString(@"价格最高", nil),NSLocalizedString(@"价格最低", nil)];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        ItemModel *model = [ItemModel modelWithText:titles[i] currentID:[@(i) stringValue] isSelect:NO];
+        [datas addObject:model];
+    }
+    
+    MenuAction *smartSort = [self addSmartActionByData:datas];
 
     MenuAction *customSort = [self addCustomFilterAction:NO];
 
-    return @[locationSort,customSort];
+    return @[locationSort,smartSort,customSort];
 }
 
 -(NSArray *)createMoreActivityActions

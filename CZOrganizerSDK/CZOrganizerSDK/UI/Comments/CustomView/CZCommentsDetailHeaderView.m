@@ -55,16 +55,29 @@
     self.goodsName.attributedText = attributedString;
     self.organizerName.text = productModel.organName;
     
-    NSString *price = [NSString stringWithFormat:@"¥%@",productModel.price];
-    NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc]initWithString:price];
-    [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
-    [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, priceStr.length -1)];
-    self.priceLab.attributedText = priceStr;
-    
-    NSString *oldPrice = [NSString stringWithFormat:@"¥%@",productModel.oldPrice];
-    NSMutableAttributedString *oldPriceStr = [[NSMutableAttributedString alloc]initWithString:oldPrice];
-    [oldPriceStr addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle)} range:NSMakeRange(0, oldPrice.length)];
-    self.oldPriceLab.attributedText = oldPriceStr;
+    if ([productModel.priceType isEqualToString:@"RMB"]) {
+        NSString *price = [NSString stringWithFormat:@"¥%@",productModel.price];
+        NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc]initWithString:price];
+        [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
+        [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, priceStr.length -1)];
+        self.priceLab.attributedText = priceStr;
+        
+        NSString *oldPrice = [NSString stringWithFormat:@"¥%@",productModel.oldPrice];
+        NSMutableAttributedString *oldPriceStr = [[NSMutableAttributedString alloc]initWithString:oldPrice];
+        [oldPriceStr addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle)} range:NSMakeRange(0, oldPrice.length)];
+        self.oldPriceLab.attributedText = oldPriceStr;
+    }else{
+        NSString *price = [NSString stringWithFormat:@"A$%@",productModel.price];
+        NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc]initWithString:price];
+        [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 2)];
+        [priceStr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(2, priceStr.length -2)];
+        self.priceLab.attributedText = priceStr;
+        
+        NSString *oldPrice = [NSString stringWithFormat:@"A$%@",productModel.oldPrice];
+        NSMutableAttributedString *oldPriceStr = [[NSMutableAttributedString alloc]initWithString:oldPrice];
+        [oldPriceStr addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle)} range:NSMakeRange(0, oldPrice.length)];
+        self.oldPriceLab.attributedText = oldPriceStr;
+    }
 }
 
 - (void)setModel:(CZCommentModel *)model{

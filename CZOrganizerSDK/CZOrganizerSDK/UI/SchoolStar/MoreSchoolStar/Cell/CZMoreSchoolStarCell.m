@@ -9,6 +9,7 @@
 
 #import "CZMoreSchoolStarCell.h"
 #import "CZRankView.h"
+#import "UIImageView+WebCache.h"
 
 @interface CZMoreSchoolStarCell ()
 @property (nonatomic ,strong) UIImageView *avatarImg;
@@ -30,13 +31,28 @@
     return self;
 }
 
+- (void)setModel:(CZSchoolStarModel *)model{
+    _model = model;
+    if ([model.status integerValue] == 1) {
+        self.VImg.hidden = NO;
+    }else{
+        self.VImg.hidden = YES;
+    }
+    self.nameLab.text = model.realName;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条",model.studyYears,model.countryName];
+    [self.rankView setRankByRate:[model.valStar floatValue]];
+    self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.servicePersonCount integerValue]) stringValue]];
+    self.schoolLab.text = [NSString stringWithFormat:@"  %@ / %@  ",model.schoolName,model.isGraduation];
+    [self.locationBtn setTitle:model.countryName forState:UIControlStateNormal];
+}
+
 /**
  * 初始化UI
  */
 - (void)initWithUI{
     
     self.avatarImg = [[UIImageView alloc]init];
-    self.avatarImg.backgroundColor = [UIColor redColor];
     self.avatarImg.layer.masksToBounds = YES;
     self.avatarImg.layer.cornerRadius = ScreenScale(90)/2.0;
     [self.contentView addSubview:self.avatarImg];
@@ -60,7 +76,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(26)];
     self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
-    self.nameLab.text = @"杨晓波";
+    self.nameLab.text = @"-";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
@@ -72,7 +88,7 @@
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.contentLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.contentLab.text = @"五年澳洲留学老油条";
+    self.contentLab.text = @"-";
     [self.contentView addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
@@ -106,7 +122,7 @@
     self.schoolLab.font = [UIFont systemFontOfSize:ScreenScale(18)];
     self.schoolLab.textColor = CZColorCreater(51, 172, 253, 1);
     self.schoolLab.textAlignment = NSTextAlignmentCenter;
-    self.schoolLab.text = @"  新南威尔士大学 / 留学中  ";
+    self.schoolLab.text = @"  - / -  ";
     self.schoolLab.layer.masksToBounds = YES;
     self.schoolLab.layer.cornerRadius = ScreenScale(3);
     self.schoolLab.layer.borderColor = CZColorCreater(51, 172, 253, 1).CGColor;
@@ -115,7 +131,7 @@
     
     self.locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.locationBtn setImage:[CZImageProvider imageNamed:@"guwen_dingwei"] forState:UIControlStateNormal];
-    [self.locationBtn setTitle:@"澳大利亚" forState:UIControlStateNormal];
+    [self.locationBtn setTitle:@"-" forState:UIControlStateNormal];
     [self.locationBtn setTitleColor:CZColorCreater(129, 129, 146, 1) forState:UIControlStateNormal];
     [self.locationBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(24)]];
     [self.locationBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(10), 0, 0)];

@@ -10,25 +10,106 @@
 #import "CZMoreSchoolStarTableView.h"
 #import "CZCommonFilterManager.h"
 #import "DropMenuBar.h"
+#import "QSOrganizerHomeService.h"
+#import "QSCommonService.h"
+#import "QSClient.h"
+#import "CZSchoolStarModel.h"
+#import "CZMJRefreshHelper.h"
+#import "QSClient.h"
 @interface CZMoreSchoolStarVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
 @property (nonatomic ,strong) CZMoreSchoolStarTableView *tableView;
 @property (nonatomic ,strong) DropMenuBar *menuBar;
 @property (nonatomic ,strong) CZCommonFilterManager *manager;
+@property (nonatomic ,assign) NSInteger pageNum;
+@property (nonatomic ,strong) CZHomeParam *param;
 @end
 
 @implementation CZMoreSchoolStarVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.param = [[CZHomeParam alloc]init];
+    self.pageNum = 1;
     [self initWithUI];
-    
+    [self requestForSchoolStars];
+    WEAKSELF
     [self.manager setSelectBlock:^(CZHomeParam * _Nonnull param) {
-        NSLog(@"..");
+        weakSelf.pageNum = 1;
+        weakSelf.param = param;
+        [weakSelf requestForSchoolStars];
+    }];
+    
+    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        weakSelf.pageNum = 1;
+        [weakSelf requestForSchoolStars];
+    }];
+    
+    self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        weakSelf.pageNum ++;
+        [weakSelf requestForSchoolStars];
+    }];
+    //查看商品
+    [self.tableView setSelectedProductCell:^(CZProductVoListModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
+    //查看达人
+    [self.tableView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
+        
     }];
 }
 
+-(void)requestForSchoolStars
+{
+    WEAKSELF
+    QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
+    self.param.userId = [QSClient userId];
+    self.param.pageNum = @(self.pageNum);
+    self.param.pageSize = @(20);
+    [service requestForApiSportUserGetSportUserListByFilterByParam:self.param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in data) {
+                    CZSchoolStarModel *model = [CZSchoolStarModel modelWithDict:dic];
+                    [array addObject:model];
+                }
+                [weakSelf.tableView.mj_header endRefreshing];
+                
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.dataArr removeAllObjects];
+                    [weakSelf.tableView.dataArr addObjectsFromArray:array];
+                }
+                else
+                {
+                    [weakSelf.tableView.dataArr addObjectsFromArray:array];
+                }
+                
+                if (array.count < 20) {
+                    [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+                else
+                {
+                    [weakSelf.tableView.mj_footer endRefreshing];
+                }
+                
+                [weakSelf.tableView reloadData];
+                
+                if (self.tableView.dataArr.count > 0) {
+//                    [self.dataTableView hideNoData];
+                }
+                else
+                {
+//                    [self.dataTableView showNodataView];
+                }
+            });
+            
+        }
+        
+    }];
+}
 
 /**
  * 初始化UI
