@@ -16,6 +16,8 @@
 #import "CZSchoolStarModel.h"
 #import "CZMJRefreshHelper.h"
 #import "QSClient.h"
+#import "SchoolStarShopDetailVC.h"
+#import "SchoolStarDetailVC.h"
 @interface CZMoreSchoolStarVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
@@ -57,7 +59,12 @@
     }];
     //查看达人
     [self.tableView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
-        
+//        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
+//        detailVC.model = model;
+//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+        SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
+        detailVC.model = model;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }
 

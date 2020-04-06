@@ -94,7 +94,6 @@
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSLog(@"11111----->>%2.f",scrollView.contentOffset.y);
     if (self.scrollContentSize) {
         self.scrollContentSize(scrollView.contentOffset.y);
     }

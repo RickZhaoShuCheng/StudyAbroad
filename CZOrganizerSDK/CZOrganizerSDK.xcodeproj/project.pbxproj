@@ -341,6 +341,58 @@
 		D81F469F242B8CD1008C6D85 /* ActivityDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */; };
 		D81F46A6242B91BF008C6D85 /* ActivityDetailHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */; };
 		D81F46A7242B91BF008C6D85 /* ActivityDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D81F46A5242B91BF008C6D85 /* ActivityDetailHeaderView.m */; };
+		D83BF6B3243B0D7D0032C2BD /* SchoolStarShopDetailVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6B1243B0D7D0032C2BD /* SchoolStarShopDetailVC.h */; };
+		D83BF6B4243B0D7D0032C2BD /* SchoolStarShopDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6B2243B0D7D0032C2BD /* SchoolStarShopDetailVC.m */; };
+		D83BF6B7243B10890032C2BD /* SchoolStarShopDetailTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6B5243B10890032C2BD /* SchoolStarShopDetailTableView.h */; };
+		D83BF6B8243B10890032C2BD /* SchoolStarShopDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6B6243B10890032C2BD /* SchoolStarShopDetailTableView.m */; };
+		D83BF6BB243B10C30032C2BD /* SchoolStarShopDetailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6B9243B10C30032C2BD /* SchoolStarShopDetailCell.h */; };
+		D83BF6BC243B10C30032C2BD /* SchoolStarShopDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6BA243B10C30032C2BD /* SchoolStarShopDetailCell.m */; };
+		D83BF6BF243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6BD243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.h */; };
+		D83BF6C0243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6BE243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.m */; };
+		D83BF6C3243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6C1243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.h */; };
+		D83BF6C4243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6C2243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.m */; };
+		D83BF6C7243B12770032C2BD /* SchoolStarShopServiceVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6C5243B12770032C2BD /* SchoolStarShopServiceVC.h */; };
+		D83BF6C8243B12770032C2BD /* SchoolStarShopServiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6C6243B12770032C2BD /* SchoolStarShopServiceVC.m */; };
+		D83BF6CB243B1A840032C2BD /* SchoolStarShopServiceTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6C9243B1A840032C2BD /* SchoolStarShopServiceTableView.h */; };
+		D83BF6CC243B1A840032C2BD /* SchoolStarShopServiceTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6CA243B1A840032C2BD /* SchoolStarShopServiceTableView.m */; };
+		D83BF6CF243B28140032C2BD /* SchoolStarShopServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6CD243B28140032C2BD /* SchoolStarShopServiceCell.h */; };
+		D83BF6D0243B28140032C2BD /* SchoolStarShopServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6CE243B28140032C2BD /* SchoolStarShopServiceCell.m */; };
+		D83BF6D3243B374A0032C2BD /* SchoolStarShopCommentVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6D1243B374A0032C2BD /* SchoolStarShopCommentVC.h */; };
+		D83BF6D4243B374A0032C2BD /* SchoolStarShopCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6D2243B374A0032C2BD /* SchoolStarShopCommentVC.m */; };
+		D83BF6D7243B37720032C2BD /* SchoolStarShopCommentTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6D5243B37720032C2BD /* SchoolStarShopCommentTableView.h */; };
+		D83BF6D8243B37720032C2BD /* SchoolStarShopCommentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6D6243B37720032C2BD /* SchoolStarShopCommentTableView.m */; };
+		D83BF6DB243B396D0032C2BD /* SchoolStarShopCommentCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6D9243B396D0032C2BD /* SchoolStarShopCommentCell.h */; };
+		D83BF6DC243B396D0032C2BD /* SchoolStarShopCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6DA243B396D0032C2BD /* SchoolStarShopCommentCell.m */; };
+		D83BF6DF243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6DD243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.h */; };
+		D83BF6E0243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6DE243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m */; };
+		D83BF6E3243B504B0032C2BD /* SchoolStarShopCaseVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6E1243B504B0032C2BD /* SchoolStarShopCaseVC.h */; };
+		D83BF6E4243B504B0032C2BD /* SchoolStarShopCaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6E2243B504B0032C2BD /* SchoolStarShopCaseVC.m */; };
+		D83BF6ED243B53FF0032C2BD /* SchoolStarDetailVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6EB243B53FF0032C2BD /* SchoolStarDetailVC.h */; };
+		D83BF6EE243B53FF0032C2BD /* SchoolStarDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6EC243B53FF0032C2BD /* SchoolStarDetailVC.m */; };
+		D83BF6F1243B54160032C2BD /* SchoolStarDetailTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6EF243B54160032C2BD /* SchoolStarDetailTableView.h */; };
+		D83BF6F2243B54160032C2BD /* SchoolStarDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6F0243B54160032C2BD /* SchoolStarDetailTableView.m */; };
+		D83BF6F5243B56790032C2BD /* SchoolStarDetailTableHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6F3243B56790032C2BD /* SchoolStarDetailTableHeaderView.h */; };
+		D83BF6F6243B56790032C2BD /* SchoolStarDetailTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6F4243B56790032C2BD /* SchoolStarDetailTableHeaderView.m */; };
+		D83BF6F9243B569C0032C2BD /* SchoolStarDetailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6F7243B569C0032C2BD /* SchoolStarDetailCell.h */; };
+		D83BF6FA243B569C0032C2BD /* SchoolStarDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6F8243B569C0032C2BD /* SchoolStarDetailCell.m */; };
+		D83BF6FD243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6FB243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.h */; };
+		D83BF6FE243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF6FC243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.m */; };
+		D83BF701243B5E1D0032C2BD /* SchoolStarDetailPostVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF6FF243B5E1D0032C2BD /* SchoolStarDetailPostVC.h */; };
+		D83BF702243B5E1D0032C2BD /* SchoolStarDetailPostVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF700243B5E1D0032C2BD /* SchoolStarDetailPostVC.m */; };
+		D83BF705243B5E3C0032C2BD /* SchoolStarDetailPostTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF703243B5E3C0032C2BD /* SchoolStarDetailPostTableView.h */; };
+		D83BF706243B5E3C0032C2BD /* SchoolStarDetailPostTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF704243B5E3C0032C2BD /* SchoolStarDetailPostTableView.m */; };
+		D83BF709243B5E680032C2BD /* SchoolStarDetailPostCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF707243B5E680032C2BD /* SchoolStarDetailPostCell.h */; };
+		D83BF70A243B5E680032C2BD /* SchoolStarDetailPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF708243B5E680032C2BD /* SchoolStarDetailPostCell.m */; };
+		D83BF70D243B62AE0032C2BD /* SchoolStarDetailPiiicVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF70B243B62AE0032C2BD /* SchoolStarDetailPiiicVC.h */; };
+		D83BF70E243B62AE0032C2BD /* SchoolStarDetailPiiicVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF70C243B62AE0032C2BD /* SchoolStarDetailPiiicVC.m */; };
+		D83BF711243B62C20032C2BD /* SchoolStarDetailPiiicTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF70F243B62C20032C2BD /* SchoolStarDetailPiiicTableView.h */; };
+		D83BF712243B62C20032C2BD /* SchoolStarDetailPiiicTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF710243B62C20032C2BD /* SchoolStarDetailPiiicTableView.m */; };
+		D83BF715243B64730032C2BD /* SchoolStarDetailDiaryVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF713243B64730032C2BD /* SchoolStarDetailDiaryVC.h */; };
+		D83BF716243B64730032C2BD /* SchoolStarDetailDiaryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF714243B64730032C2BD /* SchoolStarDetailDiaryVC.m */; };
+		D83BF719243B64870032C2BD /* SchoolStarDetailDiaryTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF717243B64870032C2BD /* SchoolStarDetailDiaryTableView.h */; };
+		D83BF71A243B64870032C2BD /* SchoolStarDetailDiaryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF718243B64870032C2BD /* SchoolStarDetailDiaryTableView.m */; };
+		D83BF71D243B68870032C2BD /* ExperienceView.h in Headers */ = {isa = PBXBuildFile; fileRef = D83BF71B243B68870032C2BD /* ExperienceView.h */; };
+		D83BF71E243B68870032C2BD /* ExperienceView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83BF71C243B68870032C2BD /* ExperienceView.m */; };
 		D854099B2411485900A348B5 /* CZAdvisorDetailServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D85409992411485900A348B5 /* CZAdvisorDetailServiceCell.h */; };
 		D854099C2411485900A348B5 /* CZAdvisorDetailServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D854099A2411485900A348B5 /* CZAdvisorDetailServiceCell.m */; };
 		D854099F241151C100A348B5 /* CZAdvisorDetailDiaryCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D854099D241151C100A348B5 /* CZAdvisorDetailDiaryCell.h */; };
@@ -826,6 +878,58 @@
 		D81F469D242B8CD1008C6D85 /* ActivityDetailTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailTableView.m; sourceTree = "<group>"; };
 		D81F46A4242B91BF008C6D85 /* ActivityDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityDetailHeaderView.h; sourceTree = "<group>"; };
 		D81F46A5242B91BF008C6D85 /* ActivityDetailHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailHeaderView.m; sourceTree = "<group>"; };
+		D83BF6B1243B0D7D0032C2BD /* SchoolStarShopDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopDetailVC.h; sourceTree = "<group>"; };
+		D83BF6B2243B0D7D0032C2BD /* SchoolStarShopDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopDetailVC.m; sourceTree = "<group>"; };
+		D83BF6B5243B10890032C2BD /* SchoolStarShopDetailTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopDetailTableView.h; sourceTree = "<group>"; };
+		D83BF6B6243B10890032C2BD /* SchoolStarShopDetailTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopDetailTableView.m; sourceTree = "<group>"; };
+		D83BF6B9243B10C30032C2BD /* SchoolStarShopDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopDetailCell.h; sourceTree = "<group>"; };
+		D83BF6BA243B10C30032C2BD /* SchoolStarShopDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopDetailCell.m; sourceTree = "<group>"; };
+		D83BF6BD243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopDetailTableHeaderView.h; sourceTree = "<group>"; };
+		D83BF6BE243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopDetailTableHeaderView.m; sourceTree = "<group>"; };
+		D83BF6C1243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopDetailSectionHeaderView.h; sourceTree = "<group>"; };
+		D83BF6C2243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopDetailSectionHeaderView.m; sourceTree = "<group>"; };
+		D83BF6C5243B12770032C2BD /* SchoolStarShopServiceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopServiceVC.h; sourceTree = "<group>"; };
+		D83BF6C6243B12770032C2BD /* SchoolStarShopServiceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopServiceVC.m; sourceTree = "<group>"; };
+		D83BF6C9243B1A840032C2BD /* SchoolStarShopServiceTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopServiceTableView.h; sourceTree = "<group>"; };
+		D83BF6CA243B1A840032C2BD /* SchoolStarShopServiceTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopServiceTableView.m; sourceTree = "<group>"; };
+		D83BF6CD243B28140032C2BD /* SchoolStarShopServiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopServiceCell.h; sourceTree = "<group>"; };
+		D83BF6CE243B28140032C2BD /* SchoolStarShopServiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopServiceCell.m; sourceTree = "<group>"; };
+		D83BF6D1243B374A0032C2BD /* SchoolStarShopCommentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopCommentVC.h; sourceTree = "<group>"; };
+		D83BF6D2243B374A0032C2BD /* SchoolStarShopCommentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopCommentVC.m; sourceTree = "<group>"; };
+		D83BF6D5243B37720032C2BD /* SchoolStarShopCommentTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopCommentTableView.h; sourceTree = "<group>"; };
+		D83BF6D6243B37720032C2BD /* SchoolStarShopCommentTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopCommentTableView.m; sourceTree = "<group>"; };
+		D83BF6D9243B396D0032C2BD /* SchoolStarShopCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopCommentCell.h; sourceTree = "<group>"; };
+		D83BF6DA243B396D0032C2BD /* SchoolStarShopCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopCommentCell.m; sourceTree = "<group>"; };
+		D83BF6DD243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopCommentHeaderView.h; sourceTree = "<group>"; };
+		D83BF6DE243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopCommentHeaderView.m; sourceTree = "<group>"; };
+		D83BF6E1243B504B0032C2BD /* SchoolStarShopCaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopCaseVC.h; sourceTree = "<group>"; };
+		D83BF6E2243B504B0032C2BD /* SchoolStarShopCaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopCaseVC.m; sourceTree = "<group>"; };
+		D83BF6EB243B53FF0032C2BD /* SchoolStarDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailVC.h; sourceTree = "<group>"; };
+		D83BF6EC243B53FF0032C2BD /* SchoolStarDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailVC.m; sourceTree = "<group>"; };
+		D83BF6EF243B54160032C2BD /* SchoolStarDetailTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailTableView.h; sourceTree = "<group>"; };
+		D83BF6F0243B54160032C2BD /* SchoolStarDetailTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailTableView.m; sourceTree = "<group>"; };
+		D83BF6F3243B56790032C2BD /* SchoolStarDetailTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailTableHeaderView.h; sourceTree = "<group>"; };
+		D83BF6F4243B56790032C2BD /* SchoolStarDetailTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailTableHeaderView.m; sourceTree = "<group>"; };
+		D83BF6F7243B569C0032C2BD /* SchoolStarDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailCell.h; sourceTree = "<group>"; };
+		D83BF6F8243B569C0032C2BD /* SchoolStarDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailCell.m; sourceTree = "<group>"; };
+		D83BF6FB243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailSectionHeaderView.h; sourceTree = "<group>"; };
+		D83BF6FC243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailSectionHeaderView.m; sourceTree = "<group>"; };
+		D83BF6FF243B5E1D0032C2BD /* SchoolStarDetailPostVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailPostVC.h; sourceTree = "<group>"; };
+		D83BF700243B5E1D0032C2BD /* SchoolStarDetailPostVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailPostVC.m; sourceTree = "<group>"; };
+		D83BF703243B5E3C0032C2BD /* SchoolStarDetailPostTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailPostTableView.h; sourceTree = "<group>"; };
+		D83BF704243B5E3C0032C2BD /* SchoolStarDetailPostTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailPostTableView.m; sourceTree = "<group>"; };
+		D83BF707243B5E680032C2BD /* SchoolStarDetailPostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailPostCell.h; sourceTree = "<group>"; };
+		D83BF708243B5E680032C2BD /* SchoolStarDetailPostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailPostCell.m; sourceTree = "<group>"; };
+		D83BF70B243B62AE0032C2BD /* SchoolStarDetailPiiicVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailPiiicVC.h; sourceTree = "<group>"; };
+		D83BF70C243B62AE0032C2BD /* SchoolStarDetailPiiicVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailPiiicVC.m; sourceTree = "<group>"; };
+		D83BF70F243B62C20032C2BD /* SchoolStarDetailPiiicTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailPiiicTableView.h; sourceTree = "<group>"; };
+		D83BF710243B62C20032C2BD /* SchoolStarDetailPiiicTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailPiiicTableView.m; sourceTree = "<group>"; };
+		D83BF713243B64730032C2BD /* SchoolStarDetailDiaryVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailDiaryVC.h; sourceTree = "<group>"; };
+		D83BF714243B64730032C2BD /* SchoolStarDetailDiaryVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailDiaryVC.m; sourceTree = "<group>"; };
+		D83BF717243B64870032C2BD /* SchoolStarDetailDiaryTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarDetailDiaryTableView.h; sourceTree = "<group>"; };
+		D83BF718243B64870032C2BD /* SchoolStarDetailDiaryTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarDetailDiaryTableView.m; sourceTree = "<group>"; };
+		D83BF71B243B68870032C2BD /* ExperienceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExperienceView.h; sourceTree = "<group>"; };
+		D83BF71C243B68870032C2BD /* ExperienceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExperienceView.m; sourceTree = "<group>"; };
 		D85409992411485900A348B5 /* CZAdvisorDetailServiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailServiceCell.h; sourceTree = "<group>"; };
 		D854099A2411485900A348B5 /* CZAdvisorDetailServiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailServiceCell.m; sourceTree = "<group>"; };
 		D854099D241151C100A348B5 /* CZAdvisorDetailDiaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailDiaryCell.h; sourceTree = "<group>"; };
@@ -1394,6 +1498,8 @@
 		537E3D79240A971100C080E9 /* SchoolStar */ = {
 			isa = PBXGroup;
 			children = (
+				D83BF6E9243B53DF0032C2BD /* SchoolStarDetail */,
+				D83BF6AF243B0D5C0032C2BD /* SchoolStarShopDetail */,
 				D81E22CA2434D7A9000CC8EC /* MoreSchoolStar */,
 				537E3D7A240A974200C080E9 /* CustomView */,
 				537E3D88240A9E0900C080E9 /* CZSchoolStarViewController.h */,
@@ -1845,6 +1951,89 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		D83BF6AF243B0D5C0032C2BD /* SchoolStarShopDetail */ = {
+			isa = PBXGroup;
+			children = (
+				D83BF6B0243B0D5C0032C2BD /* CustomView */,
+				D83BF6B1243B0D7D0032C2BD /* SchoolStarShopDetailVC.h */,
+				D83BF6B2243B0D7D0032C2BD /* SchoolStarShopDetailVC.m */,
+				D83BF6C5243B12770032C2BD /* SchoolStarShopServiceVC.h */,
+				D83BF6C6243B12770032C2BD /* SchoolStarShopServiceVC.m */,
+				D83BF6D1243B374A0032C2BD /* SchoolStarShopCommentVC.h */,
+				D83BF6D2243B374A0032C2BD /* SchoolStarShopCommentVC.m */,
+				D83BF6E1243B504B0032C2BD /* SchoolStarShopCaseVC.h */,
+				D83BF6E2243B504B0032C2BD /* SchoolStarShopCaseVC.m */,
+			);
+			path = SchoolStarShopDetail;
+			sourceTree = "<group>";
+		};
+		D83BF6B0243B0D5C0032C2BD /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				D83BF6B5243B10890032C2BD /* SchoolStarShopDetailTableView.h */,
+				D83BF6B6243B10890032C2BD /* SchoolStarShopDetailTableView.m */,
+				D83BF6B9243B10C30032C2BD /* SchoolStarShopDetailCell.h */,
+				D83BF6BA243B10C30032C2BD /* SchoolStarShopDetailCell.m */,
+				D83BF6BD243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.h */,
+				D83BF6BE243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.m */,
+				D83BF6C1243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.h */,
+				D83BF6C2243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.m */,
+				D83BF6C9243B1A840032C2BD /* SchoolStarShopServiceTableView.h */,
+				D83BF6CA243B1A840032C2BD /* SchoolStarShopServiceTableView.m */,
+				D83BF6CD243B28140032C2BD /* SchoolStarShopServiceCell.h */,
+				D83BF6CE243B28140032C2BD /* SchoolStarShopServiceCell.m */,
+				D83BF6D5243B37720032C2BD /* SchoolStarShopCommentTableView.h */,
+				D83BF6D6243B37720032C2BD /* SchoolStarShopCommentTableView.m */,
+				D83BF6D9243B396D0032C2BD /* SchoolStarShopCommentCell.h */,
+				D83BF6DA243B396D0032C2BD /* SchoolStarShopCommentCell.m */,
+				D83BF6DD243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.h */,
+				D83BF6DE243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		D83BF6E9243B53DF0032C2BD /* SchoolStarDetail */ = {
+			isa = PBXGroup;
+			children = (
+				D83BF6EA243B53DF0032C2BD /* CustomView */,
+				D83BF6EB243B53FF0032C2BD /* SchoolStarDetailVC.h */,
+				D83BF6EC243B53FF0032C2BD /* SchoolStarDetailVC.m */,
+				D83BF6FF243B5E1D0032C2BD /* SchoolStarDetailPostVC.h */,
+				D83BF700243B5E1D0032C2BD /* SchoolStarDetailPostVC.m */,
+				D83BF70B243B62AE0032C2BD /* SchoolStarDetailPiiicVC.h */,
+				D83BF70C243B62AE0032C2BD /* SchoolStarDetailPiiicVC.m */,
+				D83BF713243B64730032C2BD /* SchoolStarDetailDiaryVC.h */,
+				D83BF714243B64730032C2BD /* SchoolStarDetailDiaryVC.m */,
+			);
+			name = SchoolStarDetail;
+			path = CZOrganizerSDK/UI/SchoolStar/SchoolStarDetail;
+			sourceTree = SOURCE_ROOT;
+		};
+		D83BF6EA243B53DF0032C2BD /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				D83BF6EF243B54160032C2BD /* SchoolStarDetailTableView.h */,
+				D83BF6F0243B54160032C2BD /* SchoolStarDetailTableView.m */,
+				D83BF6F3243B56790032C2BD /* SchoolStarDetailTableHeaderView.h */,
+				D83BF6F4243B56790032C2BD /* SchoolStarDetailTableHeaderView.m */,
+				D83BF71B243B68870032C2BD /* ExperienceView.h */,
+				D83BF71C243B68870032C2BD /* ExperienceView.m */,
+				D83BF6F7243B569C0032C2BD /* SchoolStarDetailCell.h */,
+				D83BF6F8243B569C0032C2BD /* SchoolStarDetailCell.m */,
+				D83BF6FB243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.h */,
+				D83BF6FC243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.m */,
+				D83BF703243B5E3C0032C2BD /* SchoolStarDetailPostTableView.h */,
+				D83BF704243B5E3C0032C2BD /* SchoolStarDetailPostTableView.m */,
+				D83BF707243B5E680032C2BD /* SchoolStarDetailPostCell.h */,
+				D83BF708243B5E680032C2BD /* SchoolStarDetailPostCell.m */,
+				D83BF70F243B62C20032C2BD /* SchoolStarDetailPiiicTableView.h */,
+				D83BF710243B62C20032C2BD /* SchoolStarDetailPiiicTableView.m */,
+				D83BF717243B64870032C2BD /* SchoolStarDetailDiaryTableView.h */,
+				D83BF718243B64870032C2BD /* SchoolStarDetailDiaryTableView.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		D8868597241D1FC700B14680 /* Comments */ = {
 			isa = PBXGroup;
 			children = (
@@ -2008,10 +2197,12 @@
 				530751AB240A4F9C0074A67E /* CZDiaryViewController.h in Headers */,
 				53A3F785241B52D300E05F81 /* CZBoardAdvisorTopCell.h in Headers */,
 				53AAD111240274FB00A107B4 /* CZHomeFilterView.h in Headers */,
+				D83BF6D7243B37720032C2BD /* SchoolStarShopCommentTableView.h in Headers */,
 				535E5DB124080AED00471453 /* MJRefreshComponent.h in Headers */,
 				5331CAB82407FEE10069AC92 /* CZProductModel.h in Headers */,
 				D886859C241D1FE800B14680 /* CZCommentsListVC.h in Headers */,
 				D81E22CE2434D7BF000CC8EC /* CZMoreSchoolStarVC.h in Headers */,
+				D83BF705243B5E3C0032C2BD /* SchoolStarDetailPostTableView.h in Headers */,
 				1E18BF982424FAA800A62312 /* CZBoardSchoolStarNormalCell.h in Headers */,
 				53A3F791241B5DA200E05F81 /* CZBoardAdvisorViewController.h in Headers */,
 				530751B5240A50BC0074A67E /* CZDiaryCell.h in Headers */,
@@ -2023,11 +2214,14 @@
 				539484A623FFC5AC00770E99 /* MASConstraintMaker.h in Headers */,
 				5394844323FFB03400770E99 /* TAPageControl.h in Headers */,
 				D8C40E7424265ACE00087987 /* AdvisorDynamicPostVC.h in Headers */,
+				D83BF6FD243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.h in Headers */,
 				1E18BFA42424FBD800A62312 /* CZBoardSchoolStarViewController.h in Headers */,
 				53A90CBF2413951100894E9D /* CZCommonInstance.h in Headers */,
 				D88AFC182428FB9F00F1E6CB /* OrganizerDynamicSectionHeaderView.h in Headers */,
 				53AC45E024038F7600521C2F /* DropMenuView.h in Headers */,
+				D83BF71D243B68870032C2BD /* ExperienceView.h in Headers */,
 				D804BF8F242A49460050AB7D /* CZActivityListCell.h in Headers */,
+				D83BF709243B5E680032C2BD /* SchoolStarDetailPostCell.h in Headers */,
 				5320142024057D5E009B78AB /* NSObject+ORM.h in Headers */,
 				537D007024164EEE00C47796 /* CZBoardOrganizerTopCell.h in Headers */,
 				5320141B240576D2009B78AB /* CZHomeModel.h in Headers */,
@@ -2036,6 +2230,7 @@
 				534C18E2240BC636007DD7EC /* CZOrganizerModel.h in Headers */,
 				5394844D23FFB03400770E99 /* UIButton+WebCache.h in Headers */,
 				1E8D87922427497A00E09FB2 /* CZBoardProductView.h in Headers */,
+				D83BF711243B62C20032C2BD /* SchoolStarDetailPiiicTableView.h in Headers */,
 				539484A523FFC5AC00770E99 /* NSArray+MASShorthandAdditions.h in Headers */,
 				537E3D77240A96DF00C080E9 /* CZHotActivityView.h in Headers */,
 				D804BF95242A4EE90050AB7D /* ActivityDetailVC.h in Headers */,
@@ -2052,9 +2247,11 @@
 				5394844423FFB03400770E99 /* UIImageView+WebCache.h in Headers */,
 				535E5D9524080AED00471453 /* NSBundle+MJRefresh.h in Headers */,
 				5394845323FFB03400770E99 /* UIImageView+HighlightedWebCache.h in Headers */,
+				D83BF6F1243B54160032C2BD /* SchoolStarDetailTableView.h in Headers */,
 				537E3D7E240A97B700C080E9 /* CZSchoolStarListView.h in Headers */,
 				53A3F789241B5A2D00E05F81 /* CZBoardAdvisorView.h in Headers */,
 				5394845A23FFB03400770E99 /* SDWebImageDownloader.h in Headers */,
+				D83BF701243B5E1D0032C2BD /* SchoolStarDetailPostVC.h in Headers */,
 				D8CD0C192413E82000B2124C /* JCTagListView.h in Headers */,
 				D8CD0C33241533C800B2124C /* CZOrganizerDetailCollectionFooterView.h in Headers */,
 				D86B815124194248007F1595 /* CZOrganizerAdvisorVC.h in Headers */,
@@ -2066,6 +2263,7 @@
 				D8C40E7824265E1100087987 /* AdvisorDynamicTableView.h in Headers */,
 				53A3F780241B26A600E05F81 /* CZBoardOrganizerNormalCell.h in Headers */,
 				539484A323FFC5AC00770E99 /* MASConstraint+Private.h in Headers */,
+				D83BF6CF243B28140032C2BD /* SchoolStarShopServiceCell.h in Headers */,
 				53B59A2E24069EFC000C8399 /* CZBoardView.h in Headers */,
 				539BB0172407CCB100F9C2FA /* CZHomeParam.h in Headers */,
 				D8AA19232410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.h in Headers */,
@@ -2087,6 +2285,7 @@
 				537E3D71240A96DF00C080E9 /* CZSchoolStarCell.h in Headers */,
 				D88AFC2E2429108B00F1E6CB /* CZActivityListVC.h in Headers */,
 				5394845D23FFB03400770E99 /* SDWebImageCompat.h in Headers */,
+				D83BF6E3243B504B0032C2BD /* SchoolStarShopCaseVC.h in Headers */,
 				5394845523FFB03400770E99 /* SDWebImageDecoder.h in Headers */,
 				D80B06CB2430C73E00B4AB27 /* NSDate+Utils.h in Headers */,
 				53A90CB3241378A100894E9D /* CZCommonFilterManager.h in Headers */,
@@ -2100,23 +2299,29 @@
 				535982702418B68800BEA654 /* CZAllBoardViewController.h in Headers */,
 				D854099B2411485900A348B5 /* CZAdvisorDetailServiceCell.h in Headers */,
 				537E3D86240A9A9100C080E9 /* CZProductVoListModel.h in Headers */,
+				D83BF6DF243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.h in Headers */,
 				53A90CC42413D15600894E9D /* CZAllServiceViewController.h in Headers */,
 				D8C40E85242752DD00087987 /* CZCommentModel.h in Headers */,
+				D83BF6DB243B396D0032C2BD /* SchoolStarShopCommentCell.h in Headers */,
 				535F000F24000558003463B0 /* CZServiceBannerView.h in Headers */,
+				D83BF6F5243B56790032C2BD /* SchoolStarDetailTableHeaderView.h in Headers */,
 				535982842418E67B00BEA654 /* CZBoardProductListCell.h in Headers */,
 				53B59A2A24069232000C8399 /* CZCountryUtil.h in Headers */,
 				D86B814924193D78007F1595 /* CZOrganizerProjectCollectionView.h in Headers */,
 				5394844523FFB03400770E99 /* NSData+ImageContentType.h in Headers */,
 				535E5D9E24080AED00471453 /* MJRefreshBackGifFooter.h in Headers */,
+				D83BF70D243B62AE0032C2BD /* SchoolStarDetailPiiicVC.h in Headers */,
 				D8CD3E4524168BF50086B2EB /* CZOrganizerDetailAdvisorCell.h in Headers */,
 				53B59A2424065F0A000C8399 /* CZActivityModel.h in Headers */,
 				D8CD0C432415351700B2124C /* CZOrganizerDetailDiaryCell.h in Headers */,
+				D83BF6C7243B12770032C2BD /* SchoolStarShopServiceVC.h in Headers */,
 				5359826C2418AD7300BEA654 /* CZBoardOrganizerView.h in Headers */,
 				5320140624056526009B78AB /* QSNetworkManager.h in Headers */,
 				D8CD3E49241692F60086B2EB /* CZOrganizerDetailAdvisorDetailCell.h in Headers */,
 				539484AC23FFC5AC00770E99 /* MASViewConstraint.h in Headers */,
 				D8CD0C142413E82000B2124C /* JCTagCell.h in Headers */,
 				53A90CBB2413924100894E9D /* CZLastFilterView.h in Headers */,
+				D83BF6D3243B374A0032C2BD /* SchoolStarShopCommentVC.h in Headers */,
 				1E8D879824274A0600E09FB2 /* CZBoardProductViewController.h in Headers */,
 				D88685A4241D223E00B14680 /* CZCommentsHeaderView.h in Headers */,
 				539484AC23FFC5AC00770E99 /* MASViewConstraint.h in Headers */,
@@ -2164,14 +2369,18 @@
 				D8C40E912427B0C400087987 /* AdvisorDynamicPostCell.h in Headers */,
 				D8CD0C3F241534E600B2124C /* CZOrganizerDetailServiceCell.h in Headers */,
 				D854099F241151C100A348B5 /* CZAdvisorDetailDiaryCell.h in Headers */,
+				D83BF6B7243B10890032C2BD /* SchoolStarShopDetailTableView.h in Headers */,
 				53A90CB72413912E00894E9D /* FMTagsView.h in Headers */,
 				D88685B8241D3C9A00B14680 /* CZCommentsDetailHeaderView.h in Headers */,
 				535E5DB624080AED00471453 /* MJRefreshHeader.h in Headers */,
+				D83BF6F9243B569C0032C2BD /* SchoolStarDetailCell.h in Headers */,
 				5394843723FFB03400770E99 /* SDCycleScrollView.h in Headers */,
 				5359827C2418E4AF00BEA654 /* UIView+cz_anyCorners.h in Headers */,
 				D85A4FAC2410082B003E45F4 /* CZAdvisorDetailBtnView.h in Headers */,
 				D8CD0C1F241531A600B2124C /* CZOrganizerDetailViewController.h in Headers */,
 				D804BF9D242A4F630050AB7D /* ActivityDetailScrollView.h in Headers */,
+				D83BF715243B64730032C2BD /* SchoolStarDetailDiaryVC.h in Headers */,
+				D83BF719243B64870032C2BD /* SchoolStarDetailDiaryTableView.h in Headers */,
 				5394844823FFB03400770E99 /* SDWebImageDownloaderOperation.h in Headers */,
 				D8606AC1241A82DD00932421 /* CZOrganizerDiaryHeaderView.h in Headers */,
 				53A90CD72414EBC100894E9D /* CZAllServiceSubViewController.h in Headers */,
@@ -2182,6 +2391,7 @@
 				D8C40E602426411500087987 /* CZOrganizerSearchVC.h in Headers */,
 				53C1A1A82404E18F00C6A3E9 /* CZSearchBar.h in Headers */,
 				D88AFC282429061D00F1E6CB /* OrganizerDynamicPostCell.h in Headers */,
+				D83BF6BB243B10C30032C2BD /* SchoolStarShopDetailCell.h in Headers */,
 				5394845E23FFB03400770E99 /* UIImage+MultiFormat.h in Headers */,
 				D81E22D22434D7D6000CC8EC /* CZMoreSchoolStarTableView.h in Headers */,
 				5394847423FFB17000770E99 /* CZHomeBannerView.h in Headers */,
@@ -2197,7 +2407,9 @@
 				534C18E8240BD7DE007DD7EC /* CZOrganizerListViewController.h in Headers */,
 				535E5DA024080AED00471453 /* MJRefreshBackNormalFooter.h in Headers */,
 				535E5DA524080AED00471453 /* MJRefreshAutoNormalFooter.h in Headers */,
+				D83BF6ED243B53FF0032C2BD /* SchoolStarDetailVC.h in Headers */,
 				D804BF8B242A44CB0050AB7D /* CZActivityListTableView.h in Headers */,
+				D83BF6BF243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.h in Headers */,
 				D86B814524193C9A007F1595 /* CZOrganizerProjectVC.h in Headers */,
 				D88685A0241D20AD00B14680 /* CZCommentsListTableView.h in Headers */,
 				D8CD0C23241531D300B2124C /* CZOrganizerDetailCollectionView.h in Headers */,
@@ -2216,12 +2428,15 @@
 				539484A123FFC5AC00770E99 /* MASCompositeConstraint.h in Headers */,
 				537E3D61240A8C6C00C080E9 /* CZPaddingLabel.h in Headers */,
 				D8C40E702426544800087987 /* AdvisorDynamicVC.h in Headers */,
+				D83BF6C3243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.h in Headers */,
 				537D006C24164DF900C47796 /* CZBoardOrganizerViewController.h in Headers */,
 				D8E5F15824227C6F0074EB57 /* CZCommentsDetailMoreCell.h in Headers */,
 				5394845123FFB03400770E99 /* UIView+WebCacheOperation.h in Headers */,
 				53F80981240D52C300E44651 /* CZSelectCityCell.h in Headers */,
 				53B59A392406B7B1000C8399 /* CZCarefullyChooseView.h in Headers */,
 				D88685B4241D37B900B14680 /* CZCommentsDetailTableView.h in Headers */,
+				D83BF6B3243B0D7D0032C2BD /* SchoolStarShopDetailVC.h in Headers */,
+				D83BF6CB243B1A840032C2BD /* SchoolStarShopServiceTableView.h in Headers */,
 				D8AA192824110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h in Headers */,
 				537E3D72240A96DF00C080E9 /* CZSchoolStarView.h in Headers */,
 				539484B423FFC5AC00770E99 /* View+MASShorthandAdditions.h in Headers */,
@@ -2332,21 +2547,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				53AC45E324038F7600521C2F /* DropMenuBar.m in Sources */,
+				D83BF6D8243B37720032C2BD /* SchoolStarShopCommentTableView.m in Sources */,
+				D83BF6F6243B56790032C2BD /* SchoolStarDetailTableHeaderView.m in Sources */,
+				D83BF6E4243B504B0032C2BD /* SchoolStarShopCaseVC.m in Sources */,
 				535F000823FFFF8B003463B0 /* CZServiceView.m in Sources */,
 				5394844E23FFB03400770E99 /* UIImage+MultiFormat.m in Sources */,
 				537E3D99240AB7D500C080E9 /* CZAdvisorModel.m in Sources */,
+				D83BF6D0243B28140032C2BD /* SchoolStarShopServiceCell.m in Sources */,
 				5394846723FFB03400770E99 /* CZRecognizeGesTableView.m in Sources */,
 				D886859D241D1FE800B14680 /* CZCommentsListVC.m in Sources */,
+				D83BF6BC243B10C30032C2BD /* SchoolStarShopDetailCell.m in Sources */,
 				537E3D73240A96DF00C080E9 /* CZSchoolStarCell.m in Sources */,
 				5394843923FFB03400770E99 /* SDCycleScrollView.m in Sources */,
 				D88AFC212429059D00F1E6CB /* OrganizerDynamicPostVC.m in Sources */,
 				53C1A1A92404E18F00C6A3E9 /* CZSearchBar.m in Sources */,
+				D83BF6C8243B12770032C2BD /* SchoolStarShopServiceVC.m in Sources */,
 				535E5DA924080AED00471453 /* MJRefreshAutoNormalFooter.m in Sources */,
 				5320140B240565C6009B78AB /* QSClient.m in Sources */,
+				D83BF712243B62C20032C2BD /* SchoolStarDetailPiiicTableView.m in Sources */,
 				D8CD0C162413E82000B2124C /* JCTagListView.m in Sources */,
 				539BB0182407CCB100F9C2FA /* CZHomeParam.m in Sources */,
 				D8CD0C34241533C800B2124C /* CZOrganizerDetailCollectionFooterView.m in Sources */,
 				53A90CCD2414BD5100894E9D /* CZAllServiceDiaryViewController.m in Sources */,
+				D83BF6CC243B1A840032C2BD /* SchoolStarShopServiceTableView.m in Sources */,
 				53AC45DE24038F7600521C2F /* ItemModel.m in Sources */,
 				537E3D8B240A9E0900C080E9 /* CZSchoolStarViewController.m in Sources */,
 				D85A4FA9240FF04F003E45F4 /* CZAdvisorDetailHeaderView.m in Sources */,
@@ -2383,21 +2606,26 @@
 				D8E5F1512422749B0074EB57 /* CZCommentsDetailOneCell.m in Sources */,
 				53A3F78A241B5A2D00E05F81 /* CZBoardAdvisorView.m in Sources */,
 				D8CD3E4A241692F60086B2EB /* CZOrganizerDetailAdvisorDetailCell.m in Sources */,
+				D83BF6B8243B10890032C2BD /* SchoolStarShopDetailTableView.m in Sources */,
 				D88AFC152428FB5900F1E6CB /* OrganizerDynamicTableHeaderView.m in Sources */,
 				D81E22DC2434E595000CC8EC /* CZMoreSchoolStarGoodsCell.m in Sources */,
 				D8C40E922427B0C400087987 /* AdvisorDynamicPostCell.m in Sources */,
 				D88AFC25242905D100F1E6CB /* OrganizerDynamicPostTableView.m in Sources */,
 				D8C40E6924264B8200087987 /* CZOrganizerSearchCell.m in Sources */,
 				1E18BF952424FA8F00A62312 /* CZBoardSchoolStarTopCell.m in Sources */,
+				D83BF71E243B68870032C2BD /* ExperienceView.m in Sources */,
 				D8C40E7924265E1100087987 /* AdvisorDynamicTableView.m in Sources */,
 				5320141724056807009B78AB /* QSOrganizerHomeService.m in Sources */,
 				535E5D9024080AED00471453 /* UIScrollView+MJRefresh.m in Sources */,
+				D83BF70E243B62AE0032C2BD /* SchoolStarDetailPiiicVC.m in Sources */,
 				537E3D62240A8C6C00C080E9 /* CZPaddingLabel.m in Sources */,
 				539484B123FFC5AC00770E99 /* MASLayoutConstraint.m in Sources */,
 				53A90CD82414EBC100894E9D /* CZAllServiceSubViewController.m in Sources */,
+				D83BF6C4243B11D20032C2BD /* SchoolStarShopDetailSectionHeaderView.m in Sources */,
 				537E3D5E240A8BC600C080E9 /* CZPersonInfoLocationCell.m in Sources */,
 				D81F469F242B8CD1008C6D85 /* ActivityDetailTableView.m in Sources */,
 				D8CD0C172413E82000B2124C /* JCTagCell.m in Sources */,
+				D83BF6B4243B0D7D0032C2BD /* SchoolStarShopDetailVC.m in Sources */,
 				D8AA192924110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.m in Sources */,
 				539484B823FFC5AC00770E99 /* MASViewConstraint.m in Sources */,
 				537E3D74240A96DF00C080E9 /* CZSchoolStarView.m in Sources */,
@@ -2417,6 +2645,7 @@
 				53AC45E424038F7600521C2F /* MenuAction.m in Sources */,
 				53A3F781241B26A600E05F81 /* CZBoardOrganizerNormalCell.m in Sources */,
 				1E8D878F2427495C00E09FB2 /* CZBoardProductNormalCell.m in Sources */,
+				D83BF70A243B5E680032C2BD /* SchoolStarDetailPostCell.m in Sources */,
 				537E3D76240A96DF00C080E9 /* CZHotActivityCell.m in Sources */,
 				53A3F78E241B5B4700E05F81 /* CZBoardAdvisorNormalCell.m in Sources */,
 				535E5DAE24080AED00471453 /* MJRefreshStateHeader.m in Sources */,
@@ -2427,7 +2656,9 @@
 				D8CD0C01241295FA00B2124C /* CZAdvisorDetailCollectionFooterView.m in Sources */,
 				535E5D9824080AED00471453 /* UIScrollView+MJExtension.m in Sources */,
 				537E3D56240A7F4300C080E9 /* CZRankView.m in Sources */,
+				D83BF716243B64730032C2BD /* SchoolStarDetailDiaryVC.m in Sources */,
 				D88AFC192428FB9F00F1E6CB /* OrganizerDynamicSectionHeaderView.m in Sources */,
+				D83BF6F2243B54160032C2BD /* SchoolStarDetailTableView.m in Sources */,
 				53F8097E240D32B100E44651 /* CZSelectProvinceCell.m in Sources */,
 				D8CD0C442415351700B2124C /* CZOrganizerDetailDiaryCell.m in Sources */,
 				D8CD0C40241534E600B2124C /* CZOrganizerDetailServiceCell.m in Sources */,
@@ -2448,6 +2679,7 @@
 				D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */,
 				5394844B23FFB03400770E99 /* SDWebImageDownloader.m in Sources */,
 				53F80982240D52C300E44651 /* CZSelectCityCell.m in Sources */,
+				D83BF71A243B64870032C2BD /* SchoolStarDetailDiaryTableView.m in Sources */,
 				1E2C6BE624322D190006A0DE /* CZCustomFilterView.m in Sources */,
 				5320141C240576D2009B78AB /* CZHomeModel.m in Sources */,
 				1E8D878B2427494500E09FB2 /* CZBoardProductTopCell.m in Sources */,
@@ -2471,15 +2703,19 @@
 				535982812418E66900BEA654 /* CZBoardProductListView.m in Sources */,
 				53B59A2F24069EFC000C8399 /* CZBoardView.m in Sources */,
 				539484B623FFC5AC00770E99 /* MASConstraint.m in Sources */,
+				D83BF6EE243B53FF0032C2BD /* SchoolStarDetailVC.m in Sources */,
 				537D006D24164DF900C47796 /* CZBoardOrganizerViewController.m in Sources */,
+				D83BF6DC243B396D0032C2BD /* SchoolStarShopCommentCell.m in Sources */,
 				D86B814E241941FA007F1595 /* CZOrganizerDiaryVC.m in Sources */,
 				5394845423FFB03400770E99 /* SDWebImageDownloaderOperation.m in Sources */,
 				53AC45E124038F7600521C2F /* DropMenuView.m in Sources */,
+				D83BF702243B5E1D0032C2BD /* SchoolStarDetailPostVC.m in Sources */,
 				535E5DB024080AED00471453 /* MJRefreshFooter.m in Sources */,
 				530751B6240A50BC0074A67E /* CZDiaryCell.m in Sources */,
 				5394845823FFB03400770E99 /* UIImageView+WebCache.m in Sources */,
 				53A3F798241B6AA600E05F81 /* CZAllServiceSchoolStarViewController.m in Sources */,
 				D8E5F15524227B1F0074EB57 /* CZCommentsDetailTwoCell.m in Sources */,
+				D83BF706243B5E3C0032C2BD /* SchoolStarDetailPostTableView.m in Sources */,
 				537E3D66240A8FD500C080E9 /* CZPersonInfoSubCell.m in Sources */,
 				D8CD0C2C241532A500B2124C /* CZOrganizerDetailCollectionHeadView.m in Sources */,
 				D86B815224194248007F1595 /* CZOrganizerAdvisorVC.m in Sources */,
@@ -2488,6 +2724,7 @@
 				D86B814A24193D78007F1595 /* CZOrganizerProjectCollectionView.m in Sources */,
 				1E18BF992424FAA800A62312 /* CZBoardSchoolStarNormalCell.m in Sources */,
 				5394846123FFB03400770E99 /* SPPageMenu.m in Sources */,
+				D83BF6FA243B569C0032C2BD /* SchoolStarDetailCell.m in Sources */,
 				D85A4FAD2410082B003E45F4 /* CZAdvisorDetailBtnView.m in Sources */,
 				D80B06CA2430C73E00B4AB27 /* NSDate+Utils.m in Sources */,
 				534C18E3240BC636007DD7EC /* CZOrganizerModel.m in Sources */,
@@ -2534,7 +2771,9 @@
 				535E5D9C24080AED00471453 /* NSBundle+MJRefresh.m in Sources */,
 				530751AC240A4F9C0074A67E /* CZDiaryViewController.m in Sources */,
 				535E5DAF24080AED00471453 /* MJRefreshGifHeader.m in Sources */,
+				D83BF6FE243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.m in Sources */,
 				537D007124164EEE00C47796 /* CZBoardOrganizerTopCell.m in Sources */,
+				D83BF6C0243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.m in Sources */,
 				5320141F24057D5E009B78AB /* NSObject+ORM.m in Sources */,
 				5394846523FFB03400770E99 /* CZPageScrollContentView.m in Sources */,
 				5394843A23FFB03400770E99 /* UIView+SDExtension.m in Sources */,
@@ -2554,7 +2793,9 @@
 				535E5D9124080AED00471453 /* MJRefreshConst.m in Sources */,
 				535E5DA224080AED00471453 /* MJRefreshBackStateFooter.m in Sources */,
 				D8CD0C482415354800B2124C /* CZOrganizerDetailEvaluateCell.m in Sources */,
+				D83BF6E0243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m in Sources */,
 				D88685B5241D37B900B14680 /* CZCommentsDetailTableView.m in Sources */,
+				D83BF6D4243B374A0032C2BD /* SchoolStarShopCommentVC.m in Sources */,
 				D8606AB6241A747B00932421 /* CZOrganizerDiaryCollectionView.m in Sources */,
 				D8868592241BCFE700B14680 /* CZAdvisorInfoModel.m in Sources */,
 				535E5DB724080AED00471453 /* MJRefreshComponent.m in Sources */,

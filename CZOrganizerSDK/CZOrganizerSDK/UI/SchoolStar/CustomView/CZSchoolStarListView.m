@@ -9,7 +9,6 @@
 #import "CZSchoolStarListView.h"
 #import "CZPersonInfoLocationCell.h"
 #import "CZPersonInfoSubCell.h"
-#import "CZSchoolStarModel.h"
 @interface CZSchoolStarListView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -65,7 +64,16 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    if (!indexPath.row) {
+        if (self.selectedSchoolStarCell) {
+            self.selectedSchoolStarCell(self.dataArr[indexPath.section]);
+        }
+    }else{
+        if (self.selectedProductCell) {
+            CZSchoolStarModel *model = self.dataArr[indexPath.section];
+            self.selectedProductCell(model.productVoList[indexPath.row - 1]);
+        }
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

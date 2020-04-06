@@ -43,7 +43,14 @@
     self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条",model.studyYears,model.countryName];
     [self.rankView setRankByRate:[model.valStar floatValue]];
     self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.servicePersonCount integerValue]) stringValue]];
-    self.schoolLab.text = [NSString stringWithFormat:@"  %@ / %@  ",model.schoolName,model.isGraduation];
+    
+    if ([model.isGraduation integerValue] == 1) {
+        self.schoolLab.text = [NSString stringWithFormat:@"  %@ / 已毕业  ",model.schoolName];
+    }else if ([model.isGraduation integerValue] == 2){
+        self.schoolLab.text = [NSString stringWithFormat:@"  %@ / 留学中  ",model.schoolName];
+    }else if ([model.isGraduation integerValue] == 3){
+        self.schoolLab.text = [NSString stringWithFormat:@"  %@ / 准备留学  ",model.schoolName];
+    }
     [self.locationBtn setTitle:model.countryName forState:UIControlStateNormal];
 }
 

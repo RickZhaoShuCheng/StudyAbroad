@@ -597,8 +597,7 @@ static const NSString *ApiProductActivitySelectRecommendProductActivityList = @"
     NSURL *url = [NSURL URLWithString:urlString];
     NSString *userId = [QSClient userId];
     
-    NSDictionary *parameters = @{@"userId":userId,
-                                 @"productCategory":productCategory,
+    NSDictionary *parameters = @{@"userId":userId,//@"productCategory":productCategory,
                                  @"productActivityId":productActivityId,
                                  @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
                                  @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]

@@ -36,6 +36,13 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    if (self.selectedSchoolStarCell) {
+        self.selectedSchoolStarCell(self.dataArr[indexPath.row]);
+    }
+}
+
 
 
 @end

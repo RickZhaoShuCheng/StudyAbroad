@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) NSMutableArray *dataArr;
 //点击服务项目
 @property (nonatomic ,copy) void (^selectProductBlock)(CZProductVoListModel *model);
+/**
+ * 滚动值
+ */
+@property (nonatomic,copy) void (^scrollContentSize)(CGFloat offsetY);
 @end
 
 NS_ASSUME_NONNULL_END
