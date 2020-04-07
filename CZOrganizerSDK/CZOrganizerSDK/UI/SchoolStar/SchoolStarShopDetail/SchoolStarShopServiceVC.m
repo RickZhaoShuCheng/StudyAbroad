@@ -35,7 +35,7 @@
     [self requestForApiProductGetProductList];
     [self.tableView setSelectProductBlock:^(CZProductVoListModel * _Nonnull model) {
         UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
-        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+        [weakSelf.superVC.navigationController pushViewController:prodDetailVC animated:YES];
     }];
 }
 

@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarShopDetailCell : UITableViewCell
+@property (nonatomic ,strong) UIViewController *superVC;
 @property (nonatomic ,strong) UIScrollView *scrollView;
 @property (nonatomic ,strong) NSString *sportUserId;
 @property (nonatomic ,strong) SchoolStarShopServiceVC *serviceVC;

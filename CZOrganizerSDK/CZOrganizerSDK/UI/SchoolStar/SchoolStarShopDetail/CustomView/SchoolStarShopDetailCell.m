@@ -26,6 +26,7 @@
         WEAKSELF
         if (!self.serviceVC) {
             self.serviceVC = [[SchoolStarShopServiceVC alloc]init];
+            self.serviceVC.superVC = self.superVC;
             self.serviceVC.sportUserId = sportUserId;
             [self.scrollView addSubview:self.serviceVC.view];
             [self.serviceVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
