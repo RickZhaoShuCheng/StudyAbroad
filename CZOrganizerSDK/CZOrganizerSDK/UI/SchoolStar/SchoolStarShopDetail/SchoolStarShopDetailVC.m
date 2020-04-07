@@ -44,7 +44,6 @@
     [self initWithUI];
     [self addHandleAction];
     [self requestForApiSportUserSelectSportUserInfo];
-    
 }
 
 - (void)addHandleAction{
@@ -245,6 +244,7 @@
 - (SchoolStarShopDetailTableView *)tableView{
     if (!_tableView) {
         _tableView = [[SchoolStarShopDetailTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.superVC = self;
     }
     return _tableView;
 }

@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarShopDetailTableView : UITableView
+@property (nonatomic ,strong) UIViewController *superVC;
 @property (nonatomic ,strong) CZSchoolStarModel *model;
 @property (nonatomic ,strong) SchoolStarShopDetailTableHeaderView *headerView;
 @property (nonatomic ,strong) SchoolStarShopDetailCell *cell;
