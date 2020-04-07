@@ -8,6 +8,7 @@
 
 #import "CZDiaryView.h"
 #import "CZDiaryCell.h"
+#import "QSClient.h"
 
 @interface CZDiaryView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -34,6 +35,14 @@
     CZDiaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZDiaryCell class]) forIndexPath:indexPath];
     [cell setModel:self.dataArr[indexPath.row]];
     return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CZDiaryModel *model = self.dataArr[indexPath.row];
+    UIViewController *controller = [QSClient instanceDiaryDetailTabVCByOptions:@{@"diaryId":model.smdId}];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.superVC.navigationController pushViewController:controller animated:YES];
 }
 
 -(NSMutableArray *)dataArr

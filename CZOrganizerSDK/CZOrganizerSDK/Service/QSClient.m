@@ -132,4 +132,13 @@ static dispatch_once_t onceToken;
     return nil;
 }
 
++(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
+{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(instanceDiaryDetailTabVCByOptions:)]) {
+       return [client.delegate instanceDiaryDetailTabVCByOptions:options];
+    }
+    return nil;
+}
+
 @end

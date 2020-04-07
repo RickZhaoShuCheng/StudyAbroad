@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIViewController *)instanceProductDetailVCByOptions:(NSDictionary *)options;
 
+-(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
+
 @end
 
 @interface QSClient : NSObject
@@ -50,6 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceDiaryViewControllerByParam:(CZHomeParam *)param;
 +(UIViewController *)instanceWebViewByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceProductDetailVCByOptions:(NSDictionary *)options;
++(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
+
 @end
 
 NS_ASSUME_NONNULL_END
