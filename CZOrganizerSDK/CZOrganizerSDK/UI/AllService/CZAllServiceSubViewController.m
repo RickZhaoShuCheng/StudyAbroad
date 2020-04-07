@@ -68,7 +68,7 @@
     [searchButton setImage:[CZImageProvider imageNamed:@"sousuo_heise"] forState:UIControlStateNormal];
     UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     
-    self.navigationItem.rightBarButtonItems = @[shopBarItem , searchBarItem];
+    self.navigationItem.rightBarButtonItems = @[searchBarItem , shopBarItem];
 }
 
 -(void)actionForShowCart

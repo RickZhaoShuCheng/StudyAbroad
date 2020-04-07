@@ -12,7 +12,7 @@
 #import "QSOrganizerHomeService.h"
 #import "QSCommonService.h"
 #import "QSClient.h"
-#import "CZSchoolStarModel.h"
+#import "CZProductModel.h"
 #import "CZCommonFilterManager.h"
 
 @interface CZAllServiceSchoolStarViewController ()
@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    [self requestForSchoolStars];
+    [self requestForProductList];
 }
 
 -(void)initUI
@@ -43,31 +43,32 @@
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.mas_equalTo(CGRectGetMaxY(self.menuScreeningView.frame));
-        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame));
+        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame)-50);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     
     WEAKSELF
     self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         weakSelf.pageIndex = 1;
-        [weakSelf requestForSchoolStars];
+        [weakSelf requestForProductList];
     }];
     
     self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageIndex += 1;
-        [weakSelf requestForSchoolStars];
+        [weakSelf requestForProductList];
     }];
 }
 
--(void)requestForSchoolStars
+-(void)requestForProductList
 {
     WEAKSELF
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
     CZHomeParam *param = [[CZHomeParam alloc] init];
     param.userId = [QSClient userId];
+    param.serviceSource = @(2);
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
-    [service requestForApiSportUserGetSportUserListByFilterByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiProductGetProductListByFilterByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         
         if (success) {
         
@@ -76,7 +77,7 @@
                 NSMutableArray *array = [[NSMutableArray alloc] init];
                 
                 for (NSDictionary *dic in data) {
-                    CZSchoolStarModel *model = [CZSchoolStarModel modelWithDict:dic];
+                    CZProductModel *model = [CZProductModel modelWithDict:dic];
                     [array addObject:model];
                 }
                 

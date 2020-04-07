@@ -55,7 +55,7 @@
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.mas_equalTo(CGRectGetMaxY(self.menuScreeningView.frame));
-        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame));
+        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame)-50);
     }];
     
     WEAKSELF
@@ -76,7 +76,7 @@
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
     CZHomeParam *param = [[CZHomeParam alloc] init];
     param.userId = [QSClient userId];
-    param.productCategory = self.model.spId;
+//    param.productCategory = self.model.spId;
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
     [service requestForApiDiaryFindAllCaseListByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {

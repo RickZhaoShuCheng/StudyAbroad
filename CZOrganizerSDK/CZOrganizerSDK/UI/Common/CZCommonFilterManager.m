@@ -434,7 +434,7 @@
     }];
     self.param.cityId = model.country.ID;
     self.param.countryId = model.upLevelCountry.upLevelCountry.country.ID;
-    [action adjustTitle:model.country.area_name textColor:[UIColor redColor]];
+    [action adjustTitle:model.country.area_name textColor:CZColorCreater(51, 172, 253, 1)];
     if (self.selectBlock) {
         self.selectBlock(self.param);
     }

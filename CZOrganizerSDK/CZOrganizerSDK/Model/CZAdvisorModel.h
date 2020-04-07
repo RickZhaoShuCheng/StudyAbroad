@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSArray *adeptList;
 @property (nonatomic , strong) NSString *flagMoneyEnsure;
 @property (nonatomic , strong) NSString *flagMoney;
-@property (nonatomic , strong) NSArray *productVoList;
+@property (nonatomic , strong) NSMutableArray *productVoList;
 @property (nonatomic , strong) NSArray *dynamicVoList;
 @property (nonatomic , strong) NSString *valSatisfaction;
 @property (nonatomic , strong) NSString *popularity;

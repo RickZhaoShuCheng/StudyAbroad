@@ -22,13 +22,9 @@
         self.tableFooterView = [UIView new];
         self.dataSource = self;
         self.delegate = self;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
-}
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -37,9 +33,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     CZPersonInfoSubCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZPersonInfoSubCell class]) forIndexPath:indexPath];
-    CZSchoolStarModel *model = self.dataArr[indexPath.section];
+    CZProductVoListModel *model = self.dataArr[indexPath.section];
     [cell setCellType:CZPersonInfoSubCellTypeAsk];
-    [cell setModel:model.productVoList[indexPath.row]];
+    [cell setModel:model];
     return cell;
 
 }

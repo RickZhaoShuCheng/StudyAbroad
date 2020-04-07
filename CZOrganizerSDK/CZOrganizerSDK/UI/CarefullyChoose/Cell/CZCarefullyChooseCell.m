@@ -15,6 +15,8 @@
 @property (nonatomic , strong) UILabel *priceLabel;
 @property (nonatomic , strong) UILabel *addressLabel;
 @property (nonatomic , strong) UILabel *distanceLabel;
+@property (nonatomic , strong) UILabel *orgPriceLabel;
+
 @end
 
 @implementation CZCarefullyChooseCell
@@ -78,6 +80,14 @@
         make.bottom.mas_equalTo(self.addressLabel);
     }];
     
+    self.orgPriceLabel = [[UILabel alloc] init];
+    [self.contentView addSubview:self.orgPriceLabel];
+    [self.orgPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.width.mas_greaterThanOrEqualTo(0);
+        make.left.mas_equalTo(self.priceLabel.mas_right).offset(5);
+        make.centerY.mas_equalTo(self.priceLabel);
+    }];
+    
 }
 
 -(void)setModel:(CZProductModel *)model
@@ -85,9 +95,13 @@
     _model = model;
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
     self.nameLabel.text = model.title;
-    self.priceLabel.text = [NSString stringWithFormat:@"%.2f" , model.price.floatValue];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f" , model.price.floatValue/100.0];
     self.addressLabel.text = model.organName;
-    self.distanceLabel.text =[NSString stringWithFormat:@"%.2f" , model.distance.floatValue];
+    self.distanceLabel.text =[NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
+    
+    NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],NSForegroundColorAttributeName:CZColorCreater(129, 129, 146, 1),NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:11]};
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"￥%.2f" , model.oldPrice.floatValue/100.0] attributes:attribtDic];
+    self.orgPriceLabel.attributedText = attribtStr;
 }
 
 @end

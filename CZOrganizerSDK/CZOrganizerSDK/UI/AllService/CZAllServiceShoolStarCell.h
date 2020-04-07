@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZSchoolStarModel.h"
+#import "CZProductModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAllServiceShoolStarCell : UITableViewCell
-@property (nonatomic , strong) CZSchoolStarModel *model;
+@property (nonatomic , strong) CZProductModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

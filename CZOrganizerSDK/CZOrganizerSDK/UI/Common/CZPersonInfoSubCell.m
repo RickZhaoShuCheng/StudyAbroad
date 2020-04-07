@@ -89,7 +89,7 @@
 {
     _model = model;
     self.mainTitleLabel.text = model.title;
-    self.subTitleLabel.text = [NSString stringWithFormat:@"%@ %.2f" , model.priceType,model.price.floatValue/100];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"%@ %.2f" , @"￥",model.price.floatValue/100];
 }
 
 -(void)setOmodel:(CZOrganizerModel *)omodel

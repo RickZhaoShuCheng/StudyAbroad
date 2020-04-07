@@ -180,7 +180,7 @@
     [self.contentView addSubview:self.bottomView];
     [self.contentView sendSubviewToBack:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
+        make.top.mas_equalTo(self.middileView.mas_bottom);
         make.left.mas_equalTo(15);
         make.right.mas_equalTo(-15);
         make.height.mas_equalTo(50);
@@ -193,7 +193,7 @@
     self.addressIconView.image = [CZImageProvider imageNamed:@"shou_ye_di_zhi_icon"];
     [self.bottomView addSubview:self.addressIconView];
     [self.addressIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(22);
+        make.width.height.mas_equalTo(22);
         make.left.mas_equalTo(15);
         make.bottom.mas_equalTo(-15);
     }];
@@ -214,7 +214,7 @@
     [self.bottomView addSubview:self.productListView];
     [self.productListView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.mas_equalTo(0);
-        make.height.mas_equalTo(0);
+        make.bottom.mas_equalTo(0);
     }];
     
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -242,7 +242,7 @@
     }];
     
     [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(50+40*3);
+        make.height.mas_equalTo(50+40*self.model.productVoList.count);
     }];
     
     CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
@@ -261,6 +261,20 @@
     [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
 
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
+    
+    [self.productListView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.mas_equalTo(0);
+        make.height.mas_equalTo(50+40*self.model.productVoList.count);
+    }];
+    
+    [self.addressIconView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(22);
+        make.left.mas_equalTo(15);
+        make.top.mas_equalTo(50+40*self.model.productVoList.count);
+    }];
+    
+    self.productListView.dataArr = self.model.productVoList;
+    [self.productListView reloadData];
 }
 
 -(void)setType:(CZBoardSchoolStarTopType)type

@@ -52,7 +52,7 @@
     [self.infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
         make.right.mas_equalTo(-15);
-        make.top.mas_equalTo(20);
+        make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(10);
     }];
     
     self.avatarImageView = [[UIImageView alloc] init];
@@ -105,12 +105,16 @@
     }];
 }
 
--(void)setModel:(CZSchoolStarModel *)model
+-(void)setModel:(CZProductModel *)model
 {
     _model = model;
-    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
-    self.userNameLabel.text = model.userName;
-    self.priceLabel.text = [NSString stringWithFormat:@"%.2f" , model.valPrice.floatValue];
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.sportUserImg)] placeholderImage:nil];
+    self.nameLabel.text = model.title;
+    self.infoLabel.text = model.desc;
+    self.userNameLabel.text = model.sportRealName;
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f" , model.price.floatValue/100];
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.sportUserImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+
 //    self.serviceCountLabel.text = [NSString stringWithFormat:@"%lu分钟/次" , model.];
 }
 

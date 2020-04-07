@@ -15,4 +15,13 @@
     return @{@"productVoList":@"CZProductVoListModel",@"comments":@"CZCommentModel"};
 }
 
+-(NSMutableArray *)productVoList
+{
+    if ([_productVoList isKindOfClass:[NSString class]]) {
+        return @[];
+    }
+    
+    return _productVoList;
+}
+
 @end

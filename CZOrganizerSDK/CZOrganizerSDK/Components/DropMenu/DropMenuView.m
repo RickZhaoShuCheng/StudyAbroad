@@ -148,7 +148,7 @@
         currentModel = secondModel.dataSource[indexPath.row];
     }
     cell.textLabel.text = currentModel.displayText;
-    cell.textLabel.textColor = currentModel.seleceted ? [UIColor orangeColor] : [UIColor blackColor];
+    cell.textLabel.textColor = currentModel.seleceted ? [UIColor colorWithRed:51/255.0 green:172/255.0 blue:253/255.0 alpha:1.0] : [UIColor blackColor];
     
     return cell;
 }
@@ -326,7 +326,7 @@
 //        [self.action setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //    }else {
         [self.action setTitle:selectModel.displayText forState:UIControlStateNormal];
-        [self.action setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [self.action setTitleColor:[UIColor colorWithRed:51/255.0 green:172/255.0 blue:253/255.0 alpha:1.0] forState:UIControlStateNormal];
 //    }
     [self.action adjustFrame];
 }

@@ -84,7 +84,10 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = backButton;
     
-    [self.pageMenu setSelectedItemIndex:self.selectIndex];
+    if (self.selectIndex < self.models.count - 1) {
+        [self.pageMenu setSelectedItemIndex:self.selectIndex];
+    }
+    
     [self.contentView.collectionView setContentOffset:CGPointMake(self.selectIndex*self.view.bounds.size.width, 0) animated:YES];
 }
 

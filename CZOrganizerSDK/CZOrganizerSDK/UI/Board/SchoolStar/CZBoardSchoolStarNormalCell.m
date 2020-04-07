@@ -59,7 +59,7 @@
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(68);
         make.top.mas_equalTo(15);
-        make.left.mas_equalTo(15);
+        make.left.mas_equalTo(30);
     }];
     
     self.nameLabel = [[UILabel alloc] init];
@@ -121,10 +121,12 @@
     [self.weekTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
         make.top.mas_equalTo(self.tagList.mas_bottom).offset(15);
-        make.left.mas_equalTo(15);
+        make.left.mas_equalTo(30);
     }];
     
     self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:12];
+    self.weekDetailLabel.textColor = CZColorCreater(129, 129, 146, 1);
     [self.contentView addSubview:self.weekDetailLabel];
     [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
@@ -138,7 +140,8 @@
     [self.contentView addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekTitleLabel.mas_bottom);
-        make.left.right.mas_equalTo(0);
+        make.left.right.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
         make.height.mas_equalTo(52);
         make.bottom.mas_equalTo(0);
     }];
@@ -179,6 +182,13 @@
         make.height.mas_equalTo(180);
         make.top.mas_equalTo(15);
     }];
+    
+    [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.right.mas_equalTo(-15);
+        make.left.mas_equalTo(15);
+        make.bottom.mas_equalTo(self.bottomView.mas_bottom);
+    }];
 }
 
 -(void)setModel:(CZSchoolStarModel *)model
@@ -195,7 +205,7 @@
     
     [self.tagList mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
-        make.left.mas_equalTo(11);
+        make.left.mas_equalTo(26);
         make.right.mas_equalTo(-11);
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
@@ -203,6 +213,7 @@
     
     CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     model.cellHeight = cellSize.height;
+    [self.rankView setRankByRate:model.valStar.floatValue];
 
     self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
 
@@ -213,13 +224,9 @@
     [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
 
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
-}
-
-
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.bgView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, CGRectGetMaxY(self.bottomView.frame));
+    
+    self.productListView.dataArr = self.model.productVoList;
+    [self.productListView reloadData];
 }
 
 @end

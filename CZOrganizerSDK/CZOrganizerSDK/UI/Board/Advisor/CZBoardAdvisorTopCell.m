@@ -236,6 +236,9 @@
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
     self.workPlaceLabel.text = model.organName;
     self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
+    
+    self.productListView.dataArr = self.model.productVoList;
+    [self.productListView reloadData];
 }
 
 -(void)setType:(CZBoardAdvisorTopType)type

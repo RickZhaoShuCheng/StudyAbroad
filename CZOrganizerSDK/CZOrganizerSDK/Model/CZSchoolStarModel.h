@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *userRelationTypes;
 @property (nonatomic , strong) NSString *studyYears;
 @property (nonatomic , strong) NSString *myDynamicVo;
-@property (nonatomic , strong) NSArray *productVoList;
+@property (nonatomic , strong) NSMutableArray *productVoList;
 @property (nonatomic , strong) NSString *lowPrice;
 @property (nonatomic , strong) NSString *popularity;
 @property (nonatomic , strong) NSString *sales;

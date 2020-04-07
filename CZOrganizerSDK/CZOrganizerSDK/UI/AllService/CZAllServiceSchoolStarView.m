@@ -8,7 +8,7 @@
 
 #import "CZAllServiceSchoolStarView.h"
 #import "CZAllServiceShoolStarCell.h"
-#import "CZSchoolStarModel.h"
+#import "CZProductModel.h"
 @interface CZAllServiceSchoolStarView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -36,7 +36,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CZAllServiceShoolStarCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZAllServiceShoolStarCell class]) forIndexPath:indexPath];
-    CZSchoolStarModel *model = self.dataArr[indexPath.section];
+    CZProductModel *model = self.dataArr[indexPath.row];
     [cell setModel:model];
     return cell;
 }

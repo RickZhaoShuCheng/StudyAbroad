@@ -219,7 +219,7 @@
     self.mainTitleLabel.text = model.title;
     self.subTitleLabel.text = model.organName;
     self.popularityLabel.text = @"近30天累计人气";
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",model.price.floatValue/100.0];
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2fkm",model.price.floatValue/100.0];
     
     self.avatarDetailLabel.text = @"";
     self.avatarImageView.image = [CZImageProvider imageNamed:@"default_avatar"];

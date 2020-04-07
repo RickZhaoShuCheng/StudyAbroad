@@ -256,6 +256,9 @@
     }
     
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
+    
+    self.productListView.dataArr = self.model.productVoList;
+    [self.productListView reloadData];
 }
 
 
