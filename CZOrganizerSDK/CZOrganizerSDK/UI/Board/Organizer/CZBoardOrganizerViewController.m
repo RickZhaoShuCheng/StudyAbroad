@@ -45,7 +45,7 @@
         make.left.mas_equalTo(0);
         make.top.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-50);
+        make.bottom.mas_equalTo(-100);
     }];
     
     WEAKSELF
