@@ -41,6 +41,14 @@
     [self initUI];
 }
 
+- (void)loadView
+{
+    if (self.fromFilter) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 300)];
+        self.view = view;
+    }
+}
+
 -(void)actionForBack
 {
     [self.navigationController popViewControllerAnimated:YES];

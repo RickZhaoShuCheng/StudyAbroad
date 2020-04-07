@@ -185,11 +185,20 @@
 -(void)scrollToBottom
 {
     CGFloat bottomCellOffset = [_scrollMainTableView rectForSection:self.stopSectionIndex].origin.y;
-    self.scrollMainTableView.contentOffset = CGPointMake(0, bottomCellOffset);
+    [self.scrollMainTableView setContentOffset:CGPointMake(0, bottomCellOffset) animated:YES];
     if (_viewCanScroll) {
         _viewCanScroll = NO;
         _scrollContentView.canScroll = YES;
     }
+    [self didScrolling:_viewCanScroll];
+}
+
+//滚到视图最上面面
+-(void)scrollToTop
+{
+    [self.scrollMainTableView setContentOffset:CGPointZero animated:YES];
+    _viewCanScroll = YES;
+    _scrollContentView.canScroll = YES;
     [self didScrolling:_viewCanScroll];
 }
 

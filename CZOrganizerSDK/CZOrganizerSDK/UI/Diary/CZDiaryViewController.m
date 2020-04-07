@@ -154,6 +154,7 @@
         weakSelf.pageIndex = 1;
         [weakSelf requestForDiaryList];
     };
+    self.manager.filterViewShow = self.filterViewShow;
 }
 
 

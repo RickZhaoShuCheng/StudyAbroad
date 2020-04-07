@@ -72,6 +72,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSMutableDictionary *dataDicts;
 @property (nonatomic, strong) NSMutableArray *schoolStars;
 @property (nonatomic, strong) NSMutableArray *hotActivities;
+@property (nonatomic, strong) UIButton *backToTopButton;
 
 @end
 
@@ -105,6 +106,16 @@ typedef enum : NSUInteger {
     self.canScroll = YES;
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
 //    [self createDefaultFilterMenu];
+    self.backToTopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:self.backToTopButton];
+    [self.backToTopButton addTarget:self action:@selector(actionForScrollToTop) forControlEvents:UIControlEventTouchUpInside];
+    [self.backToTopButton setImage:[CZImageProvider imageNamed:@"fan_hui_ding_bu"] forState:UIControlStateNormal];
+    [self.backToTopButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(34);
+        make.right.mas_equalTo(-15);
+        make.bottom.mas_equalTo(-25);
+    }];
+    self.backToTopButton.hidden = YES;
     [self createNavigationBar];
 }
 
@@ -302,8 +313,10 @@ typedef enum : NSUInteger {
 // 子类化实现
 - (NSArray<UIViewController<CZScrollContentControllerDeleagte> *> *)contentScrollers
 {
+    WEAKSELF
     NSMutableArray *arry = [[NSMutableArray alloc]init];
     CZCarefullyChooseViewController *controller1 = [[CZCarefullyChooseViewController alloc]init];
+
     [arry addObject:controller1];
     CZDiaryViewController *controller2 = [[CZDiaryViewController alloc]init];
     [arry addObject:controller2];
@@ -313,6 +326,22 @@ typedef enum : NSUInteger {
     [arry addObject:controller4];
     CZOrganizerListViewController *controller5 = [[CZOrganizerListViewController alloc]init];
     [arry addObject:controller5];
+    
+    controller1.filterViewShow = ^{
+        [weakSelf scrollToBottom];
+    };
+    controller2.filterViewShow = ^{
+        [weakSelf scrollToBottom];
+    };
+    controller3.filterViewShow = ^{
+        [weakSelf scrollToBottom];
+    };
+    controller4.filterViewShow = ^{
+        [weakSelf scrollToBottom];
+    };
+    controller5.filterViewShow = ^{
+        [weakSelf scrollToBottom];
+    };
     
     return arry;
 }
@@ -485,6 +514,9 @@ typedef enum : NSUInteger {
     self.canScroll = canScroll;
     
     self.homeFilterView.isTop = !canScroll;
+    
+    self.backToTopButton.hidden = canScroll;
+
 }
 
 -(void)addMoreButton:(UIView *)view
@@ -710,6 +742,12 @@ typedef enum : NSUInteger {
     listVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:listVC animated:YES];
 }
+
+-(void)actionForScrollToTop
+{
+    [self scrollToTop];
+}
+
 
 #pragma - mark CZHomeFilterViewDelegate
 

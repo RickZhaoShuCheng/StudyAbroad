@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorViewController : UIViewController<CZScrollContentControllerDeleagte>
 @property (nonatomic, strong) CZHomeModel *model;
+@property (nonatomic , strong)void(^filterViewShow)(void);
 @end
 
 NS_ASSUME_NONNULL_END

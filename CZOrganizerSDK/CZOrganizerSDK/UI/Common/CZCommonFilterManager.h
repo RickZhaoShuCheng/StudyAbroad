@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZCommonFilterManager : NSObject
 @property (nonatomic , strong)CZHomeParam *param;
 @property (nonatomic , strong)void(^selectBlock)(CZHomeParam *param);
+@property (nonatomic , strong)void(^filterViewShow)(void);
 -(DropMenuBar *)actionsForType:(CZCommonFilterType)filterType;
 @end
 

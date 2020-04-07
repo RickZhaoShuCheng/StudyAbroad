@@ -309,6 +309,7 @@
     locationSort.tag = 1;
     CZSelectCityViewController *vc = [[CZSelectCityViewController alloc] init];
     vc.delegate = self;
+    vc.fromFilter = YES;
     locationSort.displayCustomWithMenu = ^UIView *{
         return vc.view;
     };
@@ -451,7 +452,9 @@
 
 - (void)dropMenuViewWillAppear:(DropMenuBar *)view selectAction:(MenuAction *)action
 {
-    
+    if (self.filterViewShow) {
+        self.filterViewShow();
+    }
 }
 
 - (void)dropMenuViewWillDisAppear:(DropMenuBar *)view selectAction:(MenuAction *)action

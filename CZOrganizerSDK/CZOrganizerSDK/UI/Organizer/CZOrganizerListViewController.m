@@ -157,6 +157,7 @@
         weakSelf.pageIndex = 1;
         [weakSelf requestForOrganizers];
     };
+    self.manager.filterViewShow = self.filterViewShow;
 }
 @end
 

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerListViewController : UIViewController<CZScrollContentControllerDeleagte>
 @property (nonatomic, strong) CZHomeModel *model;
+@property (nonatomic , strong)void(^filterViewShow)(void);
 
 @end
 

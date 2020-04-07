@@ -166,5 +166,6 @@
         weakSelf.pageIndex = 1;
         [weakSelf requestForSchoolStars];
     };
+    self.manager.filterViewShow = self.filterViewShow;
 }
 @end

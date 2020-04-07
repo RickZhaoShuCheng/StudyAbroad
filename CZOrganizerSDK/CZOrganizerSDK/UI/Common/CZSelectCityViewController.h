@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic , weak) id<CZSelectCityViewControllerDelegate> delegate;
 
+@property (nonatomic , assign) BOOL fromFilter;
+
 @end
 
 NS_ASSUME_NONNULL_END

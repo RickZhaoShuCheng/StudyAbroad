@@ -158,5 +158,6 @@
         weakSelf.pageIndex = 1;
         [weakSelf requestForAdvisors];
     };
+    self.manager.filterViewShow = self.filterViewShow;
 }
 @end

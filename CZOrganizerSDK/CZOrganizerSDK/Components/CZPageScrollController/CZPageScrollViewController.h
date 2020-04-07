@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)scrollToBottom;
 
+-(void)scrollToTop;
 @end
 
 

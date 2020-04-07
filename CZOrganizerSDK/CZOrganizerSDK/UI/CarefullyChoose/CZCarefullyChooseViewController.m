@@ -154,6 +154,7 @@
         weakSelf.pageIndex = 1;
         [weakSelf requestForCarefullyChoose];
     };
+    self.manager.filterViewShow = self.filterViewShow;
 }
 
 @end
