@@ -63,4 +63,9 @@
         self.selectProductBlock(self.dataArr[indexPath.row]);
     }
 }
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (self.scrollContentSize) {
+        self.scrollContentSize(scrollView.contentOffset.y);
+    }
+}
 @end

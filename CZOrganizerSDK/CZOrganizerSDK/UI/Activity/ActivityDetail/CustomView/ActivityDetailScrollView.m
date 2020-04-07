@@ -8,6 +8,7 @@
 
 #import "ActivityDetailScrollView.h"
 #import <WebKit/WebKit.h>
+#import "NSDate+Utils.h"
 
 @interface ActivityDetailScrollView()<UIScrollViewDelegate,SDCycleScrollViewDelegate,WKNavigationDelegate>
 @property (nonatomic ,strong) UILabel *nameLab;
@@ -44,12 +45,24 @@
     self.cycleView.imageURLStringsGroup = imgUrlArr;
     
     self.nameLab.text = model.title;
-    if (model.status == 0) {
-        self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+    if ([model.price floatValue] > 0.0) {
+        if ([model.priceType isEqualToString:@"RMB"]) {
+            self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+        }else{
+            self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]];
+        }
     }else{
         self.priceLab.text = @"免费";
     }
     
+    if (model.activitySessionList.count >= 1) {
+        CZActivitySession *session =  model.activitySessionList[0];
+        NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
+        NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.endTime integerValue]/1000]];
+        self.sessionLab.text = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
+    }else{
+        
+    }
     self.crowdLab.text = [NSString stringWithFormat:@"适合人群：%@",model.extRangeUser];
     self.organizerLab.text = [NSString stringWithFormat:@"组织机构：%@",model.extOrganization];
     self.addressLab.text = [NSString stringWithFormat:@"地       址：%@",model.extAddress];
@@ -118,7 +131,7 @@
         self.sessionLab = [[UILabel alloc]init];
         self.sessionLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
         self.sessionLab.textColor = CZColorCreater(129, 129, 146, 1);
-        self.sessionLab.text = @"2019-12-19 20:00-21:00";
+        self.sessionLab.text = @"-";
         [self addSubview:self.sessionLab];
         [self.sessionLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self).offset(ScreenScale(30));

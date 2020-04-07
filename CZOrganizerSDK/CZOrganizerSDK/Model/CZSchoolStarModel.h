@@ -71,6 +71,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *isCollect;
 @property (nonatomic , assign) CGFloat cellHeight;
 
+@property (nonatomic ,assign) BOOL introduceOpen;
+@property (nonatomic ,assign) BOOL experienceOpen;
+@property (nonatomic ,assign) CGFloat introduceHeight;
+@property (nonatomic ,assign) CGFloat singleHeight;
+
 @end
 
 NS_ASSUME_NONNULL_END

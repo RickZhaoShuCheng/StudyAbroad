@@ -19,6 +19,7 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
     if (self) {
+        self.dataArr = [NSMutableArray array];
         self.delegate = self;
         self.dataSource = self;
         self.showsVerticalScrollIndicator = NO;
@@ -31,21 +32,23 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 10;
+    return self.dataArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    CZSchoolStarModel *model = self.dataArr[section];
+    return model.productVoList.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         CZMoreSchoolStarCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZMoreSchoolStarCell class]) forIndexPath:indexPath];
-        
+        cell.model = self.dataArr[indexPath.section];
         return cell;
     }else{
         CZMoreSchoolStarGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZMoreSchoolStarGoodsCell class]) forIndexPath:indexPath];
-        
+        CZSchoolStarModel *model = self.dataArr[indexPath.section];
+        cell.model = model.productVoList[indexPath.row - 1];
         return cell;
     }
 }
@@ -73,6 +76,15 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (indexPath.row == 0) {
+        if (self.selectedSchoolStarCell) {
+            self.selectedSchoolStarCell(self.dataArr[indexPath.section]);
+        }
+    }else{
+        if (self.selectedProductCell) {
+            CZSchoolStarModel *model = self.dataArr[indexPath.section];
+            self.selectedProductCell(model.productVoList[indexPath.row - 1]);
+        }
+    }
 }
 @end

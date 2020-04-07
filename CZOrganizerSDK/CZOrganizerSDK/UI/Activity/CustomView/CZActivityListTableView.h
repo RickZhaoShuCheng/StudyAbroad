@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZActivityListTableView : UITableView
 @property (nonatomic ,copy) void (^didSelectCell)(NSString *str);
+@property (nonatomic ,strong) NSMutableArray *dataArr;
 @end
 
 NS_ASSUME_NONNULL_END

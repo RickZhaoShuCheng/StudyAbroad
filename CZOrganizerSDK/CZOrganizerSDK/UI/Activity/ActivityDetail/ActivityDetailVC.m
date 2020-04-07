@@ -12,6 +12,7 @@
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 #import "CZActivityModel.h"
+#import "CZMJRefreshHelper.h"
 
 @interface ActivityDetailVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
@@ -31,6 +32,11 @@
 @property (nonatomic ,strong) UIView *freeBottomView;
 @property (nonatomic ,strong) UIButton *chatBtn;
 @property (nonatomic ,strong) UIButton *applyBtn;
+
+@property (nonatomic ,assign) NSInteger pageNum;
+@property (nonatomic ,assign) NSInteger pageSize;
+
+@property (nonatomic ,strong) CZActivityModel *model;
 
 @end
 
@@ -59,6 +65,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.pageNum = 1;
+    self.pageSize = 20;
     self.alpha = 0.0;
     [self initWithUI];
     [self addActionHandle];
@@ -122,6 +130,22 @@
 //            weakSelf.collectionView.contentInset = UIEdgeInsetsMake(NaviH, 0, 0, 0);
 //        }
     }];
+    
+    [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
+        ActivityDetailVC *detailVC = [[ActivityDetailVC alloc]init];
+        detailVC.activityId = str;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+    }];
+    
+    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        weakSelf.pageNum = 1;
+        [weakSelf requestForApiProductActivitySelectRecommendProductActivityList];
+    }];
+    
+    self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        weakSelf.pageNum ++;
+        [weakSelf requestForApiProductActivitySelectRecommendProductActivityList];
+    }];
 }
 //获取商品详情
 - (void)requestForApiProductActivitySelectProductActivityInfo{
@@ -130,20 +154,56 @@
     [service requestForApiProductActivitySelectProductActivityInfo:self.activityId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                CZActivityModel *model = [CZActivityModel modelWithDict:data];
+                weakSelf.model = [CZActivityModel modelWithDict:data];
         
-                if (model.status == 0) {
-                    weakSelf.isFree = NO;
-                    weakSelf.isEnd = NO;
-                }else{
-                    weakSelf.isFree = YES;
+                if (weakSelf.model.status == 0) {
                     weakSelf.isEnd = YES;
+                }else{
+                    weakSelf.isEnd = NO;
+                }
+                
+                if ([weakSelf.model.price floatValue] == 0.0) {
+                    weakSelf.isFree = YES;
+                }else{
+                    weakSelf.isFree = NO;
                 }
                 
                 if (weakSelf.isEnd) {
-                    weakSelf.tableView.headerView.model = model;
+                    weakSelf.tableView.headerView.model = weakSelf.model;
                 }else{
-                    weakSelf.scrollView.model = model;
+                    weakSelf.scrollView.model = weakSelf.model;
+                }
+            });
+        }
+    }];
+}
+//获取推荐活动
+- (void)requestForApiProductActivitySelectRecommendProductActivityList{
+    WEAKSELF
+    //weakSelf.model.productCategory
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiProductActivitySelectRecommendProductActivityList:@"" productActivityId:weakSelf.model.productActivityId pageNum:self.pageNum pageSize:self.pageSize callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in data) {
+                    CZActivityModel *model = [CZActivityModel modelWithDict:dic];
+                    [array addObject:model];
+                }
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.dataArr removeAllObjects];
+                    [weakSelf.tableView.dataArr addObjectsFromArray:array];
+                }else{
+                    [weakSelf.tableView.dataArr addObjectsFromArray:array];
+                }
+                [weakSelf.tableView reloadData];
+                if (weakSelf.pageNum == 1) {
+                    [weakSelf.tableView.mj_header endRefreshing];
+                }
+                if (array.count < weakSelf.pageSize) {
+                    [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+                }else{
+                    [weakSelf.tableView.mj_footer endRefreshing];
                 }
             });
         }
@@ -213,6 +273,7 @@
         if (_freeBottomView) {
             [self.freeBottomView removeFromSuperview];
         }
+        [self requestForApiProductActivitySelectRecommendProductActivityList];
     }else{
         if (_tableView) {
             [self.tableView removeFromSuperview];

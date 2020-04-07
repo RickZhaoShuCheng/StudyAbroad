@@ -23,4 +23,15 @@
     }
 }
 
++ (NSDictionary *)arrayContainModelClass
+{
+    return @{@"activitySessionList":@"CZActivitySession",@"counselorVoList":@"CZAdvisorModel"};
+}
+
+
+@end
+
+@implementation CZActivitySession
+
+
 @end

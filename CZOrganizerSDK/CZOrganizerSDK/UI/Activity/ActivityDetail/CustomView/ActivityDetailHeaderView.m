@@ -19,12 +19,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initWithUI];
-        NSMutableArray *imgArr = [NSMutableArray arrayWithObjects:
-        @"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2261487146,3191619974&fm=26&gp=0.jpg",
-        @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584214058429&di=3b61a48930e0edaf6edfbefe6d84dcc9&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D1510410409%2C1802478552%26fm%3D214%26gp%3D0.jpg",
-        @"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=228295424,1615952080&fm=26&gp=0.jpg",
-        nil];
-        self.cycleView.imageURLStringsGroup = imgArr;
     }
     return self;
 }
@@ -42,8 +36,12 @@
     self.cycleView.imageURLStringsGroup = imgUrlArr;
     
     self.nameLab.text = model.title;
-    if (model.status == 0) {
-        self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+    if ([model.price floatValue] > 0.0) {
+        if ([model.priceType isEqualToString:@"RMB"]) {
+            self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+        }else{
+            self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]];
+        }
     }else{
         self.priceLab.text = @"免费";
     }

@@ -15,7 +15,11 @@
 #import "CZSchoolStarModel.h"
 #import "DropMenuBar.h"
 #import "CZCommonFilterManager.h"
-
+#import "QSClient.h"
+#import "SchoolStarShopDetailVC.h"
+#import "CZProductVoListModel.h"
+#import "CZSchoolStarModel.h"
+#import "SchoolStarDetailVC.h"
 @interface CZSchoolStarViewController ()
 
 @property (nonatomic ,strong) CZSchoolStarListView *dataView;
@@ -74,6 +78,24 @@
     self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageIndex += 1;
         [weakSelf requestForSchoolStars];
+    }];
+    
+    //查看商品
+    [self.dataView setSelectedProductCell:^(CZProductVoListModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        prodDetailVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
+    //查看达人
+    [self.dataView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
+        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
+        detailVC.sportUserId = model.sportUserId;
+        detailVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+//        SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
+//        detailVC.model = model;
+//        detailVC.hidesBottomBarWhenPushed = YES;
+//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }
 

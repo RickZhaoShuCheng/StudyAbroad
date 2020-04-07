@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *extAddress;
 @property (nonatomic , assign) NSInteger status;
 @property (nonatomic , strong) NSNumber *createTime;
-@property (nonatomic , strong) NSNumber *activityType;
+@property (nonatomic , assign) NSInteger activityType;
 @property (nonatomic , strong) NSString *logo;
 @property (nonatomic , strong) NSString *banners;
 @property (nonatomic , strong) NSNumber *serviceTime;
@@ -53,11 +53,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *commentsCount;
 @property (nonatomic , strong) NSString *filterComments;
 @property (nonatomic , strong) NSString *isCollect;
-@property (nonatomic , strong) NSArray *activitySessionList;
-@property (nonatomic , strong) NSArray *counselorVoList;
+@property (nonatomic , strong) NSMutableArray *activitySessionList;
+@property (nonatomic , strong) NSMutableArray *counselorVoList;
 @property (nonatomic , strong) NSString *introduce;
-@property (nonatomic , strong) NSString *description;
+//@property (nonatomic , strong) NSString *description;
 
+@end
+
+@interface CZActivitySession : NSObject
+@property (nonatomic ,strong) NSString *productActivityId;
+@property (nonatomic ,strong) NSString *spasId;
+@property (nonatomic ,strong) NSNumber *beginTime;
+@property (nonatomic ,strong) NSNumber *endTime;
+@property (nonatomic ,assign) NSInteger status;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -70,6 +70,34 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *productId 商品id
  */
 -(void)requestForApiProductActivitySelectProductActivityInfo:(NSString *)productId callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *筛选查询活动
+ *filterDic 筛选条件
+ *pageNum 页数
+ *pageSize 每页条数
+ */
+-(void)requestForApiProductActivitySelectProductActivityByFilter:(NSDictionary *)filterDic pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取推荐活动
+ *productCategory 活动详情中的productCategory
+ *productActivityId 当前活动详情中的productActivityId
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiProductActivitySelectRecommendProductActivityList:(NSString *)productCategory productActivityId:(NSString *)productActivityId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取达人店铺详情
+ *sportUserId 达人用户id
+ */
+-(void)requestForApiSportUserSelectSportUserInfo:(NSString *)sportUserId callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取机构、顾问、达人的商品
+ *productType 商品归属（1.机构 2.顾问 3.达人）
+ *idStr 归属id（例：机构id）
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiProductGetProductList:(NSString *)productType idStr:(NSString *)idStr pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

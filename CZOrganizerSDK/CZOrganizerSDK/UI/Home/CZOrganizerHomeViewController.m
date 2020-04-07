@@ -39,6 +39,7 @@
 #import "CZActivityListVC.h"
 #import "ActivityDetailVC.h"
 #import "CZMoreSchoolStarVC.h"
+#import "SchoolStarShopDetailVC.h"
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 50;
 
@@ -272,7 +273,7 @@ typedef enum : NSUInteger {
 -(CZSchoolStarView *)startView
 {
     if (!_startView) {
-        
+        WEAKSELF
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         layout.minimumLineSpacing = 15;
         layout.itemSize = CGSizeMake(129, 150);
@@ -281,6 +282,13 @@ typedef enum : NSUInteger {
         [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
 
         _startView = [[CZSchoolStarView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 150) collectionViewLayout:layout];
+        //查看达人
+        [_startView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
+            SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
+            detailVC.sportUserId = model.sportUserId;
+            detailVC.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:detailVC animated:YES];
+        }];
     }
     return _startView;
 }
