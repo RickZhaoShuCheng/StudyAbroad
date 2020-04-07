@@ -285,7 +285,7 @@ typedef enum : NSUInteger {
         //查看达人
         [_startView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
             SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
-            detailVC.model = model;
+            detailVC.sportUserId = model.sportUserId;
             detailVC.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:detailVC animated:YES];
         }];

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerAdvisorVC : UIViewController
-@property (nonatomic ,strong) NSString *caseType;//1.机构 2.顾问
+@property (nonatomic ,strong) NSString *caseType;//1.机构 2.顾问 3.达人
 @property (nonatomic ,strong) NSString *idStr;//各类型id
 @end
 

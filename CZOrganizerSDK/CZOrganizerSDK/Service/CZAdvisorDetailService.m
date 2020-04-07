@@ -23,6 +23,8 @@ static const NSString *ApiProductGetProductDetail = @"apiProduct/getProductDetai
 static const NSString *ApiProductActivitySelectProductActivityInfo = @"apiProductActivity/selectProductActivityInfo";
 static const NSString *ApiProductActivitySelectProductActivityByFilter = @"apiProductActivity/selectProductActivityByFilter";
 static const NSString *ApiProductActivitySelectRecommendProductActivityList = @"apiProductActivity/selectRecommendProductActivityList";
+static const NSString *ApiSportUserSelectSportUserInfo = @"apiSportUser/selectSportUserInfo";
+static const NSString *ApiProductGetProductList = @"apiProduct/getProductList";
 
 
 @implementation CZAdvisorDetailService
@@ -599,6 +601,119 @@ static const NSString *ApiProductActivitySelectRecommendProductActivityList = @"
     
     NSDictionary *parameters = @{@"userId":userId,//@"productCategory":productCategory,
                                  @"productActivityId":productActivityId,
+                                 @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
+                                 @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+/**
+ *获取达人店铺详情
+ *sportUserId 达人用户id
+ */
+-(void)requestForApiSportUserSelectSportUserInfo:(NSString *)sportUserId callBack:(CZAdvisorDetailBack)callBack{
+    if (!sportUserId) {
+        return;
+    }
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiSportUserSelectSportUserInfo];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,//@"productCategory":productCategory,
+                                 @"sportUserId":sportUserId
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+/**
+ *获取机构、顾问、达人的商品
+ *productType 商品归属（1.机构 2.顾问 3.达人）
+ *idStr 归属id（例：机构id）
+ *pageNum 页
+ *pageSize 数
+ */
+-(void)requestForApiProductGetProductList:(NSString *)productType idStr:(NSString *)idStr pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack{
+    if (!idStr) {
+        return;
+    }
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiProductGetProductList];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,//@"productCategory":productCategory,
+                                 @"productType":productType,
+                                 @"id":idStr,
                                  @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
                                  @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]
     };

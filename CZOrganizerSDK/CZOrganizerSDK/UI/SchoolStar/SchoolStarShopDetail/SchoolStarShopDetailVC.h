@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZSchoolStarModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarShopDetailVC : UIViewController
-@property (nonatomic ,strong) CZSchoolStarModel *model;
+@property (nonatomic ,strong) NSString *sportUserId;
 @end
 
 NS_ASSUME_NONNULL_END

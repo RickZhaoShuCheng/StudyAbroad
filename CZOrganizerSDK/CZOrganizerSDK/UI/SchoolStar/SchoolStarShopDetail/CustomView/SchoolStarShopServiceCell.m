@@ -27,6 +27,33 @@
     return self;
 }
 
+- (void)setModel:(CZProductVoListModel *)model{
+    _model = model;
+    self.titleLab.text = model.title;
+    self.contentLab.text = model.desc;
+    NSMutableAttributedString *str;
+    if ([model.priceType isEqualToString:@"RMB"]) {
+        NSString *price = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+        str = [[NSMutableAttributedString alloc]initWithString:price];
+        [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
+        [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, str.length - 1)];
+    }else{
+        NSString *price = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]];
+        str = [[NSMutableAttributedString alloc]initWithString:price];
+        [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 2)];
+        [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(2, str.length - 2)];
+    }
+    self.priceLab.attributedText = str;
+    
+    NSString *serviceTime = @"";
+    if ([model.serviceTime integerValue] <60) {
+        serviceTime = [NSString stringWithFormat:@"%ld分钟",[model.serviceTime integerValue]];
+    }else if ([model.serviceTime integerValue] >= 60) {
+        serviceTime = [NSString stringWithFormat:@"%ld小时",[model.serviceTime integerValue]/60];
+    }
+    self.countLab.text = [NSString stringWithFormat:@"%@/次",serviceTime];
+}
+
 /**
  * 初始化UI
  */
@@ -34,7 +61,7 @@
     self.titleLab = [[UILabel alloc]init];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.titleLab.textColor = [UIColor blackColor];
-    self.titleLab.text = @"新南威尔士申请咨询服务新南威尔士申请咨询服务";
+    self.titleLab.text = @"-";
     [self.contentView addSubview:self.titleLab];
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.contentView.mas_leading).offset(ScreenScale(30));
@@ -46,7 +73,7 @@
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.contentLab.textColor = CZColorCreater(170, 170, 187, 1);
-    self.contentLab.text = @"三节课高效助力期末复习介绍介绍三节课高效助力期末复习介绍介绍介绍介绍介绍介绍";
+    self.contentLab.text = @"-";
     self.contentLab.numberOfLines = 0;
     [self.contentView addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -56,7 +83,7 @@
         make.height.mas_greaterThanOrEqualTo(0);
     }];
     
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"¥1229.00"];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"¥0.00"];
     [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
     [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, str.length - 1)];
     
@@ -75,7 +102,7 @@
     self.countLab = [[UILabel alloc]init];
     self.countLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.countLab.textColor = CZColorCreater(183, 183, 196, 1);
-    self.countLab.text = @"20分钟/次";
+    self.countLab.text = @"-/次";
     [self.contentView addSubview:self.countLab];
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.priceLab.mas_trailing).offset(ScreenScale(16));
@@ -118,6 +145,17 @@
         make.height.mas_equalTo(ScreenScale(48));
         make.width.mas_equalTo(ScreenScale(120));
         make.centerY.mas_equalTo(self.buyBtn);
+    }];
+    
+    UILabel *line = [[UILabel alloc]init];
+    line.backgroundColor = CZColorCreater(243, 243, 243, 1);
+    line.text = @"";
+    [self.contentView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.contentView.mas_leading).offset(ScreenScale(30));
+        make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
+        make.height.mas_equalTo(ScreenScale(1));
+        make.bottom.mas_equalTo(self.contentView);
     }];
 }
 @end

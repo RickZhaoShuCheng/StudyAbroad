@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CZProductVoListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarShopServiceCell : UITableViewCell
-
+@property (nonatomic ,strong) CZProductVoListModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,7 +9,9 @@
 #import "SchoolStarShopDetailVC.h"
 #import "SchoolStarShopDetailTableView.h"
 #import "UIImageView+WebCache.h"
-
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
+#import "CZSchoolStarModel.h"
 @interface SchoolStarShopDetailVC ()
 @property (nonatomic ,strong) UIView *titleView;
 @property (nonatomic ,strong) UIImageView *avatarImg;
@@ -41,6 +43,8 @@
     self.alpha = 0;
     [self initWithUI];
     [self addHandleAction];
+    [self requestForApiSportUserSelectSportUserInfo];
+    
 }
 
 - (void)addHandleAction{
@@ -93,6 +97,21 @@
         }
     }];
 }
+//获取店铺详情
+-(void)requestForApiSportUserSelectSportUserInfo{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiSportUserSelectSportUserInfo:self.sportUserId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CZSchoolStarModel *model = [CZSchoolStarModel modelWithDict:data];
+                [weakSelf.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+                weakSelf.titleLab.text = model.realName;
+                weakSelf.tableView.model = model;
+            });
+        }
+    }];
+}
 
 /**
  * 初始化UI
@@ -121,7 +140,6 @@
     self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
     
     self.avatarImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, ScreenScale(8), ScreenScale(64), ScreenScale(64))];
-    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(self.model.userImg)] placeholderImage:nil];
     self.avatarImg.layer.masksToBounds = YES;
     self.avatarImg.layer.cornerRadius = ScreenScale(64)/2.0;
     [self.titleView addSubview:self.avatarImg];
@@ -129,7 +147,6 @@
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(84), ScreenScale(26), kScreenWidth-250, ScreenScale(30))];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.titleLab.textColor = [UIColor blackColor];
-    self.titleLab.text = self.model.realName;
     [self.titleView addSubview:self.titleLab];
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -155,7 +172,6 @@
         }
     }];
     
-    self.tableView.model = self.model;
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self.view);

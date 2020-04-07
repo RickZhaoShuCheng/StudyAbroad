@@ -59,9 +59,11 @@
     }];
     //查看达人
     [self.tableView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
+        //店铺详情
 //        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
-//        detailVC.model = model;
+//        detailVC.sportUserId = model.sportUserId;
 //        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+        //个人详情
         SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
         detailVC.model = model;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];

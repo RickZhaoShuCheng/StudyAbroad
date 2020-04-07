@@ -47,6 +47,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SchoolStarShopDetailCell class]) forIndexPath:indexPath];
+    self.cell.sportUserId = self.model.sportUserId;
     WEAKSELF
     self.cell.scrollContentSize = ^(CGFloat offsetY) {
         if (offsetY > 0) {
