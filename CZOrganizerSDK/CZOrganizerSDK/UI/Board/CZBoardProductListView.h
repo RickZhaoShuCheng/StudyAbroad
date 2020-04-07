@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZBoardProductListView : UICollectionView
 @property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, copy)void (^selectedBlock)(NSString *productId);
 @end
 
 NS_ASSUME_NONNULL_END

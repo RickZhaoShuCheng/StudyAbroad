@@ -33,7 +33,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     CZPersonInfoSubCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZPersonInfoSubCell class]) forIndexPath:indexPath];
-    CZProductVoListModel *model = self.dataArr[indexPath.section];
+    CZProductVoListModel *model = self.dataArr[indexPath.row];
     [cell setCellType:CZPersonInfoSubCellTypeAsk];
     [cell setModel:model];
     return cell;
@@ -44,7 +44,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    CZProductVoListModel *model = self.dataArr[indexPath.row];
+    if (self.selectedProductCell) {
+        self.selectedProductCell(model);
+    }
 }
 
 

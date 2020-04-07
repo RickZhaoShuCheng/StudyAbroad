@@ -36,6 +36,13 @@
     return cell;
 }
 
-
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CZProductModel *model = self.dataArr[indexPath.row];
+    if (self.selectedBlock) {
+        self.selectedBlock(model.productId);
+    }
+    
+}
 
 @end

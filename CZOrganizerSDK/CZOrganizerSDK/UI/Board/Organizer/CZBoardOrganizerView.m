@@ -43,6 +43,12 @@
         CZOrganizerModel *model = self.dataArr[indexPath.section];
         [cell setModel:model];
         cell.type = indexPath.section;
+        WEAKSELF
+        cell.productListView.selectedBlock = ^(NSString * _Nonnull productId) {
+            if (weakSelf.selectedProductBlock) {
+                weakSelf.selectedProductBlock(productId);
+            }
+        };
         return cell;
     }
     else
@@ -59,7 +65,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    CZOrganizerModel *model = self.dataArr[indexPath.section];
+    if (self.selectedBlock) {
+        self.selectedBlock(model.organId);
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

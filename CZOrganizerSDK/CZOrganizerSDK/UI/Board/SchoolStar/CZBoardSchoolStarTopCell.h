@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CZSchoolStarModel.h"
+#import "CZBoardSchoolStarProductView.h"
 
 typedef enum : NSUInteger {
     CZBoardSchoolStarTopTypeGold,
@@ -20,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZBoardSchoolStarTopCell : UITableViewCell
 @property (nonatomic , strong) CZSchoolStarModel *model;
 @property (nonatomic , assign) CZBoardSchoolStarTopType type;
+@property (nonatomic , strong) CZBoardSchoolStarProductView *productListView;
+
 @end
 
 NS_ASSUME_NONNULL_END

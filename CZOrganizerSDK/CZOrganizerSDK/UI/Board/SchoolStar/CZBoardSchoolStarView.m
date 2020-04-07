@@ -43,6 +43,12 @@
         CZSchoolStarModel *model = self.dataArr[indexPath.section];
         [cell setModel:model];
         cell.type = indexPath.section;
+        WEAKSELF
+        cell.productListView.selectedProductCell = ^(CZProductVoListModel * _Nonnull model) {
+            if (weakSelf.selectedProductCell) {
+                weakSelf.selectedProductCell(model);
+            }
+        };
         return cell;
     }
     else
@@ -59,7 +65,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    if (self.selectedSchoolStarCell) {
+        self.selectedSchoolStarCell(self.dataArr[indexPath.section]);
+    }
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

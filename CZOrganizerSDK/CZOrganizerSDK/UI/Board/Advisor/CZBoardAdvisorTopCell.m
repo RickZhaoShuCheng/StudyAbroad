@@ -11,7 +11,6 @@
 #import "JCTagListView.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
-#import "CZBoardProductListView.h"
 
 @interface CZBoardAdvisorTopCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -29,7 +28,6 @@
 
 @property (nonatomic , strong) UIImageView *addressIconView;
 @property (nonatomic , strong) UILabel *addressLabel;
-@property (nonatomic , strong) CZBoardProductListView *productListView;
 
 @end
 

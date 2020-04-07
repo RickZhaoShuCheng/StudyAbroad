@@ -10,6 +10,7 @@
 #import "CZBoardAdvisorTopCell.h"
 #import "CZBoardAdvisorNormalCell.h"
 #import "CZAdvisorModel.h"
+#import "CZProductVoListModel.h"
 
 @interface CZBoardAdvisorView ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -43,6 +44,12 @@
         CZAdvisorModel *model = self.dataArr[indexPath.section];
         [cell setModel:model];
         cell.type = indexPath.section;
+        WEAKSELF
+        cell.productListView.selectedBlock = ^(NSString * _Nonnull productId) {
+            if (weakSelf.selectedProductBlock) {
+                weakSelf.selectedProductBlock(productId);
+            }
+        };
         return cell;
     }
     else
@@ -59,7 +66,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    CZAdvisorModel *model = self.dataArr[indexPath.section];
+    if (self.selectedBlock) {
+        self.selectedBlock(model.counselorId);
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

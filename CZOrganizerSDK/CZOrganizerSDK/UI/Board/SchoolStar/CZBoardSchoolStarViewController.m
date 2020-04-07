@@ -15,6 +15,7 @@
 #import "QSClient.h"
 #import "CZSchoolStarModel.h"
 #import "UIImageView+WebCache.h"
+#import "SchoolStarShopDetailVC.h"
 //#import "CZAdvisorDetailViewController.h"
 
 @interface CZBoardSchoolStarViewController ()
@@ -64,12 +65,23 @@
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.content2] placeholderImage:nil];
     self.dataView.tableHeaderView = self.headImageView;
     
-    //点击cell
-//    self.dataView.selectBlock = ^{
-//        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
+    //查看达人
+    [self.dataView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
+        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
+        detailVC.sportUserId = model.sportUserId;
+        detailVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+//        SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
+//        detailVC.model = model;
 //        detailVC.hidesBottomBarWhenPushed = YES;
 //        [weakSelf.navigationController pushViewController:detailVC animated:YES];
-//    };
+    }];
+    
+    //查看商品
+    [self.dataView setSelectedProductCell:^(CZProductVoListModel * _Nonnull model) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
 }
 
 -(void)requestForSchoolStars

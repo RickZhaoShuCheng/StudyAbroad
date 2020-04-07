@@ -12,7 +12,6 @@
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
 #import "CZBoardProductListView.h"
-#import "CZBoardSchoolStarProductView.h"
 
 @interface CZBoardSchoolStarTopCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -32,7 +31,6 @@
 
 @property (nonatomic , strong) UIImageView *addressIconView;
 @property (nonatomic , strong) UILabel *addressLabel;
-@property (nonatomic , strong) CZBoardSchoolStarProductView *productListView;
 
 @end
 

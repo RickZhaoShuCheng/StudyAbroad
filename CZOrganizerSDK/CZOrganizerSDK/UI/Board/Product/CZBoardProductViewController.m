@@ -63,13 +63,10 @@
     self.headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width/375.0*116)];
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.content2] placeholderImage:nil];
     self.dataView.tableHeaderView = self.headImageView;
-    
-    //点击cell
-//    self.dataView.selectBlock = ^{
-//        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
-//        detailVC.hidesBottomBarWhenPushed = YES;
-//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
-//    };
+    self.dataView.selectedBlock = ^(NSString * _Nonnull productId) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    };
 }
 
 -(void)requestForProducts

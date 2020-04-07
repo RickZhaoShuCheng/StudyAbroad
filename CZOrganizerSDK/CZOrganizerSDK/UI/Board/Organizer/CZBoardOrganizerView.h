@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZBoardOrganizerView : UITableView
 @property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic, copy)void (^selectedBlock)(NSString *organId);
+@property (nonatomic, copy)void (^selectedProductBlock)(NSString *productId);
 @end
 
 NS_ASSUME_NONNULL_END

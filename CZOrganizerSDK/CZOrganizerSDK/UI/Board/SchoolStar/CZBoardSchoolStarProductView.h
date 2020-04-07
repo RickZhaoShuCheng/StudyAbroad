@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CZProductVoListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZBoardSchoolStarProductView : UITableView
 @property (nonatomic, strong) NSMutableArray *dataArr;
+@property (nonatomic ,copy) void (^selectedProductCell)(CZProductVoListModel *model);
+
 @end
 
 NS_ASSUME_NONNULL_END

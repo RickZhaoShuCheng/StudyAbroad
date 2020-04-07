@@ -16,6 +16,7 @@
 #import "CZAdvisorDetailViewController.h"
 #import "CZOrganizerDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "CZOrganizerVC.h"
 
 @interface CZBoardOrganizerViewController ()
 
@@ -63,16 +64,19 @@
     self.dataView.tableHeaderView = self.headImageView;
     
     //点击cell
-//    self.dataView.selectBlock = ^{
-////        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
-////        detailVC.hidesBottomBarWhenPushed = YES;
-////        [weakSelf.navigationController pushViewController:detailVC animated:YES];
-//        
-//        CZOrganizerDetailViewController *detailVC = [[CZOrganizerDetailViewController alloc]init];
-//        detailVC.hidesBottomBarWhenPushed = YES;
-//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
-//    };
+    self.dataView.selectedBlock = ^(NSString * _Nonnull organId) {
+        CZOrganizerVC *organizerVC = [[CZOrganizerVC alloc]init];
+        organizerVC.organId = organId;
+        organizerVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:organizerVC animated:YES];
+    };
+    
+    self.dataView.selectedProductBlock = ^(NSString * _Nonnull productId) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    };
 }
+
 
 -(void)requestForOrganizers
 {

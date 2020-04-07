@@ -15,6 +15,7 @@
 #import "QSClient.h"
 #import "CZAdvisorModel.h"
 #import "UIImageView+WebCache.h"
+#import "CZAdvisorDetailViewController.h"
 //#import "CZAdvisorDetailViewController.h"
 
 @interface CZBoardAdvisorViewController ()
@@ -65,11 +66,20 @@
     self.dataView.tableHeaderView = self.headImageView;
     
     //点击cell
-//    self.dataView.selectBlock = ^{
-//        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
-//        detailVC.hidesBottomBarWhenPushed = YES;
-//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
-//    };
+    self.dataView.selectedBlock = ^(NSString * _Nonnull counselorId) {
+        CZAdvisorDetailViewController *detailVC = [[CZAdvisorDetailViewController alloc]init];
+        detailVC.counselorId = counselorId;
+        detailVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
+//        CZActivityListVC *listVC = [[CZActivityListVC alloc]init];
+//        listVC.hidesBottomBarWhenPushed = YES;
+//        [weakSelf.navigationController pushViewController:listVC animated:YES];
+    };
+    
+    self.dataView.selectedProductBlock = ^(NSString * _Nonnull productId) {
+        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":productId}];
+        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    };
 }
 
 -(void)requestForAdvisors
