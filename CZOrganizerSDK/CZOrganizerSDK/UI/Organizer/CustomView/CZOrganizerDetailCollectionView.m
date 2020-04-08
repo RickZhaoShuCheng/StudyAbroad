@@ -116,6 +116,7 @@
     return 5;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    WEAKSELF
     if (indexPath.section == 1) {
         CZOrganizerDetailServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailServiceCell class]) forIndexPath:indexPath];
         CZProductVoListModel *model = self.model.productVoList[indexPath.row];
@@ -133,7 +134,6 @@
     }else if (indexPath.section == 2){
         CZOrganizerDetailAdvisorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailAdvisorCell class]) forIndexPath:indexPath];
         cell.dataArr = self.model.advisorArray;
-        WEAKSELF
         cell.selectAdvisorBlock = ^(CZAdvisorModel * _Nonnull model) {
             if (weakSelf.selectAdvisorBlock) {
                 weakSelf.selectAdvisorBlock(model);
@@ -157,6 +157,11 @@
     }
     CZOrganizerDetailEvaluateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerDetailEvaluateCell class]) forIndexPath:indexPath];
     cell.model = [CZCommentModel modelWithDict:self.model.commentList[indexPath.row]];
+    [cell setClickLikeAction:^{
+        if (weakSelf.commentsPraiseBlock) {
+            weakSelf.commentsPraiseBlock([CZCommentModel modelWithDict:weakSelf.model.commentList[indexPath.row]]);
+        }
+    }];
     return cell;
 }
 

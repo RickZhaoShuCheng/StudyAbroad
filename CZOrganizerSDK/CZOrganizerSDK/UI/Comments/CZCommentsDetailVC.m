@@ -41,7 +41,6 @@
 }
 - (void)actionMethod{
     WEAKSELF
-    
     //滚动时设置导航条透明度
     [self.tableView setScrollContentSize:^(CGFloat offsetY) {
         //设置渐变透明度
@@ -79,6 +78,18 @@
     [self.tableView setSelectProductBlock:^(CZProductModel * _Nonnull model) {
         UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
         [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+    }];
+    
+    //评价点赞
+    [self.tableView setCommentsPraiseBlock:^(NSInteger rowIndex) {
+        CZCommentModel *model = weakSelf.tableView.dataArr[rowIndex];
+        if ([model.isPraise boolValue]) {
+            //已点赞，取消点赞
+            [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model];
+        }else{
+            //未点赞，进行点赞
+            [weakSelf requestForApiObjectCommentsPraiseObjectCommentsPraise:model];
+        }
     }];
 }
 //获取评价详情
@@ -142,6 +153,39 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 CZProductModel *model = [CZProductModel modelWithDict:data];
                 weakSelf.tableView.headerView.productModel = model;
+            });
+        }
+    }];
+}
+
+/**
+评价点赞
+*/
+- (void)requestForApiObjectCommentsPraiseObjectCommentsPraise:(CZCommentModel *)model{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiObjectCommentsPraiseObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                model.isPraise = @(1);
+                model.praiseCount = @([model.praiseCount integerValue] + 1);
+                [weakSelf.tableView reloadData];
+            });
+        }
+    }];
+}
+/**
+取消评价点赞
+*/
+- (void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(CZCommentModel *)model{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service ApiObjectCommentsPraiseCancelObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                model.isPraise = @(0);
+                model.praiseCount = @([model.praiseCount integerValue] - 1);
+                [weakSelf.tableView reloadData];
             });
         }
     }];
