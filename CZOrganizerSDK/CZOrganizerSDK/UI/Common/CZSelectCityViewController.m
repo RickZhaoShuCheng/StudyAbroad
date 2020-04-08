@@ -45,11 +45,13 @@
 {
     if (self.fromFilter) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 300)];
+        view.backgroundColor = [UIColor whiteColor];
         self.view = view;
     }
     else
     {
         UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        view.backgroundColor = [UIColor whiteColor];
         self.view = view;
     }
 }
