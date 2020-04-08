@@ -97,7 +97,7 @@
     [self.rankView setRankByRate:[model.valStar floatValue]];
     self.evaluateLab.text = [NSString stringWithFormat:@"专业度: %.1f  服务: %.1f  价格: %.1f",[model.valMajor floatValue],[model.valService floatValue],[model.valPrice floatValue]];
     self.contentLab.text = model.comment;
-    self.browseLab.text = [NSString stringWithFormat:@"%@人已看",[@([model.visitCount integerValue]) stringValue]];
+    self.browseLab.text = [NSString stringWithFormat:@"浏览%@",[@([model.visitCount integerValue]) stringValue]];
     self.countLab.text = [NSString stringWithFormat:@"%@条",[@([model.replyCount integerValue]) stringValue]];
     self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
 }

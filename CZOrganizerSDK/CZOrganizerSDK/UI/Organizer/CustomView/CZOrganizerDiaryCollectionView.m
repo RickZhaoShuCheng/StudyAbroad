@@ -106,6 +106,12 @@
     return nil;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.selectDiaryBlock) {
+        self.selectDiaryBlock(self.dataArr[indexPath.row]);
+    }
+}
+
 - (void)openFilter:(UIButton *)button{
     self.isOpen = !self.isOpen;
     if (self.isOpen) {

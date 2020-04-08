@@ -115,6 +115,11 @@
         UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
         [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
     }];
+    //点击日记
+    [self.collectionView setSelectDiaryBlock:^(CZDiaryModel * _Nonnull model) {
+        UIViewController *controller = [QSClient instanceDiaryDetailTabVCByOptions:@{@"diaryId":model.smdId}];
+        [weakSelf.navigationController pushViewController:controller animated:YES];
+    }];
     
     //滚动时设置导航条透明度
     [self.collectionView setScrollContentSize:^(CGFloat offsetY) {
@@ -250,7 +255,7 @@
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
     
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];

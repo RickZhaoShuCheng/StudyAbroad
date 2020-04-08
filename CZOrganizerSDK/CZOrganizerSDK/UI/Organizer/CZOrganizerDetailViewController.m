@@ -110,6 +110,11 @@
         detailVC.counselorId = model.counselorId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
+    //点击日记
+    [self.collectionView setSelectDiaryBlock:^(CZDiaryModel * _Nonnull model) {
+        UIViewController *controller = [QSClient instanceDiaryDetailTabVCByOptions:@{@"diaryId":model.smdId}];
+        [weakSelf.navigationController pushViewController:controller animated:YES];
+    }];
 }
 
 - (void)setOrganId:(NSString *)organId{
@@ -210,7 +215,6 @@
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         layout.sectionHeadersPinToVisibleBounds = YES;
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-
         _collectionView = [[CZOrganizerDetailCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     }
     return _collectionView;

@@ -88,12 +88,9 @@
     }];
     
     self.searchBar = [[UISearchBar alloc]init];
-    [self.searchBar setBackgroundImage:[[UIImage alloc]init]];
-    self.searchBar.tintColor = [UIColor blackColor];
-    self.searchBar.searchTextField.backgroundColor = [UIColor clearColor];
-    self.searchBar.searchTextField.placeholder = @"搜索";
-    self.searchBar.searchTextField.font = [UIFont systemFontOfSize:ScreenScale(28)];
-    self.searchBar.searchTextField.returnKeyType = UIReturnKeySearch;
+    [self.searchBar setBackgroundImage:[UIImage new]];
+    self.searchBar.placeholder = @"搜索";
+    self.searchBar.returnKeyType = UIReturnKeySearch;
     [topView addSubview:self.searchBar];
     [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(topView.mas_leading).offset(ScreenScale(30));
@@ -101,6 +98,9 @@
         make.height.mas_equalTo(ScreenScale(62));
         make.trailing.mas_equalTo(topView.mas_trailing).offset(-ScreenScale(158));
     }];
+    UITextField *searchTF = [self.searchBar valueForKey:@"searchField"];
+    searchTF.backgroundColor = [UIColor clearColor];
+    searchTF.font = [UIFont systemFontOfSize:ScreenScale(28)];
     
     self.searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.searchBtn setTitle:@"搜本机构" forState:UIControlStateNormal];

@@ -187,6 +187,11 @@
         if (self.selectProductBlock) {
             self.selectProductBlock([CZProductVoListModel modelWithDict:self.model.productVoList[indexPath.row]]);
         }
+    }else if (indexPath.section == 2){
+        CZDiaryModel *model = [CZDiaryModel modelWithDict:self.model.diaryVoList[indexPath.row]];
+        if (self.selectDiaryBlock) {
+            self.selectDiaryBlock(model);
+        }
     }
 }
 
