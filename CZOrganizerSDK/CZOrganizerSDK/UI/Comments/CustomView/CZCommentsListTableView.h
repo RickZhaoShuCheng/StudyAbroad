@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 选择评价筛选index
  */
 @property (nonatomic,copy) void (^selectCommentIndex)(NSInteger index);
+//评价点赞
+@property (nonatomic ,copy) void (^commentsPraiseBlock)(NSInteger rowIndex);
 @end
 
 NS_ASSUME_NONNULL_END

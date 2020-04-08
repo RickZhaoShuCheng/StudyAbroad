@@ -45,12 +45,14 @@
 
 - (void)setProductModel:(CZProductModel *)productModel{
     _productModel = productModel;
-    
+    if (!productModel) {
+        return;
+    }
     [self.goodsImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(productModel.logo)] placeholderImage:nil];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:productModel.title];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:productModel.title?:@""];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = ScreenScale(15); // 调整行间距
-    NSRange range = NSMakeRange(0, [productModel.title length]);
+    NSRange range = NSMakeRange(0, [productModel.title?:@"" length]);
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
     self.goodsName.attributedText = attributedString;
     self.organizerName.text = productModel.organName;
@@ -82,6 +84,9 @@
 
 - (void)setModel:(CZCommentModel *)model{
     _model = model;
+    if (!model) {
+        return;
+    }
     NSMutableArray *imgsArr = [NSMutableArray array];
     NSMutableArray *imgUrlArr = [NSMutableArray array];
     if (model.imgs.length) {

@@ -66,9 +66,15 @@
     return self.commentsArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    WEAKSELF
     CZCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.commentsArr[indexPath.row];
+    [cell setClickLikeAction:^{
+        if (weakSelf.commentsPraiseBlock) {
+            weakSelf.commentsPraiseBlock(indexPath.row);
+        }
+    }];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
