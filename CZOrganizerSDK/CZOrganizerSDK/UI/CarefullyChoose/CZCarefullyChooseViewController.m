@@ -68,6 +68,10 @@
     if (!self.model) {
         self.contentScrollView = self.dataCollectionView;
     }
+    
+    if (self.keywords) {
+        self.contentScrollView = nil;
+    }
     self.dataCollectionView.alwaysBounceVertical = YES;
     self.dataCollectionView.currentVC = self;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,15 +81,17 @@
     }];
     
     WEAKSELF
-    self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageIndex = 1;
-        [weakSelf requestForCarefullyChoose];
-    }];
-    
-    self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        weakSelf.pageIndex += 1;
-        [weakSelf requestForCarefullyChoose];
-    }];
+    if (!self.keywords) {
+        self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+            weakSelf.pageIndex = 1;
+            [weakSelf requestForCarefullyChoose];
+        }];
+        
+        self.dataCollectionView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+            weakSelf.pageIndex += 1;
+            [weakSelf requestForCarefullyChoose];
+        }];
+    }
 }
 
 -(void)requestForCarefullyChoose

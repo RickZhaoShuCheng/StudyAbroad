@@ -63,23 +63,29 @@
     if (!self.model) {
         self.contentScrollView = self.dataView;
     }
+    
+    if (self.keywords) {
+        self.contentScrollView = nil;
+    }
+    
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
         make.left.right.mas_equalTo(0);
         make.bottom.mas_equalTo(!self.model?0:-100);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
-    
     WEAKSELF
-    self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageIndex = 1;
-        [weakSelf requestForOrganizers];
-    }];
-    
-    self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        weakSelf.pageIndex += 1;
-        [weakSelf requestForOrganizers];
-    }];
+    if (!self.keywords) {
+        self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+            weakSelf.pageIndex = 1;
+            [weakSelf requestForOrganizers];
+        }];
+        
+        self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+            weakSelf.pageIndex += 1;
+            [weakSelf requestForOrganizers];
+        }];
+    }
     
     //点击cell
     self.dataView.selectedBlock = ^(NSString * _Nonnull organId) {

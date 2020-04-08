@@ -15,6 +15,7 @@
 #import "CZOrganizerListViewController.h"
 #import "SPPageMenu.h"
 #import "QSClient.h"
+#import "CXSearchViewController.h"
 
 @interface CZAllServiceSubViewController ()<SPPageMenuDelegate>
 @property (nonatomic , strong)CZPageScrollContentView *contentView;
@@ -78,7 +79,8 @@
 
 -(void)actionForSearch
 {
-    
+    CXSearchViewController *searchViewController = [[CXSearchViewController alloc] initWithNibName:@"CXSearchViewController" bundle:[NSBundle bundleForClass:[self class]]];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 

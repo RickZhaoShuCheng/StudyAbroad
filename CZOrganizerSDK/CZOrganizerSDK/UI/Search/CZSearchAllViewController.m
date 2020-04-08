@@ -9,7 +9,6 @@
 #import "CZSearchAllViewController.h"
 #import "CZPageScrollContentView.h"
 #import "CZCarefullyChooseViewController.h"
-#import "CZDiaryViewController.h"
 #import "CZSchoolStarViewController.h"
 #import "CZAdvisorViewController.h"
 #import "CZOrganizerListViewController.h"
@@ -36,7 +35,7 @@
     
     self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
-    [self.pageMenu setItems:@[NSLocalizedString(@"精选", nil),NSLocalizedString(@"口碑", nil),NSLocalizedString(@"达人", nil),NSLocalizedString(@"顾问", nil),NSLocalizedString(@"机构", nil)] selectedItemIndex:0];
+    [self.pageMenu setItems:@[NSLocalizedString(@"精选", nil),NSLocalizedString(@"达人", nil),NSLocalizedString(@"顾问", nil),NSLocalizedString(@"机构", nil)] selectedItemIndex:0];
     self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:16];
     self.pageMenu.tracker.backgroundColor = self.pageMenu.unSelectedItemTitleColor = CZColorCreater(51, 172, 253, 1);
     self.pageMenu.delegate = self;
@@ -47,18 +46,8 @@
     self.contentView = [[CZPageScrollContentView alloc]initWithFrame:CGRectMake(0, self.pageMenu.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height-self.pageMenu.bounds.size.height) contentControllers:vcs rootController:self];
     [self.view addSubview:self.contentView];
     self.pageMenu.bridgeScrollView = self.contentView.collectionView;
+    self.pageMenu.delegate = self;
 }
-
--(void)actionForShowCart
-{
-    [QSClient showCartInNavi:self.navigationController];
-}
-
--(void)actionForSearch
-{
-    
-}
-
 
 
 // 子类化实现
@@ -67,14 +56,16 @@
     NSMutableArray *arry = [[NSMutableArray alloc]init];
     CZCarefullyChooseViewController *controller1 = [[CZCarefullyChooseViewController alloc]init];
     [arry addObject:controller1];
-    CZDiaryViewController *controller2 = [[CZDiaryViewController alloc]init];
+    CZSchoolStarViewController *controller2 = [[CZSchoolStarViewController alloc]init];
     [arry addObject:controller2];
-    CZSchoolStarViewController *controller3 = [[CZSchoolStarViewController alloc]init];
+    CZAdvisorViewController *controller3 = [[CZAdvisorViewController alloc]init];
     [arry addObject:controller3];
-    CZAdvisorViewController *controller4 = [[CZAdvisorViewController alloc]init];
+    CZOrganizerListViewController *controller4 = [[CZOrganizerListViewController alloc]init];
     [arry addObject:controller4];
-    CZOrganizerListViewController *controller5 = [[CZOrganizerListViewController alloc]init];
-    [arry addObject:controller5];
+    controller1.keywords = @"";
+    controller2.keywords = @"";
+    controller3.keywords = @"";
+    controller4.keywords = @"";
 
     return arry;
 }

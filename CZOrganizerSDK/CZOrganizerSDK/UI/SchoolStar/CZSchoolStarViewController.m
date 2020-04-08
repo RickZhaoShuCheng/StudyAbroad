@@ -62,6 +62,10 @@
     if (!self.model) {
         self.contentScrollView = self.dataView;
     }
+    
+    if (self.keywords) {
+        self.contentScrollView = nil;
+    }
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
         make.left.right.mas_equalTo(0);
@@ -70,15 +74,17 @@
 //    self.dataView.alwaysBounceVertical = YES;
     
     WEAKSELF
-    self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageIndex = 1;
-        [weakSelf requestForSchoolStars];
-    }];
-    
-    self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-        weakSelf.pageIndex += 1;
-        [weakSelf requestForSchoolStars];
-    }];
+    if (!self.keywords) {
+        self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+            weakSelf.pageIndex = 1;
+            [weakSelf requestForSchoolStars];
+        }];
+        
+        self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+            weakSelf.pageIndex += 1;
+            [weakSelf requestForSchoolStars];
+        }];
+    }
     
     //查看商品
     [self.dataView setSelectedProductCell:^(CZProductVoListModel * _Nonnull model) {
