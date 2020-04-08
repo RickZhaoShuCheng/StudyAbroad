@@ -16,6 +16,9 @@
 
 @property (nonatomic , strong) void(^textChangeBlock)(NSString *text);
 
+@property (nonatomic , strong) void(^searchBlock)(void);
+
+@property (nonatomic , strong) UIButton *maskButton;
 
 @end
 
@@ -57,6 +60,20 @@
         make.left.mas_equalTo(self.iconView.mas_right).offset(6);
         make.right.mas_equalTo(-10);
     }];
+    
+    self.maskButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self addSubview:self.maskButton];
+    [self.maskButton addTarget:self action:@selector(actionForSearch) forControlEvents:UIControlEventTouchUpInside];
+    [self.maskButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
+}
+
+-(void)actionForSearch
+{
+    if (self.searchBlock) {
+        self.searchBlock();
+    }
 }
 
 -(CGSize)intrinsicContentSize
@@ -95,6 +112,11 @@
 -(void)setEditTextChangedListener:(void(^)(NSString *text))block
 {
     self.textChangeBlock = block;
+}
+
+-(void)setSearchAction:(void(^)(void))block
+{
+    self.searchBlock = block;
 }
 
 @end

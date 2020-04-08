@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
 
+-(void)instanceOragizerDetailViewController:(UINavigationController *)controller options:(NSDictionary *)options;
+
+
 @end
 
 @interface QSClient : NSObject
@@ -40,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)removeDelegate:(id<QSClientDelegate>)delegate;
 
 +(UIViewController *)instancedOrganizerViewController;
++(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options;
 
 @end
 

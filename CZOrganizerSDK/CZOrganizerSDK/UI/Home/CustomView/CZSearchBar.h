@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)setEditTextChangedListener:(void(^)(NSString *text))block;
 
+-(void)setSearchAction:(void(^)(void))block;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

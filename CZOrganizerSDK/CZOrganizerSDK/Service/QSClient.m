@@ -9,6 +9,7 @@
 #import "QSClient.h"
 #import "QSClientConfigeration.h"
 #import "CZOrganizerHomeViewController.h"
+#import "CZOrganizerVC.h"
 
 @interface QSClient ()
 
@@ -139,6 +140,13 @@ static dispatch_once_t onceToken;
        return [client.delegate instanceDiaryDetailTabVCByOptions:options];
     }
     return nil;
+}
+
++(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options
+{
+    CZOrganizerVC *organizerVC = [[CZOrganizerVC alloc]init];
+    organizerVC.organId = options[@"organId"];
+    return organizerVC;
 }
 
 @end
