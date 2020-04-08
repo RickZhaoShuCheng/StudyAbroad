@@ -40,7 +40,7 @@
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
         make.width.height.mas_greaterThanOrEqualTo(0);
-        make.bottom.mas_equalTo(self.mas_bottom).offset(-ScreenScale(40));
+        make.top.mas_equalTo(self.mas_top).offset(ScreenScale(40));
     }];
     
     UIImageView *arrowImg = [[UIImageView alloc]init];

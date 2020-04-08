@@ -245,7 +245,7 @@
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
   
 }

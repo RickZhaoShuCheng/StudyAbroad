@@ -207,6 +207,11 @@
         if (self.selectProductBlock) {
             self.selectProductBlock(model);
         }
+    }else if (indexPath.section == 3){
+        CZDiaryModel *model = [CZDiaryModel modelWithDict:self.model.diaryVoList[indexPath.row]];
+        if (self.selectDiaryBlock) {
+            self.selectDiaryBlock(model);
+        }
     }
 }
 
@@ -231,11 +236,13 @@
             return CGSizeMake(0, 0);
         }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
+    }else if (section == 3){
+        return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else{
         if ([self.model.commentList isKindOfClass:[NSString class]] || self.model.commentList.count == 0) {
             return CGSizeMake(0, 0);
         }
-        return CGSizeMake(kScreenWidth, ScreenScale(130));
+        return CGSizeMake(kScreenWidth, ScreenScale(270));
     }
 }
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CZOrganizerDiaryHeaderView.h"
+#import "CZDiaryModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerDiaryCollectionView : UICollectionView
@@ -18,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 选择日记筛选index
  */
 @property (nonatomic,copy) void (^selectDiaryIndex)(NSInteger index);
+//点击日记
+@property (nonatomic ,copy) void (^selectDiaryBlock)(CZDiaryModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,6 +12,7 @@
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 #import "CZDiaryModel.h"
+#import "QSClient.h"
 
 @interface CZOrganizerDiaryVC ()
 @property (nonatomic ,strong) UIButton *backBtn;//返回按钮
@@ -40,7 +41,11 @@
     [self.collectionView setSelectDiaryIndex:^(NSInteger index) {
         [weakSelf requestForApiDiaryFindCaseListByFilter:index+1];
     }];
-    
+    //点击日记
+    [self.collectionView setSelectDiaryBlock:^(CZDiaryModel * _Nonnull model) {
+        UIViewController *controller = [QSClient instanceDiaryDetailTabVCByOptions:@{@"diaryId":model.smdId}];
+        [weakSelf.navigationController pushViewController:controller animated:YES];
+    }];
     [self requestForApiDiaryFindCaseListByFilter:1];
 }
 

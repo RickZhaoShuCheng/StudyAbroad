@@ -161,6 +161,13 @@
         self.clickDynamicBlock();
     }
 }
+//点击电话
+- (void)clickPhoneBtn{
+    UIWebView * callWebview = [[UIWebView alloc] init];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.model.phone]]]];
+    [[UIApplication sharedApplication].keyWindow addSubview:callWebview];
+}
+
 
 -(void)initWithUI{
     
@@ -480,6 +487,7 @@
         
         self.phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.phoneBtn setImage:[CZImageProvider imageNamed:@"jigou_dianhua"] forState:UIControlStateNormal];
+        [self.phoneBtn addTarget:self action:@selector(clickPhoneBtn) forControlEvents:UIControlEventTouchUpInside];
         [self.locationView addSubview:self.phoneBtn];
         [self.phoneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.trailing.mas_equalTo(self.locationView.mas_trailing).offset(-ScreenScale(20));

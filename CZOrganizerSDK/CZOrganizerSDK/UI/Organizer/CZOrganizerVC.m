@@ -37,6 +37,7 @@
 @property (nonatomic ,strong) UIButton *focusBtn;
 @property (nonatomic ,assign) CGFloat alpha;
 @property (nonatomic ,strong) UIButton *chatBtn;
+@property (nonatomic ,strong) UIView *bottomView;
 @end
 
 @implementation CZOrganizerVC
@@ -110,6 +111,10 @@
     [self.navigationController pushViewController:serchVC animated:YES];
 }
 
+- (void)clickFocusBtn:(UIButton *)focusBtn{
+    
+}
+
 /**
  获取机构详情
  */
@@ -122,13 +127,14 @@
                 CZOrganizerModel *model = [CZOrganizerModel modelWithDict:data];
                 weakSelf.titleLab.text = model.name;
                 [weakSelf.rankView setRankByRate:[model.valStar floatValue]];
+                weakSelf.scoreLab.text = [NSString stringWithFormat:@"%.1f",[model.valStar floatValue]];
                 weakSelf.countLab.text = [NSString stringWithFormat:@"粉丝数 %@",[@([model.fanCount integerValue]) stringValue]];
                 if ([model.isFocus boolValue]) {
                     [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
                 }else{
                     [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
                 }
-                model.myDynamicVo = [NSMutableArray arrayWithObjects:@{@"smdType":@"1",@"diaryTitle":@"测试标题哈哈哈哈1",@"smdContent":@"标题嘿嘿嘿1"},@{@"smdType":@"4",@"diaryTitle":@"",@"smdContent":@"测试标题嘿嘿嘿2"},@{@"smdType":@"5",@"diaryTitle":@"测试标题哈哈哈哈3",@"smdContent":@"标题嘿嘿嘿3"}, nil];
+//                model.myDynamicVo = [NSMutableArray arrayWithObjects:@{@"smdType":@"1",@"diaryTitle":@"测试标题哈哈哈哈1",@"smdContent":@"标题嘿嘿嘿1"},@{@"smdType":@"4",@"diaryTitle":@"",@"smdContent":@"测试标题嘿嘿嘿2"},@{@"smdType":@"5",@"diaryTitle":@"测试标题哈哈哈哈3",@"smdContent":@"标题嘿嘿嘿3"}, nil];
                 CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
                 baseVc.collectionView.model = model;
                 baseVc.organId = model.organId;
@@ -163,22 +169,27 @@
     // 设置代理
     self.pageMenu.delegate = self;
     
+    CZOrganizerDetailViewController *detailVC = [[CZOrganizerDetailViewController alloc]init];
+    [self addChildViewController:detailVC];
+    [self.myChildViewControllers addObject:detailVC];
     
-    NSArray *controllerClassNames = [NSArray arrayWithObjects:@"CZOrganizerDetailViewController",@"CZOrganizerProjectVC",@"CZOrganizerDiaryVC",@"CZOrganizerAdvisorVC",nil];
-    for (int i = 0; i < self.titleArr.count; i++) {
-        if (controllerClassNames.count > i) {
-            UIViewController *baseVC = [[NSClassFromString(controllerClassNames[i]) alloc] init];
-            if (i != 0) {
-                id caseType = [baseVC performSelector:@selector(caseType)];
-                caseType = @"1";
-                id idStr = [baseVC performSelector:@selector(idStr)];
-                idStr = self.organId;
-            }
-            [self addChildViewController:baseVC];
-        //控制器本来自带childViewControllers,但是遗憾的是该数组的元素顺序永远无法改变，只要是addChildViewController,都是添加到最后一个，而控制器不像数组那样，可以插入或删除任意位置，所以这里自己定义可变数组，以便插入(删除)(如果没有插入(删除)功能，直接用自带的childViewControllers即可)
-            [self.myChildViewControllers addObject:baseVC];
-        }
-    }
+    CZOrganizerProjectVC *projectVC = [[CZOrganizerProjectVC alloc]init];
+    projectVC.caseType = @"1";
+    projectVC.idStr = self.organId;
+    [self addChildViewController:projectVC];
+    [self.myChildViewControllers addObject:projectVC];
+    
+    CZOrganizerDiaryVC *diaryVC = [[CZOrganizerDiaryVC alloc]init];
+    diaryVC.caseType = @"1";
+    diaryVC.idStr = self.organId;
+    [self addChildViewController:diaryVC];
+    [self.myChildViewControllers addObject:diaryVC];
+    
+    CZOrganizerAdvisorVC *advisorVC = [[CZOrganizerAdvisorVC alloc]init];
+    advisorVC.caseType = @"1";
+    advisorVC.idStr = self.organId;
+    [self addChildViewController:advisorVC];
+    [self.myChildViewControllers addObject:advisorVC];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -NaviH, kScreenWidth,kScreenHeight)];
     self.scrollView.delegate = self;
@@ -195,9 +206,10 @@
     if (self.pageMenu.selectedItemIndex < self.myChildViewControllers.count) {
         UIViewController *baseVc = self.myChildViewControllers[self.pageMenu.selectedItemIndex];
         [self.scrollView addSubview:baseVc.view];
-        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight-NaviH);
+        baseVc.view.frame = CGRectMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0, kScreenWidth, kScreenHeight);
         self.scrollView.contentOffset = CGPointMake(kScreenWidth*self.pageMenu.selectedItemIndex, 0);
         self.scrollView.contentSize = CGSizeMake(self.titleArr.count*kScreenWidth, 0);
+        [self.view bringSubviewToFront:self.bottomView];
     }
     
     //搜索按钮
@@ -268,8 +280,9 @@
     if ([targetViewController isViewLoaded]){
         return;
     };
-    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH, kScreenWidth, kScreenHeight - NaviH - ScreenScale(140) - PageMenuHeight);
+    targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH, kScreenWidth, kScreenHeight - NaviH - PageMenuHeight);
     [self.scrollView addSubview:targetViewController.view];
+    [self.view bringSubviewToFront:self.bottomView];
 }
 
 /**
@@ -292,21 +305,21 @@
     self.navigationItem.rightBarButtonItem = rbackItem;
     
     self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
-
+    
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenScale(20), kScreenWidth-140, ScreenScale(30))];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
     self.titleLab.text = @"-";
     [self.titleView addSubview:self.titleLab];
     
-    self.rankView = [CZRankView instanceRankViewByRate:3.1];
+    self.rankView = [CZRankView instanceRankViewByRate:0.0];
     self.rankView.frame = CGRectMake(0, ScreenScale(60), ScreenScale(150), ScreenScale(28));
     [self.titleView addSubview:self.rankView];
     
     self.scoreLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155), ScreenScale(53), ScreenScale(50), ScreenScale(30))];
     self.scoreLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.scoreLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.scoreLab.text = @"3.1";
+    self.scoreLab.text = @"-";
     [self.titleView addSubview:self.scoreLab];
     
     self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(ScreenScale(155)+ScreenScale(50)+ScreenScale(34), ScreenScale(53), ScreenScale(180), ScreenScale(30))];
@@ -316,25 +329,26 @@
     [self.titleView addSubview:self.countLab];
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(75), ScreenScale(30), ScreenScale(116), ScreenScale(46))];
+    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(75), ScreenScale(15), ScreenScale(116), ScreenScale(46))];
     [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
     [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
     [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
     [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
     [self.focusBtn.layer setMasksToBounds:YES];
     [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
+    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:self.focusBtn];
     
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
     
-    UIView *bottomView = [[UIView alloc]init];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.bottomView = [[UIView alloc]init];
+    self.bottomView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.mas_equalTo(self.view);
         make.height.mas_equalTo(ScreenScale(140));
     }];
@@ -349,12 +363,12 @@
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
     [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, ScreenScale(14))];
-    [bottomView addSubview:self.chatBtn];
+    [self.bottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(bottomView);
+        make.centerX.mas_equalTo(self.bottomView);
         make.height.mas_equalTo(ScreenScale(80));
         make.width.mas_equalTo(ScreenScale(690));
-        make.top.mas_equalTo(bottomView.mas_top);
+        make.top.mas_equalTo(self.bottomView.mas_top);
     }];
 }
 
