@@ -33,7 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)instanceOragizerDetailViewController:(UINavigationController *)controller options:(NSDictionary *)options;
 
-
 @end
 
 @interface QSClient : NSObject
@@ -44,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(UIViewController *)instancedOrganizerViewController;
 +(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options;
++(UIViewController *)instanceNiceCommentViewControllerByOptions:(NSDictionary *)options;
++(UIViewController *)instanceNiceDiaryViewControllerByOptions:(NSDictionary *)options;
 
 @end
 

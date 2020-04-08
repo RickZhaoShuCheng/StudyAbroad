@@ -47,6 +47,11 @@
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 300)];
         self.view = view;
     }
+    else
+    {
+        UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        self.view = view;
+    }
 }
 
 -(void)actionForBack

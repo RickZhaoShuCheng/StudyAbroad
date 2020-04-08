@@ -53,6 +53,8 @@
 		1E8D8795242749DF00E09FB2 /* CZBoardProductNormalCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8D8794242749DF00E09FB2 /* CZBoardProductNormalCell.h */; };
 		1E8D879824274A0600E09FB2 /* CZBoardProductViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8D879624274A0600E09FB2 /* CZBoardProductViewController.h */; };
 		1E8D879924274A0600E09FB2 /* CZBoardProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D879724274A0600E09FB2 /* CZBoardProductViewController.m */; };
+		1EA435CD243E2BE80049E11B /* CZSearchAllViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EA435CB243E2BE70049E11B /* CZSearchAllViewController.h */; };
+		1EA435CE243E2BE80049E11B /* CZSearchAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA435CC243E2BE70049E11B /* CZSearchAllViewController.m */; };
 		530751AB240A4F9C0074A67E /* CZDiaryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 530751A9240A4F9C0074A67E /* CZDiaryViewController.h */; };
 		530751AC240A4F9C0074A67E /* CZDiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530751AA240A4F9C0074A67E /* CZDiaryViewController.m */; };
 		530751B5240A50BC0074A67E /* CZDiaryCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 530751B3240A50BC0074A67E /* CZDiaryCell.h */; };
@@ -610,6 +612,8 @@
 		1E8D8794242749DF00E09FB2 /* CZBoardProductNormalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZBoardProductNormalCell.h; sourceTree = "<group>"; };
 		1E8D879624274A0600E09FB2 /* CZBoardProductViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardProductViewController.h; sourceTree = "<group>"; };
 		1E8D879724274A0600E09FB2 /* CZBoardProductViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardProductViewController.m; sourceTree = "<group>"; };
+		1EA435CB243E2BE70049E11B /* CZSearchAllViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZSearchAllViewController.h; sourceTree = "<group>"; };
+		1EA435CC243E2BE70049E11B /* CZSearchAllViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZSearchAllViewController.m; sourceTree = "<group>"; };
 		530751A9240A4F9C0074A67E /* CZDiaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDiaryViewController.h; sourceTree = "<group>"; };
 		530751AA240A4F9C0074A67E /* CZDiaryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZDiaryViewController.m; sourceTree = "<group>"; };
 		530751B3240A50BC0074A67E /* CZDiaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDiaryCell.h; sourceTree = "<group>"; };
@@ -1239,6 +1243,15 @@
 			path = Product;
 			sourceTree = "<group>";
 		};
+		1EA435CA243E2B910049E11B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1EA435CB243E2BE70049E11B /* CZSearchAllViewController.h */,
+				1EA435CC243E2BE70049E11B /* CZSearchAllViewController.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		530751A8240A4F7D0074A67E /* Diary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1860,6 +1873,7 @@
 		5394846B23FFB07A00770E99 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1EA435CA243E2B910049E11B /* Search */,
 				D88AFC2A2429106B00F1E6CB /* Activity */,
 				537D006824164CC300C47796 /* Board */,
 				53A90CC12413D13E00894E9D /* AllService */,
@@ -2346,6 +2360,7 @@
 				D8C40E7424265ACE00087987 /* AdvisorDynamicPostVC.h in Headers */,
 				D83BF6FD243B56C90032C2BD /* SchoolStarDetailSectionHeaderView.h in Headers */,
 				1E18BFA42424FBD800A62312 /* CZBoardSchoolStarViewController.h in Headers */,
+				1EA435CD243E2BE80049E11B /* CZSearchAllViewController.h in Headers */,
 				53A90CBF2413951100894E9D /* CZCommonInstance.h in Headers */,
 				D88AFC182428FB9F00F1E6CB /* OrganizerDynamicSectionHeaderView.h in Headers */,
 				53AC45E024038F7600521C2F /* DropMenuView.h in Headers */,
@@ -2806,6 +2821,7 @@
 				D88AFC192428FB9F00F1E6CB /* OrganizerDynamicSectionHeaderView.m in Sources */,
 				D83BF6F2243B54160032C2BD /* SchoolStarDetailTableView.m in Sources */,
 				53F8097E240D32B100E44651 /* CZSelectProvinceCell.m in Sources */,
+				1EA435CE243E2BE80049E11B /* CZSearchAllViewController.m in Sources */,
 				D8CD0C442415351700B2124C /* CZOrganizerDetailDiaryCell.m in Sources */,
 				D8CD0C40241534E600B2124C /* CZOrganizerDetailServiceCell.m in Sources */,
 				D81E22D32434D7D6000CC8EC /* CZMoreSchoolStarTableView.m in Sources */,

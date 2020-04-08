@@ -10,6 +10,8 @@
 #import "QSClientConfigeration.h"
 #import "CZOrganizerHomeViewController.h"
 #import "CZOrganizerVC.h"
+#import "CZCommentsListVC.h"
+#import "CZOrganizerDiaryVC.h"
 
 @interface QSClient ()
 
@@ -147,6 +149,23 @@ static dispatch_once_t onceToken;
     CZOrganizerVC *organizerVC = [[CZOrganizerVC alloc]init];
     organizerVC.organId = options[@"organId"];
     return organizerVC;
+}
+
++(UIViewController *)instanceNiceCommentViewControllerByOptions:(NSDictionary *)options
+{
+    CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
+    commentsList.idStr = options[@"organId"];
+    commentsList.commentsType = options[@"commentsType"];
+    commentsList.varStar = options[@"valStar"];
+    return commentsList;
+}
+
++(UIViewController *)instanceNiceDiaryViewControllerByOptions:(NSDictionary *)options
+{
+    CZOrganizerDiaryVC *diaryVC = [[CZOrganizerDiaryVC alloc]init];
+    diaryVC.caseType = options[@"caseType"];
+    diaryVC.idStr = options[@"organId"];
+    return diaryVC;
 }
 
 @end
