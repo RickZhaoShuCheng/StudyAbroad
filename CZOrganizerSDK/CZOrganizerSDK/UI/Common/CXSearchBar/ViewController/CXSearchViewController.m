@@ -12,6 +12,7 @@
 #import "CXSearchCollectionReusableView.h"
 #import "CXSearchLayout.h"
 #import "CXDBTool.h"
+#import "CZSearchAllViewController.h"
 
 @interface CXSearchViewController ()<UICollectionReusableViewButtonDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate
 >
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *top;
 @property (nonatomic, strong)IBOutlet UIView *searchBgView;
 @property (nonatomic, strong)IBOutlet UIImageView *searchIconView;
+@property (strong, nonatomic) CZSearchAllViewController *searchVC;
 
 @end
 
@@ -39,14 +41,34 @@ const CGFloat kFirstitemleftSpace = 15;
     [self setUpdata];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+-(CZSearchAllViewController *)searchVC
+{
+    if (!_searchVC) {
+        _searchVC = [[CZSearchAllViewController alloc] init];
+    }
+    return _searchVC;
+}
+
 - (void)setUpUI {
-    
+    [self addChildViewController:self.searchVC];
+
     self.searchIconView.image = [CZImageProvider imageNamed:@"sou_su_hui"];
     
     self.searchBgView.layer.cornerRadius = 4;
     self.searchBgView.layer.masksToBounds = YES;
     
-    self.navigationController.navigationBarHidden = YES;
     self.searchCollectionView.alwaysBounceVertical = YES;
     self.searchCollectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
@@ -57,6 +79,12 @@ const CGFloat kFirstitemleftSpace = 15;
     [self.searchCollectionView setCollectionViewLayout:self.searchLayout animated:YES];
     [self.searchCollectionView registerClass:[CXSearchCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CXSearchCollectionReusableView class])];
     [self.searchCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CXSearchCollectionViewCell class]) bundle:[NSBundle bundleForClass:[self class]]] forCellWithReuseIdentifier:NSStringFromClass([CXSearchCollectionViewCell class])];
+    
+    [self.view addSubview:self.searchVC.view];
+    self.searchVC.view.hidden = YES;
+    [self.searchVC.view mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.searchCollectionView);
+    }];
 }
 
 - (void)setUpdata {
@@ -178,9 +206,14 @@ const CGFloat kFirstitemleftSpace = 15;
             *stop = YES;
         }
     }];
+    
+    self.searchVC.view.hidden = textField.text.length == 0;
+    self.searchCollectionView.hidden = !self.searchVC.view.hidden;
+    
     if (!isExist) {
         [self reloadData:textField.text];
     }
+
     return isExist;
 }
 

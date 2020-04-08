@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZCarefullyChooseViewController : UIViewController<CZScrollContentControllerDeleagte>
 @property (nonatomic, strong) CZHomeModel *model;
 @property (nonatomic , strong)void(^filterViewShow)(void);
+@property (nonatomic, strong) NSString *keywords;
 
 @end
 
