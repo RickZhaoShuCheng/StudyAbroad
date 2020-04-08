@@ -28,6 +28,7 @@
 @property (nonatomic ,assign) NSInteger pageNo;
 @property (nonatomic ,assign) NSInteger pageSize;
 @property (nonatomic ,assign) CGFloat alpha;
+@property (nonatomic ,assign) NSInteger commentIndex;
 
 @end
 
@@ -35,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.commentIndex = 1;
     self.alpha = 0;
     self.pageNo = 1;
     self.pageSize = 20;
@@ -102,6 +104,7 @@
     //评价筛选
     [self.collectionView setSelectCommentIndex:^(NSInteger index) {
         [weakSelf requestForApiObjectCommentsFindComments:index+1];
+        weakSelf.commentIndex = index + 1;
     }];
     
     //点击评价
@@ -119,6 +122,17 @@
     [self.collectionView setSelectDiaryBlock:^(CZDiaryModel * _Nonnull model) {
         UIViewController *controller = [QSClient instanceDiaryDetailTabVCByOptions:@{@"diaryId":model.smdId}];
         [weakSelf.navigationController pushViewController:controller animated:YES];
+    }];
+    
+    //评价点赞
+    [self.collectionView setCommentsPraiseBlock:^(CZCommentModel * _Nonnull model) {
+        if ([model.isPraise boolValue]) {
+            //已点赞，取消点赞
+            [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model.socId];
+        }else{
+            //未点赞，进行点赞
+            [weakSelf requestForApiObjectCommentsPraiseObjectCommentsPraise:model.socId];
+        }
     }];
     
     //滚动时设置导航条透明度
@@ -229,6 +243,35 @@
                 weakSelf.collectionView.model.commentsCount = data[@"totalSize"];
                 [weakSelf.collectionView setCommentFilter:weakSelf.collectionView.model.filterComment];
                 [weakSelf.collectionView reloadData];
+            });
+        }
+    }];
+}
+
+/**
+评价点赞
+*/
+- (void)requestForApiObjectCommentsPraiseObjectCommentsPraise:(NSString *)socId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiObjectCommentsPraiseObjectCommentsPraise:socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf requestForApiObjectCommentsFindComments:weakSelf.commentIndex];
+            });
+        }
+    }];
+}
+/**
+取消评价点赞
+*/
+- (void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service ApiObjectCommentsPraiseCancelObjectCommentsPraise:socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf requestForApiObjectCommentsFindComments:weakSelf.commentIndex];
             });
         }
     }];

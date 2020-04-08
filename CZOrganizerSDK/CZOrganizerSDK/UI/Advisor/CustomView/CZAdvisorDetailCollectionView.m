@@ -109,6 +109,7 @@
     return 4;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    WEAKSELF
     if (indexPath.section == 1) {
         CZAdvisorDetailServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailServiceCell class]) forIndexPath:indexPath];
         CZProductVoListModel *model = [CZProductVoListModel modelWithDict:self.model.productVoList[indexPath.row]];
@@ -140,6 +141,11 @@
     }
     CZAdvisorDetailEvaluateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailEvaluateCell class]) forIndexPath:indexPath];
     cell.model = [CZCommentModel modelWithDict:self.model.commentList[indexPath.row]];
+    [cell setClickLikeAction:^{
+        if (weakSelf.commentsPraiseBlock) {
+            weakSelf.commentsPraiseBlock([CZCommentModel modelWithDict:weakSelf.model.commentList[indexPath.row]]);
+        }
+    }];
     return cell;
 }
 

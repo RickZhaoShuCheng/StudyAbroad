@@ -36,17 +36,28 @@
     return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    WEAKSELF
     CZCommentModel *model = self.dataArr[indexPath.row];
     if (model.level == 1) {
         CZCommentsDetailOneCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailOneCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.model = model;
+        [cell setClickLikeAction:^{
+            if (weakSelf.commentsPraiseBlock) {
+                weakSelf.commentsPraiseBlock(indexPath.row);
+            }
+        }];
         return cell;
     }
     if (model.level == 2) {
         CZCommentsDetailTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailTwoCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.model = model;
+        [cell setClickLikeAction:^{
+            if (weakSelf.commentsPraiseBlock) {
+                weakSelf.commentsPraiseBlock(indexPath.row);
+            }
+        }];
         return cell;
     }
     CZCommentsDetailMoreCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailMoreCell class]) forIndexPath:indexPath];

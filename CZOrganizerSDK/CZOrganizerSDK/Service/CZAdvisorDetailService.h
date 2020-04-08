@@ -98,6 +98,17 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *pageSize 数
  */
 -(void)requestForApiProductGetProductList:(NSString *)productType idStr:(NSString *)idStr pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+
+/**
+ *点赞---评论点赞
+ *socId 评价id
+ */
+-(void)requestForApiObjectCommentsPraiseObjectCommentsPraise:(NSString *)socId callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *取消点赞---评论取消点赞
+ *socId 评价id
+ */
+-(void)ApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId callBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

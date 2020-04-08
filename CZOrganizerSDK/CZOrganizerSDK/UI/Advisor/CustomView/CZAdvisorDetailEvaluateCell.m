@@ -47,6 +47,11 @@
     self.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.replyCount integerValue]) stringValue]];
     self.likeLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
     self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
+    if ([model.isPraise boolValue]) {
+        self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_yi_zan"];
+    }else{
+        self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_zan"];
+    }
     NSMutableArray *imgsArr = [NSMutableArray array];
     if (model.imgs.length) {
         [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
@@ -75,6 +80,12 @@
             }];
         }];
         
+    }
+}
+
+- (void)clickLike{
+    if (self.clickLikeAction) {
+        self.clickLikeAction();
     }
 }
 
@@ -180,6 +191,8 @@
     self.likeLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.likeLab.textColor = CZColorCreater(150, 150, 171, 1);
     self.likeLab.text = @"-";
+    self.likeLab.userInteractionEnabled = YES;
+    [self.likeLab addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLike)]];
     [self.contentView addSubview:self.likeLab];
     [self.likeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(24));
@@ -189,6 +202,8 @@
     
     self.likeImg = [[UIImageView alloc]init];
     self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_zan"];
+    self.likeImg.userInteractionEnabled = YES;
+    [self.likeImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLike)]];
     [self.contentView addSubview:self.likeImg];
     [self.likeImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.likeLab.mas_leading).offset(-ScreenScale(10));
