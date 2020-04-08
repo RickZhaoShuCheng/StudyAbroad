@@ -40,6 +40,7 @@
 #import "ActivityDetailVC.h"
 #import "CZMoreSchoolStarVC.h"
 #import "SchoolStarShopDetailVC.h"
+#import "CXSearchViewController.h"
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 50;
 
@@ -119,6 +120,13 @@ typedef enum : NSUInteger {
     [self createNavigationBar];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 //导航布局
 -(void)createNavigationBar
 {
@@ -140,8 +148,13 @@ typedef enum : NSUInteger {
     self.navigationItem.rightBarButtonItem = rightBarItem;
     
     self.searchBar = [[CZSearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 33)];
-    self.searchBar.userInteractionEnabled = NO;
+    WEAKSELF
     self.navigationItem.titleView = self.searchBar;
+    [self.searchBar setSearchAction:^{
+        CXSearchViewController *searchViewController = [[CXSearchViewController alloc] initWithNibName:@"CXSearchViewController" bundle:[NSBundle bundleForClass:[weakSelf class]]];
+        searchViewController.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:searchViewController animated:YES];
+    }];
 }
 
 - (CZHomeBannerView *)bannerView

@@ -215,7 +215,7 @@
 -(void)setModel:(CZProductModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.banners)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
     self.mainTitleLabel.text = model.title;
     self.subTitleLabel.text = model.organName;
     self.popularityLabel.text = @"近30天累计人气";
