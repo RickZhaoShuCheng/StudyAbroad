@@ -18,6 +18,7 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
     if (self) {
+        self.dataArr = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
         self.delegate = self;
         self.dataSource = self;
@@ -31,16 +32,25 @@
     return self;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SchoolStarShopCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SchoolStarShopCommentCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.model = self.dataArr[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ScreenScale(230);
+    CZCommentModel *model = self.dataArr[indexPath.row];
+    return ScreenScale(160) + model.commentHeight;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.selectCommentBlock) {
+        self.selectCommentBlock(self.dataArr[indexPath.row]);
+    }
+}
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.scrollContentSize) {
         self.scrollContentSize(scrollView.contentOffset.y);

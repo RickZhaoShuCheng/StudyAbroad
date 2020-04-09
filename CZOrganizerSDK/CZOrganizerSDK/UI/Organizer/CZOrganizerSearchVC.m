@@ -8,7 +8,8 @@
 
 #import "CZOrganizerSearchVC.h"
 #import "CZOrganizerSearchCollectionView.h"
-
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
 @interface CZOrganizerSearchVC ()
 @property (nonatomic ,strong) UIButton *backBtn;//返回按钮
 @property (nonatomic ,strong) UIButton *shareBtn;//分享按钮
@@ -27,6 +28,48 @@
     [self initWithUI];
 }
 
+- (void)clickFocusBtn:(UIButton *)focusBtn{
+    if (!focusBtn.isSelected) {
+        [self requestForApiFocusFanSaveFocusFan];
+    }else{
+        [self requestForApiFocusFanCancelFocusFan];
+    }
+}
+/**
+ 关注
+ */
+- (void)requestForApiFocusFanSaveFocusFan{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiFocusFanSaveFocusFan:self.model.userId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.model.isFocus = @(1);
+                [weakSelf.focusBtn setSelected:YES];
+                [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+/**
+ 取消关注
+ */
+- (void)requestForApiFocusFanCancelFocusFan{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiFocusFanCancelFocusFan:self.model.userId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.model.isFocus = @(0);
+                [weakSelf.focusBtn setSelected:NO];
+                [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+
 /**
  * 初始化UI
  */
@@ -42,7 +85,7 @@
     //右边按钮
     self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
     [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-    [self.shareBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.shareBtn addTarget:self action:@selector(backItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
     self.navigationItem.rightBarButtonItem = rbackItem;
     
@@ -50,7 +93,7 @@
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenScale(25), kScreenWidth-140, ScreenScale(30))];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
-    self.titleLab.text = self.titleName;
+    self.titleLab.text = self.model.name;
     [self.titleView addSubview:self.titleLab];
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,6 +104,14 @@
     [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
     [self.focusBtn.layer setMasksToBounds:YES];
     [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
+    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
+    if ([self.model.isFocus boolValue]) {
+        [self.focusBtn setSelected:YES];
+        [self.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+    }else{
+        [self.focusBtn setSelected:NO];
+        [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+    }
     [self.titleView addSubview:self.focusBtn];
     self.navigationItem.titleView = self.titleView;
     
@@ -129,6 +180,9 @@
 
 //返回
 -(void)actionForBack{
+    if (self.callBackIsFocus) {
+        self.callBackIsFocus([self.model.isFocus boolValue]);
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

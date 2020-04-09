@@ -48,6 +48,8 @@
         }
         if (!self.commentVC) {
             self.commentVC = [[SchoolStarShopCommentVC alloc]init];
+            self.commentVC.superVC = self.superVC;
+            self.commentVC.sportUserId = sportUserId;
             [self.scrollView addSubview:self.commentVC.view];
             [self.commentVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth);

@@ -38,7 +38,8 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ScreenScale(256);
+    CZProductVoListModel *model = self.dataArr[indexPath.row];
+    return ScreenScale(200) + model.descHeight;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

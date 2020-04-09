@@ -27,6 +27,10 @@ static const NSString *ApiSportUserSelectSportUserInfo = @"apiSportUser/selectSp
 static const NSString *ApiProductGetProductList = @"apiProduct/getProductList";
 static const NSString *ApiObjectCommentsPraiseObjectCommentsPraise = @"apiObjectCommentsPraise/objectCommentsPraise";
 static const NSString *ApiObjectCommentsPraiseCancelObjectCommentsPraise = @"apiObjectCommentsPraise/cancelObjectCommentsPraise";
+static const NSString *ApiFocusFanSaveFocusFan = @"apiFocusFan/saveFocusFan";
+static const NSString *ApiFocusFanCancelFocusFan = @"apiFocusFan/cancelFocusFan";
+static const NSString *ApiCollectCollect = @"apiCollect/collect";
+static const NSString *ApiCollectCancelCollect = @"apiCollect/cancelCollect";
 
 
 @implementation CZAdvisorDetailService
@@ -815,7 +819,7 @@ static const NSString *ApiObjectCommentsPraiseCancelObjectCommentsPraise = @"api
  *取消点赞---评论取消点赞
  *socId 评价id
  */
--(void)ApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId callBack:(CZAdvisorDetailBack)callBack{
+-(void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId callBack:(CZAdvisorDetailBack)callBack{
     if (!socId) {
         return;
     }
@@ -826,6 +830,225 @@ static const NSString *ApiObjectCommentsPraiseCancelObjectCommentsPraise = @"api
     
     NSDictionary *parameters = @{@"userId":userId,
                                  @"socId":socId,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+/**
+ *添加关注
+ *ffUserId  关注人id
+ */
+-(void)requestForApiFocusFanSaveFocusFan:(NSString *)ffUserId  callBack:(CZAdvisorDetailBack)callBack{
+    if (!ffUserId ) {
+        return;
+    }
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiFocusFanSaveFocusFan];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"ffUserId":ffUserId ,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+/**
+ *取消关注
+ *ffUserId  关注人id
+ */
+-(void)requestForApiFocusFanCancelFocusFan:(NSString *)ffUserId  callBack:(CZAdvisorDetailBack)callBack{
+    if (!ffUserId ) {
+        return;
+    }
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiFocusFanCancelFocusFan];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"ffUserId":ffUserId ,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+/**
+ *收藏
+ *collectContentId  收藏对象id
+ *collectType 收藏类型 1.普通动态 2.话题动态 4日记 5普通长图文 6话题长图文 7商品 8活动 9达人 10机构 11 顾问
+ */
+-(void)requestForApiCollectCollect:(NSString *)collectContentId collectType:(NSInteger)collectType callBack:(CZAdvisorDetailBack)callBack{
+    if (!collectContentId ) {
+        return;
+    }
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiCollectCollect];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"collectContentId":collectContentId ,
+                                 @"collectType":@(collectType) ,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+/**
+ *取消收藏
+ *collectContentId  收藏对象id
+ *collectType 收藏类型（5.商品 6.机构 7.达人8.顾问
+ */
+-(void)requestForApiCollectCancelCollect:(NSString *)collectContentId collectType:(NSInteger)collectType callBack:(CZAdvisorDetailBack)callBack{
+    if (!collectContentId ) {
+        return;
+    }
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiCollectCancelCollect];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"collectContentId":collectContentId ,
+                                 @"collectType":@(collectType) ,
     };
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];

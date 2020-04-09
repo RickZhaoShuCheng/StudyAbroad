@@ -108,7 +108,29 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *取消点赞---评论取消点赞
  *socId 评价id
  */
--(void)ApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId callBack:(CZAdvisorDetailBack)callBack;
+-(void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *添加关注
+ *ffUserId  关注人id
+ */
+-(void)requestForApiFocusFanSaveFocusFan:(NSString *)ffUserId  callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *取消关注
+ *ffUserId  关注人id
+ */
+-(void)requestForApiFocusFanCancelFocusFan:(NSString *)ffUserId  callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *收藏
+ *collectContentId  收藏对象id
+ *collectType 收藏类型 1.普通动态 2.话题动态 4日记 5普通长图文 6话题长图文 7商品 8活动 9达人 10机构 11 顾问
+ */
+-(void)requestForApiCollectCollect:(NSString *)collectContentId collectType:(NSInteger)collectType callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *取消收藏
+ *collectContentId  收藏对象id
+ *collectType 收藏类型（5.商品 6.机构 7.达人8.顾问
+ */
+-(void)requestForApiCollectCancelCollect:(NSString *)collectContentId collectType:(NSInteger)collectType callBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

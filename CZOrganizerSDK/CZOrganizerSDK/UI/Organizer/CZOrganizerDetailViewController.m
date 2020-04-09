@@ -231,7 +231,7 @@
 - (void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(NSString *)socId{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service ApiObjectCommentsPraiseCancelObjectCommentsPraise:socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf requestForApiObjectCommentsFindComments:weakSelf.commentIndex];

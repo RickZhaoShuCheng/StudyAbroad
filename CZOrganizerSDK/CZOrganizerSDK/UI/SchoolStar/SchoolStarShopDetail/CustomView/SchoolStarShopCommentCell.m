@@ -8,7 +8,7 @@
 
 #import "SchoolStarShopCommentCell.h"
 #import "UIImageView+WebCache.h"
-
+#import "NSDate+Utils.h"
 @interface SchoolStarShopCommentCell ()
 @property (nonatomic ,strong) UIImageView *avatarImg;
 @property (nonatomic ,strong) UILabel *nameLab;
@@ -22,9 +22,17 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initWithUI];
-        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2662493301,1276913271&fm=26&gp=0.jpg"] placeholderImage:nil];
     }
     return self;
+}
+
+- (void)setModel:(CZCommentModel *)model{
+    _model = model;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    self.contentLab.text = model.comment;
+    self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
+    self.serviceLab.text = [NSString stringWithFormat:@"购买服务：%@",model.title];
 }
 
 /**
@@ -42,7 +50,7 @@
     }];
     
     self.timeLab = [[UILabel alloc]init];
-    self.timeLab.text = @"6小时前";
+    self.timeLab.text = @"-";
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
     self.timeLab.textColor = CZColorCreater(159, 159, 178, 1);
     [self.contentView addSubview:self.timeLab];
@@ -50,7 +58,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.nameLab.textColor = CZColorCreater(32, 32, 32, 1);
-    self.nameLab.text = @"百事可乐";
+    self.nameLab.text = @"-";
     [self.contentView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
@@ -70,7 +78,7 @@
     self.serviceLab = [[UILabel alloc]init];
     self.serviceLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.serviceLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.serviceLab.text = @"购买服务：新南威尔士咨询服务";
+    self.serviceLab.text = @"购买服务：-";
     [self.contentView addSubview:self.serviceLab];
     [self.serviceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_trailing).offset(ScreenScale(16));
@@ -82,7 +90,7 @@
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.contentLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.contentLab.text = @"小黄老师真的非常的棒 很耐心、细心为我解疑答惑非常的感谢！赞一个";
+    self.contentLab.text = @"-";
     self.contentLab.numberOfLines = 0;
     [self.contentView addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
