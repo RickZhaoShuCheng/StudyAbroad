@@ -173,7 +173,7 @@ static dispatch_once_t onceToken;
 {
     CZAdvisorDetailViewController *advisorDetailVC = [[CZAdvisorDetailViewController alloc]init];
     advisorDetailVC.counselorId = options[@"counselorId"];
-    return diaryVC;
+    return advisorDetailVC;
 }
 
 @end

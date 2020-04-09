@@ -79,6 +79,10 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
 //人气榜
 -(void)requestForApiProductGetPopularityListByParam:(CZHomeParam *)param
                                            callBack:(QSOrganizerHomeBack)callBack;
+
+//首页--搜索--热门搜索--通过名称模糊搜索机构列表
+-(void)requestForApiOrganSearchOrganListByNameByParam:(CZHomeParam *)param
+                                             callBack:(QSOrganizerHomeBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

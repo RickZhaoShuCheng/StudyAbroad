@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *maxPrice;
 @property (nonatomic , strong) NSNumber *pageNum;
 @property (nonatomic , strong) NSNumber *pageSize;
+@property (nonatomic , strong) NSString *name;
 
 -(NSDictionary *)dictonary;
 

@@ -37,7 +37,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    [self requestForOrganizers];
+    if (!self.keywords) {
+        [self requestForOrganizers];
+    }
 }
 
 -(void)initUI
@@ -75,17 +77,15 @@
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     WEAKSELF
-    if (!self.keywords) {
-        self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-            weakSelf.pageIndex = 1;
-            [weakSelf requestForOrganizers];
-        }];
-        
-        self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
-            weakSelf.pageIndex += 1;
-            [weakSelf requestForOrganizers];
-        }];
-    }
+    self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+        weakSelf.pageIndex = 1;
+        [weakSelf requestForOrganizers];
+    }];
+    
+    self.dataView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
+        weakSelf.pageIndex += 1;
+        [weakSelf requestForOrganizers];
+    }];
     
     //点击cell
     self.dataView.selectedBlock = ^(NSString * _Nonnull organId) {
@@ -104,52 +104,61 @@
     param.userId = [QSClient userId];
     param.pageNum = @(self.pageIndex);
     param.pageSize = @(10);
-    [service requestForApiOrganGetOrganListByFilterByParam:param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
-        
-        if (success) {
-        
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                NSMutableArray *array = [[NSMutableArray alloc] init];
-                
-                for (NSDictionary *dic in data) {
-                    CZOrganizerModel *model = [CZOrganizerModel modelWithDict:dic];
-                    [array addObject:model];
-                }
-                
-                [weakSelf.dataView.mj_header endRefreshing];
-                
-                if (weakSelf.pageIndex == 1) {
-                    [weakSelf.dataView.dataArr removeAllObjects];
-                    [weakSelf.dataView.dataArr addObjectsFromArray:array];
-                }
-                else
-                {
-                    [weakSelf.dataView.dataArr addObjectsFromArray:array];
-                }
-                
-                if (array.count < 10) {
-                    [weakSelf.dataView.mj_footer endRefreshingWithNoMoreData];
-                }
-                else
-                {
-                    [weakSelf.dataView.mj_footer endRefreshing];
-                }
-                
-                [weakSelf.dataView reloadData];
-                
-                if (self.dataView.dataArr.count > 0) {
-//                    [self.dataTableView hideNoData];
-                }
-                else
-                {
-//                    [self.dataTableView showNodataView];
-                }
-            });
+    QSOrganizerHomeBack block = ^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
             
-        }
-        
-    }];
+            if (success) {
+            
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    NSMutableArray *array = [[NSMutableArray alloc] init];
+                    
+                    for (NSDictionary *dic in data) {
+                        CZOrganizerModel *model = [CZOrganizerModel modelWithDict:dic];
+                        [array addObject:model];
+                    }
+                    
+                    [weakSelf.dataView.mj_header endRefreshing];
+                    
+                    if (weakSelf.pageIndex == 1) {
+                        [weakSelf.dataView.dataArr removeAllObjects];
+                        [weakSelf.dataView.dataArr addObjectsFromArray:array];
+                    }
+                    else
+                    {
+                        [weakSelf.dataView.dataArr addObjectsFromArray:array];
+                    }
+                    
+                    if (array.count < 10) {
+                        [weakSelf.dataView.mj_footer endRefreshingWithNoMoreData];
+                    }
+                    else
+                    {
+                        [weakSelf.dataView.mj_footer endRefreshing];
+                    }
+                    
+                    [weakSelf.dataView reloadData];
+                    
+                    if (self.dataView.dataArr.count > 0) {
+    //                    [self.dataTableView hideNoData];
+                    }
+                    else
+                    {
+    //                    [self.dataTableView showNodataView];
+                    }
+                });
+                
+            }
+            
+    };
+    
+    
+    if (!self.keywords) {
+        [service requestForApiOrganGetOrganListByFilterByParam:param callBack:block];
+    }
+    else
+    {
+        [service requestForApiOrganSearchOrganListByNameByParam:param callBack:block];
+    }
 }
 
 -(void)createDefaultFilterMenu
@@ -165,5 +174,11 @@
     };
     self.manager.filterViewShow = self.filterViewShow;
 }
+
+-(void)reloadData
+{
+    
+}
+
 @end
 
