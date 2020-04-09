@@ -1,9 +1,9 @@
 //
 //  CXDBTool.h
-//  CXShearchBar_Example
+//  CXShearchBar_ZSC
 //
-//  Created by caixiang on 2019/4/26.
-//  Copyright © 2019年 caixiang305621856. All rights reserved.
+//  Created by zsc on 2019/4/26.
+//  Copyright © 2019年 zsc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

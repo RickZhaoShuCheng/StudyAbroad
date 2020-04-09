@@ -12,6 +12,7 @@
 #import "CZOrganizerVC.h"
 #import "CZCommentsListVC.h"
 #import "CZOrganizerDiaryVC.h"
+#import "CZAdvisorDetailViewController.h"
 
 @interface QSClient ()
 
@@ -166,6 +167,13 @@ static dispatch_once_t onceToken;
     diaryVC.caseType = options[@"caseType"];
     diaryVC.idStr = options[@"organId"];
     return diaryVC;
+}
+
++(UIViewController *)instanceAdvisorDetailViewControllerByOptions:(NSDictionary *)options
+{
+    CZAdvisorDetailViewController *advisorDetailVC = [[CZAdvisorDetailViewController alloc]init];
+    advisorDetailVC.counselorId = options[@"counselorId"];
+    return advisorDetailVC;
 }
 
 @end

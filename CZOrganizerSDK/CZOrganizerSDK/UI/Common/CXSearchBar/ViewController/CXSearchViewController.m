@@ -1,9 +1,9 @@
 //
 //  CXSearchViewController.m
-//  CXShearchBar_Example
+//  CXShearchBar_ZSC
 //
-//  Created by caixiang on 2019/4/29.
-//  Copyright © 2019年 caixiang305621856. All rights reserved.
+//  Created by zsc on 2020/4/9.
+//  Copyright © 2019年 zsc. All rights reserved.
 //
 
 #import "CXSearchViewController.h"
@@ -13,6 +13,8 @@
 #import "CXSearchLayout.h"
 #import "CXDBTool.h"
 #import "CZSearchAllViewController.h"
+#import "QSOrganizerHomeService.h"
+#import "QSCommonService.h"
 
 @interface CXSearchViewController ()<UICollectionReusableViewButtonDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate
 >
@@ -88,16 +90,44 @@ const CGFloat kFirstitemleftSpace = 15;
 }
 
 - (void)setUpdata {
-    NSArray *datas = @[@"化妆棉",@"面膜",@"口红",@"眼霜",@"洗面奶",@"防晒霜",@"补水",@"香水",@"眉笔"];
-    [datas enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        CXSearchModel *searchModel = [[CXSearchModel alloc] initWithName:obj searchId:[NSString stringWithFormat:@"%u",idx + 1]];
-        [self.dataSource addObject:searchModel];
+    
+    QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
+    [service requestForApiTypeFindHotSearchTypeByCallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            if (success && data && [data count] > 0) {
+                NSMutableArray *datas = [[NSMutableArray alloc] init];
+                [data enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [datas addObject:obj[@"stName"]];
+                }];
+                
+                [datas enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    CXSearchModel *searchModel = [[CXSearchModel alloc] initWithName:obj searchId:[NSString stringWithFormat:@"%lu",idx + 1]];
+                    [self.dataSource addObject:searchModel];
+                }];
+                
+                [self.searchCollectionView reloadData];
+            }
+            
+        });
     }];
+    
     //去数据库取数据
     NSArray *dbDatas =  [CXDBTool statusesWithKey:kHistoryKey];
     if (dbDatas.count > 0) {
         [self.searchDataSource setArray:dbDatas];
     }
+    
+//    NSArray *datas = @[@"化妆棉",@"面膜",@"口红",@"眼霜",@"洗面奶",@"防晒霜",@"补水",@"香水",@"眉笔"];
+//    [datas enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        CXSearchModel *searchModel = [[CXSearchModel alloc] initWithName:obj searchId:[NSString stringWithFormat:@"%u",idx + 1]];
+//        [self.dataSource addObject:searchModel];
+//    }];
+//    //去数据库取数据
+//    NSArray *dbDatas =  [CXDBTool statusesWithKey:kHistoryKey];
+//    if (dbDatas.count > 0) {
+//        [self.searchDataSource setArray:dbDatas];
+//    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -177,7 +207,20 @@ const CGFloat kFirstitemleftSpace = 15;
     } else if (section == 1){
          searchModel =  self.searchDataSource[item];
     }
-    [self showAlertWithTitle:[NSString stringWithFormat:@"您该去搜索 %@ 的相关内容了",searchModel.content]];
+    
+    self.searchVC.view.hidden = NO;
+    self.searchCollectionView.hidden = !self.searchVC.view.hidden;
+    self.searchTextField.text = searchModel.content;
+    
+    [self.searchVC.viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull vc, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([vc respondsToSelector:@selector(setKeywords:)]) {
+            [vc performSelector:@selector(setKeywords:) withObject:searchModel.content];
+        }
+        
+        if ([vc respondsToSelector:@selector(reloadData)]) {
+            [vc performSelector:@selector(reloadData) withObject:nil];
+        }
+    }];
 }
 
 - (UIAlertController *)showAlertWithTitle:(NSString *)title {
@@ -190,6 +233,10 @@ const CGFloat kFirstitemleftSpace = 15;
 #pragma mark - textField
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
+        
+        self.searchVC.view.hidden = NO;
+        self.searchCollectionView.hidden = !self.searchVC.view.hidden;
+        
         return NO;
     }
     /***  每搜索一次   就会存放一次到历史记录，但不存重复的*/
@@ -209,6 +256,16 @@ const CGFloat kFirstitemleftSpace = 15;
     
     self.searchVC.view.hidden = textField.text.length == 0;
     self.searchCollectionView.hidden = !self.searchVC.view.hidden;
+    
+    [self.searchVC.viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull vc, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([vc respondsToSelector:@selector(setKeywords:)]) {
+            [vc performSelector:@selector(setKeywords:) withObject:textField.text];
+        }
+        
+        if ([vc respondsToSelector:@selector(reloadData)]) {
+            [vc performSelector:@selector(reloadData) withObject:nil];
+        }
+    }];
     
     if (!isExist) {
         [self reloadData:textField.text];

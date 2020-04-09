@@ -26,6 +26,7 @@
     if (self.maxPrice) [dict setObject:self.maxPrice forKey:@"maxPrice"];
     if (self.pageNum) [dict setObject:self.pageNum forKey:@"pageNum"];
     if (self.pageSize) [dict setObject:self.pageSize forKey:@"pageSize"];
+    if (self.name) [dict setObject:self.name forKey:@"name"];
 
     return dict;
 }

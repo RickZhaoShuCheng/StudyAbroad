@@ -18,6 +18,7 @@
 @interface CZSearchAllViewController ()<SPPageMenuDelegate>
 @property (nonatomic , strong)CZPageScrollContentView *contentView;
 @property (nonatomic , strong)SPPageMenu *pageMenu;
+@property (nonatomic , strong)NSMutableArray *viewControllers;
 @end
 
 @implementation CZSearchAllViewController
@@ -66,7 +67,7 @@
     controller2.keywords = @"";
     controller3.keywords = @"";
     controller4.keywords = @"";
-
+    self.viewControllers = arry;
     return arry;
 }
 

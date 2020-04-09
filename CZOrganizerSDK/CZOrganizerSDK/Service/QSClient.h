@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceNiceCommentViewControllerByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceNiceDiaryViewControllerByOptions:(NSDictionary *)options;
++(UIViewController *)instanceAdvisorDetailViewControllerByOptions:(NSDictionary *)options;
 
 @end
 
