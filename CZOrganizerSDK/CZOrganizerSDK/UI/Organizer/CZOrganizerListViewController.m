@@ -37,9 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    if (!self.keywords) {
-        [self requestForOrganizers];
-    }
+    [self requestForOrganizers];
 }
 
 -(void)initUI
@@ -56,9 +54,6 @@
         self.param.productCategory = dic[@"productCategory"];
     }
     
-    [self createDefaultFilterMenu];
-
-    
     self.dataView = [[CZOrganizerListView alloc] init];
     self.dataView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataView];
@@ -69,11 +64,27 @@
     if (self.keywords) {
         self.contentScrollView = nil;
     }
+    else
+    {
+        [self createDefaultFilterMenu];
+    }
     
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
+        if (self.menuScreeningView) {
+            make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
+        }
+        else
+        {
+            make.top.mas_equalTo(0);
+        }
         make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(!self.model?0:-100);
+        if (self.keywords) {
+            make.bottom.mas_equalTo(-100);
+        }
+        else
+        {
+            make.bottom.mas_equalTo(!self.model?0:-100);
+        }
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     WEAKSELF
@@ -98,12 +109,15 @@
 
 -(void)requestForOrganizers
 {
+    if (self.keywords && self.keywords.length == 0) {
+        return;
+    }
+    
     WEAKSELF
     QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
-    CZHomeParam *param = [[CZHomeParam alloc] init];
-    param.userId = [QSClient userId];
-    param.pageNum = @(self.pageIndex);
-    param.pageSize = @(10);
+    self.param.pageNum = @(self.pageIndex);
+    self.param.pageSize = @(10);
+    self.param.name = self.keywords && self.keywords.length > 0 ?self.keywords:nil;
     QSOrganizerHomeBack block = ^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
             
             if (success) {
@@ -153,11 +167,11 @@
     
     
     if (!self.keywords) {
-        [service requestForApiOrganGetOrganListByFilterByParam:param callBack:block];
+        [service requestForApiOrganGetOrganListByFilterByParam:self.param callBack:block];
     }
     else
     {
-        [service requestForApiOrganSearchOrganListByNameByParam:param callBack:block];
+        [service requestForApiOrganSearchOrganListByNameByParam:self.param callBack:block];
     }
 }
 
@@ -177,7 +191,10 @@
 
 -(void)reloadData
 {
-    
+    if (self.isViewLoaded) {
+        self.pageIndex = 1;
+        [self requestForOrganizers];
+    }
 }
 
 @end

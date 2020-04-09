@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) CZHomeModel *model;
 @property (nonatomic , strong)void(^filterViewShow)(void);
 @property (nonatomic, strong) NSString *keywords;
+-(void)reloadData;
 
 @end
 

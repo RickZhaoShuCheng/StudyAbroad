@@ -1,9 +1,9 @@
 //
 //  CXSearchCollectionReusableView.h
-//  CXShearchBar_Example
+//  CXShearchBar_ZSC
 //
-//  Created by caixiang on 2019/4/29.
-//  Copyright © 2019年 caixiang305621856. All rights reserved.
+//  Created by zsc on 2020/4/9.
+//  Copyright © 2019年 zsc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
