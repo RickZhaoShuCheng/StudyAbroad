@@ -65,7 +65,7 @@
 -(void)setModel:(CZActivityModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.banners)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.banners)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.nameLabel.text = model.title;
     self.addressPriceLabel.text = model.extRangeUser;
 }

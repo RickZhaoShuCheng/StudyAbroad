@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic , strong) CZOrganizerModel *omodel;
 
+@property(nonatomic, assign) CGFloat leftPadding;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

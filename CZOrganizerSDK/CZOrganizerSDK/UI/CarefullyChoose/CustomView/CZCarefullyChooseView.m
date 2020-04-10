@@ -19,7 +19,7 @@
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = CZColorCreater(245, 245, 249, 1);
         [self registerClass:[CZCarefullyChooseCell class] forCellWithReuseIdentifier:NSStringFromClass([CZCarefullyChooseCell class])];
         self.dataSource = self;
         self.delegate = self;
@@ -34,6 +34,7 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZCarefullyChooseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZCarefullyChooseCell class]) forIndexPath:indexPath];
     [cell setModel:self.dataArr[indexPath.row]];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
     return cell;
 }
 

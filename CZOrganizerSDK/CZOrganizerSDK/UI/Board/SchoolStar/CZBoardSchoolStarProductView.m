@@ -36,6 +36,7 @@
     CZProductVoListModel *model = self.dataArr[indexPath.row];
     [cell setCellType:CZPersonInfoSubCellTypeAsk];
     [cell setModel:model];
+    [cell setLeftPadding:15];
     return cell;
 
 }

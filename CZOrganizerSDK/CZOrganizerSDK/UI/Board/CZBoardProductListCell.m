@@ -63,7 +63,7 @@
 -(void)setModel:(CZProductModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.organLogo)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.nameLabel.text = model.title;
     self.priceLabel.text = [NSString stringWithFormat:@"￥ %.2f" ,  model.price.floatValue];
 }

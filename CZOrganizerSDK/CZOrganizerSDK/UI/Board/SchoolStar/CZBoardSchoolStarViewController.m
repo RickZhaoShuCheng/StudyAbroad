@@ -62,7 +62,7 @@
     }];
     
     self.headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width/375.0*116)];
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.content2] placeholderImage:nil];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.content2] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.dataView.tableHeaderView = self.headImageView;
     
     //查看达人

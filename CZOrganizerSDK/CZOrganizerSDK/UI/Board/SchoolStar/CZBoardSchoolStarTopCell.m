@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
 #import "CZBoardProductListView.h"
+#import "CZCommentModel.h"
 
 @interface CZBoardSchoolStarTopCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -31,6 +32,7 @@
 
 @property (nonatomic , strong) UIImageView *addressIconView;
 @property (nonatomic , strong) UILabel *addressLabel;
+@property (nonatomic , strong) UIImageView *confirmImageView;
 
 @end
 
@@ -69,6 +71,16 @@
         make.size.mas_equalTo(68);
         make.top.mas_equalTo(self.goldImageView).offset(8);
         make.left.mas_equalTo(self.goldImageView).offset(5);
+    }];
+    
+    self.confirmImageView = [[UIImageView alloc] init];
+    [self addSubview:self.confirmImageView];
+    self.confirmImageView.image = [CZImageProvider imageNamed:@"ji_gou_ren_zheng_da"];
+    [self.confirmImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(52);
+        make.height.mas_equalTo(24);
+        make.centerY.mas_equalTo(self.avatarImageView.mas_bottom);
+        make.centerX.mas_equalTo(self.avatarImageView);
     }];
     
     self.nameLabel = [[UILabel alloc] init];
@@ -133,48 +145,46 @@
         make.edges.mas_equalTo(0);
     }];
     
-    self.weekDetailLabel = [[UILabel alloc] init];
-    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
-    self.weekDetailLabel.textColor = [UIColor whiteColor];
-    [self.contentView addSubview:self.weekDetailLabel];
-    [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(28);
-        make.height.mas_equalTo(12);
-        make.right.mas_equalTo(-11);
-        make.top.mas_equalTo(self.tagList.mas_bottom).offset(15);
-    }];
-    
     self.middileView = [[UIView alloc] init];
     [self.contentView addSubview:self.middileView];
     [self.middileView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.weekDetailLabel.mas_bottom).offset(20);
+        make.top.mas_equalTo(self.tagList.mas_bottom).offset(10);
         make.left.mas_equalTo(15);
         make.right.mas_equalTo(-15);
         make.height.mas_equalTo(54);
     }];
     
-    self.iconImageView = [[UIImageView alloc] init];
-    self.iconImageView.layer.masksToBounds = YES;
-    self.iconImageView.layer.cornerRadius = 10.5;
-    [self.middileView addSubview:self.iconImageView];
-    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(21);
-        make.left.top.mas_equalTo(9);
+    self.weekDetailLabel = [[UILabel alloc] init];
+    self.weekDetailLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
+    self.weekDetailLabel.textColor = [UIColor whiteColor];
+    [self.middileView addSubview:self.weekDetailLabel];
+    [self.weekDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.height.mas_equalTo(12);
+        make.right.mas_equalTo(-11);
+        make.centerY.mas_equalTo(0);
     }];
     
-    self.iconDetailLabel = [[UILabel alloc] init];
-    [self.middileView addSubview:self.iconDetailLabel];
-    [self.iconDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.iconDetailLabel.mas_right).offset(5);
-        make.top.mas_equalTo(5);
-        make.right.mas_equalTo(-22);
-        make.height.mas_greaterThanOrEqualTo(0);
-    }];
+//    self.iconImageView = [[UIImageView alloc] init];
+//    self.iconImageView.layer.masksToBounds = YES;
+//    self.iconImageView.layer.cornerRadius = 10.5;
+//    [self.middileView addSubview:self.iconImageView];
+//    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(21);
+//        make.left.top.mas_equalTo(9);
+//    }];
+//
+//    self.iconDetailLabel = [[UILabel alloc] init];
+//    [self.middileView addSubview:self.iconDetailLabel];
+//    [self.iconDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.iconDetailLabel.mas_right).offset(5);
+//        make.top.mas_equalTo(5);
+//        make.right.mas_equalTo(-22);
+//        make.height.mas_greaterThanOrEqualTo(0);
+//    }];
     
     self.bottomView = [[UIView alloc] init];
-    self.bottomView.backgroundColor = [UIColor whiteColor];
-    self.bottomView.layer.cornerRadius = 10;
-    self.bottomView.layer.masksToBounds = YES;
+    self.bottomView.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.bottomView];
     [self.contentView sendSubviewToBack:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -189,11 +199,12 @@
     self.addressIconView.layer.masksToBounds = YES;
     self.addressIconView.layer.cornerRadius = 11;
     self.addressIconView.image = [CZImageProvider imageNamed:@"shou_ye_di_zhi_icon"];
+    self.addressIconView.backgroundColor = [UIColor redColor];
     [self.bottomView addSubview:self.addressIconView];
     [self.addressIconView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(22);
         make.left.mas_equalTo(15);
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(-25);
     }];
     
     self.addressLabel = [[UILabel alloc] init];
@@ -209,11 +220,18 @@
     
     
     self.productListView = [[CZBoardSchoolStarProductView alloc] init];
+    self.productListView.layer.cornerRadius = 10;
+    self.productListView.layer.masksToBounds = YES;
     [self.bottomView addSubview:self.productListView];
     [self.productListView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.mas_equalTo(0);
+        make.top.mas_equalTo(-10);
+        make.left.right.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
     }];
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width-30, 10)];
+    header.backgroundColor = [UIColor whiteColor];
+    self.productListView.tableHeaderView = header;
     
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
@@ -221,6 +239,8 @@
         make.left.mas_equalTo(15);
         make.bottom.mas_equalTo(self.middileView.mas_bottom);
     }];
+    
+    [self.bottomView sendSubviewToBack:self.productListView];
 }
 
 -(void)setModel:(CZSchoolStarModel *)model
@@ -239,12 +259,25 @@
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
     
-    [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(50+40*self.model.productVoList.count);
-    }];
+    CGFloat bottomHeight = 15+40*self.model.productVoList.count;
     
-    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    model.cellHeight = cellSize.height;
+    if (self.model.comments.count == 0) {
+        self.addressIconView.hidden = YES;
+        self.addressLabel.hidden = YES;
+    }
+    else
+    {
+        bottomHeight += 40;
+        self.addressIconView.hidden = NO;
+        self.addressLabel.hidden = NO;
+        CZCommentModel *comment = self.model.comments[0];
+        self.addressLabel.text = comment.comment;
+        [self.addressIconView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(comment.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+    }
+    
+    [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(bottomHeight);
+    }];
 
     [self.rankView setRankByRate:model.valStar.floatValue];
     
@@ -252,7 +285,6 @@
 
     self.nameLabel.text = model.realName;
     self.workPlaceLabel.text = model.schoolName;
-//    self.addressLabel.text = model.address;
     
     self.iconDetailLabel.text = @"";
     self.iconImageView.image = [CZImageProvider imageNamed:@"default_avatar"];
@@ -261,18 +293,18 @@
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
     
     [self.productListView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.mas_equalTo(0);
-        make.height.mas_equalTo(50+40*self.model.productVoList.count);
-    }];
-    
-    [self.addressIconView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(22);
-        make.left.mas_equalTo(15);
-        make.top.mas_equalTo(50+40*self.model.productVoList.count);
+        make.top.mas_equalTo(-10);
+        make.left.right.mas_equalTo(0);
+        make.height.mas_equalTo(bottomHeight);
     }];
     
     self.productListView.dataArr = self.model.productVoList;
     [self.productListView reloadData];
+    
+    [self.contentView layoutIfNeeded];
+    
+    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    model.cellHeight = cellSize.height;
 }
 
 -(void)setType:(CZBoardSchoolStarTopType)type
@@ -286,13 +318,13 @@
             break;
         case CZBoardSchoolStarTopTypeSilver:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai"];
-            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
-            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
+            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
+            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
             break;
         case CZBoardSchoolStarTopTypeCopper:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai"];
-            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
-            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
+            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
+            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
             break;
         default:
             break;

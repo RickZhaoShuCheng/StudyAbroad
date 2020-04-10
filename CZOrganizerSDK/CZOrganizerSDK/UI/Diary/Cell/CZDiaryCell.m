@@ -150,8 +150,8 @@
 -(void)setModel:(CZDiaryModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.smdMainImg)] placeholderImage:nil];
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.smdMainImg)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.nickNameLabel.text = model.userNickName;
     self.nameLabel.text = model.smdContent;
     self.goodCountLabel.text = [@(model.praiseCount.integerValue) stringValue];

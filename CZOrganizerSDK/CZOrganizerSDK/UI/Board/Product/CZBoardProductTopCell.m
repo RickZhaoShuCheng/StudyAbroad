@@ -210,25 +210,53 @@
         default:
             break;
     }
+    
+    self.goldImageView.hidden = NO;
+    if (type > 2) {
+        self.goldImageView.hidden = YES;
+    }
 }
 
 -(void)setModel:(CZProductModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.mainTitleLabel.text = model.title;
     self.subTitleLabel.text = model.organName;
     self.popularityLabel.text = @"近30天累计人气";
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2fkm",model.price.floatValue/100.0];
+    self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",model.price.floatValue/100.0];
     
     self.avatarDetailLabel.text = @"";
     self.avatarImageView.image = [CZImageProvider imageNamed:@"default_avatar"];
-    if (![model.comments isKindOfClass:[NSString class]] && model.comments.count > 0) {
+    if (model.comments.count > 0) {
         CZCommentModel *comment = [model.comments firstObject];
         self.avatarDetailLabel.text = comment.comment;
         [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(comment.userImg)] placeholderImage:nil];
+        self.bottomView.hidden = NO;
+        
+        [self.bgView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(15);
+            make.right.mas_equalTo(-15);
+            make.top.mas_equalTo(0);
+            make.height.mas_equalTo(177);
+        }];
     }
-    self.distanceLabel.text = [NSString stringWithFormat:@"%.2f" , model.distance.floatValue];
+    else
+    {
+        self.bottomView.hidden = YES;
+        
+        [self.bgView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(15);
+            make.right.mas_equalTo(-15);
+            make.top.mas_equalTo(0);
+            make.height.mas_equalTo(135);
+        }];
+    }
+    
+    [self.contentView layoutIfNeeded];
+    
+    self.distanceLabel.text = [NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
+    
 }
 
 @end

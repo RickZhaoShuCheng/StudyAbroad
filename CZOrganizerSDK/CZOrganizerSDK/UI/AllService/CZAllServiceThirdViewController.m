@@ -46,13 +46,12 @@
     CGFloat coverWidth = (screenWidth - 15*3)/2.0;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*220);
+    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*220+15);
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     self.dataCollectionView = [[CZCarefullyChooseView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame)) collectionViewLayout:layout];
     self.dataCollectionView.currentVC = self;
-    self.dataCollectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {

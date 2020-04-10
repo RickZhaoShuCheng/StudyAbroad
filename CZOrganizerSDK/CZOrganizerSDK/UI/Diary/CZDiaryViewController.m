@@ -38,7 +38,7 @@
 
 -(void)initUI
 {
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = CZColorCreater(245, 245, 249, 1.0);
     
     if (!self.param) {
         self.param = [[CZHomeParam alloc] init];

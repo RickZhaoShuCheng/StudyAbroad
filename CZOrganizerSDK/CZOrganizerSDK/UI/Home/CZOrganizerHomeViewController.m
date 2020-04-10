@@ -779,7 +779,12 @@ typedef enum : NSUInteger {
     if (cityName.length > 3) {
         cityName = [[cityName substringToIndex:2] stringByAppendingFormat:@"..."];
     }
+    
     [self.locationButton setTitle:cityName forState:UIControlStateNormal];
+    CGSize titleSize = [self.locationButton.currentTitle sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:self.locationButton.titleLabel.font.fontName size:self.locationButton.titleLabel.font.pointSize]}];
+    self.locationButton.frame = CGRectMake(0, 0, titleSize.width+25, 40);
+    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.locationButton];
+    self.navigationItem.leftBarButtonItem = leftBarItem;
     [vc.navigationController popViewControllerAnimated:YES];
 }
 

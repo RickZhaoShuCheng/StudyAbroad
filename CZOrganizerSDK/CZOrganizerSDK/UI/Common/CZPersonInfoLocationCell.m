@@ -82,7 +82,7 @@
 {
     _model = model;
     
-    [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.infoView.infoLabel.text = model.realName;
     NSString *formatterString = NSLocalizedString(@"服务%@人", nil);
     self.infoView.subTitleLabel.text = [NSString stringWithFormat:formatterString,[@(model.servicePersonCount.integerValue) stringValue]];

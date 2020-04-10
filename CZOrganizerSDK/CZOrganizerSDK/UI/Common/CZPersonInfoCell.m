@@ -33,7 +33,7 @@
 - (void)setModel:(CZAdvisorModel *)model
 {
     _model = model;
-    [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.infoView.infoLabel.text = model.counselorName;
     self.infoView.organizeNameLabel.text = model.organName;
     NSString *formatterString = NSLocalizedString(@"服务%@人", nil);
@@ -43,7 +43,7 @@
 -(void)setOmodel:(CZOrganizerModel *)omodel
 {
     _omodel = omodel;
-    [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(omodel.logo)] placeholderImage:nil];
+    [self.infoView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(omodel.logo)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.infoView.infoLabel.text = omodel.name;
     NSString *formatterString = NSLocalizedString(@"专业度：%.2f 服务：%.2f 价格：%.2f 响应：%.2f", nil);
     self.infoView.organizeNameLabel.text = [NSString stringWithFormat:formatterString ,omodel.valProfessional.floatValue, omodel.valService.floatValue,omodel.valPrice.floatValue,omodel.valResponse.floatValue];

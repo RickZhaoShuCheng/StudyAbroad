@@ -19,7 +19,6 @@
     if (self) {
         [self registerClass:[CZAllServiceShoolStarCell class] forCellReuseIdentifier:NSStringFromClass([CZAllServiceShoolStarCell class])];
         self.tableFooterView = [UIView new];
-        self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.dataSource = self;
         self.delegate = self;
     }

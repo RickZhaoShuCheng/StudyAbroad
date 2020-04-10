@@ -11,6 +11,7 @@
 #import "JCTagListView.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
+#import "CZCommentModel.h"
 
 @interface CZBoardAdvisorNormalCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -135,6 +136,8 @@
     
     self.bottomView = [[UIView alloc] init];
     self.bottomView.backgroundColor = [UIColor whiteColor];
+    self.bottomView.layer.cornerRadius = 10;
+    self.bottomView.layer.masksToBounds = YES;
     [self.contentView addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weekTitleLabel.mas_bottom);
@@ -187,17 +190,44 @@
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
     
-    
-    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    model.cellHeight = cellSize.height;
 
     [self.rankView setRankByRate:model.valStar.floatValue];
     self.nameLabel.text = model.counselorName;
     
-    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
     self.workPlaceLabel.text = model.organName;
     self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
+    self.addressLabel.text = model.address;
+    
+    CGFloat bottomHeight = 52;
+
+    if (self.model.comments.count == 0) {
+        bottomHeight = 15;
+        self.addressIconView.hidden = YES;
+        self.addressLabel.hidden = YES;
+    }
+    else
+    {
+        self.addressIconView.hidden = NO;
+        self.addressLabel.hidden = NO;
+        CZCommentModel *comment = self.model.comments[0];
+        self.addressLabel.text = comment.comment;
+        [self.addressIconView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(comment.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+    }
+    
+    [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.weekTitleLabel.mas_bottom);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+        make.height.mas_equalTo(bottomHeight);
+        make.bottom.mas_equalTo(0);
+    }];
+    
+    [self.contentView layoutIfNeeded];
+    
+    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    model.cellHeight = cellSize.height;
 }
 
 

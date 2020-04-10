@@ -60,6 +60,9 @@
         make.centerY.mas_equalTo(0);
         make.left.mas_equalTo(self.iconImageView.mas_right).offset(7);
     }];
+    
+    [self.subTitleLabel setContentHuggingPriority:UILayoutPriorityRequired
+    forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 -(void)setCellType:(CZPersonInfoSubCellType)cellType
@@ -96,7 +99,20 @@
 {
     _omodel = omodel;
     self.mainTitleLabel.text = omodel.address;
-    self.subTitleLabel.text = [NSString stringWithFormat:@"%.2fkm" , _omodel.distance];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"%.2fkm" , omodel.distance.floatValue];
+}
+
+-(void)setLeftPadding:(CGFloat)leftPadding
+{
+    _leftPadding = leftPadding;
+    
+    [self.iconImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(15);
+        make.centerY.mas_equalTo(0);
+        make.left.mas_equalTo(leftPadding);
+    }];
+    
+    [self.contentView layoutIfNeeded];
 }
 
 @end

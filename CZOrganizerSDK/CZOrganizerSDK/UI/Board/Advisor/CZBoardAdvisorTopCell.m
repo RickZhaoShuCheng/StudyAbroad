@@ -11,6 +11,7 @@
 #import "JCTagListView.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+cz_anyCorners.h"
+#import "CZCommentModel.h"
 
 @interface CZBoardAdvisorTopCell()
 @property (nonatomic , strong) UIImageView *bgView;
@@ -28,6 +29,7 @@
 
 @property (nonatomic , strong) UIImageView *addressIconView;
 @property (nonatomic , strong) UILabel *addressLabel;
+@property (nonatomic , strong) UIImageView *confirmImageView;
 
 @end
 
@@ -66,6 +68,16 @@
         make.size.mas_equalTo(68);
         make.top.mas_equalTo(self.goldImageView).offset(8);
         make.left.mas_equalTo(self.goldImageView).offset(5);
+    }];
+    
+    self.confirmImageView = [[UIImageView alloc] init];
+    [self addSubview:self.confirmImageView];
+    self.confirmImageView.image = [CZImageProvider imageNamed:@"ji_gou_ren_zheng_da"];
+    [self.confirmImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(52);
+        make.height.mas_equalTo(24);
+        make.centerY.mas_equalTo(self.avatarImageView.mas_bottom);
+        make.centerX.mas_equalTo(self.avatarImageView);
     }];
     
     self.nameLabel = [[UILabel alloc] init];
@@ -225,18 +237,55 @@
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
     
-    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    model.cellHeight = cellSize.height;
     [self.rankView setRankByRate:model.valStar.floatValue];
     self.nameLabel.text = model.counselorName;
-    
-    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    self.addressLabel.text = model.address;
+
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.weekDetailLabel.text = [NSString stringWithFormat:@"本周指数  销量 %@ | 人气 %@ | 口碑 %@",[@(model.sales.integerValue) stringValue] , [@(model.popularity.integerValue) stringValue] , [@(model.reputation.integerValue) stringValue]];
     self.workPlaceLabel.text = model.organName;
     self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
     
     self.productListView.dataArr = self.model.productVoList;
+    
+    CGFloat bottomHeight = 0;
+    
+    if (self.model.productVoList.count > 0) {
+        bottomHeight = 223;
+    }
+    else
+    {
+        bottomHeight = 70;
+    }
+    
+    if (self.model.comments.count == 0) {
+        bottomHeight -= 50;
+        self.addressIconView.hidden = YES;
+        self.addressLabel.hidden = YES;
+    }
+    else
+    {
+        self.addressIconView.hidden = NO;
+        self.addressLabel.hidden = NO;
+        CZCommentModel *comment = self.model.comments[0];
+        self.addressLabel.text = comment.comment;
+        [self.addressIconView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(comment.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
+    }
+    
     [self.productListView reloadData];
+    
+    [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+        make.height.mas_equalTo(bottomHeight);
+        make.bottom.mas_equalTo(0);
+    }];
+    
+    [self.contentView layoutIfNeeded];
+    
+    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    model.cellHeight = cellSize.height;
 }
 
 -(void)setType:(CZBoardAdvisorTopType)type
@@ -250,13 +299,13 @@
             break;
         case CZBoardAdvisorTopTypeSilver:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai"];
-            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
-            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
+            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
+            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
             break;
         case CZBoardAdvisorTopTypeCopper:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai"];
-            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
-            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
+            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
+            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
             break;
         default:
             break;

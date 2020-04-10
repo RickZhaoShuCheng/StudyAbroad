@@ -45,9 +45,10 @@
     self.nameLabel.numberOfLines = 2;
     [self.contentView addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.coverImageView.mas_bottom).offset(12);
+        make.top.mas_equalTo(self.coverImageView.mas_bottom).offset(7);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(9);
+        make.right.mas_equalTo(-9);
     }];
     
     self.priceLabel = [[UILabel alloc] init];
@@ -64,13 +65,9 @@
     self.addressLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     self.addressLabel.textColor = CZColorCreater(129, 129, 146, 1);
     [self.contentView addSubview:self.addressLabel];
-    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.width.mas_greaterThanOrEqualTo(0);
-        make.left.mas_equalTo(self.nameLabel);
-        make.bottom.mas_equalTo(-12.5);
-    }];
-    
+
     self.distanceLabel = [[UILabel alloc] init];
+    self.distanceLabel.textAlignment = NSTextAlignmentRight;
     self.distanceLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     self.distanceLabel.textColor = CZColorCreater(129, 129, 146, 1);
     [self.contentView addSubview:self.distanceLabel];
@@ -88,12 +85,22 @@
         make.centerY.mas_equalTo(self.priceLabel);
     }];
     
+    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_greaterThanOrEqualTo(0);
+        make.left.mas_equalTo(self.nameLabel);
+        make.bottom.mas_equalTo(-12.5);
+        make.right.mas_equalTo(self.distanceLabel.mas_left).offset(-5);
+    }];
+    
+    [self.distanceLabel setContentHuggingPriority:UILayoutPriorityRequired
+    forAxis:UILayoutConstraintAxisHorizontal];
+    
 }
 
 -(void)setModel:(CZProductModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.nameLabel.text = model.title;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f" , model.price.floatValue/100.0];
     self.addressLabel.text = model.organName;

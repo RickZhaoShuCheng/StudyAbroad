@@ -8,7 +8,7 @@
 
 #import "CZBoardProductView.h"
 #import "CZBoardProductTopCell.h"
-#import "CZBoardProductNormalCell.h"
+//#import "CZBoardProductNormalCell.h"
 #import "CZProductModel.h"
 
 @interface CZBoardProductView ()<UITableViewDelegate,UITableViewDataSource>
@@ -20,7 +20,7 @@
     self = [super initWithFrame:frame style:style];
     if (self) {
         [self registerClass:[CZBoardProductTopCell class] forCellReuseIdentifier:NSStringFromClass([CZBoardProductTopCell class])];
-        [self registerClass:[CZBoardProductNormalCell class] forCellReuseIdentifier:NSStringFromClass([CZBoardProductNormalCell class])];
+//        [self registerClass:[CZBoardProductNormalCell class] forCellReuseIdentifier:NSStringFromClass([CZBoardProductNormalCell class])];
         self.tableFooterView = [UIView new];
         self.dataSource = self;
         self.delegate = self;
@@ -38,23 +38,15 @@
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section <= 2) {
-        CZBoardProductTopCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZBoardProductTopCell class]) forIndexPath:indexPath];
-        CZProductModel *model = self.dataArr[indexPath.section];
-        [cell setModel:model];
-        cell.type = indexPath.section;
-        return cell;
-    }
-    else
-    {
-        CZBoardProductNormalCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZBoardProductNormalCell class]) forIndexPath:indexPath];
-        CZProductModel *model = self.dataArr[indexPath.section];
-        [cell setModel:model];
-        return cell;
-    }
+    CZBoardProductTopCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZBoardProductTopCell class]) forIndexPath:indexPath];
+    CZProductModel *model = self.dataArr[indexPath.section];
+    [cell setModel:model];
+    cell.type = indexPath.section;
+    return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section <= 2) {
+    CZProductModel *model = self.dataArr[indexPath.section];
+    if (model.comments.count > 0) {
         return 177;
     }
     return 135;

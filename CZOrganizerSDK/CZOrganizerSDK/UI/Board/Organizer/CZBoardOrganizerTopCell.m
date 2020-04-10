@@ -271,13 +271,13 @@
             break;
         case CZBoardOrganizerTopTypeSilver:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai"];
-            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
-            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
+            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
+            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
             break;
         case CZBoardOrganizerTopTypeCopper:
             self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai"];
-            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_tong_pai_bei_jing"];
-            self.middileView.backgroundColor = CZColorCreater(200, 145, 78, 1);
+            self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_yin_pai_bei_jing"];
+            self.middileView.backgroundColor = CZColorCreater(102, 129, 162, 1);
             break;
         default:
             break;

@@ -24,4 +24,13 @@
     return _productVoList;
 }
 
+-(NSMutableArray *)comments
+{
+    if ([_comments isKindOfClass:[NSString class]]) {
+        return @[];
+    }
+    
+    return _comments;
+}
+
 @end

@@ -14,6 +14,7 @@
 @property (nonatomic , strong) UILabel *subTitleLabel;
 @property (nonatomic , strong) UILabel *organizeNameLabel;
 @property (nonatomic , strong) CZRankView *rankView;
+@property (nonatomic , strong) UIImageView *confirmImageView;
 @end
 
 
@@ -35,6 +36,22 @@
     [self addSubview:self.avatarImageView];
     self.avatarImageView.layer.cornerRadius = 22.5;
     self.avatarImageView.layer.masksToBounds = YES;
+    [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(45);
+        make.left.mas_equalTo(15);
+        make.centerY.mas_equalTo(0);
+    }];
+    
+    self.confirmImageView = [[UIImageView alloc] init];
+    [self addSubview:self.confirmImageView];
+    self.confirmImageView.image = [CZImageProvider imageNamed:@"ji_gou_ren_zheng"];
+    [self.confirmImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(39);
+        make.height.mas_equalTo(18.5);
+        make.centerY.mas_equalTo(self.avatarImageView.mas_bottom);
+        make.centerX.mas_equalTo(self.avatarImageView);
+    }];
+    
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(45);
         make.left.mas_equalTo(15);

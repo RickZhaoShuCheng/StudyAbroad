@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong ,readonly) UILabel *subTitleLabel;
 @property (nonatomic , strong ,readonly) UILabel *organizeNameLabel;
 @property (nonatomic , strong ,readonly) CZRankView *rankView;
+@property (nonatomic , strong ,readonly) UIImageView *confirmImageView;
+
 
 - (instancetype)initWithFrame:(CGRect)frame container:(UIView *)container;
 

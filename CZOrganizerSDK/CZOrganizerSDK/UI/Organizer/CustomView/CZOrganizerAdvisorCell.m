@@ -32,7 +32,7 @@
 
 - (void)setModel:(CZAdvisorModel *)model{
     _model = model;
-    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:nil];
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.counselorImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.nameLab.text = model.counselorName;
     self.advisorLab.text = model.organName;
     self.countLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.serviceCount integerValue]) stringValue]];

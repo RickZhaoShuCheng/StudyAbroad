@@ -101,7 +101,6 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellider];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
             // 内部视图加载
             CGFloat headersection = [self tableView:tableView heightForHeaderInSection:self.stopSectionIndex];
             CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, self.view.frame.size.height-headersection);
