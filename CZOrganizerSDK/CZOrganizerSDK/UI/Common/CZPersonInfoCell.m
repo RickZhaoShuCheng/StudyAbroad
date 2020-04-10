@@ -48,7 +48,7 @@
     NSString *formatterString = NSLocalizedString(@"专业度：%.2f 服务：%.2f 价格：%.2f 响应：%.2f", nil);
     self.infoView.organizeNameLabel.text = [NSString stringWithFormat:formatterString ,omodel.valProfessional.floatValue, omodel.valService.floatValue,omodel.valPrice.floatValue,omodel.valResponse.floatValue];
     formatterString = NSLocalizedString(@"%@条评价", nil);
-    self.infoView.subTitleLabel.text = [NSString stringWithFormat:formatterString,omodel.comments];
+    self.infoView.subTitleLabel.text = [NSString stringWithFormat:formatterString,@(omodel.commentsCount.integerValue).stringValue];
 }
 
 /**

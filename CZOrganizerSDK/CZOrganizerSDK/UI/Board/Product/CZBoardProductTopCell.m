@@ -220,7 +220,12 @@
 -(void)setModel:(CZProductModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
+    NSArray *banners = [model.banners componentsSeparatedByString:@","];
+    NSString *imageName = @"";
+    if (banners) {
+        imageName = banners[0];
+    }
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(imageName)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.mainTitleLabel.text = model.title;
     self.subTitleLabel.text = model.organName;
     self.popularityLabel.text = @"近30天累计人气";
