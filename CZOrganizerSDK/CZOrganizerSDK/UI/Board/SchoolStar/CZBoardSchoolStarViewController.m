@@ -71,10 +71,6 @@
         detailVC.sportUserId = model.sportUserId;
         detailVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
-//        SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
-//        detailVC.model = model;
-//        detailVC.hidesBottomBarWhenPushed = YES;
-//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     
     //查看商品

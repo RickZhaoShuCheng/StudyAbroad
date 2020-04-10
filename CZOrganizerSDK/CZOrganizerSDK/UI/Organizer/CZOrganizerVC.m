@@ -15,6 +15,7 @@
 #import "CZOrganizerAdvisorVC.h"
 #import "QSOrganizerHomeService.h"
 #import "QSCommonService.h"
+#import "CZAdvisorDetailService.h"
 #import "CZOrganizerModel.h"
 #import "CZOrganizerSearchVC.h"
 
@@ -105,14 +106,28 @@
 }
 
 - (void)clickSearchBtn:(UIButton *)searchBtn{
+    WEAKSELF
     CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
     CZOrganizerSearchVC *serchVC = [[CZOrganizerSearchVC alloc]init];
-    serchVC.titleName = baseVc.collectionView.model.name;
+    serchVC.model = baseVc.collectionView.model;
+    serchVC.callBackIsFocus = ^(BOOL isFocus) {
+        if (isFocus) {
+            [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            [weakSelf.focusBtn setSelected:YES];
+        }else{
+            [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+            [weakSelf.focusBtn setSelected:NO];
+        }
+    };
     [self.navigationController pushViewController:serchVC animated:YES];
 }
 
 - (void)clickFocusBtn:(UIButton *)focusBtn{
-    
+    if (!focusBtn.isSelected) {
+        [self requestForApiFocusFanSaveFocusFan];
+    }else{
+        [self requestForApiFocusFanCancelFocusFan];
+    }
 }
 
 /**
@@ -131,13 +146,51 @@
                 weakSelf.countLab.text = [NSString stringWithFormat:@"粉丝数 %@",[@([model.fanCount integerValue]) stringValue]];
                 if ([model.isFocus boolValue]) {
                     [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                    [weakSelf.focusBtn setSelected:YES];
                 }else{
                     [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+                    [weakSelf.focusBtn setSelected:NO];
                 }
 //                model.myDynamicVo = [NSMutableArray arrayWithObjects:@{@"smdType":@"1",@"diaryTitle":@"测试标题哈哈哈哈1",@"smdContent":@"标题嘿嘿嘿1"},@{@"smdType":@"4",@"diaryTitle":@"",@"smdContent":@"测试标题嘿嘿嘿2"},@{@"smdType":@"5",@"diaryTitle":@"测试标题哈哈哈哈3",@"smdContent":@"标题嘿嘿嘿3"}, nil];
-                CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
+                CZOrganizerDetailViewController *baseVc = weakSelf.myChildViewControllers[0];
                 baseVc.collectionView.model = model;
                 baseVc.organId = model.organId;
+            });
+        }
+    }];
+}
+
+/**
+ 关注
+ */
+- (void)requestForApiFocusFanSaveFocusFan{
+    WEAKSELF
+    __weak CZOrganizerDetailViewController *baseVc = weakSelf.myChildViewControllers[0];
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiFocusFanSaveFocusFan:baseVc.collectionView.model.userId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                baseVc.collectionView.model.isFocus = @(1);
+                [weakSelf.focusBtn setSelected:YES];
+                [weakSelf.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+/**
+ 取消关注
+ */
+- (void)requestForApiFocusFanCancelFocusFan{
+    WEAKSELF
+    __weak CZOrganizerDetailViewController *baseVc = weakSelf.myChildViewControllers[0];
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiFocusFanCancelFocusFan:baseVc.collectionView.model.userId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                baseVc.collectionView.model.isFocus = @(0);
+                [weakSelf.focusBtn setSelected:NO];
+                [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
             });
         }
     }];

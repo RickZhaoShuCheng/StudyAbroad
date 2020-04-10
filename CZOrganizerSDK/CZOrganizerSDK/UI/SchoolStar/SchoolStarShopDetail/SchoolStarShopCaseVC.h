@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZOrganizerProjectCollectionView.h"
+#import "SchoolStarShopCaseCollectionView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarShopCaseVC : UIViewController
-@property (nonatomic ,strong) CZOrganizerProjectCollectionView *collectionView;
+@property (nonatomic ,strong) SchoolStarShopCaseCollectionView *collectionView;
+@property (nonatomic ,strong) NSString *sportUserId;
+@property (nonatomic ,strong) UIViewController *superVC;
 @end
 
 NS_ASSUME_NONNULL_END

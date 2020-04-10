@@ -17,9 +17,75 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initWithUI];
-        [self actionMethod];
     }
     return self;
+}
+
+-(void)setUserId:(NSString *)userId{
+    _userId = userId;
+    if (userId) {
+        WEAKSELF
+        if (!self.postVC) {
+            self.postVC = [[SchoolStarDetailPostVC alloc]init];
+            self.postVC.userId = self.userId;
+            self.postVC.superVC = self.superVC;
+            [self.scrollView addSubview:self.postVC.view];
+            [self.postVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.leading.mas_equalTo(self.scrollView);
+                make.top.bottom.mas_equalTo(self.contentView);
+                make.width.mas_equalTo(kScreenWidth);
+            }];
+            //滚动监听
+            [self.postVC.tableView setScrollContentSize:^(CGFloat offsetY) {
+                if (weakSelf.scrollContentSize) {
+                    weakSelf.scrollContentSize(offsetY);
+                }
+                if (offsetY <= 0) {
+                    weakSelf.postVC.tableView.scrollEnabled = NO;
+                }else{
+                    weakSelf.postVC.tableView.scrollEnabled = YES;
+                }
+            }];
+        }
+        if (!self.piiicVC) {
+            self.piiicVC = [[SchoolStarDetailPiiicVC alloc]init];
+            [self.scrollView addSubview:self.piiicVC.view];
+            [self.piiicVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth);
+                make.top.bottom.mas_equalTo(self.contentView);
+                make.width.mas_equalTo(kScreenWidth);
+            }];
+            [self.piiicVC.tableView setScrollContentSize:^(CGFloat offsetY) {
+                if (weakSelf.scrollContentSize) {
+                    weakSelf.scrollContentSize(offsetY);
+                }
+                if (offsetY <= 0) {
+                    weakSelf.piiicVC.tableView.scrollEnabled = NO;
+                }else{
+                    weakSelf.piiicVC.tableView.scrollEnabled = YES;
+                }
+            }];
+        }
+        if (!self.diaryVC) {
+            self.diaryVC = [[SchoolStarDetailDiaryVC alloc]init];
+            [self.scrollView addSubview:self.diaryVC.view];
+            [self.diaryVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth*2);
+                make.top.bottom.mas_equalTo(self.contentView);
+                make.width.mas_equalTo(kScreenWidth);
+            }];
+            [self.diaryVC.tableView setScrollContentSize:^(CGFloat offsetY) {
+                if (weakSelf.scrollContentSize) {
+                    weakSelf.scrollContentSize(offsetY);
+                }
+                if (offsetY <= 0) {
+                    weakSelf.diaryVC.tableView.scrollEnabled = NO;
+                }else{
+                    weakSelf.diaryVC.tableView.scrollEnabled = YES;
+                }
+            }];
+        }
+    }
 }
 /**
  * 初始化UI
@@ -40,65 +106,5 @@
     }];
     [self.contentView layoutIfNeeded];
     self.scrollView.contentSize = CGSizeMake(kScreenWidth*3, self.contentView.frame.size.height);
-    
-    self.postVC = [[SchoolStarDetailPostVC alloc]init];
-    [self.scrollView addSubview:self.postVC.view];
-    [self.postVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.scrollView);
-        make.top.bottom.mas_equalTo(self.contentView);
-        make.width.mas_equalTo(kScreenWidth);
-    }];
-    
-    self.piiicVC = [[SchoolStarDetailPiiicVC alloc]init];
-    [self.scrollView addSubview:self.piiicVC.view];
-    [self.piiicVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth);
-        make.top.bottom.mas_equalTo(self.contentView);
-        make.width.mas_equalTo(kScreenWidth);
-    }];
-    
-    self.diaryVC = [[SchoolStarDetailDiaryVC alloc]init];
-    [self.scrollView addSubview:self.diaryVC.view];
-    [self.diaryVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth*2);
-        make.top.bottom.mas_equalTo(self.contentView);
-        make.width.mas_equalTo(kScreenWidth);
-    }];
-    
 }
-- (void)actionMethod{
-    WEAKSELF
-    //滚动监听
-    [self.postVC.tableView setScrollContentSize:^(CGFloat offsetY) {
-        if (weakSelf.scrollContentSize) {
-            weakSelf.scrollContentSize(offsetY);
-        }
-        if (offsetY <= 0) {
-            weakSelf.postVC.tableView.scrollEnabled = NO;
-        }else{
-            weakSelf.postVC.tableView.scrollEnabled = YES;
-        }
-    }];
-    [self.piiicVC.tableView setScrollContentSize:^(CGFloat offsetY) {
-        if (weakSelf.scrollContentSize) {
-            weakSelf.scrollContentSize(offsetY);
-        }
-        if (offsetY <= 0) {
-            weakSelf.piiicVC.tableView.scrollEnabled = NO;
-        }else{
-            weakSelf.piiicVC.tableView.scrollEnabled = YES;
-        }
-    }];
-    [self.diaryVC.tableView setScrollContentSize:^(CGFloat offsetY) {
-        if (weakSelf.scrollContentSize) {
-            weakSelf.scrollContentSize(offsetY);
-        }
-        if (offsetY <= 0) {
-            weakSelf.diaryVC.tableView.scrollEnabled = NO;
-        }else{
-            weakSelf.diaryVC.tableView.scrollEnabled = YES;
-        }
-    }];
-}
-
 @end

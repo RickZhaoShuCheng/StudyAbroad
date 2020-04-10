@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) SchoolStarDetailPostVC *postVC;
 @property (nonatomic ,strong) SchoolStarDetailPiiicVC *piiicVC;
 @property (nonatomic ,strong) SchoolStarDetailDiaryVC *diaryVC;
+@property (nonatomic ,strong) UIViewController *superVC;
+@property (nonatomic ,strong) NSString *userId;
 /**
  * 滚动值
  */

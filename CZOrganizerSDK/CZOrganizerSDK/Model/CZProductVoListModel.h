@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *clickCount;
 @property (nonatomic , strong) NSString *comments;
 @property (nonatomic , strong) NSString *description;
-
+@property (nonatomic ,assign) CGFloat descHeight;
 @end
 
 NS_ASSUME_NONNULL_END
