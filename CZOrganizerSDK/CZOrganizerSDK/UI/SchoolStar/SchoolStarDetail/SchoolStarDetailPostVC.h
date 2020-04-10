@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarDetailPostVC : UIViewController
 @property (nonatomic ,strong) SchoolStarDetailPostTableView *tableView;
+@property (nonatomic ,strong) NSString *userId;
+@property (nonatomic ,strong) UIViewController *superVC;
 @end
 
 NS_ASSUME_NONNULL_END

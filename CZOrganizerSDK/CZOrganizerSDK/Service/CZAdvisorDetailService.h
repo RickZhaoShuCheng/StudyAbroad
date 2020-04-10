@@ -128,9 +128,26 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
 /**
  *取消收藏
  *collectContentId  收藏对象id
- *collectType 收藏类型（5.商品 6.机构 7.达人8.顾问
+ *collectType 收藏类型 1.普通动态 2.话题动态 4日记 5普通长图文 6话题长图文 7商品 8活动 9达人 10机构 11 顾问
  */
 -(void)requestForApiCollectCancelCollect:(NSString *)collectContentId collectType:(NSInteger)collectType callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取案例
+ *organId    如果是机构就传机构id，否则不传
+ *counselorId 如果是顾问就传，否则不传
+ *sportUserId    如果是达人就传，否则不传
+ *pageNum    页
+ *pageSize    数
+ */
+-(void)requestForApiDiarySelectCaseList:(NSString *)organId counselorId:(NSString *)counselorId sportUserId:(NSString *)sportUserId pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取达人个人详情及标签内容
+ *toUserId   要查看那个用户对象的id
+ *type 1动态 2日记 3.长图文（对应下面的标签）
+ *pageNum    页
+ *pageSize    数
+ */
+-(void)requestForApiMyDynamicPersonalHomepage:(NSString *)toUserId type:(NSInteger)type pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

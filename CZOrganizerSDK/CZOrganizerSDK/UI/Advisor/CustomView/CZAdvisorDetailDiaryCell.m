@@ -37,7 +37,7 @@
     if (model.topicTitle.length) {
         self.tipsLab.text = [NSString stringWithFormat:@"#%@",model.topicTitle];
     }else{
-        self.tipsLab.text = @"";
+        self.tipsLab.text = @" ";
     }
     self.schoolLab.text = [NSString stringWithFormat:@"%@ | %@篇日记",model.schoolName,[@([model.diaryCount integerValue]) stringValue]];
 }

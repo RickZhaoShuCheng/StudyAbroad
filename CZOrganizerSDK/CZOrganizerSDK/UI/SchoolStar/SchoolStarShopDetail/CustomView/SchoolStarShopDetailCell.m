@@ -69,6 +69,8 @@
         }
         if (!self.caseVC) {
             self.caseVC = [[SchoolStarShopCaseVC alloc]init];
+            self.caseVC.superVC = self.superVC;
+            self.caseVC.sportUserId = sportUserId;
             [self.scrollView addSubview:self.caseVC.view];
             [self.caseVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth*2);

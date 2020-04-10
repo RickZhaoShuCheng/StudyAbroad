@@ -7,7 +7,7 @@
 //
 
 #import "ExperienceView.h"
-
+#import "NSDate+Utils.h"
 @interface ExperienceView ()
 @property (nonatomic ,strong) UIView *roundView;
 @property (nonatomic ,strong) UIView *lineView;
@@ -27,6 +27,20 @@
 - (void)setIsEnd:(BOOL)isEnd{
     _isEnd = isEnd;
     self.lineView.hidden = isEnd;
+}
+
+- (void)setModel:(CZSportEduModel *)model{
+    _model = model;
+    NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[model.startEducationTime integerValue]/1000]];
+    NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[model.endEducationTime integerValue]/1000]];
+    self.timeLab.text = [NSString stringWithFormat:@"%@--%@",beginTime,endTime];
+    if ([model.certificationStatus integerValue] == 1) {
+        self.statusImg.image = [CZImageProvider imageNamed:@"daren_yirenzheng"];
+    }else{
+        self.statusImg.image = [CZImageProvider imageNamed:@"daren_weirenzheng"];//daren_weirenzheng
+    }
+    
+    self.schoolLab.text = [NSString stringWithFormat:@"%@   本科",model.schoolName];
 }
 
 /**
@@ -59,7 +73,7 @@
     self.timeLab = [[UILabel alloc]init];
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(28)];
     self.timeLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.timeLab.text = @"2016.0..03--至今";
+    self.timeLab.text = @"-";
     [self addSubview:self.timeLab];
     [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.roundView.mas_trailing).offset(ScreenScale(24));
@@ -81,7 +95,7 @@
     self.schoolLab = [[UILabel alloc]init];
     self.schoolLab.font = [UIFont systemFontOfSize:ScreenScale(28)];
     self.schoolLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.schoolLab.text = @"西悉尼大学   本科";
+    self.schoolLab.text = @"-";
     [self addSubview:self.schoolLab];
     [self.schoolLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.timeLab);

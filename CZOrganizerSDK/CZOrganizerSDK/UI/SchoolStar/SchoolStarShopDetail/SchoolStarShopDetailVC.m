@@ -104,6 +104,13 @@
         [self requestForApiFocusFanCancelFocusFan];
     }
 }
+- (void)clickCollectBtn:(UIButton *)collectBtn{
+    if (!collectBtn.isSelected) {
+        [self requestForApiCollectCollect];
+    }else{
+        [self requestForApiCollectCancelCollect];
+    }
+}
 
 //获取店铺详情
 -(void)requestForApiSportUserSelectSportUserInfo{
@@ -124,11 +131,13 @@
                 }
                 
                 if ([model.isCollect boolValue]) {
-                    [self.collectBtn setTitle:@"取消收藏" forState:UIControlStateNormal];
-                    [self.collectBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+                    [weakSelf.collectBtn setSelected:YES];
+                    [weakSelf.collectBtn setTitle:@"已收藏" forState:UIControlStateNormal];
+                    [weakSelf.collectBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
                 }else{
-                    [self.collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
-                    [self.collectBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+                    [weakSelf.collectBtn setSelected:NO];
+                    [weakSelf.collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
+                    [weakSelf.collectBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
                 }
                 weakSelf.tableView.model = model;
             });
@@ -164,6 +173,42 @@
                 weakSelf.tableView.model.isFocus = @(0);
                 [weakSelf.focusBtn setSelected:NO];
                 [weakSelf.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+/**
+ 收藏
+ */
+- (void)requestForApiCollectCollect{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiCollectCollect:self.tableView.model.userId collectType:9 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.tableView.model.isCollect = @(1);
+                [weakSelf.collectBtn setSelected:YES];
+                [weakSelf.collectBtn setTitle:@"已收藏" forState:UIControlStateNormal];
+                [weakSelf.collectBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+/**
+ 取消收藏
+ */
+- (void)requestForApiCollectCancelCollect{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiCollectCancelCollect:self.tableView.model.userId collectType:9 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.tableView.model.isCollect = @(0);
+                [weakSelf.collectBtn setSelected:NO];
+                [weakSelf.collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
+                [weakSelf.collectBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
             });
         }
     }];
@@ -242,6 +287,7 @@
     [self.collectBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.collectBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
     [self.collectBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(20), 0, 0 )];
+    [self.collectBtn addTarget:self action:@selector(clickCollectBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.collectBtn];
     [self.collectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.mas_equalTo(self.bottomView);

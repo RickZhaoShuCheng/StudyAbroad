@@ -487,6 +487,12 @@
 		D8AA19242410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AA19222410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m */; };
 		D8AA192824110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8AA192624110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h */; };
 		D8AA192924110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AA192724110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.m */; };
+		D8ADC3402440BA4E00C49452 /* CZCaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D8ADC33E2440BA4E00C49452 /* CZCaseModel.h */; };
+		D8ADC3412440BA4E00C49452 /* CZCaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D8ADC33F2440BA4E00C49452 /* CZCaseModel.m */; };
+		D8ADC3442440BD6D00C49452 /* SchoolStarShopCaseCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8ADC3422440BD6D00C49452 /* SchoolStarShopCaseCollectionView.h */; };
+		D8ADC3452440BD6D00C49452 /* SchoolStarShopCaseCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8ADC3432440BD6D00C49452 /* SchoolStarShopCaseCollectionView.m */; };
+		D8ADC3482440CFAD00C49452 /* CZUserInfoModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D8ADC3462440CFAD00C49452 /* CZUserInfoModel.h */; };
+		D8ADC3492440CFAD00C49452 /* CZUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D8ADC3472440CFAD00C49452 /* CZUserInfoModel.m */; };
 		D8C40E602426411500087987 /* CZOrganizerSearchVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C40E5E2426411500087987 /* CZOrganizerSearchVC.h */; };
 		D8C40E612426411500087987 /* CZOrganizerSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C40E5F2426411500087987 /* CZOrganizerSearchVC.m */; };
 		D8C40E64242649A900087987 /* CZOrganizerSearchCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8C40E62242649A900087987 /* CZOrganizerSearchCollectionView.h */; };
@@ -1052,6 +1058,12 @@
 		D8AA19222410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailCollectionView.m; sourceTree = "<group>"; };
 		D8AA192624110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDetailCollectionHeadView.h; sourceTree = "<group>"; };
 		D8AA192724110A370043CFE8 /* CZAdvisorDetailCollectionHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailCollectionHeadView.m; sourceTree = "<group>"; };
+		D8ADC33E2440BA4E00C49452 /* CZCaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZCaseModel.h; sourceTree = "<group>"; };
+		D8ADC33F2440BA4E00C49452 /* CZCaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZCaseModel.m; sourceTree = "<group>"; };
+		D8ADC3422440BD6D00C49452 /* SchoolStarShopCaseCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchoolStarShopCaseCollectionView.h; sourceTree = "<group>"; };
+		D8ADC3432440BD6D00C49452 /* SchoolStarShopCaseCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SchoolStarShopCaseCollectionView.m; sourceTree = "<group>"; };
+		D8ADC3462440CFAD00C49452 /* CZUserInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZUserInfoModel.h; sourceTree = "<group>"; };
+		D8ADC3472440CFAD00C49452 /* CZUserInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZUserInfoModel.m; sourceTree = "<group>"; };
 		D8C40E5E2426411500087987 /* CZOrganizerSearchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZOrganizerSearchVC.h; sourceTree = "<group>"; };
 		D8C40E5F2426411500087987 /* CZOrganizerSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZOrganizerSearchVC.m; sourceTree = "<group>"; };
 		D8C40E62242649A900087987 /* CZOrganizerSearchCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZOrganizerSearchCollectionView.h; sourceTree = "<group>"; };
@@ -1338,6 +1350,10 @@
 				D8868590241BCFE700B14680 /* CZAdvisorInfoModel.m */,
 				D8C40E83242752DD00087987 /* CZCommentModel.h */,
 				D8C40E84242752DD00087987 /* CZCommentModel.m */,
+				D8ADC33E2440BA4E00C49452 /* CZCaseModel.h */,
+				D8ADC33F2440BA4E00C49452 /* CZCaseModel.m */,
+				D8ADC3462440CFAD00C49452 /* CZUserInfoModel.h */,
+				D8ADC3472440CFAD00C49452 /* CZUserInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2128,6 +2144,8 @@
 				D83BF6DA243B396D0032C2BD /* SchoolStarShopCommentCell.m */,
 				D83BF6DD243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.h */,
 				D83BF6DE243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m */,
+				D8ADC3422440BD6D00C49452 /* SchoolStarShopCaseCollectionView.h */,
+				D8ADC3432440BD6D00C49452 /* SchoolStarShopCaseCollectionView.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -2518,6 +2536,7 @@
 				D8CD0C3F241534E600B2124C /* CZOrganizerDetailServiceCell.h in Headers */,
 				D854099F241151C100A348B5 /* CZAdvisorDetailDiaryCell.h in Headers */,
 				D83BF6B7243B10890032C2BD /* SchoolStarShopDetailTableView.h in Headers */,
+				D8ADC3402440BA4E00C49452 /* CZCaseModel.h in Headers */,
 				53A90CB72413912E00894E9D /* FMTagsView.h in Headers */,
 				D88685B8241D3C9A00B14680 /* CZCommentsDetailHeaderView.h in Headers */,
 				535E5DB624080AED00471453 /* MJRefreshHeader.h in Headers */,
@@ -2563,6 +2582,7 @@
 				D804BF8B242A44CB0050AB7D /* CZActivityListTableView.h in Headers */,
 				D83BF6BF243B10E50032C2BD /* SchoolStarShopDetailTableHeaderView.h in Headers */,
 				D86B814524193C9A007F1595 /* CZOrganizerProjectVC.h in Headers */,
+				D8ADC3442440BD6D00C49452 /* SchoolStarShopCaseCollectionView.h in Headers */,
 				D88685A0241D20AD00B14680 /* CZCommentsListTableView.h in Headers */,
 				1E7684DA243D7D67005F0377 /* CXDBTool.h in Headers */,
 				D8CD0C23241531D300B2124C /* CZOrganizerDetailCollectionView.h in Headers */,
@@ -2575,6 +2595,7 @@
 				535F000B23FFFFDC003463B0 /* CZServiceCell.h in Headers */,
 				539483BA23FF82B800770E99 /* CZOrganizerSDK.h in Headers */,
 				D88AFC142428FB5900F1E6CB /* OrganizerDynamicTableHeaderView.h in Headers */,
+				D8ADC3482440CFAD00C49452 /* CZUserInfoModel.h in Headers */,
 				535E5D9B24080AED00471453 /* UIScrollView+MJRefresh.h in Headers */,
 				1E8D878A2427494500E09FB2 /* CZBoardProductTopCell.h in Headers */,
 				D8CD0C2B241532A500B2124C /* CZOrganizerDetailCollectionHeadView.h in Headers */,
@@ -2838,6 +2859,7 @@
 				D88AFC1D2428FBDA00F1E6CB /* OrganizerDynamicCell.m in Sources */,
 				5331CAB52407ED4B0069AC92 /* CZSCountryModel.m in Sources */,
 				53B59A362406B79E000C8399 /* CZCarefullyChooseCell.m in Sources */,
+				D8ADC3452440BD6D00C49452 /* SchoolStarShopCaseCollectionView.m in Sources */,
 				D804BF96242A4EE90050AB7D /* ActivityDetailVC.m in Sources */,
 				5394844B23FFB03400770E99 /* SDWebImageDownloader.m in Sources */,
 				53F80982240D52C300E44651 /* CZSelectCityCell.m in Sources */,
@@ -2906,6 +2928,7 @@
 				D8C40E8E2427817400087987 /* AdvisorDynamicPostTableView.m in Sources */,
 				D8606AC2241A82DD00932421 /* CZOrganizerDiaryHeaderView.m in Sources */,
 				537E3D90240AB62400C080E9 /* CZAdvisorViewController.m in Sources */,
+				D8ADC3412440BA4E00C49452 /* CZCaseModel.m in Sources */,
 				535982712418B68800BEA654 /* CZAllBoardViewController.m in Sources */,
 				D8C40E612426411500087987 /* CZOrganizerSearchVC.m in Sources */,
 				D8C40E8224273A6300087987 /* AdvisorDynamicSectionHeaderView.m in Sources */,
@@ -2961,6 +2984,7 @@
 				535E5D9124080AED00471453 /* MJRefreshConst.m in Sources */,
 				535E5DA224080AED00471453 /* MJRefreshBackStateFooter.m in Sources */,
 				D8CD0C482415354800B2124C /* CZOrganizerDetailEvaluateCell.m in Sources */,
+				D8ADC3492440CFAD00C49452 /* CZUserInfoModel.m in Sources */,
 				D83BF6E0243B39EE0032C2BD /* SchoolStarShopCommentHeaderView.m in Sources */,
 				D88685B5241D37B900B14680 /* CZCommentsDetailTableView.m in Sources */,
 				D83BF6D4243B374A0032C2BD /* SchoolStarShopCommentVC.m in Sources */,

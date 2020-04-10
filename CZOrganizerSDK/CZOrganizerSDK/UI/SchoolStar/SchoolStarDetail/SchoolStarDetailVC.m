@@ -9,10 +9,14 @@
 
 #import "SchoolStarDetailVC.h"
 #import "SchoolStarDetailTableView.h"
+#import "QSCommonService.h"
+#import "CZAdvisorDetailService.h"
+#import "CZUserInfoModel.h"
 @interface SchoolStarDetailVC ()
 @property (nonatomic ,strong)UILabel *titleLab;//标题
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
 @property (nonatomic ,strong)UIButton *shareBtn;//分享按钮
+@property (nonatomic ,strong) CZUserInfoModel *model;
 @property (nonatomic ,strong) SchoolStarDetailTableView *tableView;
 @property (nonatomic ,assign) CGFloat alpha;
 @end
@@ -23,6 +27,7 @@
     [super viewDidLoad];
     [self initWithUI];
     [self actionMethod];
+    [self requestForApiMyDynamicPersonalHomepage];
 }
 
 - (void)actionMethod{
@@ -79,6 +84,20 @@
         }
     }];
 }
+//获取达人详情信息
+- (void)requestForApiMyDynamicPersonalHomepage{
+    WEAKSELF
+    CZAdvisorDetailService *service = [QSCommonService service:QSServiceTypeAdvisorDetail];
+    [service requestForApiMyDynamicPersonalHomepage:self.userId type:1 pageNum:1 pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.model = [CZUserInfoModel modelWithDict:data[@"userVo"]];
+                weakSelf.titleLab.text = weakSelf.model.userNickName;
+                weakSelf.tableView.model = weakSelf.model;
+            });
+        }
+    }];
+}
 
 /**
  * 初始化UI
@@ -107,11 +126,9 @@
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
     self.titleLab.textAlignment = NSTextAlignmentCenter;
     self.titleLab.textColor = [UIColor clearColor];
-    self.titleLab.text = self.model.realName;
     self.titleLab.alpha = 0.0;
     [self.navigationItem setTitleView:self.titleLab];
     
-    self.tableView.model = self.model;
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.mas_equalTo(self.view);
@@ -131,6 +148,7 @@
 - (SchoolStarDetailTableView *)tableView{
     if (!_tableView) {
         _tableView = [[SchoolStarDetailTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.superVC = self;
     }
     return _tableView;
 }

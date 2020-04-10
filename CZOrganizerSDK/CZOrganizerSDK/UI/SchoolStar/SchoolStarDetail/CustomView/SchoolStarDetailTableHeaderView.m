@@ -33,21 +33,21 @@
     }
     return self;
 }
-- (void)setModel:(CZSchoolStarModel *)model{
+- (void)setModel:(CZUserInfoModel *)model{
     _model = model;
     if (!model) {
         return;
     }
-    model.sportIntroduction = @"手机客户端复活甲卡是福克斯咖啡花洒回复框架和撒打飞机客户说客户方科技史蒂芬霍金客户打飞机可视电话反馈卡接收到回复科技萨克大姐夫很快就撒东方航空空数据大黄蜂科技爱神的箭卡号时看进度";
-    self.nameLab.text = model.realName;
+//    model.sportIntroduction = @"手机客户端复活甲卡是福克斯咖啡花洒回复框架和撒打飞机客户说客户方科技史蒂芬霍金客户打飞机可视电话反馈卡接收到回复科技萨克大姐夫很快就撒东方航空空数据大黄蜂科技爱神的箭卡号时看进度";
+    self.nameLab.text = model.userNickName;
     [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
     [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
-    if ([model.status integerValue] == 1) {
+    if ([model.isAuthentication integerValue] == 1) {
         self.VImg.hidden = NO;
     }else{
         self.VImg.hidden = YES;
     }
-    self.schoolLab.text = [NSString stringWithFormat:@"%@年%@留学老油条",model.studyYears,model.countryName];
+    self.schoolLab.text = [NSString stringWithFormat:@"%@年%@老油条",@"无字段",model.adept];//model.studyYears
     self.contentLab.text = model.sportIntroduction;
     CGFloat height = [self getStringHeightWithText:model.sportIntroduction font:[UIFont systemFontOfSize:ScreenScale(28)] viewWidth:kScreenWidth-ScreenScale(100)];
     _model.introduceHeight = height;
@@ -58,16 +58,15 @@
     }else{
         self.arrowBtn.hidden = YES;
     }
-    self.focusContent.text = [@([model.attentionCount integerValue]) stringValue];
-    self.fansContent.text = [@([model.fanCount integerValue]) stringValue];
-    self.praiseContent.text = [@([model.reserveCount integerValue]) stringValue];
-    NSArray *tempArr = @[@"",@"",@"",@""];
-//    NSArray *tempArr = @[@"",@"",@""];
-    if (tempArr.count <= 3) {
+    self.focusContent.text = [@([model.focusCount integerValue]) stringValue];
+    self.fansContent.text = [@([model.fansCount integerValue]) stringValue];
+    self.praiseContent.text = [@([model.praiseCount integerValue]) stringValue];
+    
+    if (model.sportUserEduVos.count <= 3) {
         [self.experienceContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.leading.trailing.mas_equalTo(self);
             make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(120));
-            make.height.mas_equalTo(ScreenScale(140) * tempArr.count);
+            make.height.mas_equalTo(ScreenScale(140) * model.sportUserEduVos.count);
         }];
         self.moreBtn.hidden = YES;
         self.arrowImg.hidden = YES;
@@ -81,12 +80,13 @@
         self.arrowImg.hidden = NO;
     }
     
-    [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [model.sportUserEduVos enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         ExperienceView *view = [[ExperienceView alloc]init];
 //        view.backgroundColor = [UIColor lightGrayColor];
-        if (idx == tempArr.count-1) {
+        if (idx == model.sportUserEduVos.count-1) {
             view.isEnd = YES;
         }
+        view.model = obj;
         [self.experienceContainerView addSubview:view];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self.experienceContainerView.mas_leading).offset(ScreenScale(30));
@@ -195,8 +195,7 @@
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.avatarImg.mas_leading);
         make.top.mas_equalTo(self.VImg.mas_bottom).offset(ScreenScale(30));
-        make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(30));
-        make.height.mas_greaterThanOrEqualTo(0);
+        make.width.height.mas_greaterThanOrEqualTo(0);
     }];
     
     self.schoolLab = [[UILabel alloc]init];

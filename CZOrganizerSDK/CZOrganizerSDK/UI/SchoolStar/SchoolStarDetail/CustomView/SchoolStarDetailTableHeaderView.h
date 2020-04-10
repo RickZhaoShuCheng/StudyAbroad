@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZSchoolStarModel.h"
+#import "CZUserInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SchoolStarDetailTableHeaderView : UIView
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)UILabel *contentLab;
 @property (nonatomic ,strong) UIView *experienceContainerView;
 @property (nonatomic ,strong) UIImageView *arrowImg;
-@property (nonatomic ,strong) CZSchoolStarModel *model;
+@property (nonatomic ,strong) CZUserInfoModel *model;
 @property (nonatomic ,copy) void (^arrowBtnClick)(UIButton *button);
 @property (nonatomic ,copy) void (^moreBtnClick)(UIButton *button);
 @end

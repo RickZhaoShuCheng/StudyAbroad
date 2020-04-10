@@ -65,7 +65,7 @@
 //        [weakSelf.navigationController pushViewController:detailVC animated:YES];
         //个人详情
         SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
-        detailVC.model = model;
+        detailVC.userId = model.userId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }

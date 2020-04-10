@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CZUserInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ExperienceView : UIView
 @property (nonatomic ,assign) BOOL isEnd;
+@property (nonatomic ,strong) CZSportEduModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

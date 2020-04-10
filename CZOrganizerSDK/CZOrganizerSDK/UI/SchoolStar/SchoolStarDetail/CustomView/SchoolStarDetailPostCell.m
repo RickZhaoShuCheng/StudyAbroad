@@ -9,7 +9,7 @@
 
 #import "SchoolStarDetailPostCell.h"
 #import "UIImageView+WebCache.h"
-
+#import "NSDate+Utils.h"
 @interface SchoolStarDetailPostCell ()
 @property (nonatomic ,strong) UIImageView *avatarImg;
 @property (nonatomic ,strong) UILabel *nameLab;
@@ -23,9 +23,16 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initWithUI];
-        [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:@"http://uploadfile.bizhizu.cn/2015/0720/20150720033105173.jpg.source.jpg"] placeholderImage:nil];
     }
     return self;
+}
+
+- (void)setModel:(CZCaseModel *)model{
+    _model = model;
+    [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
+    self.nameLab.text = model.userNickName;
+    self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
+    self.contentLab.text = model.smdContent;
 }
 
 /**
@@ -43,7 +50,7 @@
     }];
     
     self.nameLab = [[UILabel alloc]init];
-    self.nameLab.text = @"许一铭";
+    self.nameLab.text = @"--";
     self.nameLab.textColor = [UIColor blackColor];
     self.nameLab.font = [UIFont boldSystemFontOfSize:ScreenScale(26)];
     [self.contentView addSubview:self.nameLab];
@@ -55,7 +62,7 @@
     }];
     
     self.timeLab = [[UILabel alloc]init];
-    self.timeLab.text = @"2小时前 ";
+    self.timeLab.text = @"-";
     self.timeLab.textColor = CZColorCreater(159, 159, 178, 1);
     self.timeLab.font = [UIFont boldSystemFontOfSize:ScreenScale(22)];
     [self.contentView addSubview:self.timeLab];
@@ -85,7 +92,7 @@
     self.contentLab.numberOfLines = 0;
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(28)];
     self.contentLab.textColor = CZColorCreater(0, 0, 0, 1);
-    self.contentLab.text = @"晚餐就在位于公共市场的食在加拿大餐厅用餐这也是一个类似厂房改造的餐厅，超高的空间四面采光坐在这里很舒服，看着吧台忙碌的厨师...";
+    self.contentLab.text = @"-";
     [self.contentView addSubview:self.contentLab];
     [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImg.mas_bottom).offset(ScreenScale(22) + kScreenWidth/2 - ScreenScale(5) + ScreenScale(24));

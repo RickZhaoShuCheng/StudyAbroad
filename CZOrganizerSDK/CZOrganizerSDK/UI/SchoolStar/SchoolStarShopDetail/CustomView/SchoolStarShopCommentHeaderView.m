@@ -25,7 +25,7 @@
     self.titleLab = [[UILabel alloc]init];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(32)];
     self.titleLab.textColor = [UIColor blackColor];
-    self.titleLab.text = @"学员评价 (-）";
+    self.titleLab.text = @"学员评价 (0）";
     [self addSubview:self.titleLab];
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));

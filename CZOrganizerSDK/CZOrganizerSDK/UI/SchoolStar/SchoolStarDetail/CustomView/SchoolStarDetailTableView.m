@@ -28,19 +28,17 @@
     }
     return self;
 }
-- (void)setModel:(CZSchoolStarModel *)model{
+- (void)setModel:(CZUserInfoModel *)model{
     model.introduceOpen = NO;
     _model = model;
     self.headerView.model = _model;
-    NSArray *tempArr = @[@"",@"",@"",@""];
-//    NSArray *tempArr = @[@"",@"",@""];
-    
+
     CGRect rect = CGRectMake(0, 0, kScreenWidth, ScreenScale(780));
-    NSInteger count = tempArr.count;
-    if (tempArr.count > 3) {
+    NSInteger count = model.sportUserEduVos.count;
+    if (model.sportUserEduVos.count > 3) {
         count = 3;
     }
-    if (tempArr.count <= 3) {
+    if (model.sportUserEduVos.count <= 3) {
         rect.size.height = rect.size.height + ScreenScale(140)* count;
     }else{
         rect.size.height = rect.size.height + ScreenScale(60) + ScreenScale(140)* count;
@@ -54,6 +52,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SchoolStarDetailCell class]) forIndexPath:indexPath];
     WEAKSELF
+    self.cell.superVC = self.superVC;
+    self.cell.userId = self.model.userId;
     self.cell.scrollContentSize = ^(CGFloat offsetY) {
         if (offsetY > 0) {
             weakSelf.scrollEnabled = NO;
