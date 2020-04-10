@@ -100,6 +100,10 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
 -(void)requestForApiTypeFindHotSearchTypeByCallBack:(QSOrganizerHomeBack)callBack;
 
 
+-(void)requestForApiProductCommonListByParam:(CZHomeParam *)param
+                                         url:(NSString *)urls
+                                    callBack:(QSOrganizerHomeBack)callBack;
+
 @end
 
 NS_ASSUME_NONNULL_END

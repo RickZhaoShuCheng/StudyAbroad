@@ -60,6 +60,7 @@
         make.bottom.mas_equalTo(-100);
     }];
     
+    self.pageIndex = 1;
     WEAKSELF
     self.dataCollectionView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         weakSelf.pageIndex = 1;

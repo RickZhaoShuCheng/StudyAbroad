@@ -87,7 +87,7 @@
         
     }];
 //    self.dataView.alwaysBounceVertical = YES;
-    
+    self.pageIndex = 1;
     WEAKSELF
     self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         weakSelf.pageIndex = 1;

@@ -64,9 +64,14 @@
     [vcs addObject:controller6];
     controller6.type = CZBoardProductTypeGood;
     
+    CZBoardProductViewController *controller7 = [[CZBoardProductViewController alloc] init];
+    controller7.model = self.models[6];
+    [vcs addObject:controller7];
+    controller7.type = CZBoardProductTypeGood;
+    
     self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50) trackerStyle:SPPageMenuTrackerStyleLine];
-    self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
-    [self.pageMenu setItems:@[NSLocalizedString(@"机构榜", nil),NSLocalizedString(@"顾问榜", nil),NSLocalizedString(@"达人榜", nil),NSLocalizedString(@"人气榜", nil),NSLocalizedString(@"热销榜", nil),NSLocalizedString(@"口碑榜", nil)] selectedItemIndex:0];
+    self.pageMenu.permutationWay = SPPageMenuPermutationWayScrollAdaptContent;
+    [self.pageMenu setItems:@[controller1.model.content1,controller2.model.content1,controller3.model.content1,controller4.model.content1,controller5.model.content1,controller6.model.content1,controller7.model.content1] selectedItemIndex:0];
     self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:16];
     self.pageMenu.tracker.backgroundColor = self.pageMenu.unSelectedItemTitleColor = CZColorCreater(51, 172, 253, 1);
     self.pageMenu.selectedItemTitleColor = [UIColor blackColor];

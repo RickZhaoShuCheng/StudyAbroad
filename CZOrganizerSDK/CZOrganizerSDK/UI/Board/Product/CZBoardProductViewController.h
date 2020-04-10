@@ -14,6 +14,7 @@ typedef enum : NSUInteger {
     CZBoardProductTypePopular,
     CZBoardProductTypeHot,
     CZBoardProductTypeGood,
+    CZBoardProductTypeInteractive,
 } CZBoardProductType;
 
 NS_ASSUME_NONNULL_BEGIN

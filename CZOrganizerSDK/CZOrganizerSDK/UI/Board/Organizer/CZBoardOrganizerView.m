@@ -25,6 +25,13 @@
         self.dataSource = self;
         self.delegate = self;
         self.backgroundColor = [UIColor clearColor];
+        if (@available(iOS 11.0, *)) {
+            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            /// 自动关闭估算高度，不想估算那个，就设置那个即可
+            self.estimatedRowHeight = 0;
+            self.estimatedSectionHeaderHeight = 0;
+            self.estimatedSectionFooterHeight = 0;
+        }
     }
     return self;
 }

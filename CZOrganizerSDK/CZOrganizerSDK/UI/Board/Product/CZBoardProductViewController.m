@@ -48,7 +48,7 @@
         make.bottom.mas_equalTo(-100);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
-    
+    self.pageIndex = 1;
     WEAKSELF
     self.dataView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
         weakSelf.pageIndex = 1;
@@ -124,20 +124,26 @@
             
     };
     
-    switch (self.type) {
-        case CZBoardProductTypePopular:
-            [service requestForApiProductGetPopularityListByParam:param callBack:callBlock];
-            break;
-        case CZBoardProductTypeHot:
-            [service requestForApiProductGetHotSaleByParam:param callBack:callBlock];
-            break;
-        case CZBoardProductTypeGood:
-            [service requestForApiProductGetPublicPraiseListByParam:param callBack:callBlock];
-            break;
-        default:
-            break;
-    }
-    
+//    switch (self.type) {
+//        case CZBoardProductTypePopular:
+//            [service requestForApiProductGetPopularityListByParam:param callBack:callBlock];
+//            break;
+//        case CZBoardProductTypeHot:
+//            [service requestForApiProductGetHotSaleByParam:param callBack:callBlock];
+//            break;
+//        case CZBoardProductTypeGood:
+//            [service requestForApiProductGetPublicPraiseListByParam:param callBack:callBlock];
+//            break;
+//        case CZBoardProductTypeInteractive
+//        {
+//            [self.dataView.mj_header endRefreshing];
+//            [self.dataView.mj_footer endRefreshing];
+//            [self.dataView.mj_footer endRefreshingWithNoMoreData];
+//        }
+//        default:
+//            break;
+//    }
+    [service requestForApiProductCommonListByParam:param url:self.model.content3 callBack:callBlock];
 }
 
 
