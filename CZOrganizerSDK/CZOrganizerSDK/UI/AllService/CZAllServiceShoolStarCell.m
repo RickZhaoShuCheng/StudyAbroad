@@ -131,9 +131,9 @@
     NSString *string = @"";
     if (hour) {
         string = [string stringByAppendingFormat:@"%lu小时" , hour];
-        NSInteger min = model.serviceTime.integerValue%60;
-        if (min) {
-            string = [string stringByAppendingFormat:@"%lu分钟" , min];
+        NSInteger min = model.serviceTime.integerValue/60;
+        if (min%60) {
+            string = [string stringByAppendingFormat:@"%lu分钟" , model.serviceTime.integerValue%3600/60];
         }
     }
     else
