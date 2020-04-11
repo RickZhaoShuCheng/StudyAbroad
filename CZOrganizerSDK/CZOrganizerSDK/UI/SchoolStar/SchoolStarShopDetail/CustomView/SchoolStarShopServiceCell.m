@@ -33,27 +33,36 @@
     self.contentLab.text = model.desc;
     NSMutableAttributedString *str;
     if ([model.priceType isEqualToString:@"RMB"]) {
-        NSString *price = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+        NSString *price = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100];
         str = [[NSMutableAttributedString alloc]initWithString:price];
         [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 1)];
         [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(1, str.length - 1)];
     }else{
-        NSString *price = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]];
+        NSString *price = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
         str = [[NSMutableAttributedString alloc]initWithString:price];
         [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(24)]} range:NSMakeRange(0, 2)];
         [str addAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:ScreenScale(30)]} range:NSMakeRange(2, str.length - 2)];
     }
     self.priceLab.attributedText = str;
     
-    NSString *serviceTime = @"";
-    if ([model.serviceTime integerValue] <60) {
-        serviceTime = [NSString stringWithFormat:@"%ld分钟",[model.serviceTime integerValue]];
-    }else if ([model.serviceTime integerValue] >= 60) {
-        serviceTime = [NSString stringWithFormat:@"%ld小时",[model.serviceTime integerValue]/60];
+    NSInteger hour = model.serviceTime.integerValue/3600;
+    
+    NSString *string = @"";
+    if (hour) {
+        string = [string stringByAppendingFormat:@"%lu小时" , hour];
+        NSInteger min = model.serviceTime.integerValue/60;
+        if (min%60) {
+            string = [string stringByAppendingFormat:@"%lu分钟" , model.serviceTime.integerValue%3600/60];
+        }
     }
-    self.countLab.text = [NSString stringWithFormat:@"%@/次",serviceTime];
+    else
+    {
+        NSInteger min = model.serviceTime.integerValue/60;
+        string = [string stringByAppendingFormat:@"%lu分钟" , min];
+    }
+    string = [string stringByAppendingString:@"/次"];
+    self.countLab.text = string;
 }
-
 /**
  * 初始化UI
  */

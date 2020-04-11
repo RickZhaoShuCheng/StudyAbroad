@@ -18,6 +18,7 @@
 #import "CZAdvisorDetailService.h"
 #import "CZOrganizerModel.h"
 #import "CZOrganizerSearchVC.h"
+#import "CZOrganizerInfoView.h"
 
 #define PageMenuHeight          ScreenScale(88)
 
@@ -39,6 +40,7 @@
 @property (nonatomic ,assign) CGFloat alpha;
 @property (nonatomic ,strong) UIButton *chatBtn;
 @property (nonatomic ,strong) UIView *bottomView;
+@property (nonatomic ,strong) CZOrganizerInfoView *infoView;
 @end
 
 @implementation CZOrganizerVC
@@ -102,6 +104,25 @@
             //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
             baseVc.collectionView.contentInset = UIEdgeInsetsMake(NaviH+PageMenuHeight, 0, 0, 0);
         }
+    }];
+    
+    //点击折叠
+    [baseVc.collectionView setClickFoldBtnBlock:^{
+        baseVc.collectionView.scrollEnabled = NO;
+        [weakSelf.scrollView setScrollEnabled:NO];
+        [baseVc.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        if (!weakSelf.infoView.superview) {
+            [baseVc.collectionView addSubview:weakSelf.infoView];
+        }
+        [weakSelf.infoView.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        weakSelf.infoView.model = baseVc.collectionView.model;
+        CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
+        [UIView animateWithDuration:0.25 animations:^{
+            [weakSelf.infoView setFrame:CGRectMake(0, rect.size.height, kScreenWidth, kScreenHeight - rect.size.height)];
+            [weakSelf.bottomView setAlpha:0];
+        } completion:^(BOOL finished) {
+            [weakSelf.bottomView setHidden:YES];
+        }];
     }];
 }
 
@@ -327,7 +348,22 @@
     if (self.myChildViewControllers.count <= toIndex) {
         return;
     }
-    
+    if (toIndex == 0) {
+        if (self.infoView.superview) {
+            [UIView animateWithDuration:0.25 animations:^{
+                [self.bottomView setAlpha:0];
+            } completion:^(BOOL finished) {
+                [self.bottomView setHidden:YES];
+            }];
+        }
+    }else{
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.bottomView setAlpha:1];
+        } completion:^(BOOL finished) {
+            [self.bottomView setHidden:NO];
+        }];
+    }
+    [self.view bringSubviewToFront:self.bottomView];
     UIViewController *targetViewController = self.myChildViewControllers[toIndex];
     // 如果已经加载过，就不再加载
     if ([targetViewController isViewLoaded]){
@@ -335,7 +371,6 @@
     };
     targetViewController.view.frame = CGRectMake(kScreenWidth * toIndex, PageMenuHeight + NaviH, kScreenWidth, kScreenHeight - NaviH - PageMenuHeight);
     [self.scrollView addSubview:targetViewController.view];
-    [self.view bringSubviewToFront:self.bottomView];
 }
 
 /**
@@ -442,4 +477,27 @@
     }
     return _myChildViewControllers;
 }
+
+- (CZOrganizerInfoView *)infoView{
+    if (!_infoView) {
+        __weak CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
+        CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
+        _infoView = [[CZOrganizerInfoView alloc]initWithFrame:CGRectMake(0, rect.size.height, kScreenWidth, 0)];
+        WEAKSELF
+        [_infoView setClickFoldBtnBlock:^{
+            CGRect rect = baseVc.collectionView.headerView.bgImg.frame;
+            [weakSelf.bottomView setHidden:NO];
+            [UIView animateWithDuration:0.25 animations:^{
+                [weakSelf.infoView setFrame:CGRectMake(0, rect.size.height, kScreenWidth,0)];
+                [weakSelf.bottomView setAlpha:1];
+            } completion:^(BOOL finished) {
+                [weakSelf.infoView removeFromSuperview];
+                baseVc.collectionView.scrollEnabled = YES;
+                [weakSelf.scrollView setScrollEnabled:YES];
+            }];
+        }];
+    }
+    return _infoView;
+}
+
 @end

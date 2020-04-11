@@ -113,6 +113,7 @@
         detailVC.counselorId = model.counselorId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
+    
     //点击日记
     [self.collectionView setSelectDiaryBlock:^(CZDiaryModel * _Nonnull model) {
         UIViewController *controller = [QSClient instanceDiaryDetailTabVCByOptions:@{@"diaryId":model.smdId}];

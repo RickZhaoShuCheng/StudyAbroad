@@ -17,6 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
+        self.layer.masksToBounds = YES;
         [self initWithUI];
     }
     return self;

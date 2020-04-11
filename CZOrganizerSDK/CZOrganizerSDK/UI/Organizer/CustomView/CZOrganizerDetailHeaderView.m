@@ -167,7 +167,12 @@
     [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.model.phone]]]];
     [[UIApplication sharedApplication].keyWindow addSubview:callWebview];
 }
-
+//点击折叠
+- (void)clickFoldBtn{
+    if (self.clickFoldBtnBlock) {
+        self.clickFoldBtnBlock();
+    }
+}
 
 -(void)initWithUI{
     
@@ -396,6 +401,7 @@
         
         self.foldBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.foldBtn setImage:[CZImageProvider imageNamed:@"jigou_zhedie"] forState:UIControlStateNormal];
+        [self.foldBtn addTarget:self action:@selector(clickFoldBtn) forControlEvents:UIControlEventTouchUpInside];
         [self.containerView addSubview:self.foldBtn];
         [self.foldBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(self.containerView);

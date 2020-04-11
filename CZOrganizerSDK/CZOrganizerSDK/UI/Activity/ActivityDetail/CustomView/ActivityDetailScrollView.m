@@ -47,9 +47,9 @@
     self.nameLab.text = model.title;
     if ([model.price floatValue] > 0.0) {
         if ([model.priceType isEqualToString:@"RMB"]) {
-            self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+            self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100];
         }else{
-            self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]];
+            self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
         }
     }else{
         self.priceLab.text = @"免费";

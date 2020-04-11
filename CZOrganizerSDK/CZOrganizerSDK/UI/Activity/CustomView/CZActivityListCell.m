@@ -49,10 +49,10 @@
             self.priceLab.textColor = CZColorCreater(255,142,0,1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
         }else{
             if ([model.priceType isEqualToString:@"RMB"]) {
-                self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]];
+                self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100];
                 self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
             }else{
-                self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]];
+                self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
                 self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
             }
         }

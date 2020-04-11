@@ -242,6 +242,9 @@
         }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else if (section == 3){
+        if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0) {
+            return CGSizeMake(kScreenWidth , ScreenScale(10));
+        }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else{
         if ([self.model.commentList isKindOfClass:[NSString class]] || self.model.commentList.count == 0) {
@@ -261,9 +264,15 @@
                     weakSelf.clickDynamicBlock();
                 }
             }];
+            [self.headerView setClickFoldBtnBlock:^{
+                if (weakSelf.clickFoldBtnBlock) {
+                    weakSelf.clickFoldBtnBlock();
+                }
+            }];
             return self.headerView;
         }else if (indexPath.section == 1){
             CZOrganizerDetailCollectionHeadView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"serviceHeader" forIndexPath:indexPath];
+            header.backgroundColor = CZColorCreater(245, 245, 249, 1);
             header.allBtnBlock = ^{
                 if (weakSelf.clickAllBlock) {
                     weakSelf.clickAllBlock(indexPath.section);

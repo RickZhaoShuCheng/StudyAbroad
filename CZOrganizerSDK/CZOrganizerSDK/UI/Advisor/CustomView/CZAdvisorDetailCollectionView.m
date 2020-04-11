@@ -234,7 +234,7 @@
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else if (section == 2){
         if ([self.model.diaryVoList isKindOfClass:[NSString class]] || self.model.diaryVoList.count == 0) {
-            return CGSizeMake(0, 0);
+            return CGSizeMake(kScreenWidth , ScreenScale(10));
         }
         return CGSizeMake(kScreenWidth, ScreenScale(130));
     }else{
@@ -263,6 +263,7 @@
             return self.headerView;
         }else if (indexPath.section == 1){
             CZAdvisorDetailCollectionHeadView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"serviceHeader" forIndexPath:indexPath];
+            header.backgroundColor = CZColorCreater(245, 245, 249, 1);
             header.allBtnBlock = ^{
                 if (weakSelf.clickAllBlock) {
                     weakSelf.clickAllBlock(indexPath.section);

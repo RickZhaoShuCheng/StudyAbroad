@@ -98,12 +98,14 @@
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(75), ScreenScale(15), ScreenScale(116), ScreenScale(46))];
-    [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
+    [self.focusBtn setBackgroundColor:[UIColor whiteColor]];
     [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
-    [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.focusBtn setTitleColor:CZColorCreater(61, 172, 247, 1) forState:UIControlStateNormal];
     [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
     [self.focusBtn.layer setMasksToBounds:YES];
     [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
+    [self.focusBtn.layer setBorderColor:CZColorCreater(51, 172, 253, 1).CGColor];
+    [self.focusBtn.layer setBorderWidth:ScreenScale(2)];
     [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
     if ([self.model.isFocus boolValue]) {
         [self.focusBtn setSelected:YES];

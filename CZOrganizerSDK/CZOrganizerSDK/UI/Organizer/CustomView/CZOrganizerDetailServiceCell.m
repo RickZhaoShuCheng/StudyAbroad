@@ -35,17 +35,17 @@
     self.titleLab.text = model.title;
     
     if ([model.priceType isEqualToString:@"RMB"]) {
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%.2f",[model.price floatValue]]];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100]];
         [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 1)];
         [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(1, str.length-1)];
         self.priceLab.attributedText = str;
     }else{
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"A$%.2f",[model.price floatValue]]];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100]];
         [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 2)];
         [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(2, str.length-2)];
         self.priceLab.attributedText = str;
     }
-    self.distanceLab.text =[NSString stringWithFormat:@"%.2f" , model.distance.floatValue];
+    self.distanceLab.text =[NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
 }
 - (void)initWithUI{
     

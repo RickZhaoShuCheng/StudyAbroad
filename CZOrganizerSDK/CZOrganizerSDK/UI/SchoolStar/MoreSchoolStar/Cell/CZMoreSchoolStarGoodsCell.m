@@ -27,12 +27,12 @@
     _model = model;
     self.nameLab.text = model.title;
     if ([model.priceType isEqualToString:@"RMB"]) {
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥ %.2f",[model.price floatValue]]];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥ %.2f",[model.price floatValue]/100]];
         [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 2)];
         [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(28)]} range:NSMakeRange(2, str.length -2)];
         self.priceLab.attributedText = str;
     }else{
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"A$ %.2f",[model.price floatValue]]];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"A$ %.2f",[model.price floatValue]/100]];
         [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(22)]} range:NSMakeRange(0, 3)];
         [str addAttributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:ScreenScale(28)]} range:NSMakeRange(3, str.length -3)];
         self.priceLab.attributedText = str;

@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,copy) void (^selectAdvisorBlock)(CZAdvisorModel *model);
 //点击日记
 @property (nonatomic ,copy) void (^selectDiaryBlock)(CZDiaryModel *model);
+//点击折叠
+@property (nonatomic ,copy) dispatch_block_t clickFoldBtnBlock;
 //评价点赞
 @property (nonatomic ,copy) void (^commentsPraiseBlock)(CZCommentModel *model);
 //设置日记筛选项
