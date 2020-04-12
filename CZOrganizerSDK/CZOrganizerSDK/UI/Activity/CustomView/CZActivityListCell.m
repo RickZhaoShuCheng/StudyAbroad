@@ -67,7 +67,7 @@
     if (model.activityType == 0) {
         self.locationLab.text = @"线上直播";
     }else{
-        self.locationLab.text = model.address;
+        self.locationLab.text = model.extAddress;
     }
 }
 

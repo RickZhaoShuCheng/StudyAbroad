@@ -13,7 +13,7 @@
 #import "CZAdvisorInfoModel.h"
 #import "CZCommentsListVC.h"
 #import "CZOrganizerVC.h"
-#import "AdvisorDynamicVC.h"
+#import "CZAdvisorDynamicVC.h"
 #import "CZCommentsDetailVC.h"
 #import "CZOrganizerProjectVC.h"
 #import "QSClient.h"
@@ -47,6 +47,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     [self.titleLab setAlpha:self.alpha];
 }
@@ -91,7 +93,7 @@
     
     //点击动态事件处理
     [self.collectionView setDynamicClick:^{
-        AdvisorDynamicVC *dynamicVC = [[AdvisorDynamicVC alloc]init];
+        CZAdvisorDynamicVC *dynamicVC = [[CZAdvisorDynamicVC alloc]init];
         dynamicVC.model = weakSelf.collectionView.model;
         [weakSelf.navigationController pushViewController:dynamicVC animated:YES];
     }];
@@ -298,6 +300,7 @@
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
     

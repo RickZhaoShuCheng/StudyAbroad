@@ -16,10 +16,10 @@
 #import "DropMenuBar.h"
 #import "CZCommonFilterManager.h"
 #import "QSClient.h"
-#import "SchoolStarShopDetailVC.h"
+#import "CZSchoolStarShopDetailVC.h"
 #import "CZProductVoListModel.h"
 #import "CZSchoolStarModel.h"
-#import "SchoolStarDetailVC.h"
+#import "CZSchoolStarDetailVC.h"
 @interface CZSchoolStarViewController ()
 
 @property (nonatomic ,strong) CZSchoolStarListView *dataView;
@@ -108,7 +108,7 @@
     }];
     //查看达人
     [self.dataView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
-        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
+        CZSchoolStarShopDetailVC *detailVC = [[CZSchoolStarShopDetailVC alloc]init];
         detailVC.sportUserId = model.sportUserId;
         detailVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];

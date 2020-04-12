@@ -10,7 +10,7 @@
 
 #import "CZActivityListVC.h"
 #import "CZActivityListTableView.h"
-#import "ActivityDetailVC.h"
+#import "CZActivityDetailVC.h"
 #import "CZCommonFilterManager.h"
 #import "DropMenuBar.h"
 #import "CZAdvisorDetailService.h"
@@ -44,7 +44,7 @@
 - (void)addActionHandle{
     WEAKSELF
     [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
-        ActivityDetailVC *detailVC = [[ActivityDetailVC alloc]init];
+        CZActivityDetailVC *detailVC = [[CZActivityDetailVC alloc]init];
         detailVC.activityId = str;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];

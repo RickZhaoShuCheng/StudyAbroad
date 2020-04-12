@@ -16,8 +16,8 @@
 #import "CZSchoolStarModel.h"
 #import "CZMJRefreshHelper.h"
 #import "QSClient.h"
-#import "SchoolStarShopDetailVC.h"
-#import "SchoolStarDetailVC.h"
+#import "CZSchoolStarShopDetailVC.h"
+#import "CZSchoolStarDetailVC.h"
 @interface CZMoreSchoolStarVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
@@ -64,7 +64,7 @@
 //        detailVC.sportUserId = model.sportUserId;
 //        [weakSelf.navigationController pushViewController:detailVC animated:YES];
         //个人详情
-        SchoolStarDetailVC *detailVC = [[SchoolStarDetailVC alloc]init];
+        CZSchoolStarDetailVC *detailVC = [[CZSchoolStarDetailVC alloc]init];
         detailVC.userId = model.userId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
