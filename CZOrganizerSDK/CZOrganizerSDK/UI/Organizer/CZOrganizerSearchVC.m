@@ -112,15 +112,6 @@
     self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
     [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
     [self.shareBtn addTarget:self action:@selector(shareItemClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
-    self.navigationItem.rightBarButtonItem = rbackItem;
-    
-    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
-    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenScale(25), kScreenWidth-140, ScreenScale(30))];
-    self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
-    self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
-    self.titleLab.text = self.model.name;
-    [self.titleView addSubview:self.titleLab];
     
     self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(75), ScreenScale(15), ScreenScale(116), ScreenScale(46))];
@@ -140,7 +131,19 @@
         [self.focusBtn setSelected:NO];
         [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
     }
-    [self.titleView addSubview:self.focusBtn];
+    
+    UIBarButtonItem *focusItem = [[UIBarButtonItem alloc]initWithCustomView:self.focusBtn];
+    
+    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
+    self.navigationItem.rightBarButtonItems = @[rbackItem,focusItem];
+    
+    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
+    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenScale(25), kScreenWidth-140, ScreenScale(30))];
+    self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
+    self.titleLab.textColor = CZColorCreater(0, 0, 0, 1);
+    self.titleLab.text = self.model.name;
+    [self.titleView addSubview:self.titleLab];
+    
     self.navigationItem.titleView = self.titleView;
     
     UIView *topView = [[UIView alloc]init];

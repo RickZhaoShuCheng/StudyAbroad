@@ -29,7 +29,16 @@
     [self actionMethod];
     [self requestForApiMyDynamicPersonalHomepage];
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    [self.titleLab setAlpha:self.alpha];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    [self.titleLab setAlpha:self.alpha];
+}
 - (void)actionMethod{
     WEAKSELF
     

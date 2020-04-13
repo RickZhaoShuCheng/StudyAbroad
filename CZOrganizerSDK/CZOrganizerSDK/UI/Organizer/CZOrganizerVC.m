@@ -58,6 +58,14 @@
     [self.navigationController setNavigationBarHidden:NO];
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    self.titleView.alpha = self.alpha;
+    self.focusBtn.alpha = self.alpha;
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    self.titleView.alpha = self.alpha;
+    self.focusBtn.alpha = self.alpha;
 }
 /**
  * 主页滚动处理导航条
@@ -76,6 +84,7 @@
             weakSelf.navigationItem.titleView = weakSelf.titleView;
         }
         weakSelf.titleView.alpha = alpha;
+        weakSelf.focusBtn.alpha = alpha;
         if (alpha >0.5) {
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
@@ -111,10 +120,10 @@
     //点击折叠
     [baseVc.collectionView setClickFoldBtnBlock:^{
         baseVc.collectionView.scrollEnabled = NO;
-        [weakSelf.scrollView setScrollEnabled:NO];
+//        [weakSelf.scrollView setScrollEnabled:NO];
         [baseVc.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
         if (!weakSelf.infoView.superview) {
-            [baseVc.collectionView addSubview:weakSelf.infoView];
+            [baseVc.view addSubview:weakSelf.infoView];
         }
         [weakSelf.infoView.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
         weakSelf.infoView.model = baseVc.collectionView.model;
@@ -323,6 +332,7 @@
                 self.navigationItem.titleView = self.titleView;
             }
             self.titleView.alpha = 1;
+            self.focusBtn.alpha = 1;
             [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
         }
@@ -331,6 +341,7 @@
         [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
         self.topView.alpha = self.alpha;
         self.titleView.alpha = self.alpha;
+        self.focusBtn.alpha = self.alpha;
         if (self.alpha > 0.5) {
             [self.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
@@ -391,10 +402,24 @@
     self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
     [self.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
     [self.shareBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
-    self.navigationItem.rightBarButtonItem = rbackItem;
     
-    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
+    self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.focusBtn setFrame:CGRectMake(0, 0, ScreenScale(116), ScreenScale(46))];
+    [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
+    [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+    [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
+    [self.focusBtn.layer setMasksToBounds:YES];
+    [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
+    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.focusBtn setAlpha:0];
+    
+    UIBarButtonItem *focusItem = [[UIBarButtonItem alloc]initWithCustomView:self.focusBtn];
+    
+    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
+    self.navigationItem.rightBarButtonItems = @[rbackItem,focusItem];
+    
+    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, NaviH)];
     
     self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenScale(20), kScreenWidth-140, ScreenScale(30))];
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
@@ -417,17 +442,6 @@
     self.countLab.textColor = CZColorCreater(129, 129, 146, 1);
     self.countLab.text = @"粉丝数 8122";
     [self.titleView addSubview:self.countLab];
-    
-    self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.focusBtn setFrame:CGRectMake(kScreenWidth-140-ScreenScale(75), ScreenScale(15), ScreenScale(116), ScreenScale(46))];
-    [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
-    [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
-    [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
-    [self.focusBtn.layer setMasksToBounds:YES];
-    [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
-    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:self.focusBtn];
     
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;

@@ -24,6 +24,18 @@
     [self initWithUI];
     [self actionMethod];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    [self.titleLab setAlpha:self.alpha];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.titleLab setAlpha:self.alpha];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+}
 
 - (void)actionMethod{
     WEAKSELF

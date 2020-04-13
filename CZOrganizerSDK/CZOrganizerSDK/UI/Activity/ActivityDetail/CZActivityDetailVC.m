@@ -64,6 +64,10 @@
         [self.tableView.headerView.cycleView adjustWhenControllerViewWillAppera];
     }
 }
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.carNumber = @(0);

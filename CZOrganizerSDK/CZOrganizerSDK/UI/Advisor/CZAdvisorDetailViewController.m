@@ -55,6 +55,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.titleLab setAlpha:self.alpha];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
 }
 
 - (void)actionMethod{

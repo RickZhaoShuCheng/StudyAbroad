@@ -34,10 +34,13 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     [self.titleView setAlpha:self.alpha];
+    self.focusBtn.alpha = self.alpha;
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     [self.titleView setAlpha:self.alpha];
+    self.focusBtn.alpha = self.alpha;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,6 +62,7 @@
             weakSelf.navigationItem.titleView = weakSelf.titleView;
         }
         weakSelf.titleView.alpha = alpha;
+        weakSelf.focusBtn.alpha = alpha;
         if (alpha >0.5) {
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
@@ -237,15 +241,29 @@
     self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
     [self.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
     [self.shareBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.focusBtn setFrame:CGRectMake(0, 0, ScreenScale(116), ScreenScale(46))];
+    [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
+    [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+    [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
+    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
+    [self.focusBtn.layer setMasksToBounds:YES];
+    [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
+    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.focusBtn.alpha = 0;
+    
+    UIBarButtonItem *focusItem = [[UIBarButtonItem alloc]initWithCustomView:self.focusBtn];
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
-    self.navigationItem.rightBarButtonItem = rbackItem;
+    
+    self.navigationItem.rightBarButtonItems = @[rbackItem,focusItem];
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:0.0];
     
-    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, 44)];
+    self.titleView = [[UIView alloc]initWithFrame:CGRectMake(60, 0, kScreenWidth-120, NaviH)];
     
     self.avatarImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, ScreenScale(8), ScreenScale(64), ScreenScale(64))];
     self.avatarImg.layer.masksToBounds = YES;
@@ -256,17 +274,6 @@
     self.titleLab.font = [UIFont boldSystemFontOfSize:ScreenScale(30)];
     self.titleLab.textColor = [UIColor blackColor];
     [self.titleView addSubview:self.titleLab];
-    
-    self.focusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.focusBtn setFrame:CGRectMake(kScreenWidth-200, ScreenScale(18), ScreenScale(116), ScreenScale(46))];
-    [self.focusBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
-    [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
-    [self.focusBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
-    [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(26)]];
-    [self.focusBtn.layer setMasksToBounds:YES];
-    [self.focusBtn.layer setCornerRadius:ScreenScale(46)/2];
-    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.titleView addSubview:self.focusBtn];
     
     
     self.bottomView = [[UIView alloc]init];

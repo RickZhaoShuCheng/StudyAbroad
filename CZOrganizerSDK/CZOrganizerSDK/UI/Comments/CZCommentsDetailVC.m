@@ -19,6 +19,7 @@
 @property (nonatomic ,strong)UIButton *shareBtn;//分享按钮
 @property (nonatomic ,strong) CZCommentsDetailTableView *tableView;
 @property (nonatomic ,assign) NSInteger pageNum;
+@property (nonatomic ,assign) CGFloat alpha;
 @end
 
 @implementation CZCommentsDetailVC
@@ -31,9 +32,17 @@
     [super viewWillAppear:animated];
     [self.tableView.headerView.cycleScrollView startTimer];
     [self.tableView.headerView.cycleScrollView adjustWhenControllerViewWillAppera];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    self.titleLab.alpha = self.alpha;
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    self.titleLab.alpha = self.alpha;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.alpha = 0;
     self.pageNum = 1;
     [self initWithUI];
     [self actionMethod];
@@ -45,6 +54,7 @@
     [self.tableView setScrollContentSize:^(CGFloat offsetY) {
         //设置渐变透明度
         CGFloat alpha = (offsetY / NaviH)>0.99?0.99:(offsetY / NaviH);
+        weakSelf.alpha = alpha;
         [weakSelf.navigationController.navigationBar.subviews.firstObject setAlpha:alpha];
         weakSelf.titleLab.alpha = alpha;
         weakSelf.titleLab.textColor = [UIColor blackColor];
