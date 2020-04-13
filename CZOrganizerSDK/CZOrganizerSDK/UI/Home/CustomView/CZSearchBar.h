@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)setSearchAction:(void(^)(void))block;
 
+-(void)enableEdit:(BOOL)edit;
 
 @end
 

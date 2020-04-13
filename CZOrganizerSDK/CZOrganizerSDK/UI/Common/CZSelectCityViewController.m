@@ -65,7 +65,7 @@
 {
     self.searchBar = [[CZSearchBar alloc] initWithFrame:CGRectMake(0, 0, 400, 33)];
     self.navigationItem.titleView = self.searchBar;
-    
+    [self.searchBar enableEdit:YES];
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 44, 44);
     [leftButton setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];

@@ -119,4 +119,9 @@
     self.searchBlock = block;
 }
 
+-(void)enableEdit:(BOOL)edit
+{
+    self.maskButton.hidden = edit;
+}
+
 @end
