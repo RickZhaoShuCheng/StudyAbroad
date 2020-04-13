@@ -22,6 +22,7 @@
         [self registerClass:[CZSchoolStarCell class] forCellWithReuseIdentifier:NSStringFromClass([CZSchoolStarCell class])];
         self.dataSource = self;
         self.delegate = self;
+        self.showsHorizontalScrollIndicator = NO;
     }
     return self;
 }

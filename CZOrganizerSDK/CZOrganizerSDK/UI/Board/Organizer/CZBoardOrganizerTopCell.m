@@ -232,10 +232,6 @@
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
     
-    
-    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    model.cellHeight = cellSize.height;
-    
 //    self.goldImageView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai"];
 //    self.bgView.image = [CZImageProvider imageNamed:@"shou_ye_jin_pai_bei_jing"];
     [self.rankView setRankByRate:model.valStar.floatValue];
@@ -257,6 +253,19 @@
     
     self.productListView.dataArr = self.model.productVoList;
     [self.productListView reloadData];
+    [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.middileView.mas_bottom).offset(-10);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+        make.height.mas_equalTo(self.model.productVoList.count?223:223-160);
+        make.bottom.mas_equalTo(0);
+    }];
+    self.productListView.hidden = self.model.productVoList.count?NO:YES;
+    
+    [self.contentView layoutIfNeeded];
+    
+    CGSize cellSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    model.cellHeight = cellSize.height;
 }
 
 

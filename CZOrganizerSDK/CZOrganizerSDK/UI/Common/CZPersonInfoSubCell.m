@@ -80,7 +80,7 @@
             self.mainTitleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:12];
             self.mainTitleLabel.textColor = CZColorCreater(129, 129, 146, 1);
             self.iconImageView.image = [CZImageProvider imageNamed:@"shou_ye_ding_wei_cell"];
-            self.subTitleLabel.textColor = CZColorCreater(255, 68, 85, 1);
+            self.subTitleLabel.textColor = CZColorCreater(129, 129, 146, 1);
             self.subTitleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:13];
 
         default:

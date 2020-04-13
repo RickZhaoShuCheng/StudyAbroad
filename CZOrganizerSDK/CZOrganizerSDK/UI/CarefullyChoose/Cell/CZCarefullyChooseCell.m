@@ -31,13 +31,15 @@
 
 - (void)initWithUI{
     
+    self.contentView.layer.masksToBounds = YES;
+    self.contentView.layer.cornerRadius = 2.5;
+    
     self.coverImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.coverImageView];
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.mas_equalTo(0);
         make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(132/165.0);
     }];
-
     
     self.nameLabel = [[UILabel alloc] init];
     self.nameLabel.textColor = [UIColor blackColor];

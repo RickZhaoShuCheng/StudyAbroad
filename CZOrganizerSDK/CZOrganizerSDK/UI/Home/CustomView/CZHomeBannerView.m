@@ -80,7 +80,7 @@
     _customView = customView;
     customView.userInteractionEnabled = YES;
     CGRect rect = self.frame;
-    rect.size.height = BANNER_HEIGHT + CGRectGetHeight(customView.bounds);
+    rect.size.height = BANNER_HEIGHT + CGRectGetHeight(customView.bounds)+25;
     self.frame = rect;
     customView.frame = CGRectMake(0, CGRectGetHeight(self.cycleScrollView.frame), CGRectGetWidth(self.cycleScrollView.frame), CGRectGetHeight(customView.frame));
     [self addSubview:customView];

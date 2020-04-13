@@ -116,6 +116,7 @@ typedef enum : NSUInteger {
         make.right.mas_equalTo(-15);
         make.bottom.mas_equalTo(-25);
     }];
+    
     self.backToTopButton.hidden = YES;
     [self createNavigationBar];
 }
@@ -413,11 +414,11 @@ typedef enum : NSUInteger {
 {
     switch (indexPath.section) {
         case 0:
-            return defaultHeight+pageControlHeight;
+            return defaultHeight+pageControlHeight-15;
         case 1:
             return [UIScreen mainScreen].bounds.size.width/2.0;
         case 2:
-            return 187;
+            return 170;
         case 3:
             return 140;
         case 4:

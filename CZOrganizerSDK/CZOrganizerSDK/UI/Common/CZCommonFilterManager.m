@@ -416,7 +416,7 @@
 //增加学校筛选
 -(MenuAction *)addSchoolFilterAction
 {
-    WEAKSELF
+//    WEAKSELF
 //    NSArray *countries = [CZCountryUtil sharedInstance].datas;
 //    NSMutableArray *datas2 = [[NSMutableArray alloc] init];
 //    for (NSInteger i = 0; i < countries.count; i++) {

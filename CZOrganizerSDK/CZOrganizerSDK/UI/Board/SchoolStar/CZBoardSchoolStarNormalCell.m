@@ -208,7 +208,7 @@
     
     [self.tagList mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(5);
-        make.left.mas_equalTo(26);
+        make.left.mas_equalTo(self.workPlaceLabel.mas_left);
         make.right.mas_equalTo(-11);
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
