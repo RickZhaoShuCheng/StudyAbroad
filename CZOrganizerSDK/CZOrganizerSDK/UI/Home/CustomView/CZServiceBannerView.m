@@ -105,7 +105,7 @@ CGFloat const pageControlHeight = 30;
     self.serviceView.czDelegate = self;
     [self addSubview:self.serviceView];
     
-    self.pageControl = [[CZPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.serviceView.frame), self.bounds.size.width, 6)];
+    self.pageControl = [[CZPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.serviceView.frame)-5, self.bounds.size.width, 6)];
     [self addSubview:self.pageControl];
     self.pageControl.userInteractionEnabled = NO;
     self.pageControl.inactiveImage = [CZImageProvider imageNamed:@"zhu_ye_fu_wu_wei_xuan_zhong"];

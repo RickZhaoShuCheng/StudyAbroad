@@ -9,6 +9,7 @@
 #import "CZAllServiceSchoolStarView.h"
 #import "CZAllServiceShoolStarCell.h"
 #import "CZProductModel.h"
+#import "CZSchoolStarDetailVC.h"
 @interface CZAllServiceSchoolStarView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -44,7 +45,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    CZSchoolStarDetailVC *detailVC = [[CZSchoolStarDetailVC alloc]init];
+    CZProductModel *model = self.dataArr[indexPath.row];
+    detailVC.userId = model.userId;
+    [self.viewController.navigationController pushViewController:detailVC animated:YES];
 }
 
 -(NSMutableArray *)dataArr

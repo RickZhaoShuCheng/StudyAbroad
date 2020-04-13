@@ -38,6 +38,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createDefaultFilterMenu];
     self.dataView = [[CZAllServiceSchoolStarView alloc] init];
+    self.dataView.viewController = self;
     self.dataView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dataView];
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,6 +115,8 @@
         }
         
     }];
+    
+    
 }
 
 -(void)createDefaultFilterMenu
