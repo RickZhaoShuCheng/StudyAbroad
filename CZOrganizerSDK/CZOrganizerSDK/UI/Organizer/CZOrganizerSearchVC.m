@@ -10,7 +10,8 @@
 #import "CZOrganizerSearchCollectionView.h"
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
-@interface CZOrganizerSearchVC ()
+#import "CZOrganizerListViewController.h"
+@interface CZOrganizerSearchVC ()<UISearchBarDelegate>
 @property (nonatomic ,strong) UIButton *backBtn;//返回按钮
 @property (nonatomic ,strong) UIButton *shareBtn;//分享按钮
 @property (nonatomic ,strong) UIView *titleView;
@@ -19,6 +20,7 @@
 @property (nonatomic ,strong) UISearchBar *searchBar;
 @property (nonatomic ,strong) UIButton *searchBtn;
 @property (nonatomic ,strong) CZOrganizerSearchCollectionView *collectionView;
+@property (nonatomic ,strong) CZOrganizerListViewController *listView;
 @end
 
 @implementation CZOrganizerSearchVC
@@ -119,9 +121,9 @@
     
     UIView *topView = [[UIView alloc]init];
     topView.backgroundColor = [UIColor whiteColor];
-    topView.layer.shadowOpacity = 0.3;//阴影透明度
-    topView.layer.shadowOffset = CGSizeMake(0, 1);//阴影偏移量
-    topView.layer.shadowRadius = 4;//阴影的半径
+//    topView.layer.shadowOpacity = 0.3;//阴影透明度
+//    topView.layer.shadowOffset = CGSizeMake(0, 1);//阴影偏移量
+//    topView.layer.shadowRadius = 4;//阴影的半径
     [self.view addSubview:topView];
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.top.trailing.mas_equalTo(self.view);
@@ -144,6 +146,7 @@
     [self.searchBar setBackgroundImage:[UIImage new]];
     self.searchBar.placeholder = @"搜索";
     self.searchBar.returnKeyType = UIReturnKeySearch;
+    self.searchBar.delegate = self;
     [topView addSubview:self.searchBar];
     [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(topView.mas_leading).offset(ScreenScale(30));
@@ -173,8 +176,32 @@
         make.top.mas_equalTo(topView.mas_bottom);
     }];
 }
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self searchBtnClick];
+}
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    if (!searchBar.text.length) {
+        [self.listView.view removeFromSuperview];
+    }
+}
+
 - (void)searchBtnClick{
-    
+    [self.view endEditing:YES];
+    if (self.searchBar.text.length) {
+        self.listView.keywords = self.searchBar.text;
+        if (self.listView.view.superview) {
+             [self.listView reloadData];
+        }else{
+            [self.view addSubview:self.listView.view];
+            [self.listView.view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.leading.trailing.bottom.mas_equalTo(self.view);
+                make.top.mas_equalTo(self.view.mas_top).offset(ScreenScale(86));
+            }];
+        }
+    }else{
+        [self.listView.view removeFromSuperview];
+    }
 }
 - (void)backItemClick{
 
@@ -194,5 +221,12 @@
         _collectionView = [[CZOrganizerSearchCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     }
     return _collectionView;
+}
+- (CZOrganizerListViewController *)listView{
+    if (!_listView) {
+        _listView = [[CZOrganizerListViewController alloc]init];
+        [self addChildViewController:_listView];
+    }
+    return _listView;
 }
 @end

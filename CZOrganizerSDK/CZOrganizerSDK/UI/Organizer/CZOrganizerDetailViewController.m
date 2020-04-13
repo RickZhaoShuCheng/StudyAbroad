@@ -8,7 +8,7 @@
 
 #import "CZOrganizerDetailViewController.h"
 #import "CZCommentsListVC.h"
-#import "OrganizerDynamicVC.h"
+#import "CZOrganizerDynamicVC.h"
 #import "QSCommonService.h"
 #import "CZAdvisorDetailService.h"
 #import "CZProductVoListModel.h"
@@ -81,7 +81,7 @@
     }];
     //点击动态
     [self.collectionView setClickDynamicBlock:^{
-        OrganizerDynamicVC *dynamic = [[OrganizerDynamicVC alloc]init];
+        CZOrganizerDynamicVC *dynamic = [[CZOrganizerDynamicVC alloc]init];
         dynamic.model = weakSelf.collectionView.model;
         [weakSelf.navigationController pushViewController:dynamic animated:YES];
     }];

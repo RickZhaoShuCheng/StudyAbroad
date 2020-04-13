@@ -15,7 +15,7 @@
 #import "QSClient.h"
 #import "CZSchoolStarModel.h"
 #import "UIImageView+WebCache.h"
-#import "SchoolStarShopDetailVC.h"
+#import "CZSchoolStarShopDetailVC.h"
 //#import "CZAdvisorDetailViewController.h"
 
 @interface CZBoardSchoolStarViewController ()
@@ -68,7 +68,7 @@
     
     //查看达人
     [self.dataView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
-        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
+        CZSchoolStarShopDetailVC *detailVC = [[CZSchoolStarShopDetailVC alloc]init];
         detailVC.sportUserId = model.sportUserId;
         detailVC.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
