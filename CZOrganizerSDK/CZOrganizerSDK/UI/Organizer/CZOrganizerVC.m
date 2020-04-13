@@ -47,7 +47,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.alpha = 0.0;
+    self.alpha = 0;
     [self initWithUI];
     [self initPageMenu];
     [self firstPageScrollHandle];

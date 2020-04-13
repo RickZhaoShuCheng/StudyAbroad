@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong)CZSchoolStarModel *model;
 @property (nonatomic ,copy) dispatch_block_t locationClick;
 @property (nonatomic ,copy) dispatch_block_t dynamicClick;
+@property (nonatomic ,copy) dispatch_block_t clickAvatarBlock;
 //设置标签
 - (void)setTags:(NSMutableArray *)tagesArr;
 @end

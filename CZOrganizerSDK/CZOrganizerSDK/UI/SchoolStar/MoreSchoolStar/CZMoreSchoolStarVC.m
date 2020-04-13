@@ -18,6 +18,7 @@
 #import "QSClient.h"
 #import "CZSchoolStarShopDetailVC.h"
 #import "CZSchoolStarDetailVC.h"
+#import "CZSchoolStarShopDetailVC.h"
 @interface CZMoreSchoolStarVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
@@ -60,13 +61,13 @@
     //查看达人
     [self.tableView setSelectedSchoolStarCell:^(CZSchoolStarModel * _Nonnull model) {
         //店铺详情
-//        SchoolStarShopDetailVC *detailVC = [[SchoolStarShopDetailVC alloc]init];
-//        detailVC.sportUserId = model.sportUserId;
-//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
-        //个人详情
-        CZSchoolStarDetailVC *detailVC = [[CZSchoolStarDetailVC alloc]init];
-        detailVC.userId = model.userId;
+        CZSchoolStarShopDetailVC *detailVC = [[CZSchoolStarShopDetailVC alloc]init];
+        detailVC.sportUserId = model.sportUserId;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
+        //个人详情
+//        CZSchoolStarDetailVC *detailVC = [[CZSchoolStarDetailVC alloc]init];
+//        detailVC.userId = model.userId;
+//        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }
 

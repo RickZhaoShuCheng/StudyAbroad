@@ -37,7 +37,7 @@
 @property (nonatomic ,assign) NSInteger pageSize;
 
 @property (nonatomic ,strong) CZActivityModel *model;
-
+@property (nonatomic ,strong) NSNumber *carNumber;
 @end
 
 @implementation CZActivityDetailVC
@@ -56,6 +56,7 @@
     if (self.scrollView.superview) {
         [self.scrollView.cycleView startTimer];
         [self.scrollView.cycleView adjustWhenControllerViewWillAppera];
+        [self requestForApiShoppingCartGetShoppingCartCountCallBack];
     }
     
     if (self.tableView.superview) {
@@ -65,12 +66,14 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.carNumber = @(0);
     self.pageNum = 1;
     self.pageSize = 20;
     self.alpha = 0.0;
     [self initWithUI];
     [self addActionHandle];
     [self requestForApiProductActivitySelectProductActivityInfo];
+    [self requestForApiShoppingCartGetShoppingCartCountCallBack];
 }
 
 - (void)addActionHandle{
@@ -137,10 +140,10 @@
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     
-    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageNum = 1;
-        [weakSelf requestForApiProductActivitySelectRecommendProductActivityList];
-    }];
+//    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+//        weakSelf.pageNum = 1;
+//        [weakSelf requestForApiProductActivitySelectRecommendProductActivityList];
+//    }];
     
     self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageNum ++;
@@ -209,6 +212,19 @@
         }else{
             [weakSelf.tableView.mj_header endRefreshing];
             [weakSelf.tableView.mj_footer endRefreshing];
+        }
+    }];
+}
+//获取购物车数量
+- (void)requestForApiShoppingCartGetShoppingCartCountCallBack{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiShoppingCartGetShoppingCartCountCallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.carNumber = data;
+                weakSelf.cartCountLab.text = data;
+            });
         }
     }];
 }
@@ -418,7 +434,7 @@
     self.cartCountLab = [[UILabel alloc]init];
     self.cartCountLab.font = [UIFont systemFontOfSize:ScreenScale(20)];
     self.cartCountLab.textColor = CZColorCreater(255, 255, 255, 1);
-    self.cartCountLab.text = @"12";
+    self.cartCountLab.text = [NSString stringWithFormat:@"%@",[@([self.carNumber integerValue]) stringValue]];
     self.cartCountLab.textAlignment = NSTextAlignmentCenter;
     self.cartCountLab.layer.masksToBounds = YES;
     self.cartCountLab.layer.cornerRadius = ScreenScale(30)/2.0;

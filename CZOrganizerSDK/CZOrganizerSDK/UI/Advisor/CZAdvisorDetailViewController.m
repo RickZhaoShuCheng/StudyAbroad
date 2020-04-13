@@ -78,7 +78,6 @@
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
             commentsList.idStr = weakSelf.counselorId;
             commentsList.commentsType = @"2";
-            commentsList.varStar = weakSelf.collectionView.model.valStar;
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];

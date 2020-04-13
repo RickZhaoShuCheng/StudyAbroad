@@ -17,7 +17,7 @@
 @property (nonatomic ,strong) UILabel *crowdLab;
 @property (nonatomic ,strong) UILabel *organizerLab;
 @property (nonatomic ,strong) UILabel *addressLab;
-@property (nonatomic ,strong) WKWebView *webView;
+@property (nonatomic ,strong) UILabel *contentLab;
 @end
 @implementation CZActivityDetailScrollView
 
@@ -66,11 +66,48 @@
     self.crowdLab.text = [NSString stringWithFormat:@"适合人群：%@",model.extRangeUser];
     self.organizerLab.text = [NSString stringWithFormat:@"组织机构：%@",model.extOrganization];
     self.addressLab.text = [NSString stringWithFormat:@"地       址：%@",model.extAddress];
+//    if (model.desc.length) {
+//        [self.webView loadHTMLString:model.desc baseURL:nil];
+//    }else if (model.content.length){
+//        [self.webView loadHTMLString:model.content baseURL:nil];
+//    }
+    [self layoutIfNeeded];
     if (model.desc.length) {
-        [self.webView loadHTMLString:model.desc baseURL:nil];
+        self.contentLab.text = model.desc;
+        CGFloat contentHeight = [self getStringHeightWithText:model.desc font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth-ScreenScale(60)];
+        if (contentHeight == 0) {
+            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + ScreenScale(80));
+        }else{
+            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + contentHeight);
+        }
+        [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(contentHeight);
+        }];
     }else if (model.content.length){
-        [self.webView loadHTMLString:model.content baseURL:nil];
+        self.contentLab.text = model.content;
+        CGFloat contentHeight = [self getStringHeightWithText:model.content font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth-ScreenScale(60)];
+        if (contentHeight == 0) {
+            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + ScreenScale(100));
+        }else{
+            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + contentHeight +ScreenScale(100));
+        }
+        [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(contentHeight);
+        }];
     }
+}
+- (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
+    // 设置文字属性 要和label的一致
+    NSDictionary *attrs = @{NSFontAttributeName :font};
+    CGSize maxSize = CGSizeMake(width, MAXFLOAT);
+
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
+    // 计算文字占据的宽高
+    CGSize size = [text boundingRectWithSize:maxSize options:options attributes:attrs context:nil].size;
+
+   // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
+    return  ceilf(size.height);
 }
 
 /**
@@ -285,29 +322,42 @@
         make.centerY.mas_equalTo(detailTitle);
     }];
     
-    self.webView = [[WKWebView alloc]init];
-    self.webView.navigationDelegate = self;
-    self.webView.scrollView.scrollEnabled = NO;
-    self.webView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:self.webView];
-    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self);
-        make.width.mas_equalTo(kScreenWidth);
+    self.contentLab = [[UILabel alloc]init];
+    self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
+    self.contentLab.textColor = [UIColor blackColor];
+    self.contentLab.numberOfLines = 0;
+    [self addSubview:self.contentLab];
+    [self.contentLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
+        make.width.mas_equalTo(kScreenWidth-ScreenScale(60));
         make.top.mas_equalTo(detailTitle.mas_bottom).offset(ScreenScale(30));
         make.height.mas_equalTo(kScreenHeight);
     }];
+    
+    
+//    self.webView = [[WKWebView alloc]init];
+//    self.webView.navigationDelegate = self;
+//    self.webView.scrollView.scrollEnabled = NO;
+//    self.webView.backgroundColor = [UIColor whiteColor];
+//    [self addSubview:self.webView];
+//    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.leading.mas_equalTo(self);
+//        make.width.mas_equalTo(kScreenWidth);
+//        make.top.mas_equalTo(detailTitle.mas_bottom).offset(ScreenScale(30));
+//        make.height.mas_equalTo(kScreenHeight);
+//    }];
 }
-- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
-    CGFloat contentHeight = self.webView.scrollView.contentSize.height;
-    if (contentHeight == 0) {
-        self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + ScreenScale(80));
-    }else{
-        self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + contentHeight);
-    }
-    [self.webView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(contentHeight);
-    }];
-}
+//- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
+//    CGFloat contentHeight = self.webView.scrollView.contentSize.height;
+//    if (contentHeight == 0) {
+//        self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + ScreenScale(80));
+//    }else{
+//        self.contentSize = CGSizeMake(kScreenWidth, webView.frame.origin.y + contentHeight);
+//    }
+//    [self.webView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.mas_equalTo(contentHeight);
+//    }];
+//}
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.scrollContentSize) {
         self.scrollContentSize(scrollView.contentOffset.y);

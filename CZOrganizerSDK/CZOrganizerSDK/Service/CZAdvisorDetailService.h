@@ -148,6 +148,15 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *pageSize    数
  */
 -(void)requestForApiMyDynamicPersonalHomepage:(NSString *)toUserId type:(NSInteger)type pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取推荐的机构搜索标签
+ *spType=1&zoneType=3
+ */
+-(void)requestForApiPlaceholderFindPlaceholderByType:(NSString *)spType zoneType:(NSString *)zoneType callBack:(CZAdvisorDetailBack)callBack;
+/**
+ *获取购物车数量
+ */
+-(void)requestForApiShoppingCartGetShoppingCartCountCallBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

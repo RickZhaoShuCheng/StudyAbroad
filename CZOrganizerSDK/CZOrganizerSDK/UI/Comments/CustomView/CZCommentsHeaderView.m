@@ -33,8 +33,12 @@
     [self.rankView setRankByRate:[varStar floatValue]];
 }
 
-- (void)setAvgMajor:(NSString *)avgMajor avgPrice:(NSString *)avgPrice avgService:(NSString *)avgService{    
-    self.organizerLab.text = [NSString stringWithFormat:@"专业度: %@  服务: %@  价格: %@",avgMajor,avgService,avgPrice];
+- (void)setAvgMajor:(NSString *)avgMajor avgPrice:(NSString *)avgPrice avgService:(NSString *)avgService{
+    if ([self.commentsType isEqualToString:@"2"] || [self.commentsType isEqualToString:@"3"]) {
+        self.organizerLab.text = [NSString stringWithFormat:@"专业度: %@  服务: %@",avgMajor,avgService];
+    }else{
+        self.organizerLab.text = [NSString stringWithFormat:@"专业度: %@  服务: %@  价格: %@",avgMajor,avgService,avgPrice];
+    }
 }
 
 /**

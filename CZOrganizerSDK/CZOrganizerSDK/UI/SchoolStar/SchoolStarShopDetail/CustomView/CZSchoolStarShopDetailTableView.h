@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) CZSchoolStarModel *model;
 @property (nonatomic ,strong) CZSchoolStarShopDetailTableHeaderView *headerView;
 @property (nonatomic ,strong) CZSchoolStarShopDetailCell *cell;
+@property (nonatomic ,copy) dispatch_block_t clickAvatarBlock;
 /**
  * 滚动值
  */

@@ -157,7 +157,6 @@ static dispatch_once_t onceToken;
     CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
     commentsList.idStr = options[@"organId"];
     commentsList.commentsType = options[@"commentsType"];
-    commentsList.varStar = options[@"valStar"];
     return commentsList;
 }
 

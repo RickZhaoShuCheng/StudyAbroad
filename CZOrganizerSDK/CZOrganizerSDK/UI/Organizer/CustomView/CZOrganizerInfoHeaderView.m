@@ -55,6 +55,8 @@
         make.top.mas_equalTo(self.titleLab.mas_bottom).offset(ScreenScale(34));
         make.width.height.mas_greaterThanOrEqualTo(0);
     }];
+    [timeTitle setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [timeTitle setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     
     self.timeLab = [[UILabel alloc]init];
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
@@ -78,6 +80,8 @@
         make.top.mas_equalTo(timeTitle.mas_bottom).offset(ScreenScale(34));
         make.width.height.mas_greaterThanOrEqualTo(0);
     }];
+    [areaTitle setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [areaTitle setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     
     self.areaLab = [[UILabel alloc]init];
     self.areaLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
@@ -103,6 +107,7 @@
     }];
     //设置抗压缩优先级高 可以正常显示
     [contentTitle setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [contentTitle setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     self.contentLab = [[UILabel alloc]init];
     self.contentLab.font = [UIFont systemFontOfSize:ScreenScale(26)];
     self.contentLab.textColor = CZColorCreater(41, 41, 41, 1);

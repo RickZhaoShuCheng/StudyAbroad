@@ -17,6 +17,7 @@
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
+        self.dataArr = [NSMutableArray array];
         self.backgroundColor = [UIColor whiteColor];
         self.delegate = self;
         self.dataSource = self;
@@ -28,11 +29,12 @@
     return self;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 12;
+    return self.dataArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZOrganizerSearchCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerSearchCell class]) forIndexPath:indexPath];
+    cell.dic = self.dataArr[indexPath.row];
     return cell;
 }
 
@@ -47,6 +49,11 @@
         return headerView;
     }
     return nil;
+}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.selectSearchKey) {
+        self.selectSearchKey(self.dataArr[indexPath.row][@"content1"]);
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{

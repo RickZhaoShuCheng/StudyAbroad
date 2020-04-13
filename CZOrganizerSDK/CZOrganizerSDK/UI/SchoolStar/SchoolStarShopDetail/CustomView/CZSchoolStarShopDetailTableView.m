@@ -125,6 +125,12 @@
 - (CZSchoolStarShopDetailTableHeaderView *)headerView{
     if (!_headerView) {
         _headerView = [[CZSchoolStarShopDetailTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(540))];
+        WEAKSELF
+        [_headerView setClickAvatarBlock:^{
+            if (weakSelf.clickAvatarBlock) {
+                weakSelf.clickAvatarBlock();
+            }
+        }];
     }
     return _headerView;
 }

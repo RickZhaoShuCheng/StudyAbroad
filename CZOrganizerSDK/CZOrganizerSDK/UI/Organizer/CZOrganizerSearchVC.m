@@ -28,6 +28,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initWithUI];
+    [self requestForApiPlaceholderFindPlaceholderByType];
+    WEAKSELF
+    [self.collectionView setSelectSearchKey:^(NSString * _Nonnull key) {
+        weakSelf.searchBar.text = key;
+        [weakSelf searchBtnClick];
+    }];
 }
 
 - (void)clickFocusBtn:(UIButton *)focusBtn{
@@ -37,6 +43,24 @@
         [self requestForApiFocusFanCancelFocusFan];
     }
 }
+
+/**
+获取顾问
+*/
+- (void)requestForApiPlaceholderFindPlaceholderByType{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiPlaceholderFindPlaceholderByType:@"1" zoneType:@"3" callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.collectionView.dataArr removeAllObjects];
+                [weakSelf.collectionView.dataArr addObjectsFromArray:data];
+                [weakSelf.collectionView reloadData];
+            });
+        }
+    }];
+}
+
 /**
  关注
  */
@@ -87,7 +111,7 @@
     //右边按钮
     self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
     [self.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-    [self.shareBtn addTarget:self action:@selector(backItemClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.shareBtn addTarget:self action:@selector(shareItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
     self.navigationItem.rightBarButtonItem = rbackItem;
     
@@ -203,7 +227,7 @@
         [self.listView.view removeFromSuperview];
     }
 }
-- (void)backItemClick{
+- (void)shareItemClick{
 
 }
 

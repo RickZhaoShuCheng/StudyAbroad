@@ -12,6 +12,7 @@
 #import "CZAdvisorDetailService.h"
 #import "QSCommonService.h"
 #import "CZSchoolStarModel.h"
+#import "CZSchoolStarDetailVC.h"
 @interface CZSchoolStarShopDetailVC ()
 @property (nonatomic ,strong) UIView *titleView;
 @property (nonatomic ,strong) UIImageView *avatarImg;
@@ -94,6 +95,12 @@
             weakSelf.tableView.cell.caseVC.collectionView.scrollEnabled = YES;
             weakSelf.tableView.scrollEnabled = NO;
         }
+    }];
+    //查看达人
+    [self.tableView setClickAvatarBlock:^{
+        CZSchoolStarDetailVC *detailVC = [[CZSchoolStarDetailVC alloc]init];
+        detailVC.userId = weakSelf.tableView.model.userId;
+        [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
 }
 

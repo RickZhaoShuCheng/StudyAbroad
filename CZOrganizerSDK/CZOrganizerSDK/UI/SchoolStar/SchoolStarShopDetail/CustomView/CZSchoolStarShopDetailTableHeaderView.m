@@ -90,6 +90,13 @@
     self.bgImg.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(540));
 }
 
+- (void)clickAvatar{
+    if (self.clickAvatarBlock) {
+        self.clickAvatarBlock();
+    }
+}
+
+
 -(void)initWithUI{
     //根据标签高度调整背景高度
     self.bgImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(540))];
@@ -106,6 +113,8 @@
     self.avatarImg = [[UIImageView alloc]init];
     self.avatarImg.layer.masksToBounds = YES;
     self.avatarImg.layer.cornerRadius = ScreenScale(100)/2;
+    self.avatarImg.userInteractionEnabled = YES;
+    [self.avatarImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickAvatar)]];
     [self addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(50));

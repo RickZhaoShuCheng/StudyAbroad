@@ -75,7 +75,6 @@
             CZCommentsListVC *commentsList = [[CZCommentsListVC alloc]init];
             commentsList.idStr = weakSelf.organId;
             commentsList.commentsType = @"1";
-            commentsList.varStar = weakSelf.collectionView.model.valStar;
             [weakSelf.navigationController pushViewController:commentsList animated:YES];
         }
     }];

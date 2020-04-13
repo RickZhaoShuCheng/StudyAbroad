@@ -33,6 +33,9 @@ static const NSString *ApiCollectCollect = @"apiCollect/collect";
 static const NSString *ApiCollectCancelCollect = @"apiCollect/cancelCollect";
 static const NSString *ApiDiarySelectCaseList = @"apiDiary/selectCaseList";
 static const NSString *ApiMyDynamicPersonalHomepage = @"apiMyDynamic/personalHomepage";
+static const NSString *ApiPlaceholderFindPlaceholderByType = @"apiPlaceholder/findPlaceholderByType";
+static const NSString *ApiShoppingCartGetShoppingCartCount = @"apiShoppingCart/getShoppingCartCount";
+
 
 @implementation CZAdvisorDetailService
 /**
@@ -1200,6 +1203,104 @@ static const NSString *ApiMyDynamicPersonalHomepage = @"apiMyDynamic/personalHom
         
         if (data) {
             data = [QSCommonService removeNullFromDictionary:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+/**
+ *获取推荐的机构搜索标签
+ *spType=1&zoneType=3
+ */
+-(void)requestForApiPlaceholderFindPlaceholderByType:(NSString *)spType zoneType:(NSString *)zoneType callBack:(CZAdvisorDetailBack)callBack{
+
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiPlaceholderFindPlaceholderByType];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"spType":spType ,
+                                 @"zoneType":zoneType,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+/**
+ *获取购物车数量
+ */
+-(void)requestForApiShoppingCartGetShoppingCartCountCallBack:(CZAdvisorDetailBack)callBack{
+
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiShoppingCartGetShoppingCartCount];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSDictionary *parameters = @{@"userId":userId,
+    };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
         }
         
         if (callBack) {

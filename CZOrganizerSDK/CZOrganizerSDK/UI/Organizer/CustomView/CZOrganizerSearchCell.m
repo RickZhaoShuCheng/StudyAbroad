@@ -19,6 +19,16 @@
     }
     return self;
 }
+
+- (void)setDic:(NSDictionary *)dic{
+    _dic = dic;
+    NSMutableString *tempStr = [NSMutableString stringWithString:dic[@"content1"]];
+    if (tempStr.length > 2) {
+        [tempStr insertString:@"\n" atIndex:2];
+    }
+    self.titleLab.text = tempStr;
+}
+
 /**
  * 初始化UI
  */

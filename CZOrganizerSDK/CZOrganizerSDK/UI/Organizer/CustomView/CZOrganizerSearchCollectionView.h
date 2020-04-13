@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerSearchCollectionView : UICollectionView
-
+@property (nonatomic ,strong) NSMutableArray *dataArr;
+@property (nonatomic ,copy) void (^selectSearchKey)(NSString *key);
 @end
 
 NS_ASSUME_NONNULL_END

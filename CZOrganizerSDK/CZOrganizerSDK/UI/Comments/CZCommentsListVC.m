@@ -90,7 +90,7 @@
                     model.commentHeight = height;
                     [array addObject:model];
                 }
-                [weakSelf.tableView.headerView setVarStar:weakSelf.varStar];
+                [weakSelf.tableView.headerView setVarStar:data[@"valStar"]];
                 [weakSelf.tableView.headerView setAvgMajor:[NSString stringWithFormat:@"%.1f",[data[@"avgMajor"] floatValue]] avgPrice:[NSString stringWithFormat:@"%.1f",[data[@"avgPrice"] floatValue]] avgService:[NSString stringWithFormat:@"%.1f",[data[@"avgService"] floatValue]]];
                 if (weakSelf.pageNum == 1) {
                     [weakSelf.tableView.commentsArr removeAllObjects];
@@ -172,6 +172,7 @@
     self.navigationItem.leftBarButtonItem = backItem;
     
     self.tableView = [[CZCommentsListTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView.headerView.commentsType = self.commentsType;
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
