@@ -104,7 +104,7 @@
     self.nameLabel.text = model.title;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f" , model.price.floatValue/100.0];
     self.addressLabel.text = model.organName;
-    self.distanceLabel.text =[NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
+    self.distanceLabel.text =[NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue/1000.0];
     
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],NSForegroundColorAttributeName:CZColorCreater(129, 129, 146, 1),NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:11]};
     NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"￥%.2f" , model.oldPrice.floatValue/100.0] attributes:attribtDic];

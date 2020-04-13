@@ -45,7 +45,7 @@
         [str addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:ScreenScale(31)]} range:NSMakeRange(2, str.length-2)];
         self.priceLab.attributedText = str;
     }
-    self.distanceLab.text =[NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
+    self.distanceLab.text =[NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue/1000.0];
 }
 - (void)initWithUI{
     

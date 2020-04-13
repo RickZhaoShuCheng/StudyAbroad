@@ -167,7 +167,7 @@
     self.popularityLabel.text = @"近30天累计人气";
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",model.price.floatValue/100.0];
     
-    self.distanceLabel.text = [NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue/1000.0];
 }
 
 @end

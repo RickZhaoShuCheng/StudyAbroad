@@ -260,7 +260,7 @@
     
     [self.contentView layoutIfNeeded];
     
-    self.distanceLabel.text = [NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%.2fkm" , model.distance.floatValue/1000.0];
     
 }
 

@@ -99,7 +99,7 @@
 {
     _omodel = omodel;
     self.mainTitleLabel.text = omodel.address;
-    self.subTitleLabel.text = [NSString stringWithFormat:@"%.2fkm" , omodel.distance.floatValue];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"%.2fkm" , omodel.distance.floatValue/1000.0];
 }
 
 -(void)setLeftPadding:(CGFloat)leftPadding
