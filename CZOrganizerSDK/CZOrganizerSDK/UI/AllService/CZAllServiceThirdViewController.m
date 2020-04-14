@@ -15,14 +15,16 @@
 #import "CZProductModel.h"
 #import "DropMenuBar.h"
 #import "CZCommonFilterManager.h"
+#import "CollectionWaterfallLayout.h"
 
-@interface CZAllServiceThirdViewController ()
+@interface CZAllServiceThirdViewController ()<CollectionWaterfallLayoutProtocol>
 
 @property (nonatomic ,strong) CZCarefullyChooseView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
 @property (nonatomic, strong) DropMenuBar *menuScreeningView;
 
 @property (nonatomic, strong)CZCommonFilterManager *manager;
+@property (nonatomic, strong) CollectionWaterfallLayout *waterfallLayout;
 
 @end
 
@@ -42,22 +44,27 @@
     
     [self createDefaultFilterMenu];
     
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
+//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+//    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
+//
+//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*220+15);
+//    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
+//    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    _waterfallLayout = [[CollectionWaterfallLayout alloc] init];
+    _waterfallLayout.delegate = self;
+    _waterfallLayout.columns = 2;
+//    _waterfallLayout.columnSpacing = 15;
+    _waterfallLayout.insets = UIEdgeInsetsMake(15, 15, 15, 15);
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*220+15);
-    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
-    self.dataCollectionView = [[CZCarefullyChooseView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.menuScreeningView.frame), self.view.bounds.size.width, self.view.bounds.size.height-CGRectGetMaxY(self.menuScreeningView.frame)) collectionViewLayout:layout];
+    self.dataCollectionView = [[CZCarefullyChooseView alloc] initWithFrame:CGRectZero collectionViewLayout:_waterfallLayout];
     self.dataCollectionView.currentVC = self;
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
         make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-100);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.pageIndex = 1;
@@ -136,6 +143,22 @@
     self.manager = [[CZCommonFilterManager alloc] init];
     self.menuScreeningView = [self.manager actionsForType:CZCommonFilterTypeServiceThird];
     [self.view addSubview:self.menuScreeningView];
+}
+
+#pragma mark - CollectionWaterfallLayoutProtocol
+- (CGFloat)collectionViewLayout:(CollectionWaterfallLayout *)layout heightForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CZProductModel *model = self.dataCollectionView.dataArr[indexPath.row];
+    CGFloat height = (self.view.bounds.size.width-15*3)/2.0;
+    
+    CGFloat nameHeight = [model.title boundingRectWithSize:CGSizeMake(height-18, 50) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14]} context:nil].size.height;
+    height += nameHeight+65;
+    return height;
+}
+
+- (CGFloat)collectionViewLayout:(CollectionWaterfallLayout *)layout heightForSupplementaryViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 0;
 }
 
 @end

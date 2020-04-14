@@ -38,7 +38,7 @@
     [self.contentView addSubview:self.coverImageView];
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.mas_equalTo(0);
-        make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(132/165.0);
+        make.height.mas_equalTo(self.contentView.mas_width);
     }];
     
     self.nameLabel = [[UILabel alloc] init];
@@ -59,7 +59,7 @@
     [self.contentView addSubview:self.priceLabel];
     [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.width.mas_greaterThanOrEqualTo(0);
-        make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(7);
+        make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(4);
         make.left.mas_equalTo(self.nameLabel);
     }];
     
@@ -111,6 +111,12 @@
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],NSForegroundColorAttributeName:CZColorCreater(129, 129, 146, 1),NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:11]};
     NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"￥%.2f" , model.oldPrice.floatValue/100.0] attributes:attribtDic];
     self.orgPriceLabel.attributedText = attribtStr;
+    
+//    CGFloat height = self.contentView.bounds.size.width;
+//    CGFloat nameHeight = [self.nameLabel.text boundingRectWithSize:CGSizeMake(self.contentView.bounds.size.width, 300) options:(NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:self.nameLabel.font} context:nil].size.height;
+//    height += nameHeight;
+//    height += 100;
+//    _model.cellHeight = height;
 }
 
 @end

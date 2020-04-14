@@ -54,4 +54,17 @@
     return _dataArr;
 }
 
+
+
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+//{
+//    if([kind isEqualToString:@"Header"]){
+//        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"UICollectionReusableView" forIndexPath:indexPath];
+//        
+//        return headerView;
+//    }
+//    return nil;
+//}
+
+
 @end

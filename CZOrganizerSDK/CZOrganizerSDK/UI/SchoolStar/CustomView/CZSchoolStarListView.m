@@ -19,9 +19,11 @@
     if (self) {
         [self registerClass:[CZPersonInfoLocationCell class] forCellReuseIdentifier:NSStringFromClass([CZPersonInfoLocationCell class])];
         [self registerClass:[CZPersonInfoSubCell class] forCellReuseIdentifier:NSStringFromClass([CZPersonInfoSubCell class])];
-        self.tableFooterView = [UIView new];
         self.dataSource = self;
         self.delegate = self;
+        self.backgroundColor = [UIColor clearColor];
+        self.tableFooterView = [UIView new];
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
 }

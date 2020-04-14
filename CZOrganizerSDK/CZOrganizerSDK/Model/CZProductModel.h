@@ -70,6 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *clickCount;
 @property (nonatomic , strong) NSArray *comments;
 @property (nonatomic , strong) NSString *description;
+@property (nonatomic , assign) CGFloat cellHeight;
 
 @end
 

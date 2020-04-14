@@ -44,7 +44,7 @@
     [self.dataView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.mas_equalTo(CGRectGetMaxY(self.menuScreeningView.frame));
-        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame)-50);
+        make.bottom.mas_equalTo(0);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     self.pageIndex = 1;

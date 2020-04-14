@@ -128,7 +128,8 @@
     self.diaryNameLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:11];
     [self.coverImageView addSubview:self.diaryNameLabel];
     [self.diaryNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.width.mas_greaterThanOrEqualTo(1);
+        make.height.mas_greaterThanOrEqualTo(1);
+        make.right.mas_equalTo(-10);
         make.centerY.mas_equalTo(self.diaryIconView);
         make.left.mas_equalTo(self.diaryIconView.mas_right).offset(3);
     }];

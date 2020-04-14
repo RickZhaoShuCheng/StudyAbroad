@@ -53,6 +53,8 @@
 		1E8D8795242749DF00E09FB2 /* CZBoardProductNormalCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8D8794242749DF00E09FB2 /* CZBoardProductNormalCell.h */; };
 		1E8D879824274A0600E09FB2 /* CZBoardProductViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8D879624274A0600E09FB2 /* CZBoardProductViewController.h */; };
 		1E8D879924274A0600E09FB2 /* CZBoardProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D879724274A0600E09FB2 /* CZBoardProductViewController.m */; };
+		1EA334BC2446060700F1ED6B /* CollectionWaterfallLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EA334BA2446060700F1ED6B /* CollectionWaterfallLayout.h */; };
+		1EA334BD2446060700F1ED6B /* CollectionWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA334BB2446060700F1ED6B /* CollectionWaterfallLayout.m */; };
 		1EA435CD243E2BE80049E11B /* CZSearchAllViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EA435CB243E2BE70049E11B /* CZSearchAllViewController.h */; };
 		1EA435CE243E2BE80049E11B /* CZSearchAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA435CC243E2BE70049E11B /* CZSearchAllViewController.m */; };
 		530751AB240A4F9C0074A67E /* CZDiaryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 530751A9240A4F9C0074A67E /* CZDiaryViewController.h */; };
@@ -626,6 +628,8 @@
 		1E8D8794242749DF00E09FB2 /* CZBoardProductNormalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZBoardProductNormalCell.h; sourceTree = "<group>"; };
 		1E8D879624274A0600E09FB2 /* CZBoardProductViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardProductViewController.h; sourceTree = "<group>"; };
 		1E8D879724274A0600E09FB2 /* CZBoardProductViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardProductViewController.m; sourceTree = "<group>"; };
+		1EA334BA2446060700F1ED6B /* CollectionWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionWaterfallLayout.h; sourceTree = "<group>"; };
+		1EA334BB2446060700F1ED6B /* CollectionWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionWaterfallLayout.m; sourceTree = "<group>"; };
 		1EA435CB243E2BE70049E11B /* CZSearchAllViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZSearchAllViewController.h; sourceTree = "<group>"; };
 		1EA435CC243E2BE70049E11B /* CZSearchAllViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZSearchAllViewController.m; sourceTree = "<group>"; };
 		530751A9240A4F9C0074A67E /* CZDiaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDiaryViewController.h; sourceTree = "<group>"; };
@@ -1682,6 +1686,8 @@
 				537E3D7A240A974200C080E9 /* CustomView */,
 				537E3D88240A9E0900C080E9 /* CZSchoolStarViewController.h */,
 				537E3D89240A9E0900C080E9 /* CZSchoolStarViewController.m */,
+				1EA334BA2446060700F1ED6B /* CollectionWaterfallLayout.h */,
+				1EA334BB2446060700F1ED6B /* CollectionWaterfallLayout.m */,
 			);
 			path = SchoolStar;
 			sourceTree = "<group>";
@@ -2560,6 +2566,7 @@
 				535E5DB924080AED00471453 /* MJRefreshBackFooter.h in Headers */,
 				539484AA23FFC5AC00770E99 /* MASViewAttribute.h in Headers */,
 				D8C40E912427B0C400087987 /* CZAdvisorDynamicPostCell.h in Headers */,
+				1EA334BC2446060700F1ED6B /* CollectionWaterfallLayout.h in Headers */,
 				D8CD0C3F241534E600B2124C /* CZOrganizerDetailServiceCell.h in Headers */,
 				D854099F241151C100A348B5 /* CZAdvisorDetailDiaryCell.h in Headers */,
 				D83BF6B7243B10890032C2BD /* CZSchoolStarShopDetailTableView.h in Headers */,
@@ -3005,6 +3012,7 @@
 				534C18E9240BD7DE007DD7EC /* CZOrganizerListViewController.m in Sources */,
 				D8CD0C382415342900B2124C /* CZOrganizerDetailBtnView.m in Sources */,
 				539484AB23FFC5AC00770E99 /* ViewController+MASAdditions.m in Sources */,
+				1EA334BD2446060700F1ED6B /* CollectionWaterfallLayout.m in Sources */,
 				5394844723FFB03400770E99 /* SDWebImageDecoder.m in Sources */,
 				D8CD3E4624168BF50086B2EB /* CZOrganizerDetailAdvisorCell.m in Sources */,
 				5394844923FFB03400770E99 /* UIImageView+HighlightedWebCache.m in Sources */,

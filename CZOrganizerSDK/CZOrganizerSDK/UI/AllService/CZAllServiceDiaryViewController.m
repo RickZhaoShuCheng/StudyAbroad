@@ -48,14 +48,14 @@
     [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.dataCollectionView = [[CZDiaryView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.dataCollectionView = [[CZDiaryView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.dataCollectionView.superVC = self;
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.mas_equalTo(CGRectGetMaxY(self.menuScreeningView.frame));
-        make.bottom.mas_equalTo(-CGRectGetMaxY(self.menuScreeningView.frame)-50);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.pageIndex = 1;
