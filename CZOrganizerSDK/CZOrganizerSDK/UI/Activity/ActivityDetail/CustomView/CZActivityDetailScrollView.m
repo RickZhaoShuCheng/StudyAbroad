@@ -45,14 +45,16 @@
     self.cycleView.imageURLStringsGroup = imgUrlArr;
     
     self.nameLab.text = model.title;
-    if ([model.price floatValue] > 0.0) {
+    if ([model.price floatValue] <= 0.0) {
+        self.priceLab.textColor = CZColorCreater(255, 142, 0, 1);
+        self.priceLab.text = @"免费";
+    }else{
+        self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);
         if ([model.priceType isEqualToString:@"RMB"]) {
             self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100];
         }else{
             self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
         }
-    }else{
-        self.priceLab.text = @"免费";
     }
     
     if (model.activitySessionList.count >= 1) {
@@ -60,8 +62,6 @@
         NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
         NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.endTime integerValue]/1000]];
         self.sessionLab.text = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
-    }else{
-        
     }
     self.crowdLab.text = [NSString stringWithFormat:@"适合人群：%@",model.extRangeUser];
     self.organizerLab.text = [NSString stringWithFormat:@"组织机构：%@",model.extOrganization];

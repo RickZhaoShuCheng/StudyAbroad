@@ -610,7 +610,7 @@ static const NSString *ApiShoppingCartGetShoppingCartCount = @"apiShoppingCart/g
     NSString *userId = [QSClient userId];
     
     NSDictionary *parameters = @{@"userId":userId,
-                                 @"productCategory":productCategory,
+//                                 @"productCategory":productCategory,
                                  @"productActivityId":productActivityId,
                                  @"pageNum":[NSString stringWithFormat:@"%ld",(long)pageNum],
                                  @"pageSize":[NSString stringWithFormat:@"%ld",(long)pageSize]

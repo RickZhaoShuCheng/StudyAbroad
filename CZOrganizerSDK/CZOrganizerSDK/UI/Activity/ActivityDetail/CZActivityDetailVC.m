@@ -13,6 +13,8 @@
 #import "QSCommonService.h"
 #import "CZActivityModel.h"
 #import "CZMJRefreshHelper.h"
+#import "QSClient.h"
+#import "QSOrganizerHomeService.h"
 
 @interface CZActivityDetailVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
@@ -52,6 +54,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     if (self.scrollView.superview) {
         [self.scrollView.cycleView startTimer];
@@ -77,7 +80,6 @@
     [self initWithUI];
     [self addActionHandle];
     [self requestForApiProductActivitySelectProductActivityInfo];
-    [self requestForApiShoppingCartGetShoppingCartCountCallBack];
 }
 
 - (void)addActionHandle{
@@ -151,9 +153,14 @@
     
     self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageNum ++;
-        [weakSelf requestForApiProductActivitySelectRecommendProductActivityList];
+        [weakSelf requestForHotActivities];
     }];
 }
+
+- (void)showCartView{
+    [QSClient showCartInNavi:self.navigationController];
+}
+
 //获取商品详情
 - (void)requestForApiProductActivitySelectProductActivityInfo{
     WEAKSELF
@@ -165,14 +172,16 @@
         
                 if (weakSelf.model.status == 0) {
                     weakSelf.isEnd = YES;
+                    [weakSelf requestForHotActivities];
                 }else{
                     weakSelf.isEnd = NO;
                 }
                 
-                if ([weakSelf.model.price floatValue] == 0.0) {
+                if ([weakSelf.model.price floatValue] <= 0.0) {
                     weakSelf.isFree = YES;
                 }else{
                     weakSelf.isFree = NO;
+                    [weakSelf requestForApiShoppingCartGetShoppingCartCountCallBack];
                 }
                 
                 if (weakSelf.isEnd) {
@@ -184,12 +193,11 @@
         }
     }];
 }
-//获取推荐活动
-- (void)requestForApiProductActivitySelectRecommendProductActivityList{
+//获取热门活动
+-(void)requestForHotActivities{
     WEAKSELF
-    //weakSelf.model.productCategory
-    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service requestForApiProductActivitySelectRecommendProductActivityList:@"" productActivityId:weakSelf.model.productActivityId pageNum:self.pageNum pageSize:self.pageSize callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    QSOrganizerHomeService *service = [QSCommonService service:QSServiceTypeOrganizerHome];
+    [service requestForapiProductActivitySelectHotProductActivityByUserId:[QSClient userId] pageNum:@(self.pageNum) pageSize:@(self.pageSize) callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -227,7 +235,7 @@
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.carNumber = data;
-                weakSelf.cartCountLab.text = data;
+                weakSelf.cartCountLab.text = [NSString stringWithFormat:@"%@",[@([data integerValue]) stringValue]];
             });
         }
     }];
@@ -296,7 +304,6 @@
         if (_freeBottomView) {
             [self.freeBottomView removeFromSuperview];
         }
-        [self requestForApiProductActivitySelectRecommendProductActivityList];
     }else{
         if (_tableView) {
             [self.tableView removeFromSuperview];
@@ -312,7 +319,12 @@
                 make.bottom.mas_equalTo(self.view.mas_bottom).offset(-ScreenScale(100));
             }
         }];
-        if (self.isFree) {
+    }
+}
+- (void)setIsFree:(BOOL)isFree{
+    _isFree = isFree;
+    if (!self.isEnd) {
+        if (isFree) {
             [self addFreeBottomView];
         }else{
             [self addBottomView];
@@ -416,6 +428,7 @@
     [self.cartBtn setImage:[CZImageProvider imageNamed:@"gouwuche"] forState:UIControlStateNormal];
     [self.cartBtn setImageEdgeInsets:UIEdgeInsetsMake(-ScreenScale(30), ScreenScale(44), 0, 0)];
     [self.cartBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(35), -ScreenScale(35), 0)];
+    [self.cartBtn addTarget:self action:@selector(showCartView) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.cartBtn];
     [self.cartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.bottomView);
