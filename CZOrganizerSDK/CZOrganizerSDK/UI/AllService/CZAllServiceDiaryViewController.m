@@ -14,13 +14,15 @@
 #import "CZMJRefreshHelper.h"
 #import "CZDiaryModel.h"
 #import "CZCommonFilterManager.h"
+#import "CollectionWaterfallLayout.h"
 
-@interface CZAllServiceDiaryViewController ()
+@interface CZAllServiceDiaryViewController ()<CollectionWaterfallLayoutProtocol>
 
 @property (nonatomic ,strong) CZDiaryView *dataCollectionView;
 @property (nonatomic, assign) NSInteger pageIndex;
 @property (nonatomic, strong)CZCommonFilterManager *manager;
 @property (nonatomic, strong) DropMenuBar *menuScreeningView;
+@property (nonatomic, strong) CollectionWaterfallLayout *waterfallLayout;
 
 @end
 
@@ -36,19 +38,25 @@
 
 -(void)initUI
 {
-    self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.view.backgroundColor = CZColorCreater(245, 245, 249, 1.0);
+
     [self createDefaultFilterMenu];
     
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
+//    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+//    CGFloat coverWidth = (screenWidth - 15*3)/2.0;
+//
+//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
+//    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
+//    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(coverWidth, coverWidth/165.0*294);
-    [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 15)];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    _waterfallLayout = [[CollectionWaterfallLayout alloc] init];
+    _waterfallLayout.delegate = self;
+    _waterfallLayout.columns = 2;
+//    _waterfallLayout.columnSpacing = 5;
+    _waterfallLayout.insets = UIEdgeInsetsMake(15, 15, 15, 15);
     
-    self.dataCollectionView = [[CZDiaryView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+    self.dataCollectionView = [[CZDiaryView alloc] initWithFrame:CGRectZero collectionViewLayout:_waterfallLayout];
     self.dataCollectionView.superVC = self;
     [self.view addSubview:self.dataCollectionView];
     self.dataCollectionView.alwaysBounceVertical = YES;
@@ -88,8 +96,18 @@
                 
                 NSMutableArray *array = [[NSMutableArray alloc] init];
                 
-                for (NSDictionary *dic in data) {
-                    CZDiaryModel *model = [CZDiaryModel modelWithDict:dic];
+//                for (NSDictionary *dic in data) {
+//                    CZDiaryModel *model = [CZDiaryModel modelWithDict:dic];
+//                    [array addObject:model];
+//                }
+                
+                for (NSInteger index = 0; index < [data count]; index++) {
+                    CZDiaryModel *model = [CZDiaryModel modelWithDict:[data objectAtIndex:index]];
+                    if (index%4==0||index==3){
+                        model.coverHeight = 200;
+                    }else{
+                        model.coverHeight = 300;
+                    }
                     [array addObject:model];
                 }
                 
@@ -126,6 +144,22 @@
         }
         
     }];
+}
+
+#pragma mark - CollectionWaterfallLayoutProtocol
+- (CGFloat)collectionViewLayout:(CollectionWaterfallLayout *)layout heightForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CZDiaryModel *model = self.dataCollectionView.dataArr[indexPath.row];
+    CGFloat height = model.coverHeight;
+    
+    CGFloat nameHeight = [model.smdContent boundingRectWithSize:CGSizeMake(height-18, 50) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14]} context:nil].size.height;
+    height += nameHeight+50;
+    return height;
+}
+
+- (CGFloat)collectionViewLayout:(CollectionWaterfallLayout *)layout heightForSupplementaryViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 0;
 }
 
 -(void)createDefaultFilterMenu

@@ -117,12 +117,12 @@
     [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.nameLabel.text = model.realName;
     self.schoolNameLabel.text = model.schoolName;
-    self.introduceLabel.text = model.sportIntroduction;
+    self.introduceLabel.text = model.keywords;
     
     NSDictionary *attribtDic1 = @{NSForegroundColorAttributeName:CZColorCreater(51, 172, 253, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]
     };
-    NSMutableAttributedString *attribtStr1 = [[NSMutableAttributedString alloc]initWithString:[[@(model.reserveCount.integerValue) stringValue] stringByAppendingFormat:NSLocalizedString(@"次", nil)] attributes:attribtDic1];
+    NSMutableAttributedString *attribtStr1 = [[NSMutableAttributedString alloc]initWithString:[[@(model.serviceCount.integerValue) stringValue] stringByAppendingFormat:NSLocalizedString(@"次", nil)] attributes:attribtDic1];
     
     NSDictionary *attribtDic2 = @{NSForegroundColorAttributeName:CZColorCreater(170, 170, 187, 1),
                                   NSFontAttributeName:[UIFont fontWithName:@"PingFang-SC-Medium" size:10]

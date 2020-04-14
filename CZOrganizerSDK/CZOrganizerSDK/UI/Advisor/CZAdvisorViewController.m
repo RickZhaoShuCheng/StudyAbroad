@@ -40,8 +40,8 @@
 
 -(void)initUI
 {
-    self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.view.backgroundColor = CZColorCreater(245, 245, 249, 1.0);
+
     if (!self.param) {
         self.param = [[CZHomeParam alloc] init];
     }
@@ -52,8 +52,8 @@
         self.param.productCategory = dic[@"productCategory"];
     }
     
-    self.dataView = [[CZAdvisorView alloc] init];
-    self.dataView.backgroundColor = [UIColor whiteColor];
+    self.dataView = [[CZAdvisorView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+
     [self.view addSubview:self.dataView];
     if (!self.model) {
         self.contentScrollView = self.dataView;

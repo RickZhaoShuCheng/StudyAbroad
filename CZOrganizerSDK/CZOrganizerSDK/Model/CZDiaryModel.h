@@ -74,6 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *diarySize;
 @property (nonatomic , strong) NSNumber *diaryDays;
 @property (nonatomic , strong) NSNumber *newsCommentTime;
+@property (nonatomic , assign) CGFloat coverHeight;
 
 @end
 

@@ -63,6 +63,15 @@
     
     [self.subTitleLabel setContentHuggingPriority:UILayoutPriorityRequired
     forAxis:UILayoutConstraintAxisHorizontal];
+    
+    UIImageView *line = [[UIImageView alloc] init];
+    line.backgroundColor = CZColorCreater(243, 243, 247, 1);
+    [self.contentView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(68);
+        make.right.top.mas_equalTo(0);
+        make.height.mas_equalTo(0.5);
+    }];
 }
 
 -(void)setCellType:(CZPersonInfoSubCellType)cellType

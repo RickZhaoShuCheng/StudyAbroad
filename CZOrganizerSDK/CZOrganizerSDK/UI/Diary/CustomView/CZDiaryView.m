@@ -19,7 +19,7 @@
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         [self registerClass:[CZDiaryCell class] forCellWithReuseIdentifier:NSStringFromClass([CZDiaryCell class])];
         self.dataSource = self;
         self.delegate = self;

@@ -61,6 +61,8 @@ static CGFloat padding = 15;
 {
     for (NSInteger index = 0; index < self.courses.count; index++) {
         UIImageView *cover = [[UIImageView alloc] init];
+        cover.layer.masksToBounds = YES;
+        cover.contentMode = UIViewContentModeScaleAspectFill;
         cover.userInteractionEnabled = YES;
         [cover addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionForClickCover:)]];
         cover.tag = index;

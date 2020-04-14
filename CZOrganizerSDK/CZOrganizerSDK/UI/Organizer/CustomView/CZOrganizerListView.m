@@ -22,9 +22,11 @@
     if (self) {
         [self registerClass:[CZPersonInfoCell class] forCellReuseIdentifier:NSStringFromClass([CZPersonInfoCell class])];
         [self registerClass:[CZPersonInfoSubCell class] forCellReuseIdentifier:NSStringFromClass([CZPersonInfoSubCell class])];
-        self.tableFooterView = [UIView new];
         self.dataSource = self;
         self.delegate = self;
+        self.backgroundColor = [UIColor clearColor];
+        self.tableFooterView = [UIView new];
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
 }

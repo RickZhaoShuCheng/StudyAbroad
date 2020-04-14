@@ -39,13 +39,13 @@
 
 - (void)initWithUI{
     
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    self.contentView.layer.masksToBounds = YES;
+    self.contentView.layer.cornerRadius = 2.5;
     self.coverImageView = [[UIImageView alloc] init];
+    self.coverImageView.layer.masksToBounds = YES;
+    self.coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:self.coverImageView];
-    [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.mas_equalTo(0);
-        make.height.mas_equalTo(self.contentView.mas_width).multipliedBy(237/165.0);
-    }];
-
     
     self.tagLabel = [[UILabel alloc] init];
     self.tagLabel.textColor = CZColorCreater(170, 170, 187, 1.0);
@@ -55,7 +55,8 @@
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.coverImageView.mas_bottom).offset(7.5);
         make.height.mas_greaterThanOrEqualTo(1);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(9);
+        make.right.mas_equalTo(-9);
     }];
     
     self.nameLabel = [[UILabel alloc] init];
@@ -66,7 +67,8 @@
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.tagLabel.mas_bottom).offset(2);
         make.height.mas_greaterThanOrEqualTo(0);
-        make.left.right.mas_equalTo(0);
+        make.left.mas_equalTo(9);
+        make.right.mas_equalTo(-9);
     }];
  
     self.iconImageView = [[UIImageView alloc] init];
@@ -74,7 +76,8 @@
     self.iconImageView.layer.masksToBounds = YES;
     self.iconImageView.layer.cornerRadius = 8;
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.mas_equalTo(0);
+        make.left.mas_equalTo(9);
+        make.bottom.mas_equalTo(-10.5);
         make.size.mas_equalTo(16);
     }];
     
@@ -96,14 +99,14 @@
     [self.contentView addSubview:self.goodCountLabel];
     [self.goodCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_greaterThanOrEqualTo(0);
-        make.right.mas_equalTo(0);
+        make.right.mas_equalTo(-9);
         make.centerY.mas_equalTo(self.iconImageView);
     }];
  
     self.goodImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.goodImageView];
     [self.goodImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.goodCountLabel.mas_left).offset(-8);
+        make.right.mas_equalTo(self.goodCountLabel.mas_left).offset(-4.5);
         make.height.mas_equalTo(11);
         make.width.mas_equalTo(12.5);
         make.centerY.mas_equalTo(self.iconImageView);
@@ -158,6 +161,11 @@
     self.goodCountLabel.text = [@(model.praiseCount.integerValue) stringValue];
     self.diaryNameLabel.text = [NSString stringWithFormat:@"%@ | %@篇日记" , model.schoolName,[@(model.diaryCount.integerValue) stringValue]];
         self.tagLabel.text = model.topicTypeStr;
+    
+    [self.coverImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.mas_equalTo(0);
+        make.height.mas_equalTo(model.coverHeight);
+    }];
 }
 
 @end

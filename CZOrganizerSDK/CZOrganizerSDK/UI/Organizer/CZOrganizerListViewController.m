@@ -54,8 +54,7 @@
         self.param.productCategory = dic[@"productCategory"];
     }
     
-    self.dataView = [[CZOrganizerListView alloc] init];
-    self.dataView.backgroundColor = [UIColor whiteColor];
+    self.dataView = [[CZOrganizerListView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.view addSubview:self.dataView];
     if (!self.model) {
         self.contentScrollView = self.dataView;
