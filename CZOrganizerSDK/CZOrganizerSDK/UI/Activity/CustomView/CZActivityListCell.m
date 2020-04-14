@@ -31,7 +31,24 @@
     _model = model;
     [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:nil];
     self.nameLab.text = model.title;
+    self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
+    self.locationLab.textColor = CZColorCreater(183, 183, 196, 1);
+    self.timeLab.textColor = CZColorCreater(129, 129, 146, 1);
+    if ([model.price floatValue] <= 0.0) {
+        self.priceLab.text = @"免费";
+        self.priceLab.textColor = CZColorCreater(255,142,0,1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
+    }else{
+        self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
+        if ([model.priceType isEqualToString:@"RMB"]) {
+            self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100];
+        }else{
+            self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
+            self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
+        }
+    }
+    
     if (model.status == 0) {
+        //已结束
         self.endView.hidden = NO;
         self.nameLab.textColor = CZColorCreater(155, 158, 162, 1);
         self.locationLab.textColor = CZColorCreater(155, 158, 162, 1);
@@ -39,30 +56,20 @@
         self.priceLab.textColor = CZColorCreater(155,158,162,1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
         self.priceLab.text = @"已结束";
         self.timeLab.text = @"已结束";
-    }else{
+    }else if (model.status == 1){
+        //进行中
         self.endView.hidden = YES;
-        self.nameLab.textColor = CZColorCreater(51, 51, 51, 1);
-        self.locationLab.textColor = CZColorCreater(183, 183, 196, 1);
-        self.timeLab.textColor = CZColorCreater(129, 129, 146, 1);
-        if ([model.price floatValue] == 0.0) {
-            self.priceLab.text = @"免费";
-            self.priceLab.textColor = CZColorCreater(255,142,0,1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
-        }else{
-            if ([model.priceType isEqualToString:@"RMB"]) {
-                self.priceLab.text = [NSString stringWithFormat:@"¥%.2f",[model.price floatValue]/100];
-                self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
-            }else{
-                self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
-                self.priceLab.textColor = CZColorCreater(255, 68, 85, 1);//钱255, 68, 85, 1)   免费255，142，0，1    已结束155，158，162，1
-            }
-        }
-        if (model.activitySessionList.count >= 1) {
+        self.timeLab.text = @"进行中";
+    }else if (model.status == 2){
+        //未开始
+        self.endView.hidden = YES;
+        if (model.activitySessionList.count >=1) {
             CZActivitySession *session =  model.activitySessionList[0];
             NSString *timeStr = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
             self.timeLab.text = [NSString stringWithFormat:@"%@开始",timeStr];
-        }else{
-            self.timeLab.text = @"进行中";
         }
+    }else{
+        //???
     }
     if (model.activityType == 0) {
         self.locationLab.text = @"线上直播";
