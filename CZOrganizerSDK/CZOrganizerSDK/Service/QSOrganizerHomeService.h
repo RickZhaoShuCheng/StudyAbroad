@@ -104,6 +104,10 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
                                          url:(NSString *)urls
                                     callBack:(QSOrganizerHomeBack)callBack;
 
+//首页地区---通过地区名称模糊查询
+-(void)requestForApiSysAreaFindAreaListByNameBySearchName:(NSString *)name
+                                                 callBack:(QSOrganizerHomeBack)callBack;    
+
 @end
 
 NS_ASSUME_NONNULL_END

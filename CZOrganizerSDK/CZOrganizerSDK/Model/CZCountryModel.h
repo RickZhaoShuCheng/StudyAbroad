@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *lng;
 @property (nonatomic , strong) NSString *hot;
 
+@property (nonatomic , strong) NSString *name;
+@property (nonatomic , strong) CZCountryModel *upAreaVo;
+
 @end
 
 NS_ASSUME_NONNULL_END

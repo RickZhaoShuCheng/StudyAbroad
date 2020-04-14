@@ -16,6 +16,8 @@
 
 @property (nonatomic , strong) void(^textChangeBlock)(NSString *text);
 
+@property (nonatomic , strong) void(^startSearch)(NSString *text);
+
 @property (nonatomic , strong) void(^searchBlock)(void);
 
 @property (nonatomic , strong) UIButton *maskButton;
@@ -51,11 +53,12 @@
     self.searchBar = [[UITextField alloc] init];
     self.searchBar.delegate = self;
     self.searchBar.returnKeyType = UIReturnKeyDone;
+    self.searchBar.returnKeyType = UIReturnKeySearch;
     [self addSubview:self.searchBar];
     [self.searchBar addTarget:self action:@selector(textDidChanged:) forControlEvents:UIControlEventEditingChanged];
     self.searchBar.placeholder = NSLocalizedString(@"搜索", nil);
     [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(self.iconView);
+        make.height.mas_equalTo(30);
         make.centerY.mas_equalTo(0);
         make.left.mas_equalTo(self.iconView.mas_right).offset(6);
         make.right.mas_equalTo(-10);
@@ -105,6 +108,10 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if (self.startSearch) {
+        self.startSearch(textField.text);
+    }
+    
     [textField resignFirstResponder];
     return YES;
 }
@@ -124,4 +131,8 @@
     self.maskButton.hidden = edit;
 }
 
+-(void)setSearchStartAction:(void(^)(NSString *text))block
+{
+    self.startSearch = block;
+}
 @end

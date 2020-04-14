@@ -12,6 +12,9 @@
 #import "CZSelectProvinceCell.h"
 #import "CZSelectCityCell.h"
 #import "CZSearchBar.h"
+#import "QSCommonService.h"
+#import "QSOrganizerHomeService.h"
+#import "CZSCountryModel.h"
 
 @interface CZSelectCityViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic , strong) UITableView *countryTableView;
@@ -139,7 +142,7 @@
     }];
     self.searchResultTableView.hidden = YES;
     WEAKSELF
-    [self.searchBar setEditTextChangedListener:^(NSString * _Nonnull text) {
+    [self.searchBar setSearchStartAction:^(NSString * _Nonnull text) {
         weakSelf.searchResultTableView.hidden = text.length == 0;
         [weakSelf searchForCitiesByKeywords:text];
     }];
@@ -188,7 +191,14 @@
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
         CZSCountryModel *model = self.searchResultArray[indexPath.row];
-        cell.textLabel.text = model.country.area_name;
+        NSString *title = model.country.name;
+        if (model.country.upAreaVo && ![model.country.upAreaVo isKindOfClass:[NSString class]]) {
+            title = [title stringByAppendingFormat:@"，%@" , model.country.upAreaVo.name];
+        }
+        if (model.country.upAreaVo.upAreaVo && ![model.country.upAreaVo.upAreaVo isKindOfClass:[NSString class]]) {
+            title = [title stringByAppendingFormat:@"，%@" , model.country.upAreaVo.upAreaVo.name];
+        }
+        cell.textLabel.text = title;
         cell.textLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
         cell.textLabel.textColor = [UIColor blackColor];
         return cell;
@@ -270,15 +280,37 @@
     if (!keywords.length) {
         return;
     }
-    NSArray *cities = [CZCountryUtil sharedInstance].cities;
-
-    NSString *formatString = [NSString stringWithFormat:@"self.country.area_name CONTAINS[cd] '%@' AND self.country.level = '3'",keywords];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:formatString];
-    NSMutableArray *array = [NSMutableArray arrayWithArray:cities];
-    [array filterUsingPredicate:predicate];
     
-    self.searchResultArray = array;
-    [self.searchResultTableView reloadData];
+    QSOrganizerHomeService *service = serviceByType(QSServiceTypeOrganizerHome);
+    [service requestForApiSysAreaFindAreaListByNameBySearchName:keywords callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            if (success && [data isKindOfClass:[NSArray class]]) {
+                NSMutableArray *a = [[NSMutableArray alloc] init];
+                for (NSDictionary *dict in data) {
+                    CZCountryModel *model = [CZCountryModel modelWithDict:dict];
+                    CZSCountryModel *sModel = [[CZSCountryModel alloc] init];
+                    sModel.country = model;
+                    [a addObject:sModel];
+                }
+                
+                self.searchResultArray = a;
+                [self.searchResultTableView reloadData];
+            }
+            
+        });
+    }];
+    
+    
+//    NSArray *cities = [CZCountryUtil sharedInstance].cities;
+//
+//    NSString *formatString = [NSString stringWithFormat:@"self.country.area_name CONTAINS[cd] '%@' AND self.country.level = '3'",keywords];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:formatString];
+//    NSMutableArray *array = [NSMutableArray arrayWithArray:cities];
+//    [array filterUsingPredicate:predicate];
+//
+//    self.searchResultArray = array;
+//    [self.searchResultTableView reloadData];
 }
 
 @end

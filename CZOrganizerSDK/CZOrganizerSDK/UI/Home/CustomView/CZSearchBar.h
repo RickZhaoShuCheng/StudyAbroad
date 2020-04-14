@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)enableEdit:(BOOL)edit;
 
+-(void)setSearchStartAction:(void(^)(NSString *text))block;
+
 @end
 
 NS_ASSUME_NONNULL_END

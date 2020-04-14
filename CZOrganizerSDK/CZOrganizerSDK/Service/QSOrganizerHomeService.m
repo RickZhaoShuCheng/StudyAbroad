@@ -35,7 +35,7 @@ static const NSString *ApiCounselorSearchCounselorListByName = @"apiCounselor/se
 static const NSString *ApiSportUserSearchSportUserListByName = @"apiSportUser/searchSportUserListByName";
 static const NSString *ApiProductSearchProductListByName = @"apiProduct/searchProductListByName";
 static const NSString *ApiTypeFindHotSearchType = @"apiType/findHotSearchType";
-
+static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName";
 
 @implementation QSOrganizerHomeService
 
@@ -1012,6 +1012,51 @@ static const NSString *ApiTypeFindHotSearchType = @"apiType/findHotSearchType";
     NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, urls];
     NSURL *url = [NSURL URLWithString:urlString];
     NSDictionary *parameters = [param dictonary];
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (data) {
+            data = [QSCommonService removeNullFromArray:data];
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+
+//首页地区---通过地区名称模糊查询
+-(void)requestForApiSysAreaFindAreaListByNameBySearchName:(NSString *)name
+                                                 callBack:(QSOrganizerHomeBack)callBack
+{
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiSysAreaFindAreaList];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *parameters = @{@"areaName":name};
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
     

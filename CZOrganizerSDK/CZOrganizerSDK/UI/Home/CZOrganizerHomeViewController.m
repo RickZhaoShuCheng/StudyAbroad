@@ -777,6 +777,9 @@ typedef enum : NSUInteger {
 {
     [CZCountryUtil sharedInstance].selectModel = model;
     NSString *cityName = model.country.area_name;
+    if (!cityName || !cityName.length) {
+        cityName = model.country.name;
+    }
     if (cityName.length > 3) {
         cityName = [[cityName substringToIndex:2] stringByAppendingFormat:@"..."];
     }

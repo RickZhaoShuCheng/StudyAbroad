@@ -36,8 +36,15 @@
     model.lat = self.lat;
     model.lng = self.lng;
     model.hot = self.hot;
+    model.name = self.name;
+    model.upAreaVo = self.upAreaVo;
 
     return model;
+}
+
++ (NSDictionary *)dictWithModelClass
+{
+    return @{@"upAreaVo":@"CZCountryModel"};
 }
 
 @end
