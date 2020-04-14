@@ -19,6 +19,7 @@
 #import "CZSchoolStarShopDetailVC.h"
 #import "CZSchoolStarDetailVC.h"
 #import "CZSchoolStarShopDetailVC.h"
+#import "CXSearchViewController.h"
 @interface CZMoreSchoolStarVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIButton *searchBtn;
@@ -136,7 +137,7 @@
     //右边按钮
     self.searchBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
     [self.searchBtn setImage:[CZImageProvider imageNamed:@"sousuo_heise"] forState:UIControlStateNormal];
-    [self.searchBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.searchBtn addTarget:self action:@selector(searchItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.searchBtn];
     self.navigationItem.rightBarButtonItem = rbackItem;
     
@@ -168,7 +169,9 @@
 -(void)actionForBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)rbackItemClick{
-    
+//搜索
+- (void)searchItemClick{
+    CXSearchViewController *searchViewController = [[CXSearchViewController alloc] initWithNibName:@"CXSearchViewController" bundle:[NSBundle bundleForClass:[self class]]];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 @end

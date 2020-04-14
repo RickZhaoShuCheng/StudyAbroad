@@ -113,6 +113,11 @@
     if (indexPath.section == 1) {
         CZAdvisorDetailServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailServiceCell class]) forIndexPath:indexPath];
         CZProductVoListModel *model = [CZProductVoListModel modelWithDict:self.model.productVoList[indexPath.row]];
+//        if (indexPath.row%2) {
+//
+//        }else{
+//            model.title = @"图片高度没算，最多支持6张图片，有机会再优化";
+//        }
         cell.model = model;
         if (indexPath.row % 2 == 0) {
             [cell.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -151,6 +156,16 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
+//        CZProductVoListModel *model = [CZProductVoListModel modelWithDict:self.model.productVoList[indexPath.row]];
+//        if (indexPath.row%2) {
+//
+//        }else{
+//            model.title = @"图片高度没算，最多支持6张图片，有机会再优化";
+//        }
+//        CGFloat height = [self getStringHeightWithText:model.title font:[UIFont boldSystemFontOfSize:ScreenScale(28)] viewWidth:kScreenWidth/2.0-ScreenScale(20)];
+//        if (indexPath.row %2) {
+//            return CGSizeMake(kScreenWidth/2.0, ScreenScale(480)+height);
+//        }
         return CGSizeMake(kScreenWidth/2.0, ScreenScale(560));
     }else if (indexPath.section == 2){
         return CGSizeMake(kScreenWidth/2.0, ScreenScale(690));
