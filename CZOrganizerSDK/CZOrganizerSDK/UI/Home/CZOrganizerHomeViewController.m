@@ -715,15 +715,18 @@ typedef enum : NSUInteger {
     QSOrganizerHomeService *service = [QSCommonService service:QSServiceTypeOrganizerHome];
     [service requestForapiProductActivitySelectHotProductActivityByUserId:[QSClient userId] pageNum:@(1) pageSize:@(5) callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success) {
-            for (NSDictionary *dict in data) {
-                NSDictionary *nDict = [QSCommonService removeNullFromDictionary:dict];
-                CZActivityModel *model = [CZActivityModel modelWithDict:nDict];
-                [self.hotActivities addObject:model];
-            }
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-               self.activityView.dataArr = self.hotActivities;
-               [self.activityView reloadData];
+                
+                [self.hotActivities removeAllObjects];
+                
+                for (NSDictionary *dict in data) {
+                    NSDictionary *nDict = [QSCommonService removeNullFromDictionary:dict];
+                    CZActivityModel *model = [CZActivityModel modelWithDict:nDict];
+                    [self.hotActivities addObject:model];
+                }
+                
+                self.activityView.dataArr = self.hotActivities;
+                [self.activityView reloadData];
             });
         }
     }];

@@ -9,6 +9,7 @@
 #import "CZHotActivityCell.h"
 #import "CZActivityModel.h"
 #import "UIImageView+WebCache.h"
+#import "NSDate+Utils.h"
 
 @interface CZHotActivityCell ()
 @property (nonatomic , strong) UIImageView *coverImageView;
@@ -29,6 +30,8 @@
 - (void)initWithUI{
     
     self.coverImageView = [[UIImageView alloc] init];
+    self.coverImageView.layer.masksToBounds = YES;
+    self.coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:self.coverImageView];
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(160);
@@ -65,9 +68,16 @@
 -(void)setModel:(CZActivityModel *)model
 {
     _model = model;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.banners)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.logo)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.nameLabel.text = model.title;
-    self.addressPriceLabel.text = model.extRangeUser;
+    
+    NSString *dateString = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
+
+    if (model.activityType == 0) {
+        self.addressPriceLabel.text = [dateString stringByAppendingString:@"线上直播"];
+    }else{
+        self.addressPriceLabel.text = [dateString stringByAppendingString:model.extAddress];
+    }
 }
 
 @end
