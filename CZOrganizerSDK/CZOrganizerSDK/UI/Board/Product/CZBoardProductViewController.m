@@ -45,7 +45,7 @@
         make.left.mas_equalTo(0);
         make.top.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-100);
+        make.bottom.mas_equalTo(0);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     self.pageIndex = 1;

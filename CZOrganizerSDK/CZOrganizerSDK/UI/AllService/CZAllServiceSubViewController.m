@@ -31,6 +31,12 @@
     [self initUI];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 -(void)initUI
 {
     self.title = self.model.content1;
@@ -46,7 +52,7 @@
     self.pageMenu.unSelectedItemTitleColor = CZColorCreater(167, 167, 185, 1);
     [self.view addSubview:self.pageMenu];
     
-    self.contentView = [[CZPageScrollContentView alloc]initWithFrame:CGRectMake(0, self.pageMenu.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height-self.pageMenu.bounds.size.height) contentControllers:vcs rootController:self];
+    self.contentView = [[CZPageScrollContentView alloc]initWithFrame:CGRectMake(0, self.pageMenu.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height-self.pageMenu.bounds.size.height-(IPHONE_X?88:68)) contentControllers:vcs rootController:self];
     [self.view addSubview:self.contentView];
     self.pageMenu.bridgeScrollView = self.contentView.collectionView;
 

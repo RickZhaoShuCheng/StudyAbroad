@@ -78,13 +78,7 @@
         }
         make.left.right.mas_equalTo(0);
         
-        if (self.keywords) {
-            make.bottom.mas_equalTo(-100);
-        }
-        else
-        {
-            make.bottom.mas_equalTo(!self.model?0:-100);
-        }
+        make.bottom.mas_equalTo(0);
     }];
 //    self.dataView.alwaysBounceVertical = YES;
     self.pageIndex = 1;

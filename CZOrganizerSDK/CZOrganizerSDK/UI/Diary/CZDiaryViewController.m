@@ -78,7 +78,7 @@
     [self.dataCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.menuScreeningView.mas_bottom);
         make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(!self.model?0:-100);
+        make.bottom.mas_equalTo(0);
     }];
     
     self.pageIndex = 1;
