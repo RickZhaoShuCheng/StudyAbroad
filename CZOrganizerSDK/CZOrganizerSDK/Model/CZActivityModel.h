@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *extAddress;
 @property (nonatomic , assign) NSInteger status;
 @property (nonatomic , strong) NSNumber *createTime;
-@property (nonatomic , assign) NSInteger activityType;
+@property (nonatomic , assign) NSInteger activityType;//0.线上直播 1.线下活动
 @property (nonatomic , strong) NSString *logo;
 @property (nonatomic , strong) NSString *banners;
 @property (nonatomic , strong) NSNumber *serviceTime;
