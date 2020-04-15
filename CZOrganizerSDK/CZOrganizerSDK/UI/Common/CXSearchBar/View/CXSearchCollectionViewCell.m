@@ -11,18 +11,35 @@
 
 @interface CXSearchCollectionViewCell()
 
-@property (weak, nonatomic) IBOutlet UIView *backView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) UIView *backView;
+@property (strong, nonatomic) UILabel *nameLabel;
 
 @end
 
 @implementation CXSearchCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-    [self.backView.layer setCornerRadius:4.0];
-    [self.backView setBackgroundColor:CZColorCreater(244, 244, 248, 1.0)];
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backView = [[UIView alloc] init];
+        [self.backView.layer setCornerRadius:4.0];
+        [self.backView setBackgroundColor:CZColorCreater(244, 244, 248, 1.0)];	
+        [self.contentView addSubview:self.backView];
+        [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(0);
+        }];
+        
+        self.nameLabel = [[UILabel alloc] init];
+        self.nameLabel.font = [UIFont systemFontOfSize:13];
+        self.nameLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        [self.contentView addSubview:self.nameLabel];
+        [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_greaterThanOrEqualTo(0);
+            make.center.mas_equalTo(0);
+        }];
+    }
+    return self;
 }
 
 - (void)setText:(NSString *)text {

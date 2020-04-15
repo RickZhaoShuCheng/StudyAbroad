@@ -80,7 +80,9 @@ const CGFloat kFirstitemleftSpace = 15;
     
     [self.searchCollectionView setCollectionViewLayout:self.searchLayout animated:YES];
     [self.searchCollectionView registerClass:[CXSearchCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CXSearchCollectionReusableView class])];
-    [self.searchCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CXSearchCollectionViewCell class]) bundle:[NSBundle bundleForClass:[self class]]] forCellWithReuseIdentifier:NSStringFromClass([CXSearchCollectionViewCell class])];
+//    [self.searchCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CXSearchCollectionViewCell class]) bundle:[NSBundle bundleForClass:[self class]]] forCellWithReuseIdentifier:NSStringFromClass([CXSearchCollectionViewCell class])];
+    
+    [self.searchCollectionView registerClass:[CXSearchCollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([CXSearchCollectionViewCell class])];
     
     [self.view addSubview:self.searchVC.view];
     self.searchVC.view.hidden = YES;

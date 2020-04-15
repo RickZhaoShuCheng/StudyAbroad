@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E04F053244784A2005729BF /* CXSearchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E04F052244784A2005729BF /* CXSearchCollectionViewCell.m */; };
 		1E18BF942424FA8F00A62312 /* CZBoardSchoolStarTopCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BF922424FA8F00A62312 /* CZBoardSchoolStarTopCell.h */; };
 		1E18BF952424FA8F00A62312 /* CZBoardSchoolStarTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18BF932424FA8F00A62312 /* CZBoardSchoolStarTopCell.m */; };
 		1E18BF982424FAA800A62312 /* CZBoardSchoolStarNormalCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E18BF962424FAA800A62312 /* CZBoardSchoolStarNormalCell.h */; };
@@ -25,8 +26,6 @@
 		1E7684D0243D7D67005F0377 /* CXSearchCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684BF243D7D66005F0377 /* CXSearchCollectionReusableView.m */; };
 		1E7684D1243D7D67005F0377 /* CXSearchCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684C0243D7D66005F0377 /* CXSearchCollectionViewCell.h */; };
 		1E7684D2243D7D67005F0377 /* CXSearchLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684C1243D7D66005F0377 /* CXSearchLayout.h */; };
-		1E7684D3243D7D67005F0377 /* CXSearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7684C2243D7D66005F0377 /* CXSearchCollectionViewCell.xib */; };
-		1E7684D4243D7D67005F0377 /* CXSearchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684C3243D7D66005F0377 /* CXSearchCollectionViewCell.m */; };
 		1E7684D5243D7D67005F0377 /* CXSearchCollectionReusableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684C4243D7D66005F0377 /* CXSearchCollectionReusableView.h */; };
 		1E7684D6243D7D67005F0377 /* CXSearchLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684C5243D7D66005F0377 /* CXSearchLayout.m */; };
 		1E7684D7243D7D67005F0377 /* CXSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684C7243D7D66005F0377 /* CXSearchViewController.m */; };
@@ -582,6 +581,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E04F052244784A2005729BF /* CXSearchCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchCollectionViewCell.m; sourceTree = "<group>"; };
 		1E18BF922424FA8F00A62312 /* CZBoardSchoolStarTopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarTopCell.h; sourceTree = "<group>"; };
 		1E18BF932424FA8F00A62312 /* CZBoardSchoolStarTopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZBoardSchoolStarTopCell.m; sourceTree = "<group>"; };
 		1E18BF962424FAA800A62312 /* CZBoardSchoolStarNormalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZBoardSchoolStarNormalCell.h; sourceTree = "<group>"; };
@@ -600,8 +600,6 @@
 		1E7684BF243D7D66005F0377 /* CXSearchCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchCollectionReusableView.m; sourceTree = "<group>"; };
 		1E7684C0243D7D66005F0377 /* CXSearchCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXSearchCollectionViewCell.h; sourceTree = "<group>"; };
 		1E7684C1243D7D66005F0377 /* CXSearchLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXSearchLayout.h; sourceTree = "<group>"; };
-		1E7684C2243D7D66005F0377 /* CXSearchCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXSearchCollectionViewCell.xib; sourceTree = "<group>"; };
-		1E7684C3243D7D66005F0377 /* CXSearchCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchCollectionViewCell.m; sourceTree = "<group>"; };
 		1E7684C4243D7D66005F0377 /* CXSearchCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXSearchCollectionReusableView.h; sourceTree = "<group>"; };
 		1E7684C5243D7D66005F0377 /* CXSearchLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchLayout.m; sourceTree = "<group>"; };
 		1E7684C7243D7D66005F0377 /* CXSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchViewController.m; sourceTree = "<group>"; };
@@ -1215,8 +1213,7 @@
 				1E7684BF243D7D66005F0377 /* CXSearchCollectionReusableView.m */,
 				1E7684C0243D7D66005F0377 /* CXSearchCollectionViewCell.h */,
 				1E7684C1243D7D66005F0377 /* CXSearchLayout.h */,
-				1E7684C2243D7D66005F0377 /* CXSearchCollectionViewCell.xib */,
-				1E7684C3243D7D66005F0377 /* CXSearchCollectionViewCell.m */,
+				1E04F052244784A2005729BF /* CXSearchCollectionViewCell.m */,
 				1E7684C4243D7D66005F0377 /* CXSearchCollectionReusableView.h */,
 				1E7684C5243D7D66005F0377 /* CXSearchLayout.m */,
 			);
@@ -2737,7 +2734,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E7684D3243D7D67005F0377 /* CXSearchCollectionViewCell.xib in Resources */,
 				535E5D9624080AED00471453 /* MJRefresh.bundle in Resources */,
 				535F000423FFFE35003463B0 /* CZOrganizerBundle.bundle in Resources */,
 				1E7684D9243D7D67005F0377 /* CXSearchViewController.xib in Resources */,
@@ -2865,6 +2861,7 @@
 				D83BF70A243B5E680032C2BD /* CZSchoolStarDetailPostCell.m in Sources */,
 				537E3D76240A96DF00C080E9 /* CZHotActivityCell.m in Sources */,
 				53A3F78E241B5B4700E05F81 /* CZBoardAdvisorNormalCell.m in Sources */,
+				1E04F053244784A2005729BF /* CXSearchCollectionViewCell.m in Sources */,
 				535E5DAE24080AED00471453 /* MJRefreshStateHeader.m in Sources */,
 				535E5D9224080AED00471453 /* MJRefreshConfig.m in Sources */,
 				1E7684CF243D7D67005F0377 /* CXSearchModel.m in Sources */,
@@ -2977,7 +2974,6 @@
 				D8CD0C182413E82000B2124C /* JCTagListViewFlowLayout.m in Sources */,
 				1E18BF9D2424FB5C00A62312 /* CZBoardSchoolStarView.m in Sources */,
 				D85A4FA1240FE384003E45F4 /* CZAdvisorDetailViewController.m in Sources */,
-				1E7684D4243D7D67005F0377 /* CXSearchCollectionViewCell.m in Sources */,
 				D829DDEC244221620051BB99 /* CZOrganizerInfoCell.m in Sources */,
 				53A90CC92413D1D100894E9D /* CZAllServiceThirdViewController.m in Sources */,
 				537E3D87240A9A9100C080E9 /* CZProductVoListModel.m in Sources */,
