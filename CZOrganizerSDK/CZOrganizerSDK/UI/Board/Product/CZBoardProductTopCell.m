@@ -79,7 +79,7 @@
         make.left.mas_equalTo(self.coverImageView.mas_right).offset(11);
         make.top.mas_equalTo(self.coverImageView.mas_top).offset(2);
         make.right.mas_equalTo(-15);
-        make.height.mas_equalTo(31);
+        make.height.mas_greaterThanOrEqualTo(0);
     }];
     
     self.subTitleLabel = [[UILabel alloc] init];
@@ -99,7 +99,7 @@
     [self.bgView addSubview:self.distanceLabel];
     [self.distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15);
-        make.top.mas_equalTo(self.mainTitleLabel.mas_bottom).offset(8);
+        make.centerY.mas_equalTo(self.coverImageView);
         make.height.width.mas_greaterThanOrEqualTo(0);
     }];
     
@@ -227,7 +227,7 @@
     }
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:PIC_URL(imageName)] placeholderImage:[CZImageProvider imageNamed:@"fen_mian_mo_ren_tu"]];
     self.mainTitleLabel.text = model.title;
-    self.subTitleLabel.text = model.organName;
+    self.subTitleLabel.text = model.organName.length > 0?model.organName:model.sportRealName;
     self.popularityLabel.text = @"近30天累计人气";
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",model.price.floatValue/100.0];
     

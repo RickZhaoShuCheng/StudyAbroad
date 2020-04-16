@@ -21,6 +21,7 @@
 @property (nonatomic , strong) UILabel *priceLabel;
 
 @property (nonatomic , strong) UIImageView *confirmImageView;
+@property (nonatomic , strong) UIImageView *bgView;
 
 @end
 
@@ -36,6 +37,14 @@
 
 -(void)initWithUI
 {
+    self.bgView = [[UIImageView alloc] init];
+    [self.contentView addSubview:self.bgView];
+    self.bgView.backgroundColor = [UIColor whiteColor];
+    [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.mas_equalTo(0);
+        make.height.mas_equalTo(140);
+    }];
+    
     self.nameLabel = [[UILabel alloc] init];
     [self.contentView addSubview:self.nameLabel];
     self.nameLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -64,7 +73,7 @@
     [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(36);
         make.left.mas_equalTo(12);
-        make.bottom.mas_equalTo(-10);
+        make.bottom.mas_equalTo(-20);
     }];
     
     self.confirmImageView = [[UIImageView alloc] init];
@@ -115,6 +124,9 @@
         make.top.mas_equalTo(self.avatarImageView);
         make.right.mas_equalTo(-15);
     }];
+    
+    self.contentView.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor clearColor];
 }
 
 -(void)setModel:(CZProductModel *)model

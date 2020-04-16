@@ -22,6 +22,8 @@
         self.tableFooterView = [UIView new];
         self.dataSource = self;
         self.delegate = self;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.backgroundColor = CZColorCreater(245, 245, 249, 1.0);
     }
     return self;
 }
@@ -41,7 +43,7 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 140;
+    return 140+10;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

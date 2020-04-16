@@ -520,6 +520,8 @@ static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName"
     NSDictionary *parameters = [param dictonary];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    NSString *userId = [QSClient userId];
+    [headers setObject:userId forKey:@"userId"];
     
     [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
             BOOL success = NO;
@@ -565,7 +567,8 @@ static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName"
     NSDictionary *parameters = [param dictonary];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
-    
+    NSString *userId = [QSClient userId];
+    [headers setObject:userId forKey:@"userId"];
     [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
         BOOL success = NO;
         NSString *errorMessage;
@@ -610,7 +613,8 @@ static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName"
     NSDictionary *parameters = [param dictonary];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
-    
+    NSString *userId = [QSClient userId];
+    [headers setObject:userId forKey:@"userId"];
     [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
         BOOL success = NO;
         NSString *errorMessage;
@@ -656,7 +660,8 @@ static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName"
     NSDictionary *parameters = [param dictonary];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
-    
+    NSString *userId = [QSClient userId];
+    [headers setObject:userId forKey:@"userId"];
     [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
         BOOL success = NO;
         NSString *errorMessage;
@@ -702,7 +707,8 @@ static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName"
     NSDictionary *parameters = [param dictonary];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
-    
+    NSString *userId = [QSClient userId];
+    [headers setObject:userId forKey:@"userId"];
     [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
         BOOL success = NO;
         NSString *errorMessage;
@@ -747,7 +753,8 @@ static const NSString *ApiSysAreaFindAreaList = @"apiSysArea/findAreaListByName"
     NSDictionary *parameters = [param dictonary];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
-    
+    NSString *userId = [QSClient userId];
+    [headers setObject:userId forKey:@"userId"];
     [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
         BOOL success = NO;
         NSString *errorMessage;
