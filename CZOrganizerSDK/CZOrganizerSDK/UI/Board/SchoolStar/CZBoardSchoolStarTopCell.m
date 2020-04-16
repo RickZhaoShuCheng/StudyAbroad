@@ -221,6 +221,7 @@
     
     self.productListView = [[CZBoardSchoolStarProductView alloc] init];
     self.productListView.layer.cornerRadius = 10;
+    self.productListView.scrollEnabled = NO;
     self.productListView.layer.masksToBounds = YES;
     [self.bottomView addSubview:self.productListView];
     [self.productListView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -246,20 +247,20 @@
 -(void)setModel:(CZSchoolStarModel *)model
 {
     _model = model;
-    if (!model.keywords.length) {
+    if (!model.sportUserEduVos.length) {
         self.tagList.tags = @[];
     }
     else
     {
-        NSArray *keywords = [model.keywords componentsSeparatedByString:@","];
-        self.tagList.tags = keywords;
+        NSArray *sportUserEduVos = [model.sportUserEduVos componentsSeparatedByString:@","];
+        self.tagList.tags = sportUserEduVos;
     }
     
     [self.tagView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(self.tagList.contentHeight);
     }];
     
-    CGFloat bottomHeight = 15+40*self.model.productVoList.count;
+    CGFloat bottomHeight = 15+40*(self.model.productVoList.count < 3?self.model.productVoList.count:2);
     
     if (self.model.comments.count == 0) {
         self.addressIconView.hidden = YES;
@@ -284,7 +285,7 @@
     self.rankDetailLabel.text = [NSString stringWithFormat:@"%@ 次服务" , [@(model.serviceCount.integerValue) stringValue]];
 
     self.nameLabel.text = model.realName;
-    self.workPlaceLabel.text = model.schoolName;
+    self.workPlaceLabel.text = model.keywords;
     
     self.iconDetailLabel.text = @"";
     self.iconImageView.image = [CZImageProvider imageNamed:@"default_avatar"];
@@ -298,7 +299,7 @@
         make.height.mas_equalTo(bottomHeight);
     }];
     
-    self.productListView.dataArr = self.model.productVoList;
+    self.productListView.dataArr = self.model.productVoList.count > 2?[self.model.productVoList subarrayWithRange:NSMakeRange(0, 2)]:self.model.productVoList;
     [self.productListView reloadData];
     
     [self.contentView layoutIfNeeded];
