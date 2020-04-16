@@ -16,6 +16,7 @@
 #import "QSClient.h"
 #import "QSOrganizerHomeService.h"
 #import "NSDate+Utils.h"
+#import "QSHudView.h"
 
 @interface CZActivityDetailVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
@@ -303,12 +304,10 @@
     [service requestForApiShoppingCartGetShoppingCartCountCallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.addCartBtn.enabled = YES;
                 weakSelf.carNumber = data;
                 weakSelf.cartCountLab.text = [NSString stringWithFormat:@"%@",[@([data integerValue]) stringValue]];
             });
         }else{
-            weakSelf.addCartBtn.enabled = YES;
         }
     }];
 }
@@ -319,18 +318,7 @@
 //
 //    @"organId" : SafeStr(self.goodsDetailSourceModel.organId),
 //    @"buyCount" : @"1",
-    
-    __block UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2.0-ScreenScale(100), kScreenHeight/2.0-ScreenScale(200), ScreenScale(200), ScreenScale(200))];
-    bgView.layer.masksToBounds = YES;
-    bgView.layer.cornerRadius = ScreenScale(10);
-    bgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-    [self.view addSubview:bgView];
-
-    __block UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(ScreenScale(200)/2.0-16, ScreenScale(200)/2.0-16, 32.0f, 32.0f)];
-    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [bgView addSubview:activityIndicator];
-    [activityIndicator startAnimating];
-
+    QSProgressHUD *hud = [QSHudView HUDForView:[UIApplication sharedApplication].keyWindow];
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setValue:self.model.productId forKey:@"productId"];
@@ -339,13 +327,15 @@
     [service requestForApiShoppingCartAddShoppingCart:param CallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                [activityIndicator stopAnimating];
-                [bgView removeFromSuperview];
+                [hud hideAnimated:YES];
+                weakSelf.addCartBtn.enabled = YES;
+                [QSHudView showToastOnView:[UIApplication sharedApplication].keyWindow title:@"加入成功" customizationBlock:^(QSHudView *hudView) {
+                    [hudView hideAnimated:YES afterDelay:1];
+                }];
                 [weakSelf requestForApiShoppingCartGetShoppingCartCountCallBack];
             });
         }else{
-            [activityIndicator stopAnimating];
-            [bgView removeFromSuperview];
+            [hud hideAnimated:YES];
             weakSelf.addCartBtn.enabled = YES;
         }
     }];

@@ -47,6 +47,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZSchoolStarShopDetailCell class]) forIndexPath:indexPath];
+    self.cell.model = self.model;
     self.cell.superVC = self.superVC;
     self.cell.sportUserId = self.model.sportUserId;
     WEAKSELF
