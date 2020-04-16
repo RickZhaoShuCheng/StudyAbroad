@@ -17,6 +17,7 @@
 #import "QSOrganizerHomeService.h"
 #import "NSDate+Utils.h"
 #import "QSHudView.h"
+#import "CZActivitySureOrderVC.h"
 
 @interface CZActivityDetailVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
@@ -167,6 +168,7 @@
     [self requestForApiShoppingCartAddShoppingCart];
 }
 - (void)clickBuyBtn:(UIButton *)button{
+    WEAKSELF
     /*
     * 初始化传参
     * @param param
@@ -201,7 +203,7 @@
     }else{
         orderFree = @"1";
     }
-    
+
     NSDictionary *param = @{@"orderActivity":@"1",
                             @"orderActivityTime":orderActivityTime,
                             @"orderFree":orderFree,
@@ -222,7 +224,12 @@
     }else{
         
         void (^orderSubmitCallBack)(id) = ^(id obj){
-            
+            CZActivitySureOrderVC *orderVC = [[CZActivitySureOrderVC alloc]init];
+            orderVC.dic = obj;
+            orderVC.sureCallBack = ^{
+                [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+            };
+            [weakSelf.navigationController pushViewController:orderVC animated:YES];
         };
         NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:param];
         [mDict setObject:orderSubmitCallBack forKey:@"orderSubmitCallBack"];

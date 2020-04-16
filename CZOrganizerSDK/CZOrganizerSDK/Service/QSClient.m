@@ -151,6 +151,13 @@ static dispatch_once_t onceToken;
     }
     return nil;
 }
++(UIViewController *)instancePhoneTabVC{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(instancePhoneTabVC)]) {
+       return [client.delegate instancePhoneTabVC];
+    }
+    return nil;
+}
 
 +(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options
 {

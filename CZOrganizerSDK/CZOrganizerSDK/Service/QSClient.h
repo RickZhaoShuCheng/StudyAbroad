@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIViewController *)instanceSureOrderTabVCByOptions:(NSDictionary *)options;
 
+-(UIViewController *)instancePhoneTabVC;
+
 -(void)instanceOragizerDetailViewController:(UINavigationController *)controller options:(NSDictionary *)options;
 
 @end
@@ -48,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceNiceCommentViewControllerByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceNiceDiaryViewControllerByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceAdvisorDetailViewControllerByOptions:(NSDictionary *)options;
-
 @end
 
 @interface QSClient (Private)
@@ -62,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceProductDetailVCByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceSureOrderTabVCByOptions:(NSDictionary *)options;
-
++(UIViewController *)instancePhoneTabVC;
 @end
 
 NS_ASSUME_NONNULL_END
