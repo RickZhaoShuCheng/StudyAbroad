@@ -15,6 +15,7 @@
 #import "CZMJRefreshHelper.h"
 #import "QSClient.h"
 #import "QSOrganizerHomeService.h"
+#import "NSDate+Utils.h"
 
 @interface CZActivityDetailVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
@@ -164,9 +165,64 @@
     self.addCartBtn.enabled = NO;
     [self requestForApiShoppingCartAddShoppingCart];
 }
-- (void)clickBuyBtn{
-    UIViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:@{}];
-    [self.navigationController pushViewController:sureOrder animated:YES];
+- (void)clickBuyBtn:(UIButton *)button{
+    /*
+    * 初始化传参
+    * @param param
+      orderActivity       是否是活动订单 String  @"1" : 活动订单
+      orderActivityTime   活动订单时间   String
+      orderFree           是否免费      String  @"1" : 免费
+      orderProductId      商品id       String  商品id
+      orderHasApplyPrice  是预约金支付  String   接口返回的值里面找 ApplyPrice 有就传 @"1"
+      orderImgUrl         商品logo     String   logo 传接口返回的原始数值 不做 任何处理 内部处理
+      orderTitle          商品标题      String   订单标题
+      orderApplyPrice     预约金价格    String   传接口返回的原始数值 转字符串就行了  不要除以 100 我内部处理
+      orderTotalPrice     总价格       String   传接口返回的原始数值 转字符串就行了  不要除以 100 我内部处理
+      orderBuyCount       购买数量     String
+      orderBuyReason      商家支持预约金   String  没有就不传
+      orderMerchantTuoGuan     商家支持资金托管 String 没有就不传
+      orderMerchantBaoZheng    商家已缴纳保证金 String 没有就不传
+     */
+    NSString *orderHasApplyPrice = @"";
+    if ([self.model.applyPrice integerValue] > 0) {
+        orderHasApplyPrice = @"1";
+    }
+    NSString *orderActivityTime = @"";
+    if (self.model.activitySessionList.count >= 1) {
+        CZActivitySession *session =  self.model.activitySessionList[0];
+        NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
+        NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.endTime integerValue]/1000]];
+        orderActivityTime = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
+    }
+    NSString *orderFree = @"";
+    if (button == self.buyBtn) {
+        orderFree = @"0";
+    }else{
+        orderFree = @"1";
+    }
+    
+    NSDictionary *param = @{@"orderActivity":@"1",
+                            @"orderActivityTime":orderActivityTime,
+                            @"orderFree":orderFree,
+                            @"orderProductId":self.model.productId,
+                            @"orderHasApplyPrice":orderHasApplyPrice,
+                            @"orderImgUrl":self.model.logo,
+                            @"orderTitle":self.model.title,
+                            @"orderApplyPrice":[@([self.model.applyPrice integerValue]) stringValue],
+                            @"orderTotalPrice":[@([self.model.price integerValue]) stringValue],
+                            @"orderBuyCount":@"1",
+                            @"orderBuyReason":self.model.buyReason,
+                            @"orderMerchantTuoGuan":[@([self.model.flagMoney integerValue]) stringValue],
+                            @"orderMerchantBaoZheng":[@([self.model.flagMoneyEnsure integerValue]) stringValue],
+    };
+    if (button == self.buyBtn) {
+        UIViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:param];
+        [self.navigationController pushViewController:sureOrder animated:YES];
+    }else{
+//        CWSubmitOrderViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:param];
+//        [sureOrder setOrderSubmitCallBack]
+//        [self.navigationController pushViewController:sureOrder animated:YES];
+    }
 }
 
 //获取商品详情
@@ -422,6 +478,7 @@
     [self.applyBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.applyBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
     [self.applyBtn setBackgroundColor:CZColorCreater(76, 182, 253, 1)];
+    [self.applyBtn addTarget:self action:@selector(clickBuyBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.freeBottomView addSubview:self.applyBtn];
     [self.applyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.chatBtn.mas_trailing);
@@ -532,7 +589,7 @@
     [self.buyBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.buyBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
     [self.buyBtn setBackgroundColor:CZColorCreater(255, 68, 85, 1)];
-    [self.buyBtn addTarget:self action:@selector(clickBuyBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.buyBtn addTarget:self action:@selector(clickBuyBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.buyBtn];
     [self.buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.addCartBtn.mas_trailing);
