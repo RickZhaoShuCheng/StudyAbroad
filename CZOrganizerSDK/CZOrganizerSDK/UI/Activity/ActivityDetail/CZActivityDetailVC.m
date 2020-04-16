@@ -219,9 +219,14 @@
         UIViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:param];
         [self.navigationController pushViewController:sureOrder animated:YES];
     }else{
-//        CWSubmitOrderViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:param];
-//        [sureOrder setOrderSubmitCallBack]
-//        [self.navigationController pushViewController:sureOrder animated:YES];
+        
+        void (^orderSubmitCallBack)(id) = ^(id obj){
+            
+        };
+        NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:param];
+        [mDict setObject:orderSubmitCallBack forKey:@"orderSubmitCallBack"];
+        UIViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:mDict];
+        [self.navigationController pushViewController:sureOrder animated:YES];
     }
 }
 

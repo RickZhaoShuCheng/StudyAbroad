@@ -8,6 +8,27 @@
 
 #import "CZPageScrollContentView.h"
 
+@interface CZCommonScrollView : UICollectionView
+
+@end
+
+@implementation CZCommonScrollView
+
+ -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+ {
+     // 首先判断otherGestureRecognizer是不是系统pop手势
+     if ([otherGestureRecognizer.view isKindOfClass:NSClassFromString(@"UILayoutContainerView")]) {
+         // 再判断系统手势的state是began还是fail，同时判断scrollView的位置是不是正好在最左边
+         if ((otherGestureRecognizer.state == UIGestureRecognizerStateBegan || otherGestureRecognizer.state == UIGestureRecognizerStatePossible) && self.contentOffset.x == 0) {
+            return YES;
+         }
+     }
+
+     return NO;
+}
+
+@end
+
 NSString *const kkCollectionCellider = @"kkContentCollectionCellider";
 
 @interface CZPageScrollContentView()<UICollectionViewDelegate, UICollectionViewDataSource>
@@ -73,7 +94,7 @@ NSString *const kkCollectionCellider = @"kkContentCollectionCellider";
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:layout];
+    UICollectionView *collectionView = [[CZCommonScrollView alloc]initWithFrame:self.bounds collectionViewLayout:layout];
     collectionView.pagingEnabled = YES;
     collectionView.bounces = NO;
     collectionView.dataSource = self;
@@ -222,8 +243,6 @@ NSString *const kkCollectionCellider = @"kkContentCollectionCellider";
     
     
 }
-
-
 
 @end
 
