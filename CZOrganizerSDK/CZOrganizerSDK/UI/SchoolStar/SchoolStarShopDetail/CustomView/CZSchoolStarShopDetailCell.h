@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) UIViewController *superVC;
 @property (nonatomic ,strong) UIScrollView *scrollView;
 @property (nonatomic ,strong) NSString *sportUserId;
+@property (nonatomic ,strong) CZSchoolStarModel *model;
 @property (nonatomic ,strong) CZSchoolStarShopServiceVC *serviceVC;
 @property (nonatomic ,strong) CZSchoolStarShopCommentVC *commentVC;
 @property (nonatomic ,strong) CZSchoolStarShopCaseVC *caseVC;

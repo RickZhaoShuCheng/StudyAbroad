@@ -28,6 +28,7 @@
             self.serviceVC = [[CZSchoolStarShopServiceVC alloc]init];
             self.serviceVC.superVC = self.superVC;
             self.serviceVC.sportUserId = sportUserId;
+            self.serviceVC.starModel = self.model;
             [self.scrollView addSubview:self.serviceVC.view];
             [self.serviceVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.leading.mas_equalTo(self.scrollView);

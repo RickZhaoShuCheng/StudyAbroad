@@ -12,6 +12,7 @@
 #import "CZProductVoListModel.h"
 #import "CZMJRefreshHelper.h"
 #import "QSClient.h"
+#import "QSHudView.h"
 @interface CZSchoolStarShopServiceVC ()
 @property (nonatomic ,assign) NSInteger pageNum;
 @end
@@ -41,10 +42,11 @@
         [weakSelf requestForApiShoppingCartAddShoppingCart:model];
     }];
     [self.tableView setClickBuyBlock:^(CZProductVoListModel * _Nonnull model) {
+        NSDictionary *productDic = [weakSelf dicFromObject:model];
+        NSDictionary *starDic = [weakSelf dicFromObject:weakSelf.starModel];
         
     }];
 }
-
 /**
  获取服务项目
  */
@@ -87,17 +89,8 @@
  */
 - (void)requestForApiShoppingCartAddShoppingCart:(CZProductVoListModel *)model{
 
-   __block UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2.0-ScreenScale(100), kScreenHeight/2.0-ScreenScale(200), ScreenScale(200), ScreenScale(200))];
-    bgView.layer.masksToBounds = YES;
-    bgView.layer.cornerRadius = ScreenScale(10);
-    bgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-    [[UIApplication sharedApplication].keyWindow addSubview:bgView];
-
-    __block UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(ScreenScale(200)/2.0-16, ScreenScale(200)/2.0-16, 32.0f, 32.0f)];
-    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [bgView addSubview:activityIndicator];
-    [activityIndicator startAnimating];
-
+   
+    QSProgressHUD *hud = [QSHudView HUDForView:[UIApplication sharedApplication].keyWindow];
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setValue:model.productId forKey:@"productId"];
@@ -106,12 +99,13 @@
     [service requestForApiShoppingCartAddShoppingCart:param CallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                [activityIndicator stopAnimating];
-                [bgView removeFromSuperview];
+                [hud hideAnimated:YES];
+                [QSHudView showToastOnView:[UIApplication sharedApplication].keyWindow title:@"加入成功" customizationBlock:^(QSHudView *hudView) {
+                    [hudView hideAnimated:YES afterDelay:1];
+                }];
             });
         }else{
-            [activityIndicator stopAnimating];
-            [bgView removeFromSuperview];
+            [hud hideAnimated:YES];
         }
     }];
 }
@@ -144,5 +138,88 @@
 
    // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
     return  ceilf(size.height);
+}
+//model转化为字典
+- (NSDictionary *)dicFromObject:(NSObject *)object {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    unsigned int count;
+    objc_property_t *propertyList = class_copyPropertyList([object class], &count);
+    
+    for (int i = 0; i < count; i++) {
+        objc_property_t property = propertyList[i];
+        const char *cName = property_getName(property);
+        NSString *name = [NSString stringWithUTF8String:cName];
+        NSObject *value = [object valueForKey:name];//valueForKey返回的数字和字符串都是对象
+        
+        if ([value isKindOfClass:[NSString class]] || [value isKindOfClass:[NSNumber class]]) {
+            //string , bool, int ,NSinteger
+            [dic setObject:value forKey:name];
+            
+        } else if ([value isKindOfClass:[NSArray class]]) {
+            //数组或字典
+            [dic setObject:[self arrayWithObject:value] forKey:name];
+        } else if ([value isKindOfClass:[NSDictionary class]]) {
+            //数组或字典
+            [dic setObject:[self dicWithObject:value] forKey:name];
+        } else if (value == nil) {
+            //null
+            //[dic setObject:[NSNull null] forKey:name];//这行可以注释掉?????
+        } else {
+            //model
+            [dic setObject:[self dicFromObject:value] forKey:name];
+        }
+    }
+    
+    return [dic copy];
+}
+- (NSArray *)arrayWithObject:(id)object {
+    //数组
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *originArr = (NSArray *)object;
+    if ([originArr isKindOfClass:[NSArray class]]) {
+        for (NSObject *object in originArr) {
+            if ([object isKindOfClass:[NSString class]]||[object isKindOfClass:[NSNumber class]]) {
+                //string , bool, int ,NSinteger
+                [array addObject:object];
+            } else if ([object isKindOfClass:[NSArray class]]) {
+                //数组或字典
+                [array addObject:[self arrayWithObject:object]];
+            } else if ([object isKindOfClass:[NSDictionary class]]) {
+                //数组或字典
+                [array addObject:[self dicWithObject:object]];
+            } else {
+                //model
+                [array addObject:[self dicFromObject:object]];
+            }
+        }
+        return [array copy];
+    }
+    return array.copy;
+}
+
+- (NSDictionary *)dicWithObject:(id)object {
+    //字典
+    NSDictionary *originDic = (NSDictionary *)object;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        for (NSString *key in originDic.allKeys) {
+            id object = [originDic objectForKey:key];
+            if ([object isKindOfClass:[NSString class]]||[object isKindOfClass:[NSNumber class]]) {
+                //string , bool, int ,NSinteger
+                [dic setObject:object forKey:key];
+            } else if ([object isKindOfClass:[NSArray class]]) {
+                //数组或字典
+                [dic setObject:[self arrayWithObject:object] forKey:key];
+            } else if ([object isKindOfClass:[NSDictionary class]]) {
+                //数组或字典
+                [dic setObject:[self dicWithObject:object] forKey:key];
+            } else {
+                //model
+                [dic setObject:[self dicFromObject:object] forKey:key];
+            }
+        }
+        return [dic copy];
+    }
+    return dic.copy;
 }
 @end
