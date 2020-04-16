@@ -31,10 +31,10 @@
 }
 - (void)setDic:(NSDictionary *)dic{
     _dic = dic;
-    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(dic[@"productLogo"])] placeholderImage:nil];
-    self.titleLab.text = dic[@"productTitle"];
-    self.orderNumLab.text = dic[@"orderNo"];
-    self.timeLab.text = @"场次：2019-12-23 20:00-21:00";
+    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(dic[@"data"][@"productLogo"])] placeholderImage:nil];
+    self.titleLab.text = dic[@"data"][@"productTitle"];
+    self.orderNumLab.text = dic[@"data"][@"orderNo"];
+    self.timeLab.text = [NSString stringWithFormat:@"场次：%@",dic[@"orderActivityTime"]];
 }
 
 - (void)clickSureBtn{
