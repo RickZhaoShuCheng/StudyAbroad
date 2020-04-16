@@ -157,6 +157,10 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
  *获取购物车数量
  */
 -(void)requestForApiShoppingCartGetShoppingCartCountCallBack:(CZAdvisorDetailBack)callBack;
+/**
+ *添加到购物车
+ */
+-(void)requestForApiShoppingCartAddShoppingCart:(NSMutableDictionary *)param CallBack:(CZAdvisorDetailBack)callBack;
 @end
 
 NS_ASSUME_NONNULL_END

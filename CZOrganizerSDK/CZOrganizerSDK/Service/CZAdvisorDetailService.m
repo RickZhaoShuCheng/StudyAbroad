@@ -35,6 +35,7 @@ static const NSString *ApiDiarySelectCaseList = @"apiDiary/selectCaseList";
 static const NSString *ApiMyDynamicPersonalHomepage = @"apiMyDynamic/personalHomepage";
 static const NSString *ApiPlaceholderFindPlaceholderByType = @"apiPlaceholder/findPlaceholderByType";
 static const NSString *ApiShoppingCartGetShoppingCartCount = @"apiShoppingCart/getShoppingCartCount";
+static const NSString *ApiShoppingCartAddShoppingCart = @"apiShoppingCart/addShoppingCart";
 
 
 @implementation CZAdvisorDetailService
@@ -1275,6 +1276,51 @@ static const NSString *ApiShoppingCartGetShoppingCartCount = @"apiShoppingCart/g
     
     NSDictionary *parameters = @{@"userId":userId,
     };
+    
+    NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
+    [headers setObject:userId forKey:@"userId"];
+    
+    [QSNetworkManagerUtil sendAsyncJSONRequestWithURL:url type:QSRequestPOST headers:headers parameters:parameters pathParameters:nil completionHandler:^(NSInteger code, id  _Nonnull jsonData, NSError * _Nonnull error) {
+        BOOL success = NO;
+        NSString *errorMessage;
+        
+        if (code == 200) {
+            code = QSHttpCode_SUCCESS;
+        }
+        
+        if (code == QSHttpCode_SUCCESS) {
+            success = YES;
+        }
+        
+        errorMessage = [jsonData objectForKey:@"msg"];
+        
+        if (!errorMessage) {
+            errorMessage = [error description];
+        }
+        
+        id data = [jsonData objectForKey:@"data"];
+        
+        if ([data isKindOfClass:[NSNull class]]) {
+            data = nil;
+        }
+        
+        if (callBack) {
+            callBack(success , code , data , errorMessage);
+        }
+    }];
+}
+/**
+ *添加到购物车
+ */
+-(void)requestForApiShoppingCartAddShoppingCart:(NSMutableDictionary *)param CallBack:(CZAdvisorDetailBack)callBack{
+
+    NSString *baseURL = [QSClient sharedInstance].configeration.baseURL;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", baseURL, ApiShoppingCartAddShoppingCart];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *userId = [QSClient userId];
+    
+    NSMutableDictionary *parameters = param;
+    [parameters setValue:userId forKey:@"userId"];
     
     NSMutableDictionary *headers = [[QSClient sharedInstance].configeration.headers mutableCopy];
     [headers setObject:userId forKey:@"userId"];

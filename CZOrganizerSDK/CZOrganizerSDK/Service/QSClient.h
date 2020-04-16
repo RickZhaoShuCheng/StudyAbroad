@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
 
+-(UIViewController *)instanceSureOrderTabVCByOptions:(NSDictionary *)options;
+
 -(void)instanceOragizerDetailViewController:(UINavigationController *)controller options:(NSDictionary *)options;
 
 @end
@@ -59,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceWebViewByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceProductDetailVCByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
++(UIViewController *)instanceSureOrderTabVCByOptions:(NSDictionary *)options;
 
 @end
 

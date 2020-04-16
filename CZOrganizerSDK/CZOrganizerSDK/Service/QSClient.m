@@ -144,6 +144,13 @@ static dispatch_once_t onceToken;
     }
     return nil;
 }
++(UIViewController *)instanceSureOrderTabVCByOptions:(NSDictionary *)options{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(instanceSureOrderTabVCByOptions:)]) {
+       return [client.delegate instanceSureOrderTabVCByOptions:options];
+    }
+    return nil;
+}
 
 +(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options
 {

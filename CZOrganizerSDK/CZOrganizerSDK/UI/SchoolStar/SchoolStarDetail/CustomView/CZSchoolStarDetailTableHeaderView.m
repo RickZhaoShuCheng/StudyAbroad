@@ -47,7 +47,8 @@
     }else{
         self.VImg.hidden = YES;
     }
-    self.schoolLab.text = [NSString stringWithFormat:@"%@年%@老油条",@"无字段",model.adept];//model.studyYears
+    self.schoolLab.text = model.keywords;
+//    self.schoolLab.text = [NSString stringWithFormat:@"%@年%@老油条",@"无字段",model.adept];//model.studyYears
     self.contentLab.text = model.sportIntroduction;
     CGFloat height = [self getStringHeightWithText:model.sportIntroduction font:[UIFont systemFontOfSize:ScreenScale(28)] viewWidth:kScreenWidth-ScreenScale(100)];
     _model.introduceHeight = height;

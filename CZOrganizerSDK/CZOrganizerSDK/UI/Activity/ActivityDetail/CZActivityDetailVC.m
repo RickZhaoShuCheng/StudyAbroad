@@ -160,6 +160,14 @@
 - (void)showCartView{
     [QSClient showCartInNavi:self.navigationController];
 }
+- (void)clickCartBtn{
+    self.addCartBtn.enabled = NO;
+    [self requestForApiShoppingCartAddShoppingCart];
+}
+- (void)clickBuyBtn{
+    UIViewController *sureOrder = [QSClient instanceSureOrderTabVCByOptions:@{}];
+    [self.navigationController pushViewController:sureOrder animated:YES];
+}
 
 //获取商品详情
 - (void)requestForApiProductActivitySelectProductActivityInfo{
@@ -234,12 +242,54 @@
     [service requestForApiShoppingCartGetShoppingCartCountCallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.addCartBtn.enabled = YES;
                 weakSelf.carNumber = data;
                 weakSelf.cartCountLab.text = [NSString stringWithFormat:@"%@",[@([data integerValue]) stringValue]];
             });
+        }else{
+            weakSelf.addCartBtn.enabled = YES;
         }
     }];
 }
+//添加到购物车
+- (void)requestForApiShoppingCartAddShoppingCart{
+    WEAKSELF
+//    @"productId" : SafeStr(self.productId),
+//
+//    @"organId" : SafeStr(self.goodsDetailSourceModel.organId),
+//    @"buyCount" : @"1",
+    
+    __block UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2.0-ScreenScale(100), kScreenHeight/2.0-ScreenScale(200), ScreenScale(200), ScreenScale(200))];
+    bgView.layer.masksToBounds = YES;
+    bgView.layer.cornerRadius = ScreenScale(10);
+    bgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    [self.view addSubview:bgView];
+
+    __block UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(ScreenScale(200)/2.0-16, ScreenScale(200)/2.0-16, 32.0f, 32.0f)];
+    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [bgView addSubview:activityIndicator];
+    [activityIndicator startAnimating];
+
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setValue:self.model.productId forKey:@"productId"];
+    [param setValue:self.model.organId forKey:@"organId"];
+    [param setValue:@"1" forKey:@"buyCount"];
+    [service requestForApiShoppingCartAddShoppingCart:param CallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [activityIndicator stopAnimating];
+                [bgView removeFromSuperview];
+                [weakSelf requestForApiShoppingCartGetShoppingCartCountCallBack];
+            });
+        }else{
+            [activityIndicator stopAnimating];
+            [bgView removeFromSuperview];
+            weakSelf.addCartBtn.enabled = YES;
+        }
+    }];
+}
+
 /**
  * 初始化UI
  */
@@ -468,6 +518,7 @@
     [self.addCartBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.addCartBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
     [self.addCartBtn setBackgroundColor:CZColorCreater(137, 144, 166, 0.8)];
+    [self.addCartBtn addTarget:self action:@selector(clickCartBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.addCartBtn];
     [self.addCartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.cartBtn.mas_trailing);
@@ -481,6 +532,7 @@
     [self.buyBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.buyBtn setTitleColor:CZColorCreater(255, 255, 255, 1) forState:UIControlStateNormal];
     [self.buyBtn setBackgroundColor:CZColorCreater(255, 68, 85, 1)];
+    [self.buyBtn addTarget:self action:@selector(clickBuyBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.buyBtn];
     [self.buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.addCartBtn.mas_trailing);

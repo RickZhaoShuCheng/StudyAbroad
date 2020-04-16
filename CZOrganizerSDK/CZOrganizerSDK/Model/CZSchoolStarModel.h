@@ -67,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *sales;
 @property (nonatomic , strong) NSString *reputation;
 @property (nonatomic , strong) NSString *valSatisfaction;
+@property (nonatomic , strong) NSString *adept;
 @property (nonatomic , strong) NSArray *comments;
 @property (nonatomic , strong) NSNumber *isCollect;
 @property (nonatomic , assign) CGFloat cellHeight;

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZSchoolStarShopServiceCell : UITableViewCell
 @property (nonatomic ,strong) CZProductVoListModel *model;
+@property (nonatomic ,copy) void (^clickCartBlock)(CZProductVoListModel *model);
+@property (nonatomic ,copy) void (^clickBuyBlock)(CZProductVoListModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

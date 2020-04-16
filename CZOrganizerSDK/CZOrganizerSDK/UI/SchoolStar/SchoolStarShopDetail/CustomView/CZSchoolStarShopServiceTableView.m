@@ -35,6 +35,17 @@
     CZSchoolStarShopServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZSchoolStarShopServiceCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.dataArr[indexPath.row];
+    WEAKSELF
+    [cell setClickBuyBlock:^(CZProductVoListModel * _Nonnull model) {
+        if (weakSelf.clickBuyBlock) {
+            weakSelf.clickBuyBlock(model);
+        }
+    }];
+    [cell setClickCartBlock:^(CZProductVoListModel * _Nonnull model) {
+        if (weakSelf.clickCartBlock) {
+            weakSelf.clickCartBlock(model);
+        }
+    }];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

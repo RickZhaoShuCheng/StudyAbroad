@@ -54,13 +54,14 @@
     [self.bgImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
     [self.rankView setRankByRate:[model.valStar floatValue]];
     self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.servicePersonCount integerValue]) stringValue]];
-    if ([model.isGraduation integerValue] == 1) {
-        self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条 | %@/已毕业",model.studyYears,model.countryName,model.schoolName];
-    }else if ([model.isGraduation integerValue] == 2){
-        self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条 | %@/留学中",model.studyYears,model.countryName,model.schoolName];
-    }else if ([model.isGraduation integerValue] == 3){
-        self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条 | %@/准备留学",model.studyYears,model.countryName,model.schoolName];
-    }
+//    if ([model.isGraduation integerValue] == 1) {
+//        self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条 | %@/已毕业",model.studyYears,model.countryName,model.schoolName];
+//    }else if ([model.isGraduation integerValue] == 2){
+//        self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条 | %@/留学中",model.studyYears,model.countryName,model.schoolName];
+//    }else if ([model.isGraduation integerValue] == 3){
+//        self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条 | %@/准备留学",model.studyYears,model.countryName,model.schoolName];
+//    }
+    self.contentLab.text = model.keywords;
     self.caseView.countLab.text = [@([model.caseCount integerValue]) stringValue];
     self.fansView.countLab.text = [@([model.fanCount integerValue]) stringValue];
     self.serviceView.countLab.text = [@([model.serviceCount integerValue]) stringValue];
@@ -71,8 +72,8 @@
     self.evaluationView.countLab.text = [@([model.commentsCount integerValue]) stringValue];
 //    model.keywords = @"LOL,奥科吉是否会扣水电费,阿道夫,科技啊回复跨境电商,卡是副科级,接收到回复";
     NSMutableArray *keyArr = [NSMutableArray array];
-    if (model.keywords.length) {
-        [keyArr addObjectsFromArray:[model.keywords componentsSeparatedByString:@","]];
+    if (model.adept.length) {
+        [keyArr addObjectsFromArray:[model.adept componentsSeparatedByString:@","]];
     }
     [self setTags:keyArr];
     

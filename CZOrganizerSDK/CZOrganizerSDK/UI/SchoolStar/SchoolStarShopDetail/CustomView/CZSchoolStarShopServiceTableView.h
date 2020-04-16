@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void (^scrollContentSize)(CGFloat offsetY);
 //点击服务项目
 @property (nonatomic ,copy) void (^selectProductBlock)(CZProductVoListModel *model);
+@property (nonatomic ,copy) void (^clickCartBlock)(CZProductVoListModel *model);
+@property (nonatomic ,copy) void (^clickBuyBlock)(CZProductVoListModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

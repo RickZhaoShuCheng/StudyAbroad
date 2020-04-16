@@ -63,6 +63,16 @@
     string = [string stringByAppendingString:@"/次"];
     self.countLab.text = string;
 }
+- (void)clickBuyBtn{
+    if (self.clickBuyBlock) {
+        self.clickBuyBlock(self.model);
+    }
+}
+- (void)clickCartBtnBtn{
+    if (self.clickCartBlock) {
+        self.clickCartBlock(self.model);
+    }
+}
 /**
  * 初始化UI
  */
@@ -130,6 +140,7 @@
     maskLayer.frame = CGRectMake(0, 0, ScreenScale(120), ScreenScale(48));
     maskLayer.path = maskPath.CGPath;
     self.buyBtn.layer.mask = maskLayer;
+    [self.buyBtn addTarget:self action:@selector(clickBuyBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.buyBtn];
     [self.buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
@@ -148,6 +159,7 @@
     maskLayer1.frame = CGRectMake(0, 0, ScreenScale(120), ScreenScale(48));
     maskLayer1.path = maskPath1.CGPath;
     self.cartBtn.layer.mask = maskLayer1;
+    [self.cartBtn addTarget:self action:@selector(clickCartBtnBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.cartBtn];
     [self.cartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.buyBtn.mas_leading);

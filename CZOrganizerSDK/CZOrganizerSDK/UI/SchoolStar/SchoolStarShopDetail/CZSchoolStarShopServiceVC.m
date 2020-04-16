@@ -37,6 +37,12 @@
         UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
         [weakSelf.superVC.navigationController pushViewController:prodDetailVC animated:YES];
     }];
+    [self.tableView setClickCartBlock:^(CZProductVoListModel * _Nonnull model) {
+        [weakSelf requestForApiShoppingCartAddShoppingCart:model];
+    }];
+    [self.tableView setClickBuyBlock:^(CZProductVoListModel * _Nonnull model) {
+        
+    }];
 }
 
 /**
@@ -76,7 +82,39 @@
         }
     }];
 }
+/**
+ 加入购物车
+ */
+- (void)requestForApiShoppingCartAddShoppingCart:(CZProductVoListModel *)model{
 
+   __block UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2.0-ScreenScale(100), kScreenHeight/2.0-ScreenScale(200), ScreenScale(200), ScreenScale(200))];
+    bgView.layer.masksToBounds = YES;
+    bgView.layer.cornerRadius = ScreenScale(10);
+    bgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    [[UIApplication sharedApplication].keyWindow addSubview:bgView];
+
+    __block UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(ScreenScale(200)/2.0-16, ScreenScale(200)/2.0-16, 32.0f, 32.0f)];
+    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [bgView addSubview:activityIndicator];
+    [activityIndicator startAnimating];
+
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setValue:model.productId forKey:@"productId"];
+    [param setValue:model.organId forKey:@"organId"];
+    [param setValue:@"1" forKey:@"buyCount"];
+    [service requestForApiShoppingCartAddShoppingCart:param CallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [activityIndicator stopAnimating];
+                [bgView removeFromSuperview];
+            });
+        }else{
+            [activityIndicator stopAnimating];
+            [bgView removeFromSuperview];
+        }
+    }];
+}
 /**
  * 初始化UI
  */
