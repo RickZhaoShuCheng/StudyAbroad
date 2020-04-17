@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIViewController *)instancePhoneTabVC;
 
+-(UIViewController *)instanceLXDROrderTabVCByOptions:(NSDictionary *)options;
+
 -(void)instanceOragizerDetailViewController:(UINavigationController *)controller options:(NSDictionary *)options;
 
 @end
@@ -64,6 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceDiaryDetailTabVCByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceSureOrderTabVCByOptions:(NSDictionary *)options;
 +(UIViewController *)instancePhoneTabVC;
++(UIViewController *)instanceLXDROrderTabVCByOptions:(NSDictionary *)options;
 @end
 
 NS_ASSUME_NONNULL_END

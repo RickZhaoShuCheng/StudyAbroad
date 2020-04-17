@@ -42,6 +42,10 @@
     [self.titleView setAlpha:self.alpha];
     self.focusBtn.alpha = self.alpha;
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.alpha = 0;

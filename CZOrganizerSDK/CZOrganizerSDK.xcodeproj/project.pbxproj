@@ -446,6 +446,8 @@
 		D85A4FAD2410082B003E45F4 /* CZAdvisorDetailBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = D85A4FAB2410082B003E45F4 /* CZAdvisorDetailBtnView.m */; };
 		D85F7B022417E97D0069E6CD /* CZOrganizerVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D85F7B002417E97D0069E6CD /* CZOrganizerVC.h */; };
 		D85F7B032417E97D0069E6CD /* CZOrganizerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D85F7B012417E97D0069E6CD /* CZOrganizerVC.m */; };
+		D8605A6124496347007E2AD2 /* NSObject+ObjectMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D8605A5F24496347007E2AD2 /* NSObject+ObjectMap.h */; };
+		D8605A6224496347007E2AD2 /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D8605A6024496347007E2AD2 /* NSObject+ObjectMap.m */; };
 		D8606AB5241A747B00932421 /* CZOrganizerDiaryCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8606AB3241A747B00932421 /* CZOrganizerDiaryCollectionView.h */; };
 		D8606AB6241A747B00932421 /* CZOrganizerDiaryCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8606AB4241A747B00932421 /* CZOrganizerDiaryCollectionView.m */; };
 		D8606AB9241A780B00932421 /* CZOrganizerAdvisorTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8606AB7241A780B00932421 /* CZOrganizerAdvisorTableView.h */; };
@@ -1032,6 +1034,8 @@
 		D85A4FAB2410082B003E45F4 /* CZAdvisorDetailBtnView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDetailBtnView.m; sourceTree = "<group>"; };
 		D85F7B002417E97D0069E6CD /* CZOrganizerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZOrganizerVC.h; sourceTree = "<group>"; };
 		D85F7B012417E97D0069E6CD /* CZOrganizerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZOrganizerVC.m; sourceTree = "<group>"; };
+		D8605A5F24496347007E2AD2 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
+		D8605A6024496347007E2AD2 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		D8606AB3241A747B00932421 /* CZOrganizerDiaryCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZOrganizerDiaryCollectionView.h; sourceTree = "<group>"; };
 		D8606AB4241A747B00932421 /* CZOrganizerDiaryCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZOrganizerDiaryCollectionView.m; sourceTree = "<group>"; };
 		D8606AB7241A780B00932421 /* CZOrganizerAdvisorTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZOrganizerAdvisorTableView.h; sourceTree = "<group>"; };
@@ -1582,6 +1586,8 @@
 			children = (
 				D80B06C92430C73E00B4AB27 /* NSDate+Utils.h */,
 				D80B06C82430C73E00B4AB27 /* NSDate+Utils.m */,
+				D8605A5F24496347007E2AD2 /* NSObject+ObjectMap.h */,
+				D8605A6024496347007E2AD2 /* NSObject+ObjectMap.m */,
 				5320141E24057D5E009B78AB /* NSObject+ORM.h */,
 				5320141D24057D5E009B78AB /* NSObject+ORM.m */,
 				535FFFF523FFE5EC003463B0 /* UIColor+PureColorImage.h */,
@@ -2665,6 +2671,7 @@
 				1E7684EB243D7DA5005F0377 /* FMDatabasePool.h in Headers */,
 				D8C40E702426544800087987 /* CZAdvisorDynamicVC.h in Headers */,
 				D83BF6C3243B11D20032C2BD /* CZSchoolStarShopDetailSectionHeaderView.h in Headers */,
+				D8605A6124496347007E2AD2 /* NSObject+ObjectMap.h in Headers */,
 				537D006C24164DF900C47796 /* CZBoardOrganizerViewController.h in Headers */,
 				D8E5F15824227C6F0074EB57 /* CZCommentsDetailMoreCell.h in Headers */,
 				5394845123FFB03400770E99 /* UIView+WebCacheOperation.h in Headers */,
@@ -3041,6 +3048,7 @@
 				D8CD0C382415342900B2124C /* CZOrganizerDetailBtnView.m in Sources */,
 				539484AB23FFC5AC00770E99 /* ViewController+MASAdditions.m in Sources */,
 				1EA334BD2446060700F1ED6B /* CollectionWaterfallLayout.m in Sources */,
+				D8605A6224496347007E2AD2 /* NSObject+ObjectMap.m in Sources */,
 				5394844723FFB03400770E99 /* SDWebImageDecoder.m in Sources */,
 				D8CD3E4624168BF50086B2EB /* CZOrganizerDetailAdvisorCell.m in Sources */,
 				5394844923FFB03400770E99 /* UIImageView+HighlightedWebCache.m in Sources */,

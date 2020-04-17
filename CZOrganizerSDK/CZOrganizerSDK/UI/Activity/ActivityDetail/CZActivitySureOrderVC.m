@@ -10,6 +10,7 @@
 #import "QSClient.h"
 #import "UIImageView+WebCache.h"
 
+
 @interface CZActivitySureOrderVC ()
 @property (nonatomic ,strong) UIButton *backBtn;
 @property (nonatomic ,strong) UIImageView *iconImg;
@@ -61,6 +62,7 @@
     
     UIImageView *bgImg = [[UIImageView alloc]init];
 //    bgImg.backgroundColor = [UIColor redColor];
+    bgImg.image = [CZImageProvider imageNamed:@"huodong_yuding"];
     [self.view addSubview:bgImg];
     [bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.top.trailing.mas_equalTo(self.view);
