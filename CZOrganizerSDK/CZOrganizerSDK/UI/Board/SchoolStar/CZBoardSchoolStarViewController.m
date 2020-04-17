@@ -77,8 +77,9 @@
     
     //查看商品
     [self.dataView setSelectedProductCell:^(CZProductVoListModel * _Nonnull model) {
-        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
-        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
+        //安卓没有此功能，暂时注掉
+//        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+//        [weakSelf.navigationController pushViewController:prodDetailVC animated:YES];
     }];
 }
 

@@ -36,8 +36,9 @@
     }];
     [self requestForApiProductGetProductList];
     [self.tableView setSelectProductBlock:^(CZProductVoListModel * _Nonnull model) {
-        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
-        [weakSelf.superVC.navigationController pushViewController:prodDetailVC animated:YES];
+        //安卓没有此功能，暂时注掉
+//        UIViewController *prodDetailVC = [QSClient instanceProductDetailVCByOptions:@{@"productId":model.productId}];
+//        [weakSelf.superVC.navigationController pushViewController:prodDetailVC animated:YES];
     }];
     [self.tableView setClickCartBlock:^(CZProductVoListModel * _Nonnull model) {
         [weakSelf requestForApiShoppingCartAddShoppingCart:model];
