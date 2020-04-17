@@ -43,10 +43,15 @@
         [weakSelf requestForApiShoppingCartAddShoppingCart:model];
     }];
     [self.tableView setClickBuyBlock:^(CZProductVoListModel * _Nonnull model) {
+    
         NSDictionary *productDic = [model objectDictionary];
+        
         NSDictionary *starDic = [weakSelf.starModel objectDictionary];
+        
         NSDictionary *param = @{@"productDic":productDic,@"starDic":starDic};
+        
         UIViewController *orderVC = [QSClient instanceLXDROrderTabVCByOptions:param];
+        
         [weakSelf.superVC.navigationController pushViewController:orderVC animated:YES];
     }];
 }
