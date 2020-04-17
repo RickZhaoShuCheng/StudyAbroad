@@ -80,6 +80,13 @@
         self.moreBtn.hidden = NO;
         self.arrowImg.hidden = NO;
     }
+    if ([model.isFocus boolValue]) {
+        [self.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
+        [self.focusBtn setSelected:YES];
+    }else{
+        [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
+        [self.focusBtn setSelected:NO];
+    }
     
     [model.sportUserEduVos enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         CZExperienceView *view = [[CZExperienceView alloc]init];
@@ -118,6 +125,16 @@
 - (void)moreBtnClick:(UIButton *)moredBtn{
     if (self.moreBtnClick) {
         self.moreBtnClick(moredBtn);
+    }
+}
+- (void)clickFocusBtn:(UIButton *)button{
+    if (self.focusBtnClick) {
+        self.focusBtnClick(button);
+    }
+}
+- (void)clickChatBtn{
+    if (self.clickChatBlock) {
+        self.clickChatBlock();
     }
 }
 -(void)initWithUI{
@@ -163,6 +180,7 @@
     [self.focusBtn.titleLabel setFont:[UIFont systemFontOfSize:ScreenScale(28)]];
     [self.focusBtn.layer setMasksToBounds:YES];
     [self.focusBtn.layer setCornerRadius:ScreenScale(5)];
+    [self.focusBtn addTarget:self action:@selector(clickFocusBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.focusBtn];
     [self.focusBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.mas_trailing).offset(-ScreenScale(60));
@@ -180,6 +198,7 @@
     [self.chatBtn.layer setCornerRadius:ScreenScale(5)];
     [self.chatBtn.layer setBorderColor:CZColorCreater(255, 255, 255, 1).CGColor];
     [self.chatBtn.layer setBorderWidth:ScreenScale(1)];
+    [self.chatBtn addTarget:self action:@selector(clickChatBtn) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.focusBtn.mas_leading).offset(-ScreenScale(30));

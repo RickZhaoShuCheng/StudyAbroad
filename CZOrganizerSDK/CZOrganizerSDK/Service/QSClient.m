@@ -165,6 +165,13 @@ static dispatch_once_t onceToken;
     }
     return nil;
 }
++(UIViewController *)instanceChatTabVCByOptions:(NSDictionary *)options{
+    QSClient *client = [QSClient sharedInstance];
+    if (client.delegate && [client.delegate respondsToSelector:@selector(instanceChatTabVCByOptions:)]) {
+        return [client.delegate instanceChatTabVCByOptions:options];
+    }
+    return nil;
+}
 
 +(UIViewController *)instanceOragizerDetailViewControllerByOptions:(NSDictionary *)options
 {

@@ -71,30 +71,33 @@
 //    }else if (model.content.length){
 //        [self.webView loadHTMLString:model.content baseURL:nil];
 //    }
-    [self layoutIfNeeded];
     if (model.desc.length) {
-        self.contentLab.text = model.desc;
-        CGFloat contentHeight = [self getStringHeightWithText:model.desc font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth-ScreenScale(60)];
-        if (contentHeight == 0) {
-            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + ScreenScale(80));
-        }else{
-            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + contentHeight);
-        }
-        [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(contentHeight);
-        }];
+//        self.contentLab.text = model.desc;
+        NSString *newHtmlString= [NSString stringWithFormat:@"<head><style>img{width:%f !important;height:auto}</style></head>%@",kScreenWidth,model.desc];
+        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[newHtmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        self.contentLab.attributedText = attrStr;
+//        CGFloat contentHeight = [self getStringHeightWithText:model.desc font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth-ScreenScale(60)];
+//        if (contentHeight == 0) {
+//            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + ScreenScale(80));
+//        }else{
+//            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + contentHeight);
+//        }
+//        [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(contentHeight);
+//        }];
     }else if (model.content.length){
-        self.contentLab.text = model.content;
-        CGFloat contentHeight = [self getStringHeightWithText:model.content font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth-ScreenScale(60)];
-        if (contentHeight == 0) {
-            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + ScreenScale(100));
-        }else{
-            self.contentSize = CGSizeMake(kScreenWidth, self.contentLab.frame.origin.y + contentHeight +ScreenScale(100));
-        }
-        [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(contentHeight);
-        }];
+//        self.contentLab.text = model.content;
+        NSString *newHtmlString= [NSString stringWithFormat:@"<head><style>img{width:%f !important;height:auto}</style></head>%@",kScreenWidth,model.content];
+        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[newHtmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        self.contentLab.attributedText = attrStr;
+//        [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(contentHeight);
+//        }];
     }
+//    CGFloat contentHeight = [self getStringHeightWithText:model.content font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth-ScreenScale(60)];
+    [self layoutIfNeeded];
+    
+    self.contentSize = CGSizeMake(kScreenWidth, CGRectGetMaxY(self.contentLab.frame) + ScreenScale(100));
 }
 - (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
     // 设置文字属性 要和label的一致
@@ -331,7 +334,7 @@
         make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
         make.width.mas_equalTo(kScreenWidth-ScreenScale(60));
         make.top.mas_equalTo(detailTitle.mas_bottom).offset(ScreenScale(30));
-        make.height.mas_equalTo(kScreenHeight);
+        make.height.mas_greaterThanOrEqualTo(0);
     }];
     
     

@@ -19,6 +19,7 @@
 #import "CZOrganizerModel.h"
 #import "CZOrganizerSearchVC.h"
 #import "CZOrganizerInfoView.h"
+#import "QSClient.h"
 
 #define PageMenuHeight          ScreenScale(88)
 
@@ -66,6 +67,10 @@
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     self.titleView.alpha = self.alpha;
     self.focusBtn.alpha = self.alpha;
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
 }
 /**
  * 主页滚动处理导航条
@@ -161,7 +166,16 @@
         [self requestForApiFocusFanCancelFocusFan];
     }
 }
-
+- (void)clickChatBtn{
+    CZOrganizerDetailViewController *baseVc = self.myChildViewControllers[0];
+    
+    NSDictionary *param = @{@"conversationType":@"1",
+                            @"targetId":baseVc.collectionView.model.userId,
+                            @"title":baseVc.collectionView.model.userName,
+    };
+    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+    [self.navigationController pushViewController:chatVC animated:YES];
+}
 /**
  获取机构详情
  */
@@ -468,6 +482,7 @@
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
     [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, ScreenScale(14))];
+    [self.chatBtn addTarget:self action:@selector(clickChatBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.bottomView);

@@ -12,6 +12,7 @@
 #import "QSCommonService.h"
 #import "CZAdvisorDetailService.h"
 #import "CZUserInfoModel.h"
+#import "QSClient.h"
 @interface CZSchoolStarDetailVC ()
 @property (nonatomic ,strong)UILabel *titleLab;//标题
 @property (nonatomic ,strong)UIButton *backBtn;//返回按钮
@@ -38,6 +39,10 @@
     [super viewDidAppear:animated];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     [self.titleLab setAlpha:self.alpha];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
 }
 - (void)actionMethod{
     WEAKSELF
@@ -90,6 +95,62 @@
             weakSelf.tableView.cell.piiicVC.tableView.scrollEnabled = YES;
             weakSelf.tableView.cell.diaryVC.tableView.scrollEnabled = YES;
             weakSelf.tableView.scrollEnabled = NO;
+        }
+    }];
+    //点击关注
+    self.tableView.headerView.focusBtnClick = ^(UIButton * _Nonnull button) {
+        [weakSelf clickFocusBtn:button];
+    };
+    //点击私信
+    self.tableView.headerView.clickChatBlock = ^{
+        NSDictionary *param = @{@"conversationType":@"1",
+                                @"targetId":weakSelf.userId,
+                                @"title":weakSelf.tableView.model.userNickName,
+        };
+        UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+        [weakSelf.navigationController pushViewController:chatVC animated:YES];
+    };
+    
+    
+}
+
+- (void)clickFocusBtn:(UIButton *)focusBtn{
+    if (!focusBtn.isSelected) {
+        [self requestForApiFocusFanSaveFocusFan:focusBtn];
+    }else{
+        [self requestForApiFocusFanCancelFocusFan:focusBtn];
+    }
+}
+/**
+ 关注
+ */
+- (void)requestForApiFocusFanSaveFocusFan:(UIButton *)button{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiFocusFanSaveFocusFan:self.userId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.tableView.model.isFocus = @(1);
+                [button setSelected:YES];
+                [button setTitle:@"已关注" forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+/**
+ 取消关注
+ */
+- (void)requestForApiFocusFanCancelFocusFan:(UIButton *)button{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiFocusFanCancelFocusFan:self.userId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.tableView.model.isFocus = @(0);
+                [button setSelected:NO];
+                [button setTitle:@"+关注" forState:UIControlStateNormal];
+            });
         }
     }];
 }

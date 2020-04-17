@@ -57,6 +57,10 @@
     [self.titleLab setAlpha:self.alpha];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
+}
 
 - (void)actionMethod{
     WEAKSELF
@@ -171,6 +175,14 @@
         weakSelf.collectionView.contentInset = UIEdgeInsetsMake(NaviH, 0, 0, 0);
         }
     }];
+}
+- (void)clickChatBtn{
+//    NSDictionary *param = @{@"conversationType":@"1",
+//                            @"targetId":self.collectionView.model.userId,
+//                            @"title":self.collectionView.model.counselorName,
+//    };
+//    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+//    [self.navigationController pushViewController:chatVC animated:YES];
 }
 /**
  获取顾问详情
@@ -327,6 +339,7 @@
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateNormal];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"guwen_xiaoxi"] forState:UIControlStateHighlighted];
     [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, ScreenScale(14))];
+    [self.chatBtn addTarget:self action:@selector(clickChatBtn) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(bottomView);

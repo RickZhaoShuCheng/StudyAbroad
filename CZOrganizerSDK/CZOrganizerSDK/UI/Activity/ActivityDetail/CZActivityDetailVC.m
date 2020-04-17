@@ -54,6 +54,7 @@
     if (self.tableView.superview) {
         [self.tableView.headerView.cycleView stopTimer];
     }
+    [self.navigationController.navigationBar.subviews.firstObject setAlpha:1];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -74,6 +75,7 @@
     [super viewDidAppear:animated];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.carNumber = @(0);
@@ -167,6 +169,23 @@
     self.addCartBtn.enabled = NO;
     [self requestForApiShoppingCartAddShoppingCart];
 }
+- (void)clickCollectBtn:(UIButton *)collectBtn{
+    if (!collectBtn.isSelected) {
+        [self requestForApiCollectCollect];
+    }else{
+        [self requestForApiCollectCancelCollect];
+    }
+}
+//点击私信
+- (void)clickChatBtn{
+//    NSDictionary *param = @{@"conversationType":@"1",
+//                            @"targetId":self.model.sportUserId,
+//                            @"title":self.model.sportUserName,
+//    };
+//    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+//    [self.navigationController pushViewController:chatVC animated:YES];
+}
+//点击报名/购买
 - (void)clickBuyBtn:(UIButton *)button{
     WEAKSELF
     /*
@@ -191,11 +210,13 @@
         orderHasApplyPrice = @"1";
     }
     NSString *orderActivityTime = @"";
+    NSString *spasId = @"";
     if (self.model.activitySessionList.count >= 1) {
         CZActivitySession *session =  self.model.activitySessionList[0];
         NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
         NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.endTime integerValue]/1000]];
         orderActivityTime = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
+        spasId = session.spasId;
     }
     NSString *orderFree = @"";
     if (button == self.buyBtn) {
@@ -204,7 +225,9 @@
         orderFree = @"1";
     }
 
-    NSDictionary *param = @{@"orderActivity":@"1",
+    NSDictionary *param = @{@"spasId":spasId,
+                            @"productActivityId":self.model.productActivityId,
+                            @"orderActivity":@"1",
                             @"orderActivityTime":orderActivityTime,
                             @"orderFree":orderFree,
                             @"orderProductId":self.model.productId,
@@ -246,7 +269,17 @@
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.model = [CZActivityModel modelWithDict:data];
-        
+                if ([weakSelf.model.isCollect boolValue]) {
+                    [weakSelf.loveBtn setSelected:YES];
+                    [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+                }else{
+                    [weakSelf.loveBtn setSelected:NO];
+                    if (weakSelf.alpha >0.5) {
+                        [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+                    }else{
+                        [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
+                    }
+                }
                 if (weakSelf.model.status == 0) {
                     weakSelf.isEnd = YES;
                     [weakSelf requestForHotActivities];
@@ -347,6 +380,43 @@
         }
     }];
 }
+/**
+ 收藏
+ */
+- (void)requestForApiCollectCollect{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiCollectCollect:self.activityId collectType:8 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.model.isCollect = @(1);
+                [weakSelf.loveBtn setSelected:YES];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            });
+        }
+    }];
+}
+
+/**
+ 取消收藏
+ */
+- (void)requestForApiCollectCancelCollect{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiCollectCancelCollect:self.activityId collectType:8 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.model.isCollect = @(0);
+                [weakSelf.loveBtn setSelected:NO];
+                if (weakSelf.alpha >0.5) {
+                    [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+                }else{
+                    [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
+                }
+            });
+        }
+    }];
+}
 
 /**
  * 初始化UI
@@ -369,7 +439,7 @@
     //右边按钮
     self.loveBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//xingxing_heise   xingxing_baise@2x
     [self.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
-    [self.loveBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.loveBtn addTarget:self action:@selector(clickCollectBtn:) forControlEvents:UIControlEventTouchUpInside];
     [rightView addSubview:self.loveBtn];
     
     UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:rightView];
@@ -467,6 +537,7 @@
     [self.chatBtn setBackgroundColor:CZColorCreater(255, 255, 255, 1)];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"kefu"] forState:UIControlStateNormal];
     [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(20), 0, 0)];
+    [self.chatBtn addTarget:self action:@selector(clickChatBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.freeBottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.freeBottomView.mas_leading);
@@ -521,6 +592,7 @@
     [self.serviceBtn setImage:[CZImageProvider imageNamed:@"kefu"] forState:UIControlStateNormal];
     [self.serviceBtn setImageEdgeInsets:UIEdgeInsetsMake(-ScreenScale(30), ScreenScale(45), 0, 0)];
     [self.serviceBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(35), -ScreenScale(35), 0)];
+    [self.serviceBtn addTarget:self action:@selector(clickChatBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.serviceBtn];
     [self.serviceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.top.mas_equalTo(self.bottomView);

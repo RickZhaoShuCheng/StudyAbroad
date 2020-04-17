@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) CZUserInfoModel *model;
 @property (nonatomic ,copy) void (^arrowBtnClick)(UIButton *button);
 @property (nonatomic ,copy) void (^moreBtnClick)(UIButton *button);
+@property (nonatomic ,copy) void (^focusBtnClick)(UIButton *button);
+@property (nonatomic ,copy) dispatch_block_t clickChatBlock;
 @end
 
 NS_ASSUME_NONNULL_END
