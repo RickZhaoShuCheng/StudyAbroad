@@ -14,10 +14,16 @@
 #import "SPPageMenu.h"
 #import "QSClient.h"
 #import "CXSearchViewController.h"
+#import "CZBadgeView.h"
+#import "CZAdvisorDetailService.h"
+#import "QSCommonService.h"
 
 @interface CZAllServiceViewController ()<SPPageMenuDelegate>
 @property (nonatomic , strong)CZPageScrollContentView *contentView;
 @property (nonatomic , strong) SPPageMenu *pageMenu;
+@property (nonatomic, strong) CZBadgeView *redDotBadgeView;
+@property (nonatomic, strong) UIButton *shopButton;
+
 @end
 
 @implementation CZAllServiceViewController
@@ -31,6 +37,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self requestForApiShoppingCartGetShoppingCartCountCallBack];
 }
 
 -(void)initUI
@@ -71,11 +78,11 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = backButton;
     
-    UIButton *shopButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    shopButton.frame = CGRectMake(0, 0, 30, 30);
-    [shopButton addTarget:self action:@selector(actionForShowCart) forControlEvents:UIControlEventTouchUpInside];
-    [shopButton setImage:[CZImageProvider imageNamed:@"zhu_ye_dao_hang_gou_wu_che_an_niu"] forState:UIControlStateNormal];
-    UIBarButtonItem *shopBarItem = [[UIBarButtonItem alloc] initWithCustomView:shopButton];
+    self.shopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.shopButton.frame = CGRectMake(0, 0, 30, 30);
+    [self.shopButton addTarget:self action:@selector(actionForShowCart) forControlEvents:UIControlEventTouchUpInside];
+    [self.shopButton setImage:[CZImageProvider imageNamed:@"zhu_ye_dao_hang_gou_wu_che_an_niu"] forState:UIControlStateNormal];
+    UIBarButtonItem *shopBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.shopButton];
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     searchButton.frame = CGRectMake(0, 0, 30, 30);
@@ -105,6 +112,57 @@
 - (void)pageMenu:(SPPageMenu *)pageMenu itemSelectedFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex
 {
     [self.contentView.collectionView setContentOffset:CGPointMake(toIndex*self.view.bounds.size.width, 0) animated:YES];
+}
+
+//获取购物车数量
+- (void)requestForApiShoppingCartGetShoppingCartCountCallBack{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiShoppingCartGetShoppingCartCountCallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSInteger count = [data integerValue];
+                if (count) {
+                    [weakSelf showRedDotOnTabBar:count];
+                }
+                else
+                {
+                    [weakSelf hideRedDotFromTabBar];
+                }
+            });
+        }else{
+        }
+    }];
+}
+
+-(void)showRedDotOnTabBar:(NSInteger)unreadCount
+{
+    if(!self.redDotBadgeView){
+        CZBadgeView *redDotBadgeView = [[CZBadgeView alloc] init];
+        self.redDotBadgeView = redDotBadgeView;
+    }
+    
+    self.redDotBadgeView.style = unreadCount > 0?CZBadgeViewStyleDefault:CZBadgeViewStyleDot;
+    if (self.redDotBadgeView.style == CZBadgeViewStyleDefault) {
+        if (unreadCount <= 99) {
+            self.redDotBadgeView.badgeValue = @(unreadCount).stringValue;
+        }
+        else
+        {
+            self.redDotBadgeView.badgeValue = @"99+";
+        }
+    }
+    
+    self.redDotBadgeView.frame = CGRectMake(CGRectGetWidth(self.shopButton.frame)-10, -CGRectGetMinY(self.shopButton.frame)-2, self.redDotBadgeView.frame.size.width, self.redDotBadgeView.frame.size.height);
+    
+    [self.shopButton addSubview:self.redDotBadgeView];
+    
+    self.redDotBadgeView.hidden = NO;
+}
+
+-(void)hideRedDotFromTabBar
+{
+    self.redDotBadgeView.hidden = YES;
 }
 
 @end

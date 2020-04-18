@@ -24,6 +24,8 @@
 		1E60A3E42448A3CC00809B63 /* QSProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E60A3E02448A3CC00809B63 /* QSProgressHUD.h */; };
 		1E60A3E52448A3CC00809B63 /* QSHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E60A3E12448A3CC00809B63 /* QSHudView.m */; };
 		1E60A3E62448A3CC00809B63 /* QSProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E60A3E22448A3CC00809B63 /* QSProgressHUD.m */; };
+		1E72B21B244B6534002C9A49 /* CZBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E72B219244B6534002C9A49 /* CZBadgeView.h */; };
+		1E72B21C244B6534002C9A49 /* CZBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E72B21A244B6534002C9A49 /* CZBadgeView.m */; };
 		1E7684CD243D7D66005F0377 /* CXSearchModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684BB243D7D66005F0377 /* CXSearchModel.h */; };
 		1E7684CE243D7D66005F0377 /* CXSearchProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684BC243D7D66005F0377 /* CXSearchProtocol.h */; };
 		1E7684CF243D7D67005F0377 /* CXSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684BD243D7D66005F0377 /* CXSearchModel.m */; };
@@ -606,6 +608,8 @@
 		1E60A3E02448A3CC00809B63 /* QSProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSProgressHUD.h; sourceTree = "<group>"; };
 		1E60A3E12448A3CC00809B63 /* QSHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSHudView.m; sourceTree = "<group>"; };
 		1E60A3E22448A3CC00809B63 /* QSProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSProgressHUD.m; sourceTree = "<group>"; };
+		1E72B219244B6534002C9A49 /* CZBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZBadgeView.h; sourceTree = "<group>"; };
+		1E72B21A244B6534002C9A49 /* CZBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZBadgeView.m; sourceTree = "<group>"; };
 		1E7684BB243D7D66005F0377 /* CXSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXSearchModel.h; sourceTree = "<group>"; };
 		1E7684BC243D7D66005F0377 /* CXSearchProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXSearchProtocol.h; sourceTree = "<group>"; };
 		1E7684BD243D7D66005F0377 /* CXSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchModel.m; sourceTree = "<group>"; };
@@ -1607,6 +1611,8 @@
 				535FFFFF23FFFC12003463B0 /* CZImageProvider.m */,
 				53B59A2824069232000C8399 /* CZCountryUtil.h */,
 				53B59A2924069232000C8399 /* CZCountryUtil.m */,
+				1E72B219244B6534002C9A49 /* CZBadgeView.h */,
+				1E72B21A244B6534002C9A49 /* CZBadgeView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2589,6 +2595,7 @@
 				5394846023FFB03400770E99 /* UIImage+GIF.h in Headers */,
 				D85A4FA8240FF04F003E45F4 /* CZAdvisorDetailHeaderView.h in Headers */,
 				5394844A23FFB03400770E99 /* SDImageCache.h in Headers */,
+				1E72B21B244B6534002C9A49 /* CZBadgeView.h in Headers */,
 				D8C40E64242649A900087987 /* CZOrganizerSearchCollectionView.h in Headers */,
 				D8CD0C472415354800B2124C /* CZOrganizerDetailEvaluateCell.h in Headers */,
 				D81F46A6242B91BF008C6D85 /* CZActivityDetailHeaderView.h in Headers */,
@@ -3052,6 +3059,7 @@
 				5394844723FFB03400770E99 /* SDWebImageDecoder.m in Sources */,
 				D8CD3E4624168BF50086B2EB /* CZOrganizerDetailAdvisorCell.m in Sources */,
 				5394844923FFB03400770E99 /* UIImageView+HighlightedWebCache.m in Sources */,
+				1E72B21C244B6534002C9A49 /* CZBadgeView.m in Sources */,
 				535E5DB224080AED00471453 /* MJRefreshHeader.m in Sources */,
 				5320142424058D8C009B78AB /* CZSchoolStarModel.m in Sources */,
 				D8AA19242410EDFE0043CFE8 /* CZAdvisorDetailCollectionView.m in Sources */,

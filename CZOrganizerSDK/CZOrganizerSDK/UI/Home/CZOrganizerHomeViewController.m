@@ -41,6 +41,9 @@
 #import "CZMoreSchoolStarVC.h"
 #import "CZSchoolStarShopDetailVC.h"
 #import "CXSearchViewController.h"
+#import "CZBadgeView.h"
+#import "CZAdvisorDetailService.h"
+
 static NSInteger sectionCount = 6;
 static CGFloat filterHeight = 50;
 
@@ -74,6 +77,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSMutableArray *schoolStars;
 @property (nonatomic, strong) NSMutableArray *hotActivities;
 @property (nonatomic, strong) UIButton *backToTopButton;
+@property (nonatomic, strong) CZBadgeView *redDotBadgeView;
 
 @end
 
@@ -126,6 +130,8 @@ typedef enum : NSUInteger {
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    [self requestForApiShoppingCartGetShoppingCartCountCallBack];
 }
 
 //导航布局
@@ -792,6 +798,57 @@ typedef enum : NSUInteger {
     UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.locationButton];
     self.navigationItem.leftBarButtonItem = leftBarItem;
     [vc.navigationController popViewControllerAnimated:YES];
+}
+
+//获取购物车数量
+- (void)requestForApiShoppingCartGetShoppingCartCountCallBack{
+    WEAKSELF
+    CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
+    [service requestForApiShoppingCartGetShoppingCartCountCallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+        if (success){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSInteger count = [data integerValue];
+                if (count) {
+                    [weakSelf showRedDotOnTabBar:count];
+                }
+                else
+                {
+                    [weakSelf hideRedDotFromTabBar];
+                }
+            });
+        }else{
+        }
+    }];
+}
+
+-(void)showRedDotOnTabBar:(NSInteger)unreadCount
+{
+    if(!self.redDotBadgeView){
+        CZBadgeView *redDotBadgeView = [[CZBadgeView alloc] init];
+        self.redDotBadgeView = redDotBadgeView;
+    }
+    
+    self.redDotBadgeView.style = unreadCount > 0?CZBadgeViewStyleDefault:CZBadgeViewStyleDot;
+    if (self.redDotBadgeView.style == CZBadgeViewStyleDefault) {
+        if (unreadCount <= 99) {
+            self.redDotBadgeView.badgeValue = @(unreadCount).stringValue;
+        }
+        else
+        {
+            self.redDotBadgeView.badgeValue = @"99+";
+        }
+    }
+    
+    self.redDotBadgeView.frame = CGRectMake(CGRectGetWidth(self.shopButton.frame)-5, -CGRectGetMinY(self.shopButton.frame)-5, self.redDotBadgeView.frame.size.width, self.redDotBadgeView.frame.size.height);
+    
+    [self.shopButton addSubview:self.redDotBadgeView];
+    
+    self.redDotBadgeView.hidden = NO;
+}
+
+-(void)hideRedDotFromTabBar
+{
+    self.redDotBadgeView.hidden = YES;
 }
 
 @end
