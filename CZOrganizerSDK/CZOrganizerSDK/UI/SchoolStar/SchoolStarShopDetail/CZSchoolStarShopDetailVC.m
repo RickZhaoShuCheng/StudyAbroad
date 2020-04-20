@@ -13,6 +13,7 @@
 #import "QSCommonService.h"
 #import "CZSchoolStarModel.h"
 #import "CZSchoolStarDetailVC.h"
+#import "QSClient.h"
 @interface CZSchoolStarShopDetailVC ()
 @property (nonatomic ,strong) UIView *titleView;
 @property (nonatomic ,strong) UIImageView *avatarImg;
@@ -32,6 +33,8 @@
 @implementation CZSchoolStarShopDetailVC
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     [self.titleView setAlpha:self.alpha];
     self.focusBtn.alpha = self.alpha;
@@ -126,7 +129,15 @@
         [self requestForApiCollectCancelCollect];
     }
 }
-
+//点击私信
+- (void)clickChatBtn{
+    NSDictionary *param = @{@"conversationType":@"1",
+                            @"targetId":self.tableView.model.userId,
+                            @"title":self.tableView.model.realName,
+    };
+    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+    [self.navigationController pushViewController:chatVC animated:YES];
+}
 //获取店铺详情
 -(void)requestForApiSportUserSelectSportUserInfo{
     WEAKSELF
@@ -332,6 +343,7 @@
     [self.chatBtn setBackgroundColor:CZColorCreater(51, 172, 253, 1)];
     [self.chatBtn setImage:[CZImageProvider imageNamed:@"daren_dianhua"] forState:UIControlStateNormal];
     [self.chatBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -ScreenScale(20), 0, 0 )];
+    [self.chatBtn addTarget:self action:@selector(clickChatBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.chatBtn];
     [self.chatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.bottomView);

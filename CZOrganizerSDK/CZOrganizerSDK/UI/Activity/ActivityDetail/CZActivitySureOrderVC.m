@@ -32,10 +32,6 @@
 }
 - (void)setDic:(NSDictionary *)dic{
     _dic = dic;
-    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(dic[@"data"][@"productLogo"])] placeholderImage:nil];
-    self.titleLab.text = dic[@"data"][@"productTitle"];
-    self.orderNumLab.text = dic[@"data"][@"orderNo"];
-    self.timeLab.text = [NSString stringWithFormat:@"场次：%@",dic[@"orderActivityTime"]];
 }
 
 - (void)clickSureBtn{
@@ -108,7 +104,7 @@
     self.timeLab = [[UILabel alloc]init];
     self.timeLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.timeLab.textColor = CZColorCreater(129, 129, 146, 1);
-    self.timeLab.text = @"场次：2019-12-23 20:00-21:00";
+    self.timeLab.text = @"场次：-";
     [goodsView addSubview:self.timeLab];
     [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.iconImg.mas_trailing).offset(ScreenScale(20));
@@ -217,7 +213,7 @@
     self.nameLab = [[UILabel alloc]init];
     self.nameLab.font = [UIFont systemFontOfSize:ScreenScale(30)];
     self.nameLab.textColor = CZColorCreater(122, 122, 122, 1);
-    self.nameLab.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"realName"];
+    self.nameLab.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"userNickName"];
     [infoView addSubview:self.nameLab];
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(infoView.mas_trailing).offset(-ScreenScale(30));
@@ -251,6 +247,13 @@
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(-ScreenScale(160));
         make.height.mas_equalTo(ScreenScale(94));
     }];
+    
+    
+    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(self.dic[@"data"][@"productLogo"])] placeholderImage:nil];
+    self.titleLab.text = self.dic[@"data"][@"productTitle"];
+    self.orderNumLab.text = self.dic[@"data"][@"orderNo"];
+    self.timeLab.text = [NSString stringWithFormat:@"场次：%@",self.dic[@"orderActivityTime"]];
+    self.nameLab.text = self.dic[@"data"][@"linkName"];
 }
 //返回
 -(void)actionForBack{

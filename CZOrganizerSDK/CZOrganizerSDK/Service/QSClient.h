@@ -54,8 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(UIViewController *)instanceNiceCommentViewControllerByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceNiceDiaryViewControllerByOptions:(NSDictionary *)options;
 +(UIViewController *)instanceAdvisorDetailViewControllerByOptions:(NSDictionary *)options;
++(UIViewController *)instanceStarShopDetailViewControllerByOptions:(NSDictionary *)options;
 @end
-
 @interface QSClient (Private)
 @property (nonatomic , strong , readonly) QSClientConfigeration *configeration;
 +(void)logInfo:(NSString *)format, ...;

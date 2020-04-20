@@ -56,13 +56,25 @@
             self.priceLab.text = [NSString stringWithFormat:@"A$%.2f",[model.price floatValue]/100];
         }
     }
-    
-    if (model.activitySessionList.count >= 1) {
-        CZActivitySession *session =  model.activitySessionList[0];
+    __block NSString *sessionStr = @"";
+    [model.activitySessionList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CZActivitySession *session =  obj;
         NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
         NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.endTime integerValue]/1000]];
-        self.sessionLab.text = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
-    }
+        NSString *timeStr = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
+        if (sessionStr.length) {
+            sessionStr = [sessionStr stringByAppendingString:[NSString stringWithFormat:@"\n\n%@",timeStr]];
+        }else{
+            sessionStr = timeStr;
+        }
+    }];
+    self.sessionLab.text = sessionStr;
+//    if (model.activitySessionList.count >= 1) {
+//        CZActivitySession *session =  model.activitySessionList[0];
+//        NSString *beginTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.beginTime integerValue]/1000]];
+//        NSString *endTime = [NSDate stringYearMonthDayWithDate:[NSDate dateWithTimeIntervalSince1970:[session.endTime integerValue]/1000]];
+//        self.sessionLab.text = [NSString stringWithFormat:@"%@ %@",beginTime,endTime];
+//    }
     self.crowdLab.text = [NSString stringWithFormat:@"适合人群：%@",model.extRangeUser];
     self.organizerLab.text = [NSString stringWithFormat:@"组织机构：%@",model.extOrganization];
     self.addressLab.text = [NSString stringWithFormat:@"地       址：%@",model.extAddress];
@@ -176,6 +188,7 @@
         self.sessionLab.font = [UIFont systemFontOfSize:ScreenScale(22)];
         self.sessionLab.textColor = CZColorCreater(129, 129, 146, 1);
         self.sessionLab.text = @"-";
+        self.sessionLab.numberOfLines = 0;
         [self addSubview:self.sessionLab];
         [self.sessionLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(self).offset(ScreenScale(30));

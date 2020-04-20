@@ -100,6 +100,9 @@
     [param setValue:model.productId forKey:@"productId"];
     [param setValue:model.organId forKey:@"organId"];
     [param setValue:@"1" forKey:@"buyCount"];
+    NSString *name = [[NSUserDefaults standardUserDefaults] stringForKey:@"userNickName"];
+    [param setValue:name forKey:@"linkName"];
+    [param setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"userPhone"] forKey:@"linkPhone"];
     [service requestForApiShoppingCartAddShoppingCart:param CallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -110,6 +113,9 @@
             });
         }else{
             [hud hideAnimated:YES];
+            [QSHudView showToastOnView:[UIApplication sharedApplication].keyWindow title:errorMessage customizationBlock:^(QSHudView *hudView) {
+                [hudView hideAnimated:YES afterDelay:1];
+            }];
         }
     }];
 }

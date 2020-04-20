@@ -58,7 +58,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
     if (self.scrollView.superview) {
         [self.scrollView.cycleView startTimer];

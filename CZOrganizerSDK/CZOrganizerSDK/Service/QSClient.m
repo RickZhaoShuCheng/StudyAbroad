@@ -13,7 +13,7 @@
 #import "CZCommentsListVC.h"
 #import "CZOrganizerDiaryVC.h"
 #import "CZAdvisorDetailViewController.h"
-
+#import "CZSchoolStarShopDetailVC.h"
 @interface QSClient ()
 
 @property (nonatomic , strong) QSClientConfigeration *configeration;
@@ -201,6 +201,12 @@ static dispatch_once_t onceToken;
     CZAdvisorDetailViewController *advisorDetailVC = [[CZAdvisorDetailViewController alloc]init];
     advisorDetailVC.counselorId = options[@"counselorId"];
     return advisorDetailVC;
+}
++(UIViewController *)instanceStarShopDetailViewControllerByOptions:(NSDictionary *)options
+{
+    CZSchoolStarShopDetailVC *detailVC = [[CZSchoolStarShopDetailVC alloc]init];
+    detailVC.sportUserId = options[@"sportUserId"];
+    return detailVC;
 }
 
 @end

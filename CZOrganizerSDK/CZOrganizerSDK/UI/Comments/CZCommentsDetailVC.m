@@ -30,6 +30,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.navigationBar.translucent = NO;
     [self.tableView.headerView.cycleScrollView startTimer];
     [self.tableView.headerView.cycleScrollView adjustWhenControllerViewWillAppera];
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
