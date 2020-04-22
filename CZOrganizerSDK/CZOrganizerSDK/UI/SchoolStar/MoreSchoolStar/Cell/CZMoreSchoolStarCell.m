@@ -40,7 +40,8 @@
     }
     self.nameLab.text = model.realName;
     [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:PIC_URL(model.userImg)] placeholderImage:nil];
-    self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条",model.studyYears,model.countryName];
+    self.contentLab.text = model.keywords;
+//    self.contentLab.text = [NSString stringWithFormat:@"%@年%@留学老油条",model.studyYears,model.countryName];
     [self.rankView setRankByRate:[model.valStar floatValue]];
     self.serviceLab.text = [NSString stringWithFormat:@"服务%@人",[@([model.servicePersonCount integerValue]) stringValue]];
     

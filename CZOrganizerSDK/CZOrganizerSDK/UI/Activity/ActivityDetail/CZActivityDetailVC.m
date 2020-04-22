@@ -202,7 +202,7 @@
       orderApplyPrice     预约金价格    String   传接口返回的原始数值 转字符串就行了  不要除以 100 我内部处理
       orderTotalPrice     总价格       String   传接口返回的原始数值 转字符串就行了  不要除以 100 我内部处理
       orderBuyCount       购买数量     String
-      orderBuyReason      商家支持预约金   String  没有就不传
+      orderMerchantApply      商家支持预约金   String  没有就不传
       orderMerchantTuoGuan     商家支持资金托管 String 没有就不传
       orderMerchantBaoZheng    商家已缴纳保证金 String 没有就不传
      */
@@ -238,7 +238,7 @@
                             @"orderApplyPrice":[@([self.model.applyPrice integerValue]) stringValue],
                             @"orderTotalPrice":[@([self.model.price integerValue]) stringValue],
                             @"orderBuyCount":@"1",
-                            @"orderBuyReason":self.model.buyReason,
+                            @"orderMerchantApply":[@([self.model.flagApply integerValue]) stringValue],
                             @"orderMerchantTuoGuan":[@([self.model.flagMoney integerValue]) stringValue],
                             @"orderMerchantBaoZheng":[@([self.model.flagMoneyEnsure integerValue]) stringValue],
     };
