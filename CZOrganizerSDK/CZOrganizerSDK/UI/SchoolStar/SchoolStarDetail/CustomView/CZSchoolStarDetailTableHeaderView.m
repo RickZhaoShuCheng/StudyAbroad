@@ -63,22 +63,42 @@
     self.fansContent.text = [@([model.fansCount integerValue]) stringValue];
     self.praiseContent.text = [@([model.praiseCount integerValue]) stringValue];
     
-    if (model.sportUserEduVos.count <= 3) {
-        [self.experienceContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.leading.trailing.mas_equalTo(self);
-            make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(120));
-            make.height.mas_equalTo(ScreenScale(140) * model.sportUserEduVos.count);
-        }];
+    if ([model.sportUserEduVos isKindOfClass:[NSArray class]]) {
+        if (model.sportUserEduVos.count <= 3) {
+            [self.experienceContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.leading.trailing.mas_equalTo(self);
+                make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(120));
+                make.height.mas_equalTo(ScreenScale(140) * model.sportUserEduVos.count);
+            }];
+            self.moreBtn.hidden = YES;
+            self.arrowImg.hidden = YES;
+        }else{
+            [self.experienceContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.leading.trailing.mas_equalTo(self);
+                make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(120));
+                make.height.mas_equalTo(ScreenScale(140) * 3);
+            }];
+            self.moreBtn.hidden = NO;
+            self.arrowImg.hidden = NO;
+        }
+        [model.sportUserEduVos enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                CZExperienceView *view = [[CZExperienceView alloc]init];
+        //        view.backgroundColor = [UIColor lightGrayColor];
+                if (idx == model.sportUserEduVos.count-1) {
+                    view.isEnd = YES;
+                }
+                view.model = obj;
+                [self.experienceContainerView addSubview:view];
+                [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.leading.mas_equalTo(self.experienceContainerView.mas_leading).offset(ScreenScale(30));
+                    make.trailing.mas_equalTo(self.experienceContainerView);
+                    make.top.mas_equalTo(self.experienceContainerView).offset(ScreenScale(140) * idx);
+                    make.height.mas_equalTo(ScreenScale(140));
+                }];
+            }];
+    }else{
         self.moreBtn.hidden = YES;
         self.arrowImg.hidden = YES;
-    }else{
-        [self.experienceContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.leading.trailing.mas_equalTo(self);
-            make.top.mas_equalTo(self.bgImg.mas_bottom).offset(ScreenScale(120));
-            make.height.mas_equalTo(ScreenScale(140) * 3);
-        }];
-        self.moreBtn.hidden = NO;
-        self.arrowImg.hidden = NO;
     }
     if ([model.isFocus boolValue]) {
         [self.focusBtn setTitle:@"已关注" forState:UIControlStateNormal];
@@ -87,22 +107,6 @@
         [self.focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
         [self.focusBtn setSelected:NO];
     }
-    
-    [model.sportUserEduVos enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        CZExperienceView *view = [[CZExperienceView alloc]init];
-//        view.backgroundColor = [UIColor lightGrayColor];
-        if (idx == model.sportUserEduVos.count-1) {
-            view.isEnd = YES;
-        }
-        view.model = obj;
-        [self.experienceContainerView addSubview:view];
-        [view mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(self.experienceContainerView.mas_leading).offset(ScreenScale(30));
-            make.trailing.mas_equalTo(self.experienceContainerView);
-            make.top.mas_equalTo(self.experienceContainerView).offset(ScreenScale(140) * idx);
-            make.height.mas_equalTo(ScreenScale(140));
-        }];
-    }];
 }
 - (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
     // 设置文字属性 要和label的一致
@@ -265,7 +269,7 @@
     self.focusContent = [[UILabel alloc]init];
     self.focusContent.font = [UIFont boldSystemFontOfSize:ScreenScale(36)];
     self.focusContent.textColor = CZColorCreater(255, 255, 255, 1);
-    self.focusContent.text = @"12321";
+    self.focusContent.text = @"-";
     [self addSubview:self.focusContent];
     [self.focusContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(focusTitle.mas_leading);
@@ -276,7 +280,7 @@
     self.fansContent = [[UILabel alloc]init];
     self.fansContent.font = [UIFont boldSystemFontOfSize:ScreenScale(36)];
     self.fansContent.textColor = CZColorCreater(255, 255, 255, 1);
-    self.fansContent.text = @"456456";
+    self.fansContent.text = @"-";
     [self addSubview:self.fansContent];
     [self.fansContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(fansTitle.mas_leading);
@@ -287,7 +291,7 @@
     self.praiseContent = [[UILabel alloc]init];
     self.praiseContent.font = [UIFont boldSystemFontOfSize:ScreenScale(36)];
     self.praiseContent.textColor = CZColorCreater(255, 255, 255, 1);
-    self.praiseContent.text = @"789789";
+    self.praiseContent.text = @"-";
     [self addSubview:self.praiseContent];
     [self.praiseContent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(praiseTitle.mas_leading);

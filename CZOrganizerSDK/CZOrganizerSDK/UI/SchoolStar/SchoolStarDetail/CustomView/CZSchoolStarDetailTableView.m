@@ -34,15 +34,17 @@
     self.headerView.model = _model;
 
     CGRect rect = CGRectMake(0, 0, kScreenWidth, ScreenScale(780));
-    NSInteger count = model.sportUserEduVos.count;
-    if (model.sportUserEduVos.count > 3) {
-        count = 3;
+    NSInteger count = 0;
+    if ([model.sportUserEduVos isKindOfClass:[NSArray class]]) {
+        count = model.sportUserEduVos.count;
+        if (model.sportUserEduVos.count > 3) {
+            count = 3;
+            rect.size.height = rect.size.height + ScreenScale(60) + ScreenScale(140)* count;
+        }else{
+            rect.size.height = rect.size.height + ScreenScale(140)* count;
+        }
     }
-    if (model.sportUserEduVos.count <= 3) {
-        rect.size.height = rect.size.height + ScreenScale(140)* count;
-    }else{
-        rect.size.height = rect.size.height + ScreenScale(60) + ScreenScale(140)* count;
-    }
+    
     [self.headerView setFrame:rect];
     [self reloadData];
 }
