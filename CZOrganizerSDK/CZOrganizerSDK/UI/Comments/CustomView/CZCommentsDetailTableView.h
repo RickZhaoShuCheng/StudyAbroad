@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZCommentsDetailTableView : UITableView
 @property (nonatomic ,strong) CZCommentsDetailHeaderView *headerView;
+@property (nonatomic ,strong) CZCommentModel *model;
 @property (nonatomic ,strong) NSMutableArray *dataArr;
 /**
  * 滚动值
@@ -22,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 //点击商品
 @property (nonatomic ,copy) void (^selectProductBlock)(CZProductModel *model);
 //评价点赞
-@property (nonatomic ,copy) void (^commentsPraiseBlock)(NSInteger rowIndex);
+@property (nonatomic ,copy) void (^commentsPraiseBlock)(NSInteger rowIndex,UIButton *likeBtn);
 @end
 
 NS_ASSUME_NONNULL_END

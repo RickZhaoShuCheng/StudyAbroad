@@ -29,7 +29,7 @@
 @property (nonatomic ,assign) NSInteger pageSize;
 @property (nonatomic ,assign) CGFloat alpha;
 @property (nonatomic ,assign) NSInteger commentIndex;
-
+@property (nonatomic ,strong) UIButton *likeBtn;
 @end
 
 @implementation CZAdvisorDetailViewController
@@ -131,7 +131,13 @@
     }];
     
     //评价点赞
-    [self.collectionView setCommentsPraiseBlock:^(CZCommentModel * _Nonnull model) {
+    [self.collectionView setCommentsPraiseBlock:^(CZCommentModel * _Nonnull model, UIButton * _Nonnull likeBtn) {
+        if (likeBtn.isSelected) {
+            return;
+        }
+        likeBtn.selected = YES;
+        weakSelf.likeBtn = likeBtn;
+
         if ([model.isPraise boolValue]) {
             //已点赞，取消点赞
             [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model.socId];
@@ -252,6 +258,7 @@
     [service requestForApiObjectCommentsFindComments:@"2" idStr:self.counselorId filterSum:index pageNum:self.pageNo pageSize:self.pageSize callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
        if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.likeBtn.selected = NO;
                 weakSelf.collectionView.model.filterComment = data[@"filterComment"];
                 weakSelf.collectionView.model.commentList = data[@"list"];
                 weakSelf.collectionView.model.commentsCount = data[@"totalSize"];

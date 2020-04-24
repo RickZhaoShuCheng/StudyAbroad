@@ -32,6 +32,26 @@
     }
     return self;
 }
+- (void)setModel:(CZCommentModel *)model{
+    _model = model;
+    self.headerView.model = model;
+    
+    NSMutableArray *imgsArr = [NSMutableArray array];
+    NSMutableArray *imgUrlArr = [NSMutableArray array];
+    if (model.imgs.length) {
+        [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
+    }
+    [imgsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [imgUrlArr addObject:PIC_URL(obj)];
+    }];
+    CGRect rect = self.headerView.frame;
+    if (imgsArr.count <=0) {
+        self.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight - kScreenWidth);
+    }else{
+        self.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight);
+    }
+    self.tableHeaderView = self.headerView;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArr.count;
 }
@@ -42,9 +62,9 @@
         CZCommentsDetailOneCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailOneCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.model = model;
-        [cell setClickLikeAction:^{
+        [cell setClickLikeAction:^(UIButton *likeBtn){
             if (weakSelf.commentsPraiseBlock) {
-                weakSelf.commentsPraiseBlock(indexPath.row);
+                weakSelf.commentsPraiseBlock(indexPath.row,likeBtn);
             }
         }];
         return cell;
@@ -53,9 +73,9 @@
         CZCommentsDetailTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsDetailTwoCell class]) forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.model = model;
-        [cell setClickLikeAction:^{
+        [cell setClickLikeAction:^(UIButton *likeBtn){
             if (weakSelf.commentsPraiseBlock) {
-                weakSelf.commentsPraiseBlock(indexPath.row);
+                weakSelf.commentsPraiseBlock(indexPath.row,likeBtn);
             }
         }];
         return cell;

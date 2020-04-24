@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 //点击日记
 @property (nonatomic ,copy) void (^selectDiaryBlock)(CZDiaryModel *model);
 //评价点赞
-@property (nonatomic ,copy) void (^commentsPraiseBlock)(CZCommentModel *model);
+@property (nonatomic ,copy) void (^commentsPraiseBlock)(CZCommentModel *model , UIButton *likeBtn);
 //设置日记筛选项
 - (void)setDiaryFilter:(NSString *)filterStr;
 //设置评价筛选项

@@ -21,7 +21,7 @@
 @property (nonatomic ,strong)UILabel *contentLab;
 @property (nonatomic ,strong)UILabel *lookLab;
 @property (nonatomic ,strong)UILabel *likeLab;
-@property (nonatomic, strong)UIImageView *likeImg;
+@property (nonatomic, strong)UIButton *likeBtn;
 @property (nonatomic ,strong)UILabel *commentLab;
 @property (nonatomic, strong)UIImageView *commentImg;
 @end
@@ -46,9 +46,11 @@
     self.likeLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
     self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
     if ([model.isPraise boolValue]) {
-        self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_yi_zan"];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateNormal];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateDisabled];
     }else{
-        self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_zan"];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
     }
     NSMutableArray *imgsArr = [NSMutableArray array];
     if (model.imgs.length) {
@@ -65,11 +67,21 @@
 
 //加载图片
 - (void)loadPicsImg{
+    NSMutableArray *imgArr = [NSMutableArray array];
+    [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UIImageView class]] && obj.tag >= 700) {
+            [imgArr addObject:obj];
+        }
+    }];
+    [imgArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromSuperview];
+    }];
     if (self.picsArr.count>0) {
         WEAKSELF
         [self.picsArr enumerateObjectsUsingBlock:^(NSString *  _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
             UIImageView *pic = [[UIImageView alloc]init];
             [pic sd_setImageWithURL:[NSURL URLWithString:PIC_URL(url)] placeholderImage:nil];
+            pic.tag = 700 + idx;
             [weakSelf.contentView addSubview:pic];
             [pic mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.leading.mas_equalTo(weakSelf.contentLab.mas_leading).offset(idx%3 * (ScreenScale(193.5)+ScreenScale(10)));
@@ -81,9 +93,9 @@
     }
 }
 
-- (void)clickLike{
+- (void)clickLike:(UIButton *)likeBtn{
     if (self.clickLikeAction) {
-        self.clickLikeAction();
+        self.clickLikeAction(likeBtn);
     }
 }
 
@@ -190,8 +202,6 @@
     self.likeLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
     self.likeLab.textColor = CZColorCreater(150, 150, 171, 1);
     self.likeLab.text = @"-";
-    self.likeLab.userInteractionEnabled = YES;
-    [self.likeLab addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLike)]];
     [self.contentView addSubview:self.likeLab];
     [self.likeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(24));
@@ -199,15 +209,15 @@
         make.height.width.mas_greaterThanOrEqualTo(0);
     }];
     
-    self.likeImg = [[UIImageView alloc]init];
-    self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_zan"];
-    self.likeImg.userInteractionEnabled = YES;
-    [self.likeImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLike)]];
-    [self.contentView addSubview:self.likeImg];
-    [self.likeImg mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+    [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
+    [self.likeBtn addTarget:self action:@selector(clickLike:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:self.likeBtn];
+    [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.likeLab.mas_leading).offset(-ScreenScale(10));
-        make.width.mas_equalTo(ScreenScale(25));
-        make.height.mas_equalTo(ScreenScale(20));
+        make.width.mas_equalTo(ScreenScale(60));
+        make.height.mas_equalTo(ScreenScale(60));
         make.centerY.mas_equalTo(self.likeLab);
     }];
     
@@ -217,7 +227,7 @@
     self.commentLab.text = @"-";
     [self.contentView addSubview:self.commentLab];
     [self.commentLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.likeImg.mas_leading).offset(-ScreenScale(70));
+        make.trailing.mas_equalTo(self.likeBtn.mas_leading).offset(-ScreenScale(70));
         make.centerY.mas_equalTo(self.lookLab);
         make.height.width.mas_greaterThanOrEqualTo(0);
     }];

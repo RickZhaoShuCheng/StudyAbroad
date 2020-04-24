@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZAdvisorDetailEvaluateCell : UICollectionViewCell
 @property (nonatomic ,strong)NSMutableArray *picsArr;
 @property (nonatomic ,strong) CZCommentModel *model;
-@property (nonatomic ,copy) dispatch_block_t clickLikeAction;
+@property (nonatomic ,copy) void (^clickLikeAction)(UIButton * likeBtn) ;
 @end
 
 NS_ASSUME_NONNULL_END

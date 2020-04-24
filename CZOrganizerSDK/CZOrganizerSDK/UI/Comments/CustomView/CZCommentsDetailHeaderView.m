@@ -109,8 +109,22 @@
 
 - (void)setImgArr:(NSMutableArray *)imgArr{
     if (imgArr.count <= 0) {
+        self.cycleScrollView.hidden = YES;
+        self.imgCountLab.hidden = YES;
+        [self.avatarView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
+            make.top.mas_equalTo(self.mas_top).offset(NaviH +ScreenScale(32));
+            make.size.mas_equalTo(ScreenScale(70));
+        }];
         return;
     }
+    [self.avatarView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.mas_leading).offset(ScreenScale(30));
+        make.top.mas_equalTo(self.cycleScrollView.mas_bottom).offset(ScreenScale(32));
+        make.size.mas_equalTo(ScreenScale(70));
+    }];
+    self.cycleScrollView.hidden = NO;
+    self.imgCountLab.hidden = NO;
     self.cycleScrollView.imageURLStringsGroup = imgArr;
     NSString *tempStr = [NSString stringWithFormat:@"1/%lu",(unsigned long)imgArr.count];
     NSMutableAttributedString *imgCount = [[NSMutableAttributedString alloc]initWithString:tempStr];

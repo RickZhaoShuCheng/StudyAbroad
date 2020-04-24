@@ -16,7 +16,7 @@
 @property (nonatomic ,strong) UILabel *contentLab;
 @property (nonatomic ,strong) UILabel *timeLab;
 @property (nonatomic ,strong) UILabel *countLab;
-@property (nonatomic ,strong) UIImageView *likeImg;
+@property (nonatomic, strong)UIButton *likeBtn;
 @end
 @implementation CZCommentsDetailTwoCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -38,15 +38,17 @@
     self.countLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
     self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
     if ([model.isPraise boolValue]) {
-        self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_yi_zan"];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateNormal];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateDisabled];
     }else{
-        self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_zan"];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+        [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
     }
 }
 
-- (void)clickLike{
+- (void)clickLike:(UIButton *)likeBtn{
     if (self.clickLikeAction) {
-        self.clickLikeAction();
+        self.clickLikeAction(likeBtn);
     }
 }
 
@@ -104,8 +106,6 @@
     self.countLab.text = @"-";
     self.countLab.textColor = CZColorCreater(150, 150, 171, 1);
     self.countLab.textAlignment = NSTextAlignmentRight;
-    self.countLab.userInteractionEnabled = YES;
-    [self.countLab addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLike)]];
     [self.contentView addSubview:self.countLab];
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.mas_equalTo(self.contentView.mas_trailing).offset(-ScreenScale(30));
@@ -113,15 +113,15 @@
         make.height.width.mas_greaterThanOrEqualTo(0);
     }];
     
-    self.likeImg = [[UIImageView alloc]init];
-    self.likeImg.image = [CZImageProvider imageNamed:@"zhu_ye_zan"];
-    self.likeImg.userInteractionEnabled = YES;
-    [self.likeImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLike)]];
-    [self.contentView addSubview:self.likeImg];
-    [self.likeImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(self.countLab.mas_leading).offset(-ScreenScale(10)).priorityHigh();
-        make.width.mas_equalTo(ScreenScale(25));
-        make.height.mas_equalTo(ScreenScale(20));
+    self.likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+    [self.likeBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
+    [self.likeBtn addTarget:self action:@selector(clickLike:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:self.likeBtn];
+    [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.mas_equalTo(self.countLab.mas_leading).offset(-ScreenScale(10));
+        make.width.mas_equalTo(ScreenScale(60));
+        make.height.mas_equalTo(ScreenScale(60));
         make.centerY.mas_equalTo(self.countLab);
     }];
 }

@@ -19,6 +19,7 @@
 @property (nonatomic ,strong) CZCommentsListTableView *tableView;
 @property (nonatomic ,assign) NSInteger pageNum;
 @property (nonatomic ,assign) NSInteger filterNum;
+@property (nonatomic ,strong) UIButton *likeBtn;
 @end
 
 @implementation CZCommentsListVC
@@ -57,8 +58,14 @@
         [weakSelf requestForApiObjectCommentsFindComments:weakSelf.filterNum];
     }];
     //评价点赞
-    [self.tableView setCommentsPraiseBlock:^(NSInteger rowIndex) {
+    [self.tableView setCommentsPraiseBlock:^(NSInteger rowIndex , UIButton *likeBtn) {
         CZCommentModel *model = weakSelf.tableView.commentsArr[rowIndex];
+        if (likeBtn.isSelected) {
+            return;
+        }
+        likeBtn.selected = YES;
+        weakSelf.likeBtn = likeBtn;
+        
         if ([model.isPraise boolValue]) {
             //已点赞，取消点赞
             [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model];
@@ -121,6 +128,7 @@
     [service requestForApiObjectCommentsPraiseObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.likeBtn.selected = NO;
                 model.isPraise = @(1);
                 model.praiseCount = @([model.praiseCount integerValue] + 1);
                 [weakSelf.tableView reloadData];
@@ -137,6 +145,7 @@
     [service requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.likeBtn.selected = NO;
                 model.isPraise = @(0);
                 model.praiseCount = @([model.praiseCount integerValue] - 1);
                 [weakSelf.tableView reloadData];

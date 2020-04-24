@@ -20,6 +20,7 @@
 @property (nonatomic ,strong) CZCommentsDetailTableView *tableView;
 @property (nonatomic ,assign) NSInteger pageNum;
 @property (nonatomic ,assign) CGFloat alpha;
+@property (nonatomic ,strong) UIButton *likeBtn;
 @end
 
 @implementation CZCommentsDetailVC
@@ -54,6 +55,18 @@
     WEAKSELF
     //滚动时设置导航条透明度
     [self.tableView setScrollContentSize:^(CGFloat offsetY) {
+        
+        NSMutableArray *imgsArr = [NSMutableArray array];
+        NSMutableArray *imgUrlArr = [NSMutableArray array];
+        if (weakSelf.tableView.model.imgs.length) {
+            [imgsArr addObjectsFromArray:[weakSelf.tableView.model.imgs componentsSeparatedByString:@","]];
+        }
+        [imgsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [imgUrlArr addObject:PIC_URL(obj)];
+        }];
+        if (imgsArr.count <= 0) {
+            return;
+        }
         //设置渐变透明度
         CGFloat alpha = (offsetY / NaviH)>0.99?0.99:(offsetY / NaviH);
         weakSelf.alpha = alpha;
@@ -77,10 +90,10 @@
 //        }
     }];
     
-    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
-        weakSelf.pageNum = 1;
-        [weakSelf requestForApiObjectCommentsFindObjectCommentsBySocId];
-    }];
+//    self.tableView.mj_header = [CZMJRefreshHelper lb_headerWithAction:^{
+//        weakSelf.pageNum = 1;
+//        [weakSelf requestForApiObjectCommentsFindObjectCommentsBySocId];
+//    }];
     
     self.tableView.mj_footer = [CZMJRefreshHelper lb_footerWithAction:^{
         weakSelf.pageNum ++;
@@ -93,8 +106,13 @@
     }];
     
     //评价点赞
-    [self.tableView setCommentsPraiseBlock:^(NSInteger rowIndex) {
+    [self.tableView setCommentsPraiseBlock:^(NSInteger rowIndex,UIButton *likeBtn) {
         CZCommentModel *model = weakSelf.tableView.dataArr[rowIndex];
+        if (likeBtn.isSelected) {
+            return;
+        }
+        likeBtn.selected = YES;
+        weakSelf.likeBtn = likeBtn;
         if ([model.isPraise boolValue]) {
             //已点赞，取消点赞
             [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model];
@@ -111,15 +129,29 @@
     [service requestForApiObjectCommentsFindObjectCommentsBySocId:self.idStr pageNum:self.pageNum pageSize:20 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.tableView.headerView.frame = CGRectMake(0, 0, kScreenWidth, ScreenScale(1340));
                 CZCommentModel *model = [CZCommentModel modelWithDict:data[@"myDynamicCommentsVo"]];
                 //获取商品信息
                 [weakSelf requestForApiProductGetProductDetail:model.objId];
 //                model.comment = @"操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功";
                 model.commentHeight = [weakSelf getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
-                weakSelf.tableView.headerView.model = model;
-                CGRect rect = weakSelf.tableView.headerView.frame;
-                weakSelf.tableView.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight);
+                weakSelf.tableView.model = model;
+                NSMutableArray *imgsArr = [NSMutableArray array];
+                NSMutableArray *imgUrlArr = [NSMutableArray array];
+                if (model.imgs.length) {
+                    [imgsArr addObjectsFromArray:[model.imgs componentsSeparatedByString:@","]];
+                }
+                [imgsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [imgUrlArr addObject:PIC_URL(obj)];
+                }];
+                if (imgsArr.count <= 0) {
+                    weakSelf.alpha = 1;
+                    [weakSelf.navigationController.navigationBar.subviews.firstObject setAlpha:1];
+                    weakSelf.titleLab.alpha = 1;
+                    weakSelf.titleLab.textColor = [UIColor blackColor];
+                    [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
+                    [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
+                }
+                
                 NSMutableArray *tempArr = data[@"discussCommentsList"];
                 NSMutableArray *replyArr = [NSMutableArray array];
                 [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -179,6 +211,7 @@
     [service requestForApiObjectCommentsPraiseObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.likeBtn.selected = NO;
                 model.isPraise = @(1);
                 model.praiseCount = @([model.praiseCount integerValue] + 1);
                 [weakSelf.tableView reloadData];
@@ -195,6 +228,7 @@
     [service requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.likeBtn.selected = NO;
                 model.isPraise = @(0);
                 model.praiseCount = @([model.praiseCount integerValue] - 1);
                 [weakSelf.tableView reloadData];

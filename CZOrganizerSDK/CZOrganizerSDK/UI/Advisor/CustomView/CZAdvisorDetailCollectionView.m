@@ -146,9 +146,9 @@
     }
     CZAdvisorDetailEvaluateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailEvaluateCell class]) forIndexPath:indexPath];
     cell.model = [CZCommentModel modelWithDict:self.model.commentList[indexPath.row]];
-    [cell setClickLikeAction:^{
+    [cell setClickLikeAction:^(UIButton * _Nonnull likeBtn) {
         if (weakSelf.commentsPraiseBlock) {
-            weakSelf.commentsPraiseBlock([CZCommentModel modelWithDict:weakSelf.model.commentList[indexPath.row]]);
+            weakSelf.commentsPraiseBlock([CZCommentModel modelWithDict:weakSelf.model.commentList[indexPath.row]],likeBtn);
         }
     }];
     return cell;

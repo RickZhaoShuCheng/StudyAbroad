@@ -70,9 +70,9 @@
     CZCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([CZCommentsCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.commentsArr[indexPath.row];
-    [cell setClickLikeAction:^{
+    [cell setClickLikeAction:^(UIButton * _Nonnull likeBtn) {
         if (weakSelf.commentsPraiseBlock) {
-            weakSelf.commentsPraiseBlock(indexPath.row);
+            weakSelf.commentsPraiseBlock(indexPath.row,likeBtn);
         }
     }];
     return cell;

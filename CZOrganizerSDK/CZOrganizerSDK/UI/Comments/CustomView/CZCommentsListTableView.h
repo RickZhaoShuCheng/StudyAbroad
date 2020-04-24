@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic,copy) void (^selectCommentIndex)(NSInteger index);
 //评价点赞
-@property (nonatomic ,copy) void (^commentsPraiseBlock)(NSInteger rowIndex);
+@property (nonatomic ,copy) void (^commentsPraiseBlock)(NSInteger rowIndex , UIButton *likeBtn);
 @end
 
 NS_ASSUME_NONNULL_END
