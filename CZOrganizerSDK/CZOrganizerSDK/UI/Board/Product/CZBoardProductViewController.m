@@ -62,6 +62,7 @@
     
     self.headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width/2.0)];
     self.headImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.headImageView.layer.masksToBounds = YES;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:self.model.content2] placeholderImage:[CZImageProvider imageNamed:@"default_avatar"]];
     self.dataView.tableHeaderView = self.headImageView;
     self.dataView.selectedBlock = ^(NSString * _Nonnull productId) {
