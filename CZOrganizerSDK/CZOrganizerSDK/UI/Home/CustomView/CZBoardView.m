@@ -38,6 +38,12 @@ static CGFloat innerPadding = 10;
         CGFloat defaultWidth = container.bounds.size.width-2*padding;
         self.frame = CGRectMake(padding, 0, defaultWidth, defaultWidth);
         [container addSubview:self];
+        
+        UIImageView *line = [[UIImageView alloc] init];
+        line.backgroundColor = CZColorCreater(245, 245, 249, 1.0);
+        [container addSubview:line];
+        line.frame = CGRectMake(0, defaultWidth-40, container.frame.size.width, 10);
+        
         [self layoutBaseViews];
     }
     return self;
