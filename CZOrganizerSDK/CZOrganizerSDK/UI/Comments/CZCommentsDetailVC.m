@@ -20,7 +20,11 @@
 @property (nonatomic ,strong) CZCommentsDetailTableView *tableView;
 @property (nonatomic ,assign) NSInteger pageNum;
 @property (nonatomic ,assign) CGFloat alpha;
-@property (nonatomic ,strong) UIButton *likeBtn;
+@property (nonatomic ,strong) UIView *bottomView;
+@property (nonatomic ,strong) UIButton *praiseBtn;
+@property (nonatomic ,strong) UILabel *praiseLab;
+@property (nonatomic ,strong) UIButton *commentBtn;
+@property (nonatomic ,strong) UILabel *commentLab;
 @end
 
 @implementation CZCommentsDetailVC
@@ -112,16 +116,30 @@
             return;
         }
         likeBtn.selected = YES;
-        weakSelf.likeBtn = likeBtn;
         if ([model.isPraise boolValue]) {
             //已点赞，取消点赞
-            [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model];
+            [weakSelf requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model actionBtn:likeBtn];
         }else{
             //未点赞，进行点赞
-            [weakSelf requestForApiObjectCommentsPraiseObjectCommentsPraise:model];
+            [weakSelf requestForApiObjectCommentsPraiseObjectCommentsPraise:model actionBtn:likeBtn];
         }
     }];
 }
+//底部点赞
+- (void)clickPraiseBtn{
+    if (self.praiseBtn.isSelected) {
+        return;
+    }
+    self.praiseBtn.selected = YES;
+    if ([self.tableView.model.isPraise boolValue]) {
+        //已点赞，取消点赞
+        [self requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:self.tableView.model actionBtn:self.praiseBtn];
+    }else{
+        //未点赞，进行点赞
+        [self requestForApiObjectCommentsPraiseObjectCommentsPraise:self.tableView.model actionBtn:self.praiseBtn];
+    }
+}
+
 //获取评价详情
 - (void)requestForApiObjectCommentsFindObjectCommentsBySocId{
     WEAKSELF
@@ -132,6 +150,15 @@
                 CZCommentModel *model = [CZCommentModel modelWithDict:data[@"myDynamicCommentsVo"]];
                 //获取商品信息
                 [weakSelf requestForApiProductGetProductDetail:model.objId];
+                if ([model.isPraise boolValue]) {
+                    [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateNormal];
+                    [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateDisabled];
+                }else{
+                    [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+                    [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
+                }
+                weakSelf.praiseLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+                weakSelf.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.commentsCount integerValue]) stringValue]];
 //                model.comment = @"操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功操作成功";
                 model.commentHeight = [weakSelf getStringHeightWithText:model.comment font:[UIFont systemFontOfSize:ScreenScale(26)] viewWidth:kScreenWidth - ScreenScale(60)];
                 weakSelf.tableView.model = model;
@@ -205,16 +232,28 @@
 /**
 评价点赞
 */
-- (void)requestForApiObjectCommentsPraiseObjectCommentsPraise:(CZCommentModel *)model{
+- (void)requestForApiObjectCommentsPraiseObjectCommentsPraise:(CZCommentModel *)model actionBtn:(UIButton *)actionBtn{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
     [service requestForApiObjectCommentsPraiseObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.likeBtn.selected = NO;
+                actionBtn.selected = NO;
                 model.isPraise = @(1);
                 model.praiseCount = @([model.praiseCount integerValue] + 1);
-                [weakSelf.tableView reloadData];
+                if (actionBtn != weakSelf.praiseBtn) {
+                    [weakSelf.tableView reloadData];
+                }else{
+                    if ([model.isPraise boolValue]) {
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateNormal];
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateDisabled];
+                    }else{
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
+                    }
+                    weakSelf.praiseLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+                    weakSelf.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.commentsCount integerValue]) stringValue]];
+                }
             });
         }
     }];
@@ -222,16 +261,28 @@
 /**
 取消评价点赞
 */
-- (void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(CZCommentModel *)model{
+- (void)requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:(CZCommentModel *)model actionBtn:(UIButton *)actionBtn{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
     [service requestForApiObjectCommentsPraiseCancelObjectCommentsPraise:model.socId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.likeBtn.selected = NO;
+                actionBtn.selected = NO;
                 model.isPraise = @(0);
                 model.praiseCount = @([model.praiseCount integerValue] - 1);
-                [weakSelf.tableView reloadData];
+                if (actionBtn != weakSelf.praiseBtn) {
+                    [weakSelf.tableView reloadData];
+                }else{
+                    if ([model.isPraise boolValue]) {
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateNormal];
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_yi_zan"] forState:UIControlStateDisabled];
+                    }else{
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];
+                        [weakSelf.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
+                    }
+                    weakSelf.praiseLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
+                    weakSelf.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.commentsCount integerValue]) stringValue]];
+                }
             });
         }
     }];
@@ -250,11 +301,11 @@
     self.navigationItem.leftBarButtonItem = backItem;
     
     //右边按钮
-    self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
-    [self.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
-    [self.shareBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
-    self.navigationItem.rightBarButtonItem = rbackItem;
+//    self.shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];//heise_fenxiang@2x   guwen_fenxiang
+//    [self.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
+//    [self.shareBtn addTarget:self action:@selector(rbackItemClick) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *rbackItem = [[UIBarButtonItem alloc]initWithCustomView:self.shareBtn];
+//    self.navigationItem.rightBarButtonItem = rbackItem;
     //导航透明
     self.edgesForExtendedLayout = UIRectEdgeTop;
 //    self.navigationController.navigationBar.translucent = YES;
@@ -267,11 +318,81 @@
     self.titleLab.text = @"评价详情";
     [self.navigationItem setTitleView:self.titleLab];
     
+    self.bottomView = [[UIView alloc]init];
+    self.bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.mas_equalTo(self.view);
+        if (IPHONE_X) {
+            make.bottom.mas_equalTo(self.view.mas_bottom).offset(-kBottomSafeHeight);
+        }else{
+            make.bottom.mas_equalTo(self.view);
+        }
+        make.height.mas_equalTo(ScreenScale(94));
+    }];
+    
+    UILabel *line = [[UILabel alloc]init];
+    line.backgroundColor = CZColorCreater(241, 241, 241, 1);
+    line.text = @"";
+    [self.bottomView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.top.trailing.mas_equalTo(self.bottomView);
+        make.height.mas_equalTo(ScreenScale(1));
+    }];
+
+    self.praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateNormal];//zhu_ye_yi_zan
+    [self.praiseBtn setImage:[CZImageProvider imageNamed:@"zhu_ye_zan"] forState:UIControlStateDisabled];
+    [self.praiseBtn addTarget:self action:@selector(clickPraiseBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomView addSubview:self.praiseBtn];
+    [self.praiseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(ScreenScale(60));
+        make.height.mas_equalTo(ScreenScale(60));
+        make.centerY.mas_equalTo(self.bottomView);
+        make.leading.mas_equalTo(self.bottomView.mas_leading).offset(ScreenScale(152));
+    }];
+    
+    self.commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.commentBtn setImage:[CZImageProvider imageNamed:@"guwen_pinglun"] forState:UIControlStateNormal];
+    [self.commentBtn setImage:[CZImageProvider imageNamed:@"guwen_pinglun"] forState:UIControlStateDisabled];
+    [self.bottomView addSubview:self.commentBtn];
+    [self.commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(ScreenScale(60));
+        make.height.mas_equalTo(ScreenScale(60));
+        make.centerY.mas_equalTo(self.bottomView);
+        make.trailing.mas_equalTo(self.bottomView.mas_trailing).offset(-ScreenScale(175));
+    }];
+    
+    self.praiseLab = [[UILabel alloc]init];
+    self.praiseLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
+    self.praiseLab.textColor = CZColorCreater(150, 150, 171, 1);
+    self.praiseLab.text = @"-";
+    [self.bottomView addSubview:self.praiseLab];
+    [self.praiseLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.praiseBtn.mas_trailing);
+        make.height.mas_greaterThanOrEqualTo(0);
+        make.trailing.mas_equalTo(self.commentBtn.mas_leading);
+        make.centerY.mas_equalTo(self.praiseBtn);
+    }];
+    
+    self.commentLab = [[UILabel alloc]init];
+    self.commentLab.font = [UIFont systemFontOfSize:ScreenScale(24)];
+    self.commentLab.textColor = CZColorCreater(150, 150, 171, 1);
+    self.commentLab.text = @"-";
+    [self.bottomView addSubview:self.commentLab];
+    [self.commentLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.commentBtn.mas_trailing);
+        make.height.mas_greaterThanOrEqualTo(0);
+        make.trailing.mas_equalTo(self.bottomView.mas_trailing).offset(-ScreenScale(30));
+        make.centerY.mas_equalTo(self.commentBtn);
+    }];
+    
+    
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.mas_equalTo(self.view);
         make.top.mas_equalTo(self.view.mas_top).offset(-NaviH);
-        make.bottom.mas_equalTo(self.view);
+        make.bottom.mas_equalTo(self.bottomView.mas_top);
     }];
 }
 
@@ -297,9 +418,9 @@
     return _tableView;
 }
 
-- (void)rbackItemClick{
-    
-}
+//- (void)rbackItemClick{
+//
+//}
 
 //返回
 -(void)actionForBack{

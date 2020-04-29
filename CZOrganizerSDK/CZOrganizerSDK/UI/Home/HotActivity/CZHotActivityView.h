@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZHotActivityView : UICollectionView
 
 @property (nonatomic, strong) NSMutableArray *dataArr;
-@property (nonatomic, copy)void (^selectedBlock)(NSString *activityId);
+@property (nonatomic, copy)void (^selectedBlock)(NSString *productId);
 @end
 
 NS_ASSUME_NONNULL_END

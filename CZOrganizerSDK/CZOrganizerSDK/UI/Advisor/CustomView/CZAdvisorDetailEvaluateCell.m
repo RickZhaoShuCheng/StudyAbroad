@@ -44,7 +44,7 @@
     self.evaluateLab.text = [NSString stringWithFormat:@"专业度: %.1f  服务: %.1f  价格: %.1f",[model.valMajor floatValue],[model.valService floatValue],[model.valPrice floatValue]];
     self.contentLab.text = model.comment;
     self.lookLab.text = [NSString stringWithFormat:@"%@人已看",[@([model.visitCount integerValue]) stringValue]];
-    self.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.replyCount integerValue]) stringValue]];
+    self.commentLab.text = [NSString stringWithFormat:@"%@",[@([model.commentsCount integerValue]) stringValue]];
     self.likeLab.text = [NSString stringWithFormat:@"%@",[@([model.praiseCount integerValue]) stringValue]];
     self.timeLab.text = [[NSDate alloc] distanceTimeWithBeforeTime:[model.createTime doubleValue]/1000];
     if ([model.isPraise boolValue]) {

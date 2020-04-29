@@ -46,7 +46,7 @@
     }];
     CGRect rect = self.headerView.frame;
     if (imgsArr.count <=0) {
-        self.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight - kScreenWidth);
+        self.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight - kScreenWidth + NaviH);
     }else{
         self.headerView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height + model.commentHeight);
     }
@@ -122,7 +122,7 @@
 
 - (CZCommentsDetailHeaderView *)headerView{
     if (!_headerView) {
-        _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1340))];
+        _headerView = [[CZCommentsDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(1300))];
         [_headerView.goodsView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickGoods)]];
     }
     return _headerView;

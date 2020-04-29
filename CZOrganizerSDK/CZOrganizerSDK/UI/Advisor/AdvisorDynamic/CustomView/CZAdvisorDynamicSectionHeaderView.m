@@ -26,14 +26,14 @@
  */
 - (void)initWithUI{
     
-    NSArray *menuArr = @[@"帖子",@"长图文"];
+    NSArray *menuArr = @[@"文章",@"问答"];
     // trackerStyle:跟踪器的样式
-    self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(ScreenScale(150), 0, kScreenWidth-ScreenScale(300), ScreenScale(89)) trackerStyle:SPPageMenuTrackerStyleLine];
+    self.pageMenu = [SPPageMenu pageMenuWithFrame:CGRectMake(ScreenScale(100), 0, kScreenWidth-ScreenScale(200), ScreenScale(89)) trackerStyle:SPPageMenuTrackerStyleLine];
     self.pageMenu.permutationWay = SPPageMenuPermutationWayNotScrollAdaptContent;
-    self.pageMenu.selectedItemTitleColor = CZColorCreater(0, 0, 0, 1);
-    self.pageMenu.unSelectedItemTitleColor = CZColorCreater(140, 140, 153, 1);
-    self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:ScreenScale(32)];
-    self.pageMenu.tracker.backgroundColor = CZColorCreater(51, 172, 253, 1);
+    self.pageMenu.selectedItemTitleColor = CZColorCreater(54,163, 238, 1);
+    self.pageMenu.unSelectedItemTitleColor = CZColorCreater(51, 51, 51, 1);
+    self.pageMenu.itemTitleFont = [UIFont boldSystemFontOfSize:ScreenScale(34)];
+    self.pageMenu.tracker.backgroundColor = CZColorCreater(54, 163, 238, 1);
     // 传递数组，默认选中第0个
     [self.pageMenu setItems:menuArr selectedItemIndex:0];
     [self.contentView addSubview:self.pageMenu];

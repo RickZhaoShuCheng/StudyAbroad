@@ -98,7 +98,7 @@
     //点击动态事件处理
     [self.collectionView setDynamicClick:^{
         CZAdvisorDynamicVC *dynamicVC = [[CZAdvisorDynamicVC alloc]init];
-        dynamicVC.model = weakSelf.collectionView.model;
+        dynamicVC.userId = weakSelf.collectionView.model.userId;
         [weakSelf.navigationController pushViewController:dynamicVC animated:YES];
     }];
     
@@ -183,12 +183,12 @@
     }];
 }
 - (void)clickChatBtn{
-//    NSDictionary *param = @{@"conversationType":@"1",
-//                            @"targetId":self.collectionView.model.userId,
-//                            @"title":self.collectionView.model.counselorName,
-//    };
-//    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
-//    [self.navigationController pushViewController:chatVC animated:YES];
+    NSDictionary *param = @{@"conversationType":@"1",
+                            @"targetId":self.collectionView.model.userId,
+                            @"title":self.collectionView.model.counselorName,
+    };
+    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 /**
  获取顾问详情

@@ -23,7 +23,6 @@
         self.dataSource = self;
         self.showsVerticalScrollIndicator = NO;
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        self.bounces = NO;
         self.backgroundColor = [UIColor whiteColor];
         [self registerClass:[CZAdvisorDynamicCell class] forCellReuseIdentifier:NSStringFromClass([CZAdvisorDynamicCell class])];
         [self registerClass:[CZAdvisorDynamicSectionHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([CZAdvisorDynamicSectionHeaderView class])];
@@ -31,8 +30,9 @@
     }
     return self;
 }
-- (void)setModel:(CZAdvisorInfoModel *)model{
-    model.introduceOpen = NO;
+- (void)setModel:(CZUserInfoModel *)model{
+//    model.introduceOpen = NO;
+//    model.introduce = @"南京市海牛工作室教育咨询有限责任公司是一家由加拿大籍华人教育专家和岛城多名教育行业专家共同创办京市海牛工作室教育咨询有限责任公司是一家由加拿大籍华人教育专家南京市海牛工作室教育咨询有限责任。公司是一家由南京市海牛工作室教育咨询有限责任公司是一家由南京市海牛工作室教育咨询有限责任公司是一家加拿大籍华人。";
     _model = model;
     self.headerView.model = _model;
     [self reloadData];
@@ -46,10 +46,8 @@
     self.cell.scrollContentSize = ^(CGFloat offsetY) {
         if (offsetY > 0) {
             weakSelf.scrollEnabled = NO;
-//            NSLog(@"2222++++++++");
         }else{
             weakSelf.scrollEnabled = YES;
-//            NSLog(@"2222................");
         }
     };
     return self.cell;
@@ -81,6 +79,22 @@
 }
 #pragma mark - SPPageMenu的代理方法
 - (void)pageMenu:(SPPageMenu *)pageMenu itemSelectedFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
+    //悬浮
+    CGFloat header = self.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
+    CGFloat offsetY = self.contentOffset.y;
+    if (offsetY < (header - NaviH) && offsetY >= 0) {
+        //当视图滑动的距离小于header时
+        self.cell.postVC.tableView.scrollEnabled = NO;
+        self.cell.QAVC.tableView.scrollEnabled = NO;
+//        self.cell.diaryVC.tableView.scrollEnabled = NO;
+        self.scrollEnabled = YES;
+    }else if(offsetY >= (header - NaviH)){
+        //当视图滑动的距离大于header时，这里就可以设置section1的header的位置啦，设置的时候要考虑到导航栏的透明对滚动视图的影响
+        self.cell.postVC.tableView.scrollEnabled = YES;
+        self.cell.QAVC.tableView.scrollEnabled = YES;
+//        self.cell.diaryVC.tableView.scrollEnabled = YES;
+        self.scrollEnabled = NO;
+    }
     
     if (fromIndex == toIndex) {
         return;
@@ -115,12 +129,12 @@
 
 - (CZAdvisorDynamicTableHeaderView *)headerView{
     if (!_headerView) {
-        _headerView = [[CZAdvisorDynamicTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(810))];
+        _headerView = [[CZAdvisorDynamicTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, ScreenScale(686))];
         WEAKSELF
         _headerView.arrowBtnClick = ^(UIButton * _Nonnull button) {
             CGRect headerFrame = weakSelf.headerView.frame;
             CGRect frame = weakSelf.headerView.bgImg.frame;
-            CGFloat height = weakSelf.model.introduceHeight-weakSelf.model.singleHeight*2;
+            CGFloat height = weakSelf.model.introduceHeight-weakSelf.model.singleHeight*3;
             if (!weakSelf.model.introduceOpen) {
                 //逆时针 旋转180度
                 [UIView beginAnimations:nil context:nil];
@@ -145,7 +159,7 @@
                 transform = CGAffineTransformScale(transform, 1,1);
                 button.transform = transform;
                 [UIView commitAnimations];
-                weakSelf.headerView.contentLab.numberOfLines = 2;
+                weakSelf.headerView.contentLab.numberOfLines = 3;
                 weakSelf.headerView.bgImg.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height - height);
                 weakSelf.headerView.frame = CGRectMake(headerFrame.origin.x, headerFrame.origin.y, headerFrame.size.width, headerFrame.size.height - height);
             }

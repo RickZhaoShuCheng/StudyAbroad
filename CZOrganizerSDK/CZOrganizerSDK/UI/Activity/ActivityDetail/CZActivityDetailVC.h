@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CZActivityDetailVC : UIViewController
 @property (nonatomic ,assign) BOOL isEnd;
 @property (nonatomic ,assign) BOOL isFree;
-@property (nonatomic ,strong) NSString *activityId;
+@property (nonatomic ,strong) NSString *productId;
 @end
 
 NS_ASSUME_NONNULL_END

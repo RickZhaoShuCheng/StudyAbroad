@@ -125,7 +125,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     CZAdvisorDetailHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZAdvisorDetailHeaderCell class]) forIndexPath:indexPath];
-    cell.model = [CZDiaryModel modelWithDict:self.model.dynamicVoList[indexPath.row]];
+    cell.model = self.model.dynamicVoList[indexPath.row];
     return cell;
 }
 

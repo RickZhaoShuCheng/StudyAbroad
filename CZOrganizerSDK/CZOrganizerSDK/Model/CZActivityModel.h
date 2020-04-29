@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSString *priceType;
 @property (nonatomic , strong) NSString *organName;
 @property (nonatomic , strong) NSString *sportUserName;
+@property (nonatomic , strong) NSString *userNickName;
 @property (nonatomic , strong) NSNumber *price;
 @property (nonatomic , strong) NSNumber *oldPrice;
 @property (nonatomic , strong) NSNumber *applyPrice;
@@ -53,7 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *diaryCount;
 @property (nonatomic , strong) NSNumber *commentsCount;
 @property (nonatomic , strong) NSString *filterComments;
-@property (nonatomic , strong) NSString *isCollect;
+@property (nonatomic , strong) NSNumber *isCollect;
+@property (nonatomic , strong) NSString *userId;
 @property (nonatomic , strong) NSMutableArray *activitySessionList;
 @property (nonatomic , strong) NSMutableArray *counselorVoList;
 @property (nonatomic , strong) NSString *introduce;

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZOrganizerSearchCell : UICollectionViewCell
 @property (nonatomic ,strong) NSDictionary *dic;
+@property (nonatomic ,strong) UILabel *titleLab;
 @end
 
 NS_ASSUME_NONNULL_END

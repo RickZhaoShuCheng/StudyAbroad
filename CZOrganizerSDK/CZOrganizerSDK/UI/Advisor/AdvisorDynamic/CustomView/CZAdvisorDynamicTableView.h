@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CZAdvisorDynamicTableHeaderView.h"
-#import "CZAdvisorInfoModel.h"
+#import "CZUserInfoModel.h"
 #import "CZAdvisorDynamicCell.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDynamicTableView : UITableView
-@property (nonatomic ,strong) CZAdvisorInfoModel *model;
+@property (nonatomic ,strong) CZUserInfoModel *model;
 @property (nonatomic ,strong) CZAdvisorDynamicTableHeaderView *headerView;
 @property (nonatomic ,strong) CZAdvisorDynamicCell *cell;
 /**

@@ -11,7 +11,7 @@
 @implementation CZAdvisorInfoModel
 + (NSDictionary *)arrayContainModelClass
 {
-    return @{@"productVoList":@"CZProductVoListModel",@"comments":@"CZCommentModel"};
+    return @{@"productVoList":@"CZProductVoListModel",@"comments":@"CZCommentModel",@"dynamicVoList":@"CZDynamicModel"};
 }
 
 @end

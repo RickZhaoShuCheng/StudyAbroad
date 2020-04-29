@@ -22,7 +22,7 @@
     return self;
 }
 
-- (void)setModel:(CZDiaryModel *)model{
+- (void)setModel:(CZDynamicModel *)model{
     _model = model;
     NSMutableArray *imgArr = [NSMutableArray array];
     if (model.smdImgs.length) {

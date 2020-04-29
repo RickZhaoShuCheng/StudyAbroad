@@ -1354,5 +1354,4 @@ static const NSString *ApiShoppingCartAddShoppingCart = @"apiShoppingCart/addSho
         }
     }];
 }
-
 @end

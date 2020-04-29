@@ -291,10 +291,10 @@ typedef enum : NSUInteger {
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         [layout setSectionInset:UIEdgeInsetsMake(0, 15, 0, 0)];
         _activityView = [[CZHotActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 150) collectionViewLayout:layout];
-        [_activityView setSelectedBlock:^(NSString * _Nonnull activityId) {
+        [_activityView setSelectedBlock:^(NSString * _Nonnull productId) {
             CZActivityDetailVC *detailVC = [[CZActivityDetailVC alloc]init];
             detailVC.hidesBottomBarWhenPushed = YES;
-            detailVC.activityId = activityId;
+            detailVC.productId = productId;
             [weakSelf.navigationController pushViewController:detailVC animated:YES];
         }];
     }

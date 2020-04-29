@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZDiaryModel.h"
+#import "CZDynamicModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDetailHeaderCell : UICollectionViewCell
-@property (nonatomic ,strong) CZDiaryModel *model;
+@property (nonatomic ,strong) CZDynamicModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

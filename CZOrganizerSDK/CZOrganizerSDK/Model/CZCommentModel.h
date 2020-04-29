@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) NSString *orderId;
 @property (nonatomic ,strong) NSNumber *praiseCount;
 @property (nonatomic ,strong) NSNumber *replyCount;
+@property (nonatomic ,strong) NSNumber *commentsCount;
 @property (nonatomic ,strong) NSString *socId;
 @property (nonatomic ,strong) NSString *title;
 @property (nonatomic ,strong) NSString *toComment;

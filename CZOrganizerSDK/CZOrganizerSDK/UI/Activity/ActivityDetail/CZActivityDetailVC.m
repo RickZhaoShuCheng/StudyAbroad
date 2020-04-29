@@ -61,6 +61,7 @@
     [self.navigationController setNavigationBarHidden:NO];
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar.subviews.firstObject setAlpha:self.alpha];
+    self.titleLab.alpha = self.alpha;
     if (self.scrollView.superview) {
         [self.scrollView.cycleView startTimer];
         [self.scrollView.cycleView adjustWhenControllerViewWillAppera];
@@ -101,11 +102,23 @@
         if (alpha >0.5) {
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-            [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+            if ([weakSelf.model.isCollect boolValue]) {
+                [weakSelf.loveBtn setSelected:YES];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            }else{
+                [weakSelf.loveBtn setSelected:NO];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+            }
         }else{
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"baise_fanhui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
-            [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
+            if ([weakSelf.model.isCollect boolValue]) {
+                [weakSelf.loveBtn setSelected:YES];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            }else{
+                [weakSelf.loveBtn setSelected:NO];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
+            }
         }
 //        //悬浮
 //        CGFloat header = weakSelf.collectionView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
@@ -129,12 +142,25 @@
         if (alpha >0.5) {
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"tong_yong_fan_hui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"heise_fenxiang"] forState:UIControlStateNormal];
-            [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+            if ([weakSelf.model.isCollect boolValue]) {
+                [weakSelf.loveBtn setSelected:YES];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            }else{
+                [weakSelf.loveBtn setSelected:NO];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_heise"] forState:UIControlStateNormal];
+            }
         }else{
             [weakSelf.backBtn setImage:[CZImageProvider imageNamed:@"baise_fanhui"] forState:UIControlStateNormal];
             [weakSelf.shareBtn setImage:[CZImageProvider imageNamed:@"guwen_fenxiang"] forState:UIControlStateNormal];
-            [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
+            if ([weakSelf.model.isCollect boolValue]) {
+                [weakSelf.loveBtn setSelected:YES];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            }else{
+                [weakSelf.loveBtn setSelected:NO];
+                [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"xingxing_baise"] forState:UIControlStateNormal];
+            }
         }
+        
 //        //悬浮
 //        CGFloat header = weakSelf.collectionView.headerView.frame.size.height;//这个header其实是section1 的header到顶部的距离（一般为: tableHeaderView的高度）
 //        if (offsetY < (header - NaviH) && offsetY >= 0) {
@@ -148,7 +174,7 @@
     
     [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
         CZActivityDetailVC *detailVC = [[CZActivityDetailVC alloc]init];
-        detailVC.activityId = str;
+        detailVC.productId = str;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     
@@ -179,12 +205,12 @@
 }
 //点击私信
 - (void)clickChatBtn{
-//    NSDictionary *param = @{@"conversationType":@"1",
-//                            @"targetId":self.model.sportUserId,
-//                            @"title":self.model.sportUserName,
-//    };
-//    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
-//    [self.navigationController pushViewController:chatVC animated:YES];
+    NSDictionary *param = @{@"conversationType":@"1",
+                            @"targetId":self.model.userId,
+                            @"title":self.model.userNickName,
+    };
+    UIViewController *chatVC = [QSClient instanceChatTabVCByOptions:param];
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 //点击报名/购买
 - (void)clickBuyBtn:(UIButton *)button{
@@ -266,7 +292,7 @@
 - (void)requestForApiProductActivitySelectProductActivityInfo{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service requestForApiProductActivitySelectProductActivityInfo:self.activityId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiProductActivitySelectProductActivityInfo:self.productId callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.model = [CZActivityModel modelWithDict:data];
@@ -365,6 +391,9 @@
     [param setValue:self.model.productId forKey:@"productId"];
     [param setValue:self.model.organId forKey:@"organId"];
     [param setValue:@"1" forKey:@"buyCount"];
+    NSString *name = [[NSUserDefaults standardUserDefaults] stringForKey:@"userNickName"];
+    [param setValue:name forKey:@"linkName"];
+    [param setValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"userPhone"] forKey:@"linkPhone"];
     [service requestForApiShoppingCartAddShoppingCart:param CallBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -387,12 +416,18 @@
 - (void)requestForApiCollectCollect{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service requestForApiCollectCollect:self.activityId collectType:8 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiCollectCollect:self.model.productActivityId collectType:8 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.model.isCollect = @(1);
                 [weakSelf.loveBtn setSelected:YES];
                 [weakSelf.loveBtn setImage:[CZImageProvider imageNamed:@"yi_shou_cang"] forState:UIControlStateNormal];
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [QSHudView showToastOnView:[UIApplication sharedApplication].keyWindow title:errorMessage customizationBlock:^(QSHudView *hudView) {
+                    [hudView hideAnimated:YES afterDelay:1];
+                }];
             });
         }
     }];
@@ -404,7 +439,7 @@
 - (void)requestForApiCollectCancelCollect{
     WEAKSELF
     CZAdvisorDetailService *service = serviceByType(QSServiceTypeAdvisorDetail);
-    [service requestForApiCollectCancelCollect:self.activityId collectType:8 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiCollectCancelCollect:self.model.productActivityId collectType:8 callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success){
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.model.isCollect = @(0);

@@ -9,7 +9,7 @@
 #import "CZOrganizerSearchCell.h"
 
 @interface CZOrganizerSearchCell()
-@property (nonatomic ,strong) UILabel *titleLab;
+
 @end
 @implementation CZOrganizerSearchCell
 - (instancetype)initWithFrame:(CGRect)frame{

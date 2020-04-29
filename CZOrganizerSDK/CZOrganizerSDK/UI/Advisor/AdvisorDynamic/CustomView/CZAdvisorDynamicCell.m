@@ -33,6 +33,7 @@
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.alwaysBounceHorizontal = YES;
     self.scrollView.pagingEnabled = YES;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
     [self.contentView addSubview:self.scrollView];
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.contentView);
@@ -41,11 +42,17 @@
     self.scrollView.contentSize = CGSizeMake(kScreenWidth*2, self.contentView.frame.size.height);
     
     self.postVC = [[CZAdvisorDynamicPostVC alloc]init];
-    
-//    postVC.view.frame = CGRectMake(0, 0, kScreenWidth, self.tableView.cell.contentView.frame.size.height);
     [self.scrollView addSubview:self.postVC.view];
     [self.postVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.scrollView);
+        make.top.bottom.mas_equalTo(self.contentView);
+        make.width.mas_equalTo(kScreenWidth);
+    }];
+    
+    self.QAVC = [[CZAdvisorDynamicQAVC alloc]init];
+    [self.scrollView addSubview:self.QAVC.view];
+    [self.QAVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.scrollView.mas_leading).offset(kScreenWidth);
         make.top.bottom.mas_equalTo(self.contentView);
         make.width.mas_equalTo(kScreenWidth);
     }];
@@ -61,6 +68,16 @@
             weakSelf.postVC.tableView.scrollEnabled = NO;
         }else{
             weakSelf.postVC.tableView.scrollEnabled = YES;
+        }
+    }];
+    [self.QAVC.tableView setScrollContentSize:^(CGFloat offsetY) {
+        if (weakSelf.scrollContentSize) {
+            weakSelf.scrollContentSize(offsetY);
+        }
+        if (offsetY <= 0) {
+            weakSelf.QAVC.tableView.scrollEnabled = NO;
+        }else{
+            weakSelf.QAVC.tableView.scrollEnabled = YES;
         }
     }];
 }

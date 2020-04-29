@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZAdvisorInfoModel.h"
+#import "CZUserInfoModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDynamicVC : UIViewController
-@property (nonatomic ,strong) CZAdvisorInfoModel *model;
+@property (nonatomic ,strong) CZUserInfoModel *model;
+@property (nonatomic ,strong) NSString *userId;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -36,7 +36,6 @@
 		1E7684D6243D7D67005F0377 /* CXSearchLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684C5243D7D66005F0377 /* CXSearchLayout.m */; };
 		1E7684D7243D7D67005F0377 /* CXSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684C7243D7D66005F0377 /* CXSearchViewController.m */; };
 		1E7684D8243D7D67005F0377 /* CXSearchViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684C8243D7D66005F0377 /* CXSearchViewController.h */; };
-		1E7684D9243D7D67005F0377 /* CXSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7684C9243D7D66005F0377 /* CXSearchViewController.xib */; };
 		1E7684DA243D7D67005F0377 /* CXDBTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684CB243D7D66005F0377 /* CXDBTool.h */; };
 		1E7684DB243D7D67005F0377 /* CXDBTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E7684CC243D7D66005F0377 /* CXDBTool.m */; };
 		1E7684E8243D7DA5005F0377 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E7684DD243D7DA4005F0377 /* FMDatabase.h */; };
@@ -364,6 +363,7 @@
 		D804BF9E242A4F630050AB7D /* CZActivityDetailScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D804BF9C242A4F630050AB7D /* CZActivityDetailScrollView.m */; };
 		D80B06CA2430C73E00B4AB27 /* NSDate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D80B06C82430C73E00B4AB27 /* NSDate+Utils.m */; };
 		D80B06CB2430C73E00B4AB27 /* NSDate+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = D80B06C92430C73E00B4AB27 /* NSDate+Utils.h */; };
+		D81D46022457233900EA8C10 /* CXSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D81D46012457233900EA8C10 /* CXSearchViewController.xib */; };
 		D81E22CE2434D7BF000CC8EC /* CZMoreSchoolStarVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D81E22CC2434D7BF000CC8EC /* CZMoreSchoolStarVC.h */; };
 		D81E22CF2434D7BF000CC8EC /* CZMoreSchoolStarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D81E22CD2434D7BF000CC8EC /* CZMoreSchoolStarVC.m */; };
 		D81E22D22434D7D6000CC8EC /* CZMoreSchoolStarTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D81E22D02434D7D6000CC8EC /* CZMoreSchoolStarTableView.h */; };
@@ -468,6 +468,8 @@
 		D86B815224194248007F1595 /* CZOrganizerAdvisorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D86B815024194248007F1595 /* CZOrganizerAdvisorVC.m */; };
 		D87AB4892448BE9B002880C2 /* CZActivitySureOrderVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D87AB4872448BE9B002880C2 /* CZActivitySureOrderVC.h */; };
 		D87AB48A2448BE9B002880C2 /* CZActivitySureOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D87AB4882448BE9B002880C2 /* CZActivitySureOrderVC.m */; };
+		D88590252459B92200ABE37D /* CZDynamicModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D88590232459B92200ABE37D /* CZDynamicModel.h */; };
+		D88590262459B92200ABE37D /* CZDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D88590242459B92200ABE37D /* CZDynamicModel.m */; };
 		D8868591241BCFE700B14680 /* CZAdvisorInfoModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D886858F241BCFE700B14680 /* CZAdvisorInfoModel.h */; };
 		D8868592241BCFE700B14680 /* CZAdvisorInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D8868590241BCFE700B14680 /* CZAdvisorInfoModel.m */; };
 		D886859C241D1FE800B14680 /* CZCommentsListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D886859A241D1FE800B14680 /* CZCommentsListVC.h */; };
@@ -578,6 +580,12 @@
 		D8E5F15524227B1F0074EB57 /* CZCommentsDetailTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E5F15324227B1F0074EB57 /* CZCommentsDetailTwoCell.m */; };
 		D8E5F15824227C6F0074EB57 /* CZCommentsDetailMoreCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D8E5F15624227C6F0074EB57 /* CZCommentsDetailMoreCell.h */; };
 		D8E5F15924227C6F0074EB57 /* CZCommentsDetailMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E5F15724227C6F0074EB57 /* CZCommentsDetailMoreCell.m */; };
+		D8E7C6B4245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D8E7C6B2245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.h */; };
+		D8E7C6B5245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7C6B3245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.m */; };
+		D8E7C6B8245837E700B7CB34 /* CZAdvisorDynamicQAVC.h in Headers */ = {isa = PBXBuildFile; fileRef = D8E7C6B6245837E700B7CB34 /* CZAdvisorDynamicQAVC.h */; };
+		D8E7C6B9245837E700B7CB34 /* CZAdvisorDynamicQAVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7C6B7245837E700B7CB34 /* CZAdvisorDynamicQAVC.m */; };
+		D8E7C6BC2458381800B7CB34 /* CZAdvisorDynamicQATableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D8E7C6BA2458381800B7CB34 /* CZAdvisorDynamicQATableView.h */; };
+		D8E7C6BD2458381800B7CB34 /* CZAdvisorDynamicQATableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7C6BB2458381800B7CB34 /* CZAdvisorDynamicQATableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -620,7 +628,6 @@
 		1E7684C5243D7D66005F0377 /* CXSearchLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchLayout.m; sourceTree = "<group>"; };
 		1E7684C7243D7D66005F0377 /* CXSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXSearchViewController.m; sourceTree = "<group>"; };
 		1E7684C8243D7D66005F0377 /* CXSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXSearchViewController.h; sourceTree = "<group>"; };
-		1E7684C9243D7D66005F0377 /* CXSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXSearchViewController.xib; sourceTree = "<group>"; };
 		1E7684CB243D7D66005F0377 /* CXDBTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXDBTool.h; sourceTree = "<group>"; };
 		1E7684CC243D7D66005F0377 /* CXDBTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXDBTool.m; sourceTree = "<group>"; };
 		1E7684DD243D7DA4005F0377 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -954,6 +961,7 @@
 		D804BF9C242A4F630050AB7D /* CZActivityDetailScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZActivityDetailScrollView.m; sourceTree = "<group>"; };
 		D80B06C82430C73E00B4AB27 /* NSDate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utils.m"; sourceTree = "<group>"; };
 		D80B06C92430C73E00B4AB27 /* NSDate+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utils.h"; sourceTree = "<group>"; };
+		D81D46012457233900EA8C10 /* CXSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXSearchViewController.xib; sourceTree = "<group>"; };
 		D81E22CC2434D7BF000CC8EC /* CZMoreSchoolStarVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZMoreSchoolStarVC.h; sourceTree = "<group>"; };
 		D81E22CD2434D7BF000CC8EC /* CZMoreSchoolStarVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZMoreSchoolStarVC.m; sourceTree = "<group>"; };
 		D81E22D02434D7D6000CC8EC /* CZMoreSchoolStarTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZMoreSchoolStarTableView.h; sourceTree = "<group>"; };
@@ -1058,6 +1066,8 @@
 		D86B815024194248007F1595 /* CZOrganizerAdvisorVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZOrganizerAdvisorVC.m; sourceTree = "<group>"; };
 		D87AB4872448BE9B002880C2 /* CZActivitySureOrderVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZActivitySureOrderVC.h; sourceTree = "<group>"; };
 		D87AB4882448BE9B002880C2 /* CZActivitySureOrderVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZActivitySureOrderVC.m; sourceTree = "<group>"; };
+		D88590232459B92200ABE37D /* CZDynamicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZDynamicModel.h; sourceTree = "<group>"; };
+		D88590242459B92200ABE37D /* CZDynamicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZDynamicModel.m; sourceTree = "<group>"; };
 		D886858F241BCFE700B14680 /* CZAdvisorInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorInfoModel.h; sourceTree = "<group>"; };
 		D8868590241BCFE700B14680 /* CZAdvisorInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorInfoModel.m; sourceTree = "<group>"; };
 		D886859A241D1FE800B14680 /* CZCommentsListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZCommentsListVC.h; sourceTree = "<group>"; };
@@ -1168,6 +1178,12 @@
 		D8E5F15324227B1F0074EB57 /* CZCommentsDetailTwoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZCommentsDetailTwoCell.m; sourceTree = "<group>"; };
 		D8E5F15624227C6F0074EB57 /* CZCommentsDetailMoreCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZCommentsDetailMoreCell.h; sourceTree = "<group>"; };
 		D8E5F15724227C6F0074EB57 /* CZCommentsDetailMoreCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZCommentsDetailMoreCell.m; sourceTree = "<group>"; };
+		D8E7C6B2245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDynamicPostCommentCell.h; sourceTree = "<group>"; };
+		D8E7C6B3245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDynamicPostCommentCell.m; sourceTree = "<group>"; };
+		D8E7C6B6245837E700B7CB34 /* CZAdvisorDynamicQAVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDynamicQAVC.h; sourceTree = "<group>"; };
+		D8E7C6B7245837E700B7CB34 /* CZAdvisorDynamicQAVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDynamicQAVC.m; sourceTree = "<group>"; };
+		D8E7C6BA2458381800B7CB34 /* CZAdvisorDynamicQATableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZAdvisorDynamicQATableView.h; sourceTree = "<group>"; };
+		D8E7C6BB2458381800B7CB34 /* CZAdvisorDynamicQATableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZAdvisorDynamicQATableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1254,9 +1270,9 @@
 		1E7684C6243D7D66005F0377 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D81D46012457233900EA8C10 /* CXSearchViewController.xib */,
 				1E7684C7243D7D66005F0377 /* CXSearchViewController.m */,
 				1E7684C8243D7D66005F0377 /* CXSearchViewController.h */,
-				1E7684C9243D7D66005F0377 /* CXSearchViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1402,6 +1418,8 @@
 				D8ADC33F2440BA4E00C49452 /* CZCaseModel.m */,
 				D8ADC3462440CFAD00C49452 /* CZUserInfoModel.h */,
 				D8ADC3472440CFAD00C49452 /* CZUserInfoModel.m */,
+				D88590232459B92200ABE37D /* CZDynamicModel.h */,
+				D88590242459B92200ABE37D /* CZDynamicModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2361,6 +2379,8 @@
 				D8C40E6F2426544800087987 /* CZAdvisorDynamicVC.m */,
 				D8C40E7224265ACE00087987 /* CZAdvisorDynamicPostVC.h */,
 				D8C40E7324265ACE00087987 /* CZAdvisorDynamicPostVC.m */,
+				D8E7C6B6245837E700B7CB34 /* CZAdvisorDynamicQAVC.h */,
+				D8E7C6B7245837E700B7CB34 /* CZAdvisorDynamicQAVC.m */,
 			);
 			path = AdvisorDynamic;
 			sourceTree = "<group>";
@@ -2380,6 +2400,10 @@
 				D8C40E8C2427817400087987 /* CZAdvisorDynamicPostTableView.m */,
 				D8C40E8F2427B0C400087987 /* CZAdvisorDynamicPostCell.h */,
 				D8C40E902427B0C400087987 /* CZAdvisorDynamicPostCell.m */,
+				D8E7C6B2245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.h */,
+				D8E7C6B3245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.m */,
+				D8E7C6BA2458381800B7CB34 /* CZAdvisorDynamicQATableView.h */,
+				D8E7C6BB2458381800B7CB34 /* CZAdvisorDynamicQATableView.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -2439,6 +2463,7 @@
 				5394846F23FFB0B100770E99 /* CZOrganizerHomeViewController.h in Headers */,
 				5394846923FFB03400770E99 /* CZPageScrollController.h in Headers */,
 				539484A623FFC5AC00770E99 /* MASConstraintMaker.h in Headers */,
+				D88590252459B92200ABE37D /* CZDynamicModel.h in Headers */,
 				5394844323FFB03400770E99 /* TAPageControl.h in Headers */,
 				D8C40E7424265ACE00087987 /* CZAdvisorDynamicPostVC.h in Headers */,
 				D83BF6FD243B56C90032C2BD /* CZSchoolStarDetailSectionHeaderView.h in Headers */,
@@ -2525,6 +2550,7 @@
 				5331CAB02407EC0D0069AC92 /* CZCountryModel.h in Headers */,
 				D88AFC202429059D00F1E6CB /* CZOrganizerDynamicPostVC.h in Headers */,
 				5394848523FFC48C00770E99 /* CZCarefullyChooseViewController.h in Headers */,
+				D8E7C6B8245837E700B7CB34 /* CZAdvisorDynamicQAVC.h in Headers */,
 				537E3D98240AB7D500C080E9 /* CZAdvisorModel.h in Headers */,
 				537E3D78240A96DF00C080E9 /* CZHotActivityCell.h in Headers */,
 				1E60A3E42448A3CC00809B63 /* QSProgressHUD.h in Headers */,
@@ -2599,6 +2625,7 @@
 				D8C40E64242649A900087987 /* CZOrganizerSearchCollectionView.h in Headers */,
 				D8CD0C472415354800B2124C /* CZOrganizerDetailEvaluateCell.h in Headers */,
 				D81F46A6242B91BF008C6D85 /* CZActivityDetailHeaderView.h in Headers */,
+				D8E7C6BC2458381800B7CB34 /* CZAdvisorDynamicQATableView.h in Headers */,
 				539484B523FFC5AC00770E99 /* Masonry.h in Headers */,
 				535E5DB924080AED00471453 /* MJRefreshBackFooter.h in Headers */,
 				539484AA23FFC5AC00770E99 /* MASViewAttribute.h in Headers */,
@@ -2627,6 +2654,7 @@
 				D81F469E242B8CD1008C6D85 /* CZActivityDetailTableView.h in Headers */,
 				537E3D59240A8A1A00C080E9 /* CZPersonInfoCell.h in Headers */,
 				535E5D9324080AED00471453 /* UIScrollView+MJExtension.h in Headers */,
+				D8E7C6B4245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.h in Headers */,
 				D8C40E602426411500087987 /* CZOrganizerSearchVC.h in Headers */,
 				53C1A1A82404E18F00C6A3E9 /* CZSearchBar.h in Headers */,
 				1E7684EF243D7DA5005F0377 /* FMDB.h in Headers */,
@@ -2778,8 +2806,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				535E5D9624080AED00471453 /* MJRefresh.bundle in Resources */,
+				D81D46022457233900EA8C10 /* CXSearchViewController.xib in Resources */,
 				535F000423FFFE35003463B0 /* CZOrganizerBundle.bundle in Resources */,
-				1E7684D9243D7D67005F0377 /* CXSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2892,8 +2920,10 @@
 				539484B923FFC5AC00770E99 /* MASViewAttribute.m in Sources */,
 				1E8D879924274A0600E09FB2 /* CZBoardProductViewController.m in Sources */,
 				D8C40E712426544800087987 /* CZAdvisorDynamicVC.m in Sources */,
+				D8E7C6BD2458381800B7CB34 /* CZAdvisorDynamicQATableView.m in Sources */,
 				5394844623FFB03400770E99 /* SDWebImageManager.m in Sources */,
 				535F000C23FFFFDC003463B0 /* CZServiceCell.m in Sources */,
+				D8E7C6B5245830CA00B7CB34 /* CZAdvisorDynamicPostCommentCell.m in Sources */,
 				53A90CD12414D53C00894E9D /* CZDiaryModel.m in Sources */,
 				539484AF23FFC5AC00770E99 /* MASCompositeConstraint.m in Sources */,
 				D8C40E8A24276BB400087987 /* CZAdvisorDynamicCell.m in Sources */,
@@ -2945,6 +2975,7 @@
 				5320141C240576D2009B78AB /* CZHomeModel.m in Sources */,
 				1E8D878B2427494500E09FB2 /* CZBoardProductTopCell.m in Sources */,
 				535E5DAA24080AED00471453 /* MJRefreshNormalHeader.m in Sources */,
+				D88590262459B92200ABE37D /* CZDynamicModel.m in Sources */,
 				1E18BFA52424FBD800A62312 /* CZBoardSchoolStarViewController.m in Sources */,
 				1E7684D0243D7D67005F0377 /* CXSearchCollectionReusableView.m in Sources */,
 				D88AFC112428FAC200F1E6CB /* CZOrganizerDynamicTableView.m in Sources */,
@@ -3034,6 +3065,7 @@
 				D8CD0C062413D51D00B2124C /* CZAdvisorDetailHeaderCell.m in Sources */,
 				53A90CB4241378A100894E9D /* CZCommonFilterManager.m in Sources */,
 				D88685B9241D3C9A00B14680 /* CZCommentsDetailHeaderView.m in Sources */,
+				D8E7C6B9245837E700B7CB34 /* CZAdvisorDynamicQAVC.m in Sources */,
 				5394844C23FFB03400770E99 /* UIImage+GIF.m in Sources */,
 				1E7684E9243D7DA5005F0377 /* FMDatabaseQueue.m in Sources */,
 				1E7684ED243D7DA5005F0377 /* FMDatabase.m in Sources */,

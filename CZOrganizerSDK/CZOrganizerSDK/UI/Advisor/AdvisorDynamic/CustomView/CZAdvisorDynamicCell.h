@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "CZAdvisorDynamicPostVC.h"
+#import "CZAdvisorDynamicQAVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDynamicCell : UITableViewCell
 @property (nonatomic ,strong) UIScrollView *scrollView;
 @property (nonatomic ,strong) CZAdvisorDynamicPostVC *postVC;
+@property (nonatomic ,strong) CZAdvisorDynamicQAVC *QAVC;
 /**
  * 滚动值
  */

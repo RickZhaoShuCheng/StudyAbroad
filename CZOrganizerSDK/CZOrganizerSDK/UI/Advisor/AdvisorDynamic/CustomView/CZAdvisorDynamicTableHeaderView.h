@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CZAdvisorInfoModel.h"
+#import "CZUserInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CZAdvisorDynamicTableHeaderView : UIView
 @property (nonatomic ,strong)UIImageView *bgImg;
 @property (nonatomic ,strong)UIVisualEffectView *effectView;
 @property (nonatomic ,strong)UILabel *contentLab;
-@property (nonatomic ,strong) CZAdvisorInfoModel *model;
+@property (nonatomic ,strong) CZUserInfoModel *model;
 @property (nonatomic ,copy) void (^arrowBtnClick)(UIButton *button);
+@property (nonatomic ,copy) dispatch_block_t clickChatBlock;
 @end
 
 NS_ASSUME_NONNULL_END

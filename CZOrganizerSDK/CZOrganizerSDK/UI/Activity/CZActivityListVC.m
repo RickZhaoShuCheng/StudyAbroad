@@ -46,7 +46,7 @@
     WEAKSELF
     [self.tableView setDidSelectCell:^(NSString * _Nonnull str) {
         CZActivityDetailVC *detailVC = [[CZActivityDetailVC alloc]init];
-        detailVC.activityId = str;
+        detailVC.productId = str;
         [weakSelf.navigationController pushViewController:detailVC animated:YES];
     }];
     

@@ -35,6 +35,15 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CZOrganizerSearchCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CZOrganizerSearchCell class]) forIndexPath:indexPath];
     cell.dic = self.dataArr[indexPath.row];
+    if (indexPath.row % 4 == 0) {
+        cell.titleLab.backgroundColor = CZColorCreater(242, 248, 248, 1);
+    }else if (indexPath.row % 4 == 1){
+        cell.titleLab.backgroundColor = CZColorCreater(252, 244, 246, 1);
+    }else if (indexPath.row % 4 == 2){
+        cell.titleLab.backgroundColor = CZColorCreater(253, 247, 236, 1);
+    }else if (indexPath.row % 4 == 3){
+        cell.titleLab.backgroundColor = CZColorCreater(239, 253, 254, 1);
+    }
     return cell;
 }
 
