@@ -12,14 +12,25 @@
 
 + (NSDictionary *)arrayContainModelClass
 {
-    return @{@"productVoList":@"CZProductVoListModel",@"comments":@"CZCommentModel"};
+    return @{@"productVoList":@"CZProductVoListModel",@"comments":@"CZCommentModel",@"sportUserTagList":@"CZSportUserTag"};
 }
 
 -(NSMutableArray *)productVoList
 {
     if ([_productVoList isKindOfClass:[NSString class]]) {
-        return @[];
+        return [NSMutableArray array];
     }
     return _productVoList;
 }
+-(NSMutableArray *)sportUserTagList
+{
+    if ([_sportUserTagList isKindOfClass:[NSString class]]) {
+        return [NSMutableArray array];
+    }
+    return _sportUserTagList;
+}
+@end
+
+@implementation CZSportUserTag
+
 @end

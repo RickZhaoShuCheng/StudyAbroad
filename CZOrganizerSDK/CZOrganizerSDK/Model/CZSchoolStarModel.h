@@ -55,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSNumber *caseCount;
 @property (nonatomic , strong) NSNumber *reserveCount;
 @property (nonatomic , strong) NSNumber *serviceCount;
+@property (nonatomic , strong) NSMutableArray *sportUserTagList;
 @property (nonatomic , strong) NSNumber *servicePersonCount;
 @property (nonatomic , strong) NSNumber *askRanking;
 @property (nonatomic , strong) NSString *sportUserEduVos;
@@ -76,6 +77,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,assign) BOOL experienceOpen;
 @property (nonatomic ,assign) CGFloat introduceHeight;
 @property (nonatomic ,assign) CGFloat singleHeight;
+@end
+
+@interface CZSportUserTag : NSObject
+@property (nonatomic ,assign) NSInteger status;
+@property (nonatomic ,strong) NSNumber *createTime;
+@property (nonatomic ,strong) NSString *sportUserId;
+@property (nonatomic ,strong) NSString *sportUserTagId;
+@property (nonatomic ,strong) NSString *tagName;
+
 @end
 
 NS_ASSUME_NONNULL_END

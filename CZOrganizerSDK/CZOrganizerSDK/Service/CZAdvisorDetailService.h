@@ -143,7 +143,7 @@ typedef void(^CZAdvisorDetailBack)(BOOL success , NSInteger code ,id data ,NSStr
 /**
  *获取达人个人详情及标签内容
  *toUserId   要查看那个用户对象的id
- *type 1动态 2日记 3.长图文（对应下面的标签）
+ *type 1动态 2日记 3.文章（只有文章下面有三条评论）
  *pageNum    页
  *pageSize    数
  */

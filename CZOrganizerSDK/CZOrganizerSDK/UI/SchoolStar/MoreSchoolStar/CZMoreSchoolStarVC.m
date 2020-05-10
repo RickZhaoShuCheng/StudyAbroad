@@ -80,7 +80,7 @@
     self.param.userId = [QSClient userId];
     self.param.pageNum = @(self.pageNum);
     self.param.pageSize = @(20);
-    [service requestForApiSportUserGetSportUserListByFilterByParam:self.param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
+    [service requestForApiSportUserGetMoreSportUserListByParam:self.param callBack:^(BOOL success, NSInteger code, id  _Nonnull data, NSString * _Nonnull errorMessage) {
         if (success) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableArray *array = [[NSMutableArray alloc] init];

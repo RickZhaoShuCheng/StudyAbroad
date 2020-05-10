@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CZUserInfoModel : NSObject
 @property (nonatomic ,strong) NSString *addressName;
+@property (nonatomic ,strong) NSString *organAddress;
 @property (nonatomic ,strong) NSString *adept;
 @property (nonatomic ,strong) NSNumber *beginCreateTime;
 @property (nonatomic ,strong) NSNumber *beginLoginTime;
@@ -68,6 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) NSString *schoolId;
 @property (nonatomic ,strong) NSString *schoolName;
 @property (nonatomic ,strong) NSString *schoolYear;
+@property (nonatomic ,strong) NSString *selfIntroduction;
 @property (nonatomic ,strong) NSString *semesterId;
 @property (nonatomic ,strong) NSString *sportIntroduction;
 @property (nonatomic ,strong) NSMutableArray *sportUserEduVos;
@@ -92,6 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,assign) BOOL experienceOpen;
 @property (nonatomic ,assign) CGFloat introduceHeight;
 @property (nonatomic ,assign) CGFloat singleHeight;
+@property (nonatomic ,strong) NSMutableArray *list;
 @end
 
 @interface CZSportEduModel : NSObject

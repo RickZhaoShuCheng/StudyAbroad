@@ -70,10 +70,11 @@
     self.complainView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.rateComplaint integerValue]) stringValue],@"%"];
     self.refundView.countLab.text = [NSString stringWithFormat:@"%@%@",[@([model.rateRepay integerValue]) stringValue],@"%"];
     self.evaluationView.countLab.text = [@([model.commentsCount integerValue]) stringValue];
-//    model.keywords = @"LOL,奥科吉是否会扣水电费,阿道夫,科技啊回复跨境电商,卡是副科级,接收到回复";
     NSMutableArray *keyArr = [NSMutableArray array];
-    if (model.adept.length) {
-        [keyArr addObjectsFromArray:[model.adept componentsSeparatedByString:@","]];
+    if (model.sportUserTagList.count) {
+        [model.sportUserTagList enumerateObjectsUsingBlock:^(CZSportUserTag *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [keyArr addObject:obj.tagName];
+        }];
     }
     [self setTags:keyArr];
     

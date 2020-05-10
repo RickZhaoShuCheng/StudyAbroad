@@ -50,6 +50,10 @@ typedef void(^QSOrganizerHomeBack)(BOOL success , NSInteger code ,id data ,NSStr
 //
 -(void)requestForApiProductGetProductListByFilterByParam:(CZHomeParam *)param
                                                 callBack:(QSOrganizerHomeBack)callBack;
+
+//获取更多达人
+-(void)requestForApiSportUserGetMoreSportUserListByParam:(CZHomeParam *)param
+                                                callBack:(QSOrganizerHomeBack)callBack;
 /**
  *获取机构详情
  *organId 机构id
